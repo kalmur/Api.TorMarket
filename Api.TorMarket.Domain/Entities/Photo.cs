@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Application.Entities.Common;
+﻿using Api.TorMarket.Domain.Entities.Common;
 
-namespace Api.TorMarket.Application.Entities;
+namespace Api.TorMarket.Domain.Entities;
 
 public class Photo : AuditableEntity
 {

@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Entities.Common;
+﻿namespace Api.TorMarket.Domain.Entities.Common;
 
 public class AuditableEntity
 {

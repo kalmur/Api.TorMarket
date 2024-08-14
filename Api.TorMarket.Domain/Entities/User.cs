@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Entities;
+﻿namespace Api.TorMarket.Domain.Entities;
 
 public class User
 {

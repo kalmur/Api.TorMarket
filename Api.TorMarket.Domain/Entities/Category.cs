@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.Entities;
-using Api.TorMarket.Application.Entities.Common;
+﻿using Api.TorMarket.Domain.Entities.Common;
 
 namespace Api.TorMarket.Domain.Entities;
 
