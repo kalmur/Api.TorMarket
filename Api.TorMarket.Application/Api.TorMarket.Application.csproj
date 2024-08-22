@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Api.TorMarket.Domain\Api.TorMarket.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Workflows\Review\DeleteReview\" />
+  </ItemGroup>
+
 </Project>

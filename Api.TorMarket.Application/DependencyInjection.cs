@@ -1,9 +1,7 @@
-﻿using Api.TorMarket.Application.Options;
-using Api.TorMarket.Application.Services.Interfaces;
-using Api.TorMarket.Application.Services;
-using Auth0Net.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Services;
 
 namespace Api.TorMarket.Application;
 
@@ -13,31 +11,15 @@ public static class DependencyInjection
     {
         var currentAssembly = typeof(DependencyInjection).Assembly;
 
-        services.AddMediatR(config => config.RegisterServicesFromAssembly(currentAssembly));
-
-        RegisterAuth0Services(services, configuration);
-
-        return services;
-    }
-
-    private static void RegisterAuth0Services(IServiceCollection services, IConfiguration configuration)
-    {
-        services.Configure<Auth0Options>(configuration.GetSection(Auth0Options.SectionName));
-
-        var options = configuration.GetSection(Auth0Options.SectionName).Get<Auth0Options>();
+        services.AddMediatR(config => 
+            config.RegisterServicesFromAssembly(currentAssembly)
+        );
 
         services
-            .AddScoped<IAuth0UsersClient, Auth0UsersClient>()
-            .AddScoped<IAuth0Service, Auth0Service>()
+            .AddSingleton<IPasswordService, PasswordService>()
             .AddSingleton<IPasswordGenerator, PasswordGenerator>()
-            .AddSingleton<IPasswordService, PasswordService>();
+            .AddSingleton<IPasswordValidator, PasswordValidator>();
 
-        services.AddAuth0AuthenticationClient(config =>
-        {
-            config.Domain = options!.Domain!;
-            config.ClientId = options.ClientId;
-            config.ClientSecret = options.ClientSecret;
-        });
-        services.AddAuth0ManagementClient().AddManagementAccessToken();
+        return services;
     }
 }

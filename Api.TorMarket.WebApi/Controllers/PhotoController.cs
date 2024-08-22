@@ -8,11 +8,9 @@ namespace Api.TorMarket.WebApi.Controllers;
 public class PhotoController
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<PhotoController> _logger;
 
-    public PhotoController(IMediator mediator, ILogger<PhotoController> logger)
+    public PhotoController(IMediator mediator)
     {
         _mediator = mediator;
-        _logger = logger;
     }
 }

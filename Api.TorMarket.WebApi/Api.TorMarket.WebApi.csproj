@@ -11,11 +11,14 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Api.TorMarket.Application\Api.TorMarket.Application.csproj" />
     <ProjectReference Include="..\Api.TorMarket.Infrastructure\Api.TorMarket.Infrastructure.csproj" />
+    <ProjectReference Include="..\Api.TorMarket.Infrastructure\Api.TorMarket.Persistence.csproj" />
+    <ProjectReference Include="..\Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj" />
   </ItemGroup>
 
   <ItemGroup>

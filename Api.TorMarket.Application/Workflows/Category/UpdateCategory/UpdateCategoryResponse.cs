@@ -1,5 +1,15 @@
-﻿namespace Api.TorMarket.Application.Workflows.Category.UpdateCategory;
+﻿using Api.TorMarket.Domain.Results.Errors;
+
+namespace Api.TorMarket.Application.Workflows.Category.UpdateCategory;
 
 public class UpdateCategoryResponse
 {
+    public UpdateCategoryResponse(Error error = default)
+    {
+        HasErrored = error is not null;
+        Error = error;
+    }
+
+    public bool HasErrored { get; }
+    public Error Error { get; }
 }

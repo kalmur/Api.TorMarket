@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Services.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using ApiUser = Api.TorMarket.Domain.Entities.User;
@@ -18,7 +18,11 @@ public class CreateUserHandler : INotificationHandler<CreateUserNotification>
 
     public async Task Handle(CreateUserNotification notification, CancellationToken cancellationToken)
     {
-        var user = new ApiUser { ExternalId = notification.ExternalId };
+        var user = new ApiUser
+        {
+            RoleId = notification.RoleId,
+            ExternalId = notification.ExternalId
+        };
 
         _context.User.Add(user);
         await _context.SaveChangesAsync(cancellationToken);

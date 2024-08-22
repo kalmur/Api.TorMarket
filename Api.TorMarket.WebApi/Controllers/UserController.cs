@@ -4,8 +4,7 @@ using Api.TorMarket.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Services.Interfaces;
+using Api.TorMarket.Application.Abstractions;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -15,21 +14,15 @@ public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly IAuth0Service _auth0Service;
-    private readonly ILogger<UserController> _logger;
 
-    public UserController
-    (
-        IMediator mediator, 
-        IAuth0Service auth0Service, 
-        ILogger<UserController> logger
-    )
+    public UserController(IMediator mediator, IAuth0Service auth0Service)
     {
         _mediator = mediator;
         _auth0Service = auth0Service;
-        _logger = logger;
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUserDto))]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto dto)
     {
         var result = await GetAuthUserOrCreate(dto);
@@ -81,12 +74,14 @@ public class UserController : ControllerBase
         if (result.Succeeded && result.Item.Any())
         {
             if (result.Item.Count > 1)
+            {
                 return new ApiResult<UserModel>
                 {
                     Message = $"Multiple users found with the email address {user.Email}",
                     StatusCode = HttpStatusCode.InternalServerError,
                     Succeeded = false
                 };
+            }
 
             identityProviderUser = new ApiResult<UserModel>
             {
@@ -106,7 +101,8 @@ public class UserController : ControllerBase
             await UpdateUser(identityProviderUser);
 
             var externalProviderId = identityProviderUser.Item.ProviderSubjectId;
-            await _mediator.Publish(new CreateUserNotification(externalProviderId));
+
+            await _mediator.Publish(new CreateUserNotification(user.RoleId, externalProviderId));
         }
 
         return identityProviderUser;
