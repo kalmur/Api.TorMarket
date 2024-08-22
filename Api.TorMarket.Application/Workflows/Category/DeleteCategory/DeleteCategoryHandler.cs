@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Services.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,10 +15,12 @@ public class DeleteCategoryHandler : INotificationHandler<DeleteCategoryNotifica
         _logger = logger;
     }
 
-
     public async Task Handle(DeleteCategoryNotification notification, CancellationToken cancellationToken)
     {
-        var categoryToDelete = await _context.Category.SingleOrDefaultAsync(x => x.CategoryId == notification.CategoryId, cancellationToken);
+        var categoryToDelete = await _context.Category.SingleOrDefaultAsync(x => 
+            x.CategoryId == notification.CategoryId, 
+            cancellationToken
+        );
 
         if (categoryToDelete is null)
         {
@@ -27,6 +29,7 @@ public class DeleteCategoryHandler : INotificationHandler<DeleteCategoryNotifica
         else
         {
             _context.Category.Remove(categoryToDelete);
+
             await _context.SaveChangesAsync(cancellationToken);
 
             _logger.LogInformation("Category with ID: '{id}' deleted.", notification.CategoryId);

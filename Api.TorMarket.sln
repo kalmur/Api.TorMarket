@@ -9,9 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Domain", "Api.TorMarket.Domain\Api.TorMarket.Domain.csproj", "{D4578D46-3900-4EAC-B492-3E6E2168686E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Infrastructure", "Api.TorMarket.Infrastructure\Api.TorMarket.Infrastructure.csproj", "{B6305B2F-688B-4C21-80FC-4FEE6F7CDF1E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{639C2A1C-3CEB-41F7-9604-61B98A519975}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Application.Tests", "Api.TorMarket.Application.Tests\Api.TorMarket.Application.Tests.csproj", "{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.WebApi.Tests", "Api.TorMarket.WebApi.Tests\Api.TorMarket.WebApi.Tests.csproj", "{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Infrastructure", "Api.TorMarket.Infrastructure\Api.TorMarket.Infrastructure.csproj", "{B8F7A9BB-B399-4617-B9B8-581565A6EC1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Persistence", "Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj", "{E74805AA-70FE-480B-AC4E-2A56038F8A07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,13 +37,29 @@ Global
 		{D4578D46-3900-4EAC-B492-3E6E2168686E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4578D46-3900-4EAC-B492-3E6E2168686E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4578D46-3900-4EAC-B492-3E6E2168686E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B6305B2F-688B-4C21-80FC-4FEE6F7CDF1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B6305B2F-688B-4C21-80FC-4FEE6F7CDF1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B6305B2F-688B-4C21-80FC-4FEE6F7CDF1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B6305B2F-688B-4C21-80FC-4FEE6F7CDF1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8F7A9BB-B399-4617-B9B8-581565A6EC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F7A9BB-B399-4617-B9B8-581565A6EC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F7A9BB-B399-4617-B9B8-581565A6EC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F7A9BB-B399-4617-B9B8-581565A6EC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC} = {639C2A1C-3CEB-41F7-9604-61B98A519975}
+		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB} = {639C2A1C-3CEB-41F7-9604-61B98A519975}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40E40749-CD44-4A6B-BFC5-E4C2562E1DCA}

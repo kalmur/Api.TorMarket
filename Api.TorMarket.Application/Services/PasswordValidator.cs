@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Services.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 
 namespace Api.TorMarket.Application.Services;
 
