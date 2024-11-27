@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Application.DTOs;
 using Api.TorMarket.Application.Workflows.Review.CreateReview;
-using Api.TorMarket.WebApi.Services;
+using Api.TorMarket.WebApi.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

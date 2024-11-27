@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.TorMarket.Persistence", "Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj", "{E74805AA-70FE-480B-AC4E-2A56038F8A07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.TorMarket.Infrastructure.Tests", "Api.TorMarket.Infrastructure.Tests\Api.TorMarket.Infrastructure.Tests.csproj", "{7C55412B-69A1-459A-A638-66A2EBBE9B8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E74805AA-70FE-480B-AC4E-2A56038F8A07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C55412B-69A1-459A-A638-66A2EBBE9B8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C55412B-69A1-459A-A638-66A2EBBE9B8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C55412B-69A1-459A-A638-66A2EBBE9B8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C55412B-69A1-459A-A638-66A2EBBE9B8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B8E8C13C-1CA6-4B0D-B9D0-F9EDE9BACFBC} = {639C2A1C-3CEB-41F7-9604-61B98A519975}
 		{99A2E735-A9E4-4E57-9EDB-98A69CC57DDB} = {639C2A1C-3CEB-41F7-9604-61B98A519975}
+		{7C55412B-69A1-459A-A638-66A2EBBE9B8E} = {639C2A1C-3CEB-41F7-9604-61B98A519975}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40E40749-CD44-4A6B-BFC5-E4C2562E1DCA}

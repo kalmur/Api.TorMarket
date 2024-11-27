@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Application.DTOs;
 using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Workflows.Listing.CreateListing;
+using Api.TorMarket.Application.Workflows.Listing.Commands.CreateListing;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

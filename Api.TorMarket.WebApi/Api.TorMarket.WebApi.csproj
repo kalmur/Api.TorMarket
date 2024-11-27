@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
-  </ItemGroup>
-
 </Project>

@@ -1,6 +1,3 @@
 ﻿namespace Api.TorMarket.Application.DTOs;
 
-public class CreateCategoryDto
-{
-    public string Name { get; set; }
-}
+public record CreateCategoryDto(string Name);

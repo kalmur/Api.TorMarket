@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class ReviewEntityConfiguration : IEntityTypeConfiguration<Review>
+public class ReviewEntityConfiguration : IEntityTypeConfiguration<ReviewModel>
 {
-    public void Configure(EntityTypeBuilder<Review> builder)
+    public void Configure(EntityTypeBuilder<ReviewModel> builder)
     {
         builder
             .ToTable(TableNames.Review)

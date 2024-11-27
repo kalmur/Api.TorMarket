@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc;
+using Api.TorMarket.WebApi.Services.Interfaces;
 
 namespace Api.TorMarket.WebApi.Services;
 
@@ -14,8 +15,7 @@ public class HttpResponse : IHttpResponse
                 Title = "Forbidden.",
                 Detail = errorMessage ?? "Access to resource is Forbidden.",
                 Status = StatusCodes.Status403Forbidden
-            }
-        )
+            })
         {
             StatusCode = StatusCodes.Status403Forbidden
         };

@@ -7,7 +7,7 @@ using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Infrastructure.Options;
 using Auth0User = Auth0.ManagementApi.Models.User;
-using MarketplaceUser = Api.TorMarket.Domain.Models.UserModel;
+using MarketplaceUser = Api.TorMarket.Application.Models.IdentityUserModel;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -132,16 +132,14 @@ public class Auth0Service : IAuth0Service
             Succeeded = true,
             StatusCode = HttpStatusCode.OK,
             Item = auth0User != null
-                ? new MarketplaceUser
-                {
-                    FirstName = userMetadata?.FirstName,
-                    LastName = userMetadata?.LastName,
-                    Email = auth0User.Email,
-                    PhoneNumber = userMetadata?.PhoneNumber,
-                    Provider = ProviderName,
-                    ProviderSubjectId = auth0User.UserId,
-                }
-                : null
+                ? new MarketplaceUser(
+                    userMetadata?.FirstName,
+                    userMetadata?.LastName,
+                    auth0User.Email,
+                    userMetadata?.PhoneNumber,
+                    ProviderName,
+                    auth0User.UserId
+                ) : null
         };
     }
 

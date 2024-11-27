@@ -1,7 +1,7 @@
 using Api.TorMarket.Application;
 using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
-using Api.TorMarket.WebApi.Services;
+using Api.TorMarket.WebApi.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 using HttpResponse = Api.TorMarket.WebApi.Services.HttpResponse;
 

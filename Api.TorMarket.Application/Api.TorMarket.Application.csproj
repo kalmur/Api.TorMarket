@@ -14,6 +14,7 @@
     <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="OneOf_bargos" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Workflows\Category\Queries\" />
+    <Folder Include="Workflows\Listing\Queries\GetListingsByCategory\" />
+    <Folder Include="Workflows\Listing\Queries\GetListingById\" />
     <Folder Include="Workflows\Review\DeleteReview\" />
   </ItemGroup>
 

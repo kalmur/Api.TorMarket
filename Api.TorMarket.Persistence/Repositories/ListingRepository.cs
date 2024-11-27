@@ -1,21 +1,19 @@
 ﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Entities;
-using Api.TorMarket.Domain.Repositories;
+using Api.TorMarket.Application.Extensions;
+using Api.TorMarket.Application.Interfaces;
+using Api.TorMarket.Application.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class ListingRepository : IListingRepository
+public class ListingRepository(IApplicationDbContext context) : IListingRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public ListingRepository(IApplicationDbContext context)
+    public async Task<IEnumerable<ListingModel>> GetAllListingsWithReviews(CancellationToken ct)
     {
-        _context = context;
-    }
+        var listings = await context.Listings
+            .Include(l => l.Reviews)
+            .ToListAsync(ct);
 
-    public async Task AddListing(Listing listing, CancellationToken ct)
-    {
-        _context.Listings.Add(listing);
-        await _context.SaveChangesAsync(ct);
+        return listings.ToModel();
     }
 }

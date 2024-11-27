@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Models;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -65,9 +66,9 @@ public class UserController : ControllerBase
             : Ok(result);
     }
 
-    private async Task<ApiResult<UserModel>> GetAuthUserOrCreate(CreateUserDto user)
+    private async Task<ApiResult<IdentityUserModel>> GetAuthUserOrCreate(CreateUserDto user)
     {
-        ApiResult<UserModel> identityProviderUser;
+        ApiResult<IdentityUserModel> identityProviderUser;
 
         var result = await _auth0Service.GetUserByEmail(user.Email).ConfigureAwait(false);
 
@@ -75,7 +76,7 @@ public class UserController : ControllerBase
         {
             if (result.Item.Count > 1)
             {
-                return new ApiResult<UserModel>
+                return new ApiResult<IdentityUserModel>
                 {
                     Message = $"Multiple users found with the email address {user.Email}",
                     StatusCode = HttpStatusCode.InternalServerError,
@@ -83,7 +84,7 @@ public class UserController : ControllerBase
                 };
             }
 
-            identityProviderUser = new ApiResult<UserModel>
+            identityProviderUser = new ApiResult<IdentityUserModel>
             {
                 StatusCode = result.StatusCode,
                 Succeeded = true,
@@ -108,7 +109,7 @@ public class UserController : ControllerBase
         return identityProviderUser;
     }
 
-    private async Task UpdateUser(ApiResult<UserModel> identityProviderUser)
+    private async Task UpdateUser(ApiResult<IdentityUserModel> identityProviderUser)
     {
         var updateUser = new UpdateUserDto
         {

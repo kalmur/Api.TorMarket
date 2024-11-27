@@ -2,15 +2,10 @@
 
 namespace Api.TorMarket.Application.DTOs;
 
-public class CreateUserDto
-{
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
-
-    public string PhoneNumber { get; set; }
-    public int RoleId { get; set; }
-}
+public record CreateUserDto(
+    string FirstName,
+    string LastName,
+    [Required] [EmailAddress] string Email,
+    string PhoneNumber,
+    int RoleId
+);

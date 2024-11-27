@@ -1,10 +1,8 @@
 ﻿using Api.TorMarket.Application.DTOs;
-using Api.TorMarket.Application.Workflows.Category.CreateCategory;
-using Api.TorMarket.Application.Workflows.Category.DeleteCategory;
-using Api.TorMarket.Application.Workflows.Category.UpdateCategory;
-using Api.TorMarket.Application.Workflows.Listing.CreateListing;
-using Api.TorMarket.Domain.Results.Errors;
-using Api.TorMarket.WebApi.Services;
+using Api.TorMarket.Application.Workflows.Category.Commands.Create;
+using Api.TorMarket.Application.Workflows.Category.Commands.Delete;
+using Api.TorMarket.Application.Workflows.Category.Commands.Update;
+using Api.TorMarket.WebApi.Services.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,16 +41,14 @@ public class CategoryController : ControllerBase
         
         var response = await _mediator.Send(request);
 
-        if (response.HasErrored)
+        if (response.IsT1)
         {
-            return response.Error.Type switch
-            {
-                ErrorType.NotFound => _httpResponse.NotFound(),
-                _ => _httpResponse.InternalServerError()
-            };
+            return response.AsT1.NotFoundError is not null 
+                ? _httpResponse.NotFound("Category not found.") 
+                : _httpResponse.UnprocessableEntity("Invalid input for category update.");
         }
 
-        return NoContent();
+        return Ok(response.AsT0.Name);
     }
 
     [HttpDelete]

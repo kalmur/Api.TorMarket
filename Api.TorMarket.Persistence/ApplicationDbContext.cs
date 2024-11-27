@@ -5,12 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions options) : DbContext(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
     public DbSet<Category> Category => Set<Category>();
 
     public DbSet<Listing> Listings => Set<Listing>();
@@ -26,7 +22,9 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>()
-                     .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
+                     .Where(q => 
+                         q.State == EntityState.Added 
+                         || q.State == EntityState.Modified))
         {
             if (entry.State == EntityState.Added)
             {

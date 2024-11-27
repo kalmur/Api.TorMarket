@@ -1,41 +1,45 @@
 ﻿using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Extensions;
+using Api.TorMarket.Application.Interfaces;
+using Api.TorMarket.Application.Models;
 using Api.TorMarket.Domain.Entities;
-using Api.TorMarket.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class ReviewRepository : IReviewRepository
+public class ReviewRepository(IApplicationDbContext context) : IReviewRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public ReviewRepository(IApplicationDbContext context)
+    public async Task<ReviewModel?> GetReviewById(int id, CancellationToken ct)
     {
-        _context = context;
+        var review = await context.Reviews
+            .FirstOrDefaultAsync(x =>
+                x.ReviewId == id, 
+                ct
+            );
+
+        return review?.ToModel();
     }
 
-
-    public async Task<Review?> GetReviewById(int id, CancellationToken ct)
+    public async Task<ReviewModel?> DeleteReview(int id, CancellationToken ct)
     {
-        return await _context.Reviews.FirstOrDefaultAsync(x =>
-            x.ReviewId == id, ct);
-    }
+        var review = await context.Reviews
+            .FirstOrDefaultAsync(x => 
+                x.ReviewId == id, 
+                ct
+            );
 
-    public async Task<Review?> DeleteReview(int id, CancellationToken ct)
-    {
-        return await _context.Reviews.FirstOrDefaultAsync(x =>
-            x.ReviewId == id, ct);
+        return review?.ToModel();
     }
 
     public async Task AddReviewAsync(Review review, CancellationToken ct)
     {
-        _context.Reviews.Add(review);
-        await _context.SaveChangesAsync(ct);
+        context.Reviews.Add(review);
+        await context.SaveChangesAsync(ct);
     }
 
     public async Task RemoveReviewAsync(Review review, CancellationToken ct)
     {
-        _context.Reviews.Remove(review);
-        await _context.SaveChangesAsync(ct);
+        context.Reviews.Remove(review);
+        await context.SaveChangesAsync(ct);
     }
 }
