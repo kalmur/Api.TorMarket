@@ -1,10 +1,10 @@
 ﻿using Api.TorMarket.Application.DTOs;
 using Api.TorMarket.Application.Workflows.User.CreateUser;
-using Api.TorMarket.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Models;
 
 namespace Api.TorMarket.WebApi.Controllers;
 

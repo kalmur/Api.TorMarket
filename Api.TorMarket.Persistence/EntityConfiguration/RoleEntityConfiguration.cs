@@ -1,5 +1,6 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Constants;
+using Api.TorMarket.Persistence.SeedData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -23,10 +24,14 @@ public class RoleEntityConfiguration : IEntityTypeConfiguration<Role>
 
         builder.Property(x => x.Description);
 
+        // Navigation
         builder
             .HasMany(x => x.Users)
             .WithOne(x => x.Role)
             .HasForeignKey(x => x.RoleId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        // Seed roles data
+        builder.HasData(RoleData.Roles);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Domain.Repositories;
+using Api.TorMarket.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

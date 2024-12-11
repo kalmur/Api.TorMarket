@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Newtonsoft.Json;
 
-namespace Api.TorMarket.Domain.Models;
+namespace Api.TorMarket.Application.Models;
 
 public class ApiResult
 {

@@ -36,6 +36,7 @@ public class ListingEntityConfiguration : IEntityTypeConfiguration<Listing>
         builder.Property(x => x.Country);
         builder.Property(x => x.AvailableFrom);
 
+        // Navigation
         builder
             .HasOne(x => x.User)
             .WithMany(x => x.Listings)

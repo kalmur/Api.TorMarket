@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Domain.Repositories;
+﻿using Api.TorMarket.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using ApiCategory = Api.TorMarket.Domain.Entities.Category;

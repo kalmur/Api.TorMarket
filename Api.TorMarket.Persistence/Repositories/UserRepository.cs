@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Repositories;
+using Api.TorMarket.Application.Interfaces;
 using User = Api.TorMarket.Domain.Entities.User;
 
 namespace Api.TorMarket.Persistence.Repositories;

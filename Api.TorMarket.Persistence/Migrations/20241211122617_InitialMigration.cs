@@ -1,9 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Api.TorMarket.Infrastructure.Migrations
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace Api.TorMarket.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
@@ -57,7 +58,7 @@ namespace Api.TorMarket.Infrastructure.Migrations
                         column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,7 +93,7 @@ namespace Api.TorMarket.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -122,7 +123,7 @@ namespace Api.TorMarket.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -152,7 +153,30 @@ namespace Api.TorMarket.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "CategoryId", "CreatedOn", "Name", "UpdatedOn" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 12, 11, 12, 26, 17, 405, DateTimeKind.Local).AddTicks(8675), "Electronics", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6347) },
+                    { 2, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6541), "Games", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6544) },
+                    { 3, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6546), "Toys", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6548) },
+                    { 4, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6549), "Clothing", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6550) },
+                    { 5, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6552), "Vehicles", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6553) },
+                    { 6, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6555), "Pets", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6556) },
+                    { 7, new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6558), "Other", new DateTime(2024, 12, 11, 12, 26, 17, 410, DateTimeKind.Local).AddTicks(6559) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Role",
+                columns: new[] { "RoleId", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Administrator", "Admin" },
+                    { 2, "Tor Market User", "User" }
                 });
 
             migrationBuilder.CreateIndex(

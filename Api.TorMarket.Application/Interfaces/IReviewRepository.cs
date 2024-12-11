@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Domain.Entities;
 
-namespace Api.TorMarket.Domain.Repositories;
+namespace Api.TorMarket.Application.Interfaces;
 
 public interface IReviewRepository
 {

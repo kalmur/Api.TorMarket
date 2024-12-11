@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.DTOs;
-using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Application.Models;
 
 namespace Api.TorMarket.Application.Abstractions;
 

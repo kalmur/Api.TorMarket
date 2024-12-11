@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Api.TorMarket.Application\Api.TorMarket.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

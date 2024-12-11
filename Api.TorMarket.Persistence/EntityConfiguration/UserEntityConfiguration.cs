@@ -23,6 +23,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.ExternalId);
 
+        // Navigation
         builder
             .HasOne(x => x.Role)
             .WithMany(x => x.Users)

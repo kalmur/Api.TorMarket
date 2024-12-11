@@ -23,6 +23,7 @@ public class ReviewEntityConfiguration : IEntityTypeConfiguration<Review>
 
         builder.Property(x => x.Comment);
 
+        // Navigation
         builder
             .HasOne(x => x.User)
             .WithMany(x => x.Reviews)

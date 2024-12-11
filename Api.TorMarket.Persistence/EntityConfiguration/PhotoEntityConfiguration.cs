@@ -9,14 +9,18 @@ public class PhotoEntityConfiguration : IEntityTypeConfiguration<Photo>
 {
     public void Configure(EntityTypeBuilder<Photo> builder)
     {
-        builder.ToTable(TableNames.Photos).HasKey(x => x.PhotoId);
+        builder
+            .ToTable(TableNames.Photos)
+            .HasKey(x => x.PhotoId);
 
-        builder.Property(x => x.PhotoId).ValueGeneratedOnAdd();
+        builder
+            .Property(x => x.PhotoId)
+            .ValueGeneratedOnAdd();
 
         builder.Property(x => x.Url);
-
         builder.Property(x => x.IsPrimary);
 
+        // Navigation
         builder
             .HasOne(x => x.User)
             .WithMany(x => x.Photos)

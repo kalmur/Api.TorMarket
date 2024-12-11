@@ -2,7 +2,6 @@
 using Api.TorMarket.Application.Workflows.Category.CreateCategory;
 using Api.TorMarket.Application.Workflows.Category.DeleteCategory;
 using Api.TorMarket.Application.Workflows.Category.UpdateCategory;
-using Api.TorMarket.Application.Workflows.Listing.CreateListing;
 using Api.TorMarket.Domain.Results.Errors;
 using Api.TorMarket.WebApi.Services;
 using MediatR;

@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Repositories;
+using Api.TorMarket.Application.Interfaces;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

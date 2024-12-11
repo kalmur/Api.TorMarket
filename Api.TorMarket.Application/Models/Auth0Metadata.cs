@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Domain.Models;
+﻿namespace Api.TorMarket.Application.Models;
 
 public class Auth0Metadata
 {

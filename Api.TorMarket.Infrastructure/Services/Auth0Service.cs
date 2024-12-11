@@ -4,10 +4,10 @@ using Auth0.ManagementApi.Models;
 using Microsoft.Extensions.Options;
 using System.Net;
 using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Application.Models;
 using Api.TorMarket.Infrastructure.Options;
 using Auth0User = Auth0.ManagementApi.Models.User;
-using MarketplaceUser = Api.TorMarket.Domain.Models.UserModel;
+using MarketplaceUser = Api.TorMarket.Application.Models.UserModel;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
