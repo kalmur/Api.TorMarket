@@ -17,7 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Api.TorMarket.Application\Api.TorMarket.Application.csproj" />
     <ProjectReference Include="..\Api.TorMarket.Infrastructure\Api.TorMarket.Infrastructure.csproj" />
-    <ProjectReference Include="..\Api.TorMarket.Infrastructure\Api.TorMarket.Persistence.csproj" />
     <ProjectReference Include="..\Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj" />
   </ItemGroup>
 
