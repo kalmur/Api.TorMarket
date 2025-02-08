@@ -1,13 +1,12 @@
-﻿using Api.TorMarket.Application.DTOs;
-using Auth0.Core.Exceptions;
+﻿using Auth0.Core.Exceptions;
 using Auth0.ManagementApi.Models;
 using Microsoft.Extensions.Options;
 using System.Net;
 using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Models;
+using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Infrastructure.Options;
 using Auth0User = Auth0.ManagementApi.Models.User;
-using MarketplaceUser = Api.TorMarket.Application.Models.UserModel;
+using UserrModel = Api.TorMarket.Domain.Models.UserModel;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -30,7 +29,7 @@ public class Auth0Service : IAuth0Service
         _options = options.Value;
     }
 
-    public virtual async Task<ApiResult<MarketplaceUser>> CreateUserAsync(CreateUserDto user)
+    public virtual async Task<ApiResult<UserrModel>> CreateUserAsync(CreateUserModel user)
     {
         var password = _passwordService.GetNewPassword();
 
@@ -56,14 +55,16 @@ public class Auth0Service : IAuth0Service
         }
         catch (ErrorApiException e)
         {
-            return Failure<ApiResult<MarketplaceUser>>(e);
+            return Failure<ApiResult<UserrModel>>(e);
         }
 
         return Success(auth0User);
     }
 
-    public virtual async Task<ApiResult<MarketplaceUser>> UpdateUserAsync(string identityProviderId,
-        UpdateUserDto user)
+    public virtual async Task<ApiResult<UserrModel>> UpdateUserAsync(
+        string identityProviderId, 
+        UpdateUserModel user
+    )
     {
         Auth0User auth0User;
         try
@@ -87,13 +88,13 @@ public class Auth0Service : IAuth0Service
         }
         catch (ErrorApiException e)
         {
-            return Failure<ApiResult<MarketplaceUser>>(e);
+            return Failure<ApiResult<UserrModel>>(e);
         }
 
         return Success(auth0User);
     }
 
-    public async Task<ApiResult<MarketplaceUser>> GetUserAsync(string providerId)
+    public async Task<ApiResult<UserrModel>> GetUserAsync(string providerId)
     {
         Auth0User auth0User;
         try
@@ -102,13 +103,13 @@ public class Auth0Service : IAuth0Service
         }
         catch (ErrorApiException e)
         {
-            return Failure<ApiResult<MarketplaceUser>>(e);
+            return Failure<ApiResult<UserrModel>>(e);
         }
 
         return Success(auth0User);
     }
 
-    public async Task<ApiResult<IReadOnlyList<MarketplaceUser>>> GetUserByEmail(string email)
+    public async Task<ApiResult<IReadOnlyList<UserrModel>>> GetUserByEmail(string email)
     {
         IList<Auth0User> auth0UserList;
         try
@@ -118,21 +119,21 @@ public class Auth0Service : IAuth0Service
         }
         catch (ErrorApiException e)
         {
-            return Failure<ApiResult<IReadOnlyList<MarketplaceUser>>>(e);
+            return Failure<ApiResult<IReadOnlyList<UserrModel>>>(e);
         }
 
         return Success(auth0UserList);
     }
 
-    private static ApiResult<MarketplaceUser> Success(Auth0User auth0User = null)
+    private static ApiResult<UserrModel> Success(Auth0User auth0User = null)
     {
         var userMetadata = auth0User?.UserMetadata;
-        return new ApiResult<MarketplaceUser>
+        return new ApiResult<UserrModel>
         {
             Succeeded = true,
             StatusCode = HttpStatusCode.OK,
             Item = auth0User != null
-                ? new MarketplaceUser
+                ? new UserrModel
                 {
                     FirstName = userMetadata?.FirstName,
                     LastName = userMetadata?.LastName,
@@ -145,13 +146,13 @@ public class Auth0Service : IAuth0Service
         };
     }
 
-    private static ApiResult<IReadOnlyList<MarketplaceUser>> Success(IEnumerable<Auth0User> auth0UserList)
+    private static ApiResult<IReadOnlyList<UserrModel>> Success(IEnumerable<Auth0User> auth0UserList)
     {
-        return new ApiResult<IReadOnlyList<MarketplaceUser>>
+        return new ApiResult<IReadOnlyList<UserrModel>>
         {
             Succeeded = true,
             StatusCode = HttpStatusCode.OK,
-            Item = auth0UserList.Select(u => new MarketplaceUser
+            Item = auth0UserList.Select(u => new UserrModel
             {
                 FirstName = u.UserMetadata?.FirstName,
                 LastName = u.UserMetadata?.LastName,

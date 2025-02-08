@@ -7,7 +7,10 @@ namespace Api.TorMarket.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddApplication(
+        this IServiceCollection services, 
+        IConfiguration configuration
+    )
     {
         var currentAssembly = typeof(DependencyInjection).Assembly;
 

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using Api.TorMarket.Application.Results.Errors;
 
 namespace Api.TorMarket.Domain.Results.Errors;
 

@@ -1,10 +1,10 @@
-﻿using Api.TorMarket.Application.DTOs;
-using Api.TorMarket.Application.Workflows.User.CreateUser;
+﻿using Api.TorMarket.Application.Workflows.User.CreateUser;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Models;
+using Api.TorMarket.Domain.Models;
+using Api.TorMarket.WebApi.DTOs;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -22,8 +22,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUserDto))]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserDto dto)
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUserModel))]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserModel dto)
     {
         var result = await GetAuthUserOrCreate(dto);
 
@@ -37,10 +37,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateAuth0User(
         string externalProviderId,
-        [FromBody] UpdateUserDto user
+        [FromBody] UpdateUserModel user
     )
     {
-        var result = await _auth0Service.UpdateUserAsync(externalProviderId, new UpdateUserDto
+        var result = await _auth0Service.UpdateUserAsync(externalProviderId, new UpdateUserModel
         {
             Email = user.Email,
             FirstName = user.FirstName,
@@ -65,7 +65,7 @@ public class UserController : ControllerBase
             : Ok(result);
     }
 
-    private async Task<ApiResult<UserModel>> GetAuthUserOrCreate(CreateUserDto user)
+    private async Task<ApiResult<UserModel>> GetAuthUserOrCreate(CreateUserModel user)
     {
         ApiResult<UserModel> identityProviderUser;
 
@@ -110,7 +110,7 @@ public class UserController : ControllerBase
 
     private async Task UpdateUser(ApiResult<UserModel> identityProviderUser)
     {
-        var updateUser = new UpdateUserDto
+        var updateUser = new UpdateUserModel
         {
             FirstName = identityProviderUser.Item.FirstName,
             LastName = identityProviderUser.Item.LastName,

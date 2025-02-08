@@ -1,4 +1,6 @@
-﻿namespace Api.TorMarket.Domain.Results.Errors;
+﻿using Api.TorMarket.Application.Results.Errors;
+
+namespace Api.TorMarket.Domain.Results.Errors;
 
 public class RequestValidationError : Error
 {

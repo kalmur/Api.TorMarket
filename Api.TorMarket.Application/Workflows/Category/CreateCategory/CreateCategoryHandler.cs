@@ -1,16 +1,16 @@
 ﻿using Api.TorMarket.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using ApiCategory = Api.TorMarket.Domain.Entities.Category;
+using ApiCategory = Api.TorMarket.Domain.Entities.ProductCategory;
 
 namespace Api.TorMarket.Application.Workflows.Category.CreateCategory;
 
 public class CreateCategoryHandler : INotificationHandler<CreateCategoryNotification>
 {
-    private readonly ICategoryRepository _repository;
+    private readonly IProductCategoryRepository _repository;
     private readonly ILogger<CreateCategoryHandler> _logger;
 
-    public CreateCategoryHandler(ICategoryRepository repository, ILogger<CreateCategoryHandler> logger)
+    public CreateCategoryHandler(IProductCategoryRepository repository, ILogger<CreateCategoryHandler> logger)
     {
         _repository = repository;
         _logger = logger;

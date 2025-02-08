@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Domain.Results.Errors;
+﻿namespace Api.TorMarket.Application.Results.Errors;
 
 public enum ErrorType
 {

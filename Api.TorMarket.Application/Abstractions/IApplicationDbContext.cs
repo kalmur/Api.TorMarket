@@ -5,12 +5,15 @@ namespace Api.TorMarket.Application.Abstractions;
 
 public interface IApplicationDbContext
 {
-    DbSet<Category> Category { get; }
-    DbSet<Listing> Listings { get; }
-    DbSet<Photo> Photos { get; }
-    DbSet<Review> Reviews { get; }
-    DbSet<Role> Role { get; }
-    DbSet<User> User { get; }
+    DbSet<Address> Address { get; }
+    DbSet<Order> Order { get; }
+    DbSet<OrderLine> OrderLine { get; }
+    DbSet<OrderStatus> OrderStatus { get; }
+    DbSet<Product> Product { get; }
+    DbSet<ProductCategory> ProductCategory { get; }
+    DbSet<SiteUser> SiteUser { get; }
+    DbSet<UserAddress> UserAddress { get; }
+    DbSet<UserProductReview> UserProductReview { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

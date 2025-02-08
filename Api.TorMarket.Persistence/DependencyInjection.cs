@@ -1,5 +1,6 @@
 ﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Application.Interfaces;
+using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,8 +10,7 @@ namespace Api.TorMarket.Persistence;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence
-    (
+    public static IServiceCollection AddPersistence(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -21,12 +21,14 @@ public static class DependencyInjection
 
         services
             .AddScoped<IApplicationDbContext, ApplicationDbContext>()
-            .AddScoped<ICategoryRepository, CategoryRepository>()
-            .AddScoped<IListingRepository, ListingRepository>()
-            .AddScoped<IPhotoRepository, PhotoRepository>()
-            .AddScoped<IReviewRepository, ReviewRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IUserRepository, UserRepository>();
+            .AddScoped<IAddressRepository, AddressRepository>()
+            .AddScoped<IOrderRepository, OrderRepository>()
+            .AddScoped<IOrderLineRepository, OrderLineRepository>()
+            .AddScoped<IOrderStatusRepository, OrderStatus>()
+            .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
+            .AddScoped<ISiteUserRepository, SiteUserRepository>()
+            .AddScoped<IUserAddressRepository, UserAddressRepository>()
+            .AddScoped<IUserProductReviewRepository, UserProductReviewRepository>();
 
         return services;
     }

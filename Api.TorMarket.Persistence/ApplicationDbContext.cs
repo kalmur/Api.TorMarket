@@ -5,23 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions options) : DbContext(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
-    {
-    }
-
-    public DbSet<Category> Category => Set<Category>();
-
-    public DbSet<Listing> Listings => Set<Listing>();
-
-    public DbSet<Photo> Photos => Set<Photo>();
-
-    public DbSet<Review> Reviews => Set<Review>();
-
-    public DbSet<Role> Role => Set<Role>();
-
-    public DbSet<User> User => Set<User>();
+    public DbSet<Address> Address => Set<Address>();
+    public DbSet<Order> Order => Set<Order>();
+    public DbSet<OrderLine> OrderLine => Set<OrderLine>();
+    public DbSet<OrderStatus> OrderStatus => Set<OrderStatus>();
+    public DbSet<Product> Product => Set<Product>();
+    public DbSet<ProductCategory> ProductCategory => Set<ProductCategory>();
+    public DbSet<SiteUser> SiteUser => Set<SiteUser>();
+    public DbSet<UserAddress> UserAddress => Set<UserAddress>();
+    public DbSet<UserProductReview> UserProductReview => Set<UserProductReview>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

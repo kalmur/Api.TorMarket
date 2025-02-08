@@ -7,10 +7,10 @@ namespace Api.TorMarket.Application.Workflows.Review.CreateReview;
 
 public class CreateReviewHandler : INotificationHandler<CreateReviewNotification>
 {
-    private readonly IReviewRepository _repository;
+    private readonly IUserProductReviewRepository _repository;
     private readonly ILogger<CreateReviewHandler> _logger;
 
-    public CreateReviewHandler(IReviewRepository repository, ILogger<CreateReviewHandler> logger)
+    public CreateReviewHandler(IUserProductReviewRepository repository, ILogger<CreateReviewHandler> logger)
     {
         _repository = repository;
         _logger = logger;

@@ -7,10 +7,10 @@ namespace Api.TorMarket.Application.Workflows.Listing.CreateListing;
 
 public class CreateListingHandler : IRequestHandler<CreateListingRequest, CreateListingResponse>
 {
-    private readonly IListingRepository _repository;
+    private readonly IProductRepository _repository;
     private readonly ILogger<CreateListingHandler> _logger;
 
-    public CreateListingHandler(IListingRepository repository, ILogger<CreateListingHandler> logger)
+    public CreateListingHandler(IProductRepository repository, ILogger<CreateListingHandler> logger)
     {
         _repository = repository;
         _logger = logger;

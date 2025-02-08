@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Domain.Results.Errors;
+﻿using Api.TorMarket.Application.Results.Errors;
+using Api.TorMarket.Domain.Results.Errors;
 
 namespace Api.TorMarket.Application.Workflows.Category.UpdateCategory;
 

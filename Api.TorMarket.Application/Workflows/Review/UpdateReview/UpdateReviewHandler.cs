@@ -33,7 +33,7 @@ public class UpdateReviewHandler : IRequestHandler<UpdateReviewRequest, UpdateRe
             );
         }
 
-        reviewToUpdate.Rating = request.Rating;
+        reviewToUpdate.RatingValue = request.Rating;
         reviewToUpdate.Comment = request.Comment;
 
         await _context.SaveChangesAsync(cancellationToken);

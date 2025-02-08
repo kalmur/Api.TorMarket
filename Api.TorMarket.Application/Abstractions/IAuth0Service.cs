@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.DTOs;
-using Api.TorMarket.Application.Models;
+﻿using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Application.Abstractions;
 
@@ -16,7 +15,7 @@ public interface IAuth0Service
     ///     An <see cref="ApiResult" /> indicating whether the operation was a success, and containing
     ///     a <see cref="Auth0.ManagementApi.Models.User" /> with the external identity provider's identifier for the user.
     /// </returns>
-    Task<ApiResult<UserModel>> CreateUserAsync(CreateUserDto user);
+    Task<ApiResult<UserModel>> CreateUserAsync(CreateUserModel user);
 
     /// <summary>
     ///     Update a user in the external identity provider's system.
@@ -27,7 +26,7 @@ public interface IAuth0Service
     ///     An <see cref="ApiResult" /> indicating whether the operation was a success,
     ///     and containing a <see cref="Auth0.ManagementApi.Models.User" /> with the updated fields.
     /// </returns>
-    Task<ApiResult<UserModel>> UpdateUserAsync(string identityProviderId, UpdateUserDto user);
+    Task<ApiResult<UserModel>> UpdateUserAsync(string identityProviderId, UpdateUserModel user);
 
     /// <summary>
     ///     Get a user from the external identity provider's system.
