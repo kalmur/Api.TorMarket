@@ -5,5 +5,5 @@ public class OrderStatus
     public int Id { get; set; }
     public string? Status { get; set; }
 
-    public virtual IReadOnlyCollection<Order> Orders { get; set; } = null!;
+    public virtual ICollection<Order> Orders { get; set; } = null!;
 }

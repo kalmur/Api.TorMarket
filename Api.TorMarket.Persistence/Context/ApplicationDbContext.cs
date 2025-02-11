@@ -3,11 +3,12 @@ using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.TorMarket.Persistence;
+namespace Api.TorMarket.Persistence.Context;
 
-public class ApplicationDbContext(DbContextOptions options) : DbContext(options), IApplicationDbContext
+public class ApplicationDbContext(DbContextOptions options)
+    : DbContext(options), IApplicationDbContext
 {
-    public DbSet<Address> Address => Set<Address>();
+    public virtual DbSet<Address> Address => Set<Address>();
     public DbSet<Order> Order => Set<Order>();
     public DbSet<OrderLine> OrderLine => Set<OrderLine>();
     public DbSet<OrderStatus> OrderStatus => Set<OrderStatus>();
@@ -20,14 +21,17 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>()
-                     .Where(q => q.State == EntityState.Added || q.State == EntityState.Modified))
+                     .Where(q => 
+                         q.State is EntityState.Added or 
+                                    EntityState.Modified
+                     ))
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedOn = DateTime.Now;
+                entry.Entity.CreatedOn = DateTimeOffset.UtcNow;
             }
 
-            entry.Entity.UpdatedOn = DateTime.Now;
+            entry.Entity.UpdatedOn = DateTimeOffset.UtcNow;
         }
 
         return base.SaveChangesAsync(cancellationToken);
@@ -36,5 +40,7 @@ public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+        DataSeed.SeedData(modelBuilder);
     }
 }

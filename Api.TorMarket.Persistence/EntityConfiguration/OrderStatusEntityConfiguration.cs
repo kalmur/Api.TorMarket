@@ -2,7 +2,6 @@
 using Api.TorMarket.Persistence.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Api.TorMarket.Persistence.SeedData;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
@@ -25,8 +24,5 @@ public class OrderStatusEntityConfiguration : IEntityTypeConfiguration<OrderStat
             .WithOne(o => o.Status)
             .HasForeignKey(o => o.Id)
             .OnDelete(DeleteBehavior.Restrict);
-
-        // Seed order status data
-        builder.HasData(OrderStatusSeedData.OrderStatuses);
     }
 }

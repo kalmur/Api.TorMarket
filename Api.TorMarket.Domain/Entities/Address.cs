@@ -10,5 +10,5 @@ public class Address
     public string? PostalCode { get; set; }
     public string? Country { get; set; }
 
-    public virtual IReadOnlyCollection<UserAddress> UserAddresses { get; set; } = null!;
+    public virtual ICollection<UserAddress> UserAddresses { get; set; } = null!;
 }

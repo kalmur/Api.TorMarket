@@ -7,7 +7,7 @@ public class Order
     public int ShippingAddress { get; set; }
     public int OrderStatus { get; set; }
     public decimal TotalPrice { get; set; }
-    public DateTime OrderDate { get; set; }
+    public DateTimeOffset OrderDate { get; set; }
 
     public virtual SiteUser User { get; set; } = null!;
     public virtual Address Address { get; set; } = null!;

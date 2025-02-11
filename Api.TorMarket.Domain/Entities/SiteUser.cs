@@ -7,6 +7,6 @@ public class SiteUser
     public string? EmailAddress { get; set; }
     public string? ProviderId { get; set; }
 
-    public virtual IReadOnlyCollection<UserProductReview> UserProductReviews { get; set; } = null!;
-    public virtual IReadOnlyCollection<UserAddress> UserAddresses { get; set; } = null!;
+    public virtual ICollection<UserProductReview> UserProductReviews { get; set; } = null!;
+    public virtual ICollection<UserAddress> UserAddresses { get; set; } = null!;
 }

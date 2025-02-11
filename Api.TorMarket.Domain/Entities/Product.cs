@@ -10,5 +10,5 @@ public class Product
     public string? Image { get; set; }
 
     public virtual ProductCategory ProductCategory { get; set; } = null!;
-    public virtual IReadOnlyCollection<UserProductReview> UserProductReviews { get; set; } = null!;
+    public virtual ICollection<UserProductReview> UserProductReviews { get; set; } = null!;
 }

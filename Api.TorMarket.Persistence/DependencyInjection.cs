@@ -1,6 +1,7 @@
 ﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Application.Interfaces;
 using Api.TorMarket.Domain.Entities;
+using Api.TorMarket.Persistence.Context;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

@@ -1,6 +1,5 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Constants;
-using Api.TorMarket.Persistence.SeedData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,8 +24,5 @@ public class ProductCategoryEntityConfiguration : IEntityTypeConfiguration<Produ
             .HasMany(x => x.Products)
             .WithOne(x => x.ProductCategory)
             .HasForeignKey(x => x.CategoryId);
-
-        // Seed product categories data
-        builder.HasData(ProductCategorySeedData.ProductCategories);
     }
 }
