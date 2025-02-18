@@ -1,4 +1,6 @@
-﻿namespace Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Domain.Models;
+
+namespace Api.TorMarket.Domain.Entities;
 
 public class OrderLineEntity
 {

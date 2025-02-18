@@ -45,14 +45,16 @@ public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEnt
         builder
             .HasKey(ol => ol.Id);
 
-        builder.HasOne(ol => ol.Product)
-            .WithMany()
-            .HasForeignKey(ol => ol.ProductId)
+        builder
+            .HasOne(ol => ol.Product)
+            .WithMany(p => p.OrderLines)
+            .HasForeignKey(ol => ol.Id)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(ol => ol.OrderEntity)
+        builder
+            .HasOne(ol => ol.OrderEntity)
             .WithMany()
-            .HasForeignKey(ol => ol.OrderId)
+            .HasForeignKey(ol => ol.Id)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

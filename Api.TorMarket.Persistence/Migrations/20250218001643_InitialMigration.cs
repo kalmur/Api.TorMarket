@@ -221,8 +221,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "OrderLine",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -232,14 +231,14 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_OrderLine", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Order_OrderId",
-                        column: x => x.OrderId,
+                        name: "FK_OrderLine_Order_Id",
+                        column: x => x.Id,
                         principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Product_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_OrderLine_Product_Id",
+                        column: x => x.Id,
                         principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -275,16 +274,6 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "IX_Order_UserId",
                 table: "Order",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderLine_OrderId",
-                table: "OrderLine",
-                column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderLine_ProductId",
-                table: "OrderLine",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",

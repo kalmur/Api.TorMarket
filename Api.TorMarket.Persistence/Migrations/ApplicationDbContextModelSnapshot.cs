@@ -59,8 +59,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -78,10 +76,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(4);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderLine", (string)null);
                 });
@@ -415,7 +409,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -437,13 +431,13 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "OrderEntity")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Domain.Entities.ProductEntity", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
+                        .WithMany("OrderLines")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -543,6 +537,8 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductEntity", b =>
                 {
+                    b.Navigation("OrderLines");
+
                     b.Navigation("ShoppingCartItems");
 
                     b.Navigation("UserProductReviews");
@@ -556,6 +552,8 @@ namespace Api.TorMarket.Persistence.Migrations
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.SiteUserEntity", b =>
                 {
                     b.Navigation("Addresses");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("ProductReviews");
 

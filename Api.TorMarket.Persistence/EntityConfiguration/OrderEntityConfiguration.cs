@@ -13,7 +13,7 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
     protected override void ConfigureColumns(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .Property(x => x.Id)
+            .Property(o => o.Id)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -48,7 +48,7 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
 
         builder
             .HasOne(o => o.User)
-            .WithMany()
+            .WithMany(u => u.Orders)
             .HasForeignKey(o => o.Id)
             .OnDelete(DeleteBehavior.Restrict);
 

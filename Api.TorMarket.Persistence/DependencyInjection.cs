@@ -25,9 +25,9 @@ public static class DependencyInjection
         {
             options.UseSqlServer(
                 connectionString,
-                options =>
+                sqlOptions =>
                 {
-                    options.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName!);
+                    sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName!);
                 }
             );
         });

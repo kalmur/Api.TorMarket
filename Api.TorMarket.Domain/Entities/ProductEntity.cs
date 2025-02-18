@@ -14,4 +14,5 @@ public class ProductEntity
     public virtual ProductCategoryEntity ProductCategoryEntity { get; set; } = null!;
     public virtual ICollection<ProductReviewEntity> UserProductReviews { get; set; } = null!;
     public virtual ICollection<ShoppingCartItemEntity> ShoppingCartItems { get; set; } = null!;
+    public virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;
 }
