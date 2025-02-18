@@ -1,22 +1,27 @@
-﻿using Api.TorMarket.Application.Abstractions;
+﻿using Api.TorMarket.Application.Interfaces;
 using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Context;
 
-public class ApplicationDbContext(DbContextOptions options)
-    : DbContext(options), IApplicationDbContext
+public class ApplicationDbContext : DbContext, IApplicationDbContext
 {
-    public virtual DbSet<Address> Address => Set<Address>();
-    public DbSet<Order> Order => Set<Order>();
-    public DbSet<OrderLine> OrderLine => Set<OrderLine>();
-    public DbSet<OrderStatus> OrderStatus => Set<OrderStatus>();
-    public DbSet<Product> Product => Set<Product>();
-    public DbSet<ProductCategory> ProductCategory => Set<ProductCategory>();
-    public DbSet<SiteUser> SiteUser => Set<SiteUser>();
-    public DbSet<UserAddress> UserAddress => Set<UserAddress>();
-    public DbSet<UserProductReview> UserProductReview => Set<UserProductReview>();
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        : base(options)
+    {
+    }
+
+    public DbSet<OrderEntity> Order => Set<OrderEntity>();
+    public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
+    public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
+    public DbSet<ProductEntity> Product => Set<ProductEntity>();
+    public DbSet<ProductCategoryEntity> ProductCategory => Set<ProductCategoryEntity>();
+    public DbSet<ProductReviewEntity> ProductReview => Set<ProductReviewEntity>();
+    public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
+    public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
+    public DbSet<SiteUserEntity> SiteUser => Set<SiteUserEntity>();
+    public DbSet<UserAddressEntity> UserAddress => Set<UserAddressEntity>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

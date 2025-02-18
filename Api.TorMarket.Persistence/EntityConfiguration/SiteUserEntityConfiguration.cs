@@ -1,43 +1,65 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Constants;
+using Api.TorMarket.Persistence.EntityConfiguration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class SiteUserEntityConfiguration : IEntityTypeConfiguration<SiteUser>
+public class SiteUserEntityConfiguration : EntityConfigurationBase<SiteUserEntity>
 {
-    public void Configure(EntityTypeBuilder<SiteUser> builder)
+    protected override string TableName => TableNames.SiteUser;
+
+    protected override void ConfigureColumns(EntityTypeBuilder<SiteUserEntity> builder)
+    {
+        builder
+            .Property(x => x.Id)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
+
+        builder
+            .Property(x => x.UserName)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
+            .Property(x => x.EmailAddress)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder.Property(x => x.ProviderId);
+    }
+
+    protected override void ConfigureKeys(EntityTypeBuilder<SiteUserEntity> builder)
     {
         builder
             .ToTable(TableNames.SiteUser)
             .HasKey(x => x.Id);
 
         builder
-            .Property(x => x.Id)
-            .ValueGeneratedOnAdd();
+            .HasMany(u => u.Products)
+            .WithOne(p => p.User)
+            .HasForeignKey(u => u.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .Property(x => x.UserName)
-            .IsRequired();
-
-        builder
-            .Property(x => x.EmailAddress)
-            .IsRequired();
-
-        builder.Property(x => x.ProviderId);
-
-        // Navigation
-        builder
-            .HasMany(x => x.UserProductReviews)
+            .HasMany(x => x.ProductReviews)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.UserAddresses)
+            .HasMany(x => x.Addresses)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
+    }
+
+    protected override void ConfigureIndexes(EntityTypeBuilder<SiteUserEntity> builder)
+    {
+        builder
+            .HasIndex(su => su.ProviderId)
+            .IsUnique();
     }
 }

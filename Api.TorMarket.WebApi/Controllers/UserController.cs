@@ -1,10 +1,8 @@
-﻿using Api.TorMarket.Application.Workflows.User.CreateUser;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Models;
-using Api.TorMarket.WebApi.DTOs;
+using Api.TorMarket.Domain.Models.External;
+using Api.TorMarket.Application.Interfaces.Services;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -102,7 +100,7 @@ public class UserController : ControllerBase
 
             var externalProviderId = identityProviderUser.Item.ProviderSubjectId;
 
-            await _mediator.Publish(new CreateUserNotification(user.RoleId, externalProviderId));
+            //await _mediator.Publish(new CreateUserNotification(user.RoleId, externalProviderId));
         }
 
         return identityProviderUser;

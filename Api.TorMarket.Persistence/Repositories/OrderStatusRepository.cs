@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Interfaces;
+﻿using Api.TorMarket.Application.Interfaces.Repository;
 
 namespace Api.TorMarket.Persistence.Repositories;
 

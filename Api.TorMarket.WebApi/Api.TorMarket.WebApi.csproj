@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Responses\Interfaces\**" />
+    <Content Remove="Responses\Interfaces\**" />
+    <EmbeddedResource Remove="Responses\Interfaces\**" />
+    <None Remove="Responses\Interfaces\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -18,10 +25,6 @@
     <ProjectReference Include="..\Api.TorMarket.Application\Api.TorMarket.Application.csproj" />
     <ProjectReference Include="..\Api.TorMarket.Infrastructure\Api.TorMarket.Infrastructure.csproj" />
     <ProjectReference Include="..\Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Interfaces\" />
   </ItemGroup>
 
 </Project>

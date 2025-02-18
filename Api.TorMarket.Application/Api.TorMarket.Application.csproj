@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Workflows\Review\DeleteReview\" />
+    <Folder Include="Workflows\" />
   </ItemGroup>
 
 </Project>

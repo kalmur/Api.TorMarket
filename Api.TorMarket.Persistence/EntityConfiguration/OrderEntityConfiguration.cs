@@ -1,24 +1,26 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Constants;
+using Api.TorMarket.Persistence.EntityConfiguration.Common;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
+public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
 {
-    public void Configure(EntityTypeBuilder<Order> builder)
+    protected override string TableName => TableNames.Order;
+
+    protected override void ConfigureColumns(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .ToTable(TableNames.Order)
-            .HasKey(o => o.Id);
-
-        builder
             .Property(x => x.Id)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
             .Property(o => o.UserId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
@@ -37,8 +39,13 @@ public class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
         builder
             .Property(o => o.OrderDate)
             .IsRequired();
+    }
 
-        // Navigation
+    protected override void ConfigureKeys(EntityTypeBuilder<OrderEntity> builder)
+    {
+        builder
+            .HasKey(o => o.Id);
+
         builder
             .HasOne(o => o.User)
             .WithMany()
@@ -46,7 +53,7 @@ public class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(o => o.Status)
+            .HasOne(o => o.StatusEntity)
             .WithMany(s => s.Orders)
             .HasForeignKey(o => o.Id)
             .OnDelete(DeleteBehavior.Restrict);
@@ -55,5 +62,11 @@ public class OrderEntityConfiguration : IEntityTypeConfiguration<Order>
             .WithMany()
             .HasForeignKey(o => o.Id)
             .OnDelete(DeleteBehavior.Restrict);
+    }
+
+    protected override void ConfigureIndexes(EntityTypeBuilder<OrderEntity> builder)
+    {
+        builder
+            .HasIndex(o => o.UserId);
     }
 }

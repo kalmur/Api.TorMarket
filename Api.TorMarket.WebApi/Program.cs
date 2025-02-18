@@ -1,9 +1,7 @@
-using Api.TorMarket.Application;
-using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
-using Api.TorMarket.WebApi.Services;
+using Api.TorMarket.WebApi.Responses;
 using Microsoft.OpenApi.Models;
-using HttpResponse = Api.TorMarket.WebApi.Services.HttpResponse;
+using HttpResponse = Api.TorMarket.WebApi.Responses.HttpResponse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,12 +31,13 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services
-    .AddApplication(builder.Configuration)
-    .AddInfrastructure(builder.Configuration)
+    //.AddApplication(builder.Configuration)
+    //.AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddControllers();
 
-builder.Services.AddScoped<IHttpResponse, HttpResponse>();
+builder.Services
+    .AddScoped<IHttpResponse, HttpResponse>();
 
 var app = builder.Build();
 

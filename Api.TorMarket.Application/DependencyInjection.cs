@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Application.Services;
+using Api.TorMarket.Application.Interfaces.Services;
 
 namespace Api.TorMarket.Application;
 

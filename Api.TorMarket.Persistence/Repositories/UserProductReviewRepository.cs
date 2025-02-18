@@ -1,5 +1,5 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Interfaces;
+﻿using Api.TorMarket.Application.Interfaces;
+using Api.TorMarket.Application.Interfaces.Repository;
 using Api.TorMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,27 +7,27 @@ namespace Api.TorMarket.Persistence.Repositories;
 
 public class UserProductReviewRepository(IApplicationDbContext context) : IUserProductReviewRepository
 {
-    public async Task<UserProductReview?> GetReviewById(int id, CancellationToken cancellationToken) =>
-        await context.UserProductReview.FirstOrDefaultAsync(x =>
+    public async Task<ProductReviewEntity?> GetReviewById(int id, CancellationToken cancellationToken) =>
+        await context.ProductReview.FirstOrDefaultAsync(x =>
             x.Id == id, 
             cancellationToken
         );
 
-    public async Task<UserProductReview?> DeleteReview(int id, CancellationToken cancellationToken) =>
-        await context.UserProductReview.FirstOrDefaultAsync(x =>
+    public async Task<ProductReviewEntity?> DeleteReview(int id, CancellationToken cancellationToken) =>
+        await context.ProductReview.FirstOrDefaultAsync(x =>
             x.Id == id, 
             cancellationToken
         );
 
-    public async Task AddReviewAsync(UserProductReview review, CancellationToken ct)
+    public async Task AddReviewAsync(ProductReviewEntity review, CancellationToken ct)
     {
-        context.UserProductReview.Add(review);
+        context.ProductReview.Add(review);
         await context.SaveChangesAsync(ct);
     }
 
-    public async Task RemoveReviewAsync(UserProductReview review, CancellationToken ct)
+    public async Task RemoveReviewAsync(ProductReviewEntity review, CancellationToken ct)
     {
-        context.UserProductReview.Remove(review);
+        context.ProductReview.Remove(review);
         await context.SaveChangesAsync(ct);
     }
 }

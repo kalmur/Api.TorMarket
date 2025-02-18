@@ -1,44 +1,62 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Persistence.Constants;
+using Api.TorMarket.Persistence.EntityConfiguration.Common;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class OrderLineEntityConfiguration : IEntityTypeConfiguration<OrderLine>
+public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEntity>
 {
-    public void Configure(EntityTypeBuilder<OrderLine> builder)
+    protected override string TableName => TableNames.OrderLine;
+
+    protected override void ConfigureColumns(EntityTypeBuilder<OrderLineEntity> builder)
     {
         builder
-            .ToTable(TableNames.OrderLine)
-            .HasKey(ol => ol.Id);
+            .Property(ol => ol.Id)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
 
         builder
             .Property(ol => ol.ProductId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(ol => ol.OrderId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(ol => ol.Quantity)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(ol => ol.Price)
+            .HasColumnOrder(ColumnOrder++)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
+    }
 
-        // Navigation
+    protected override void ConfigureKeys(EntityTypeBuilder<OrderLineEntity> builder)
+    {
+        builder
+            .HasKey(ol => ol.Id);
+
         builder.HasOne(ol => ol.Product)
             .WithMany()
             .HasForeignKey(ol => ol.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne(ol => ol.Order)
+        builder.HasOne(ol => ol.OrderEntity)
             .WithMany()
             .HasForeignKey(ol => ol.OrderId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
+    protected override void ConfigureIndexes(EntityTypeBuilder<OrderLineEntity> builder)
+    {
     }
 }

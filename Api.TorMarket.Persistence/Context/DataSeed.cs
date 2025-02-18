@@ -6,7 +6,7 @@ namespace Api.TorMarket.Persistence.Context;
 
 public static class DataSeed
 {
-    internal static void SeedData(ModelBuilder builder)
+    public static void SeedData(ModelBuilder builder)
     {
         SeedOrderStatuses(builder);
         SeedProductCategories(builder);
@@ -14,7 +14,7 @@ public static class DataSeed
 
     private static void SeedOrderStatuses(ModelBuilder builder)
     {
-        static OrderStatus CreateOrderStatus(
+        static OrderStatusEntity CreateOrderStatus(
             int id,
             string status
         ) => new()
@@ -23,7 +23,7 @@ public static class DataSeed
             Status = status
         };
 
-        IImmutableList<OrderStatus> orderStatuses = ImmutableList.Create(
+        IImmutableList<OrderStatusEntity> orderStatuses = ImmutableList.Create(
             CreateOrderStatus(1, "Pending"),
             CreateOrderStatus(2, "Processing"),
             CreateOrderStatus(3, "Shipped"),
@@ -31,12 +31,12 @@ public static class DataSeed
             CreateOrderStatus(5, "Cancelled")
         );
 
-        builder.Entity<OrderStatus>().HasData(orderStatuses);
+        builder.Entity<OrderStatusEntity>().HasData(orderStatuses);
     }
 
     private static void SeedProductCategories(ModelBuilder builder)
     {
-        static ProductCategory CreateProductCategories(
+        static ProductCategoryEntity CreateProductCategories(
             int id,
             string name
         ) => new()
@@ -45,7 +45,7 @@ public static class DataSeed
             Name = name
         };
 
-        IImmutableList<ProductCategory> productCategories = ImmutableList.Create(
+        IImmutableList<ProductCategoryEntity> productCategories = ImmutableList.Create(
             CreateProductCategories(1, "Electronics"),
             CreateProductCategories(2, "Games"),
             CreateProductCategories(3, "Toys"),
@@ -55,6 +55,6 @@ public static class DataSeed
             CreateProductCategories(7, "Other")
         );
 
-        builder.Entity<ProductCategory>().HasData(productCategories);
+        builder.Entity<ProductCategoryEntity>().HasData(productCategories);
     }
 }
