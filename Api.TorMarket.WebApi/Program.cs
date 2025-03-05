@@ -1,3 +1,5 @@
+using Api.TorMarket.Application;
+using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
 using Api.TorMarket.WebApi.Responses;
 using Microsoft.OpenApi.Models;
@@ -31,8 +33,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services
-    //.AddApplication(builder.Configuration)
-    //.AddInfrastructure(builder.Configuration)
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddControllers();
 

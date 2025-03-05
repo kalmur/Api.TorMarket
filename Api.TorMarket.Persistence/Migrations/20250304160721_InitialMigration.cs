@@ -17,87 +17,85 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "OrderStatus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderStatus", x => x.Id);
+                    table.PrimaryKey("PK_OrderStatus", x => x.OrderStatusId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "ProductCategory",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ProductCategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductCategory", x => x.Id);
+                    table.PrimaryKey("PK_ProductCategory", x => x.ProductCategoryId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SiteUser",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProviderId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProviderId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SiteUser", x => x.Id);
+                    table.PrimaryKey("PK_SiteUser", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Product",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SellLease = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AvailableFrom = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.ProductId);
                     table.ForeignKey(
                         name: "FK_Product_ProductCategory_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "ProductCategory",
-                        principalColumn: "Id");
+                        principalColumn: "ProductCategoryId");
                     table.ForeignKey(
                         name: "FK_Product_SiteUser_UserId",
                         column: x => x.UserId,
                         principalTable: "SiteUser",
-                        principalColumn: "Id");
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "ShoppingCart",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCart", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCart", x => x.ShoppingCartId);
                     table.ForeignKey(
                         name: "FK_ShoppingCart_SiteUser_UserId",
                         column: x => x.UserId,
                         principalTable: "SiteUser",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -105,7 +103,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "UserAddress",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    UserAddressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     UnitNumber = table.Column<int>(type: "int", nullable: false),
@@ -118,12 +116,12 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAddress", x => x.Id);
+                    table.PrimaryKey("PK_UserAddress", x => x.UserAddressId);
                     table.ForeignKey(
                         name: "FK_UserAddress_SiteUser_UserId",
                         column: x => x.UserId,
                         principalTable: "SiteUser",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -131,7 +129,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "ProductReviews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ProductReviewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -142,25 +140,25 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductReviews", x => x.Id);
+                    table.PrimaryKey("PK_ProductReviews", x => x.ProductReviewId);
                     table.ForeignKey(
                         name: "FK_ProductReviews_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductReviews_SiteUser_UserId",
                         column: x => x.UserId,
                         principalTable: "SiteUser",
-                        principalColumn: "Id");
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "ShoppingCartItem",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ShoppingCartItemId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -168,18 +166,18 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartItem", x => x.Id);
+                    table.PrimaryKey("PK_ShoppingCartItem", x => x.ShoppingCartItemId);
                     table.ForeignKey(
                         name: "FK_ShoppingCartItem_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Product",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ShoppingCartItem_ShoppingCart_CartId",
                         column: x => x.CartId,
                         principalTable: "ShoppingCart",
-                        principalColumn: "Id",
+                        principalColumn: "ShoppingCartId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -187,7 +185,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ShippingAddress = table.Column<int>(type: "int", nullable: false),
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
@@ -196,24 +194,24 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Order", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Order_OrderStatus_Id",
-                        column: x => x.Id,
+                        name: "FK_Order_OrderStatus_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "OrderStatus",
-                        principalColumn: "Id",
+                        principalColumn: "OrderStatusId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Order_SiteUser_Id",
-                        column: x => x.Id,
+                        name: "FK_Order_SiteUser_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "SiteUser",
-                        principalColumn: "Id",
+                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Order_UserAddress_Id",
-                        column: x => x.Id,
+                        name: "FK_Order_UserAddress_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "UserAddress",
-                        principalColumn: "Id",
+                        principalColumn: "UserAddressId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -221,7 +219,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "OrderLine",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    OrderLineId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -229,24 +227,24 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderLine", x => x.Id);
+                    table.PrimaryKey("PK_OrderLine", x => x.OrderLineId);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Order_Id",
-                        column: x => x.Id,
+                        name: "FK_OrderLine_Order_OrderLineId",
+                        column: x => x.OrderLineId,
                         principalTable: "Order",
-                        principalColumn: "Id",
+                        principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Product_Id",
-                        column: x => x.Id,
+                        name: "FK_OrderLine_Product_OrderLineId",
+                        column: x => x.OrderLineId,
                         principalTable: "Product",
-                        principalColumn: "Id",
+                        principalColumn: "ProductId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "OrderStatus",
-                columns: new[] { "Id", "Status" },
+                columns: new[] { "OrderStatusId", "Status" },
                 values: new object[,]
                 {
                     { 1, "Pending" },
@@ -258,7 +256,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "ProductCategory",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "ProductCategoryId", "Name" },
                 values: new object[,]
                 {
                     { 1, "Electronics" },
@@ -325,8 +323,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "IX_SiteUser_ProviderId",
                 table: "SiteUser",
                 column: "ProviderId",
-                unique: true,
-                filter: "[ProviderId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAddress_UserId",

@@ -9,13 +9,13 @@ public class UserProductReviewRepository(IApplicationDbContext context) : IUserP
 {
     public async Task<ProductReviewEntity?> GetReviewById(int id, CancellationToken cancellationToken) =>
         await context.ProductReview.FirstOrDefaultAsync(x =>
-            x.Id == id, 
+            x.ProductReviewId == id, 
             cancellationToken
         );
 
     public async Task<ProductReviewEntity?> DeleteReview(int id, CancellationToken cancellationToken) =>
         await context.ProductReview.FirstOrDefaultAsync(x =>
-            x.Id == id, 
+            x.ProductReviewId == id, 
             cancellationToken
         );
 

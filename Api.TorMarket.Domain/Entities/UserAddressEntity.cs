@@ -2,7 +2,7 @@
 
 public class UserAddressEntity
 {
-    public int Id { get; set; }
+    public int UserAddressId { get; set; }
     public int UserId { get; set; }
     public int UnitNumber { get; set; }
     public int StreetNumber { get; set; }

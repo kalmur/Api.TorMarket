@@ -1,10 +1,8 @@
-﻿using Api.TorMarket.Domain.Models;
-
-namespace Api.TorMarket.Domain.Entities;
+﻿namespace Api.TorMarket.Domain.Entities;
 
 public class OrderLineEntity
 {
-    public int Id { get; set; }
+    public int OrderLineId { get; set; }
     public int ProductId { get; set; }
     public int OrderId { get; set; }
     public int Quantity { get; set; }

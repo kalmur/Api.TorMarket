@@ -2,7 +2,7 @@
 
 public class ShoppingCartEntity
 {
-    public int Id { get; set; }
+    public int ShoppingCartId { get; set; }
     public int UserId { get; set; }
 
     public virtual SiteUserEntity User { get; set; } = null!;

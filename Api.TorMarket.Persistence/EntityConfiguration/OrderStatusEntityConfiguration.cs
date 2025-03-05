@@ -13,7 +13,7 @@ public class OrderStatusEntityConfiguration : EntityConfigurationBase<OrderStatu
     protected override void ConfigureColumns(EntityTypeBuilder<OrderStatusEntity> builder)
     {
         builder
-            .Property(os => os.Id)
+            .Property(os => os.OrderStatusId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -28,12 +28,12 @@ public class OrderStatusEntityConfiguration : EntityConfigurationBase<OrderStatu
     protected override void ConfigureKeys(EntityTypeBuilder<OrderStatusEntity> builder)
     {
         builder
-            .HasKey(os => os.Id);
+            .HasKey(os => os.OrderStatusId);
 
         builder
             .HasMany(os => os.Orders)
             .WithOne(o => o.StatusEntity)
-            .HasForeignKey(o => o.Id)
+            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

@@ -4,7 +4,7 @@ namespace Api.TorMarket.Domain.Entities;
 
 public class ProductReviewEntity : AuditableEntity
 {
-    public int Id { get; set; }
+    public int ProductReviewId { get; set; }
     public int UserId { get; set; }
     public int ProductId { get; set; }
     public int? RatingValue { get; set; }

@@ -13,7 +13,7 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
     protected override void ConfigureColumns(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .Property(o => o.Id)
+            .Property(o => o.OrderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -44,23 +44,23 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
     protected override void ConfigureKeys(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .HasKey(o => o.Id);
+            .HasKey(o => o.OrderId);
 
         builder
             .HasOne(o => o.User)
             .WithMany(u => u.Orders)
-            .HasForeignKey(o => o.Id)
+            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
             .HasOne(o => o.StatusEntity)
             .WithMany(s => s.Orders)
-            .HasForeignKey(o => o.Id)
+            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(o => o.Address)
             .WithMany()
-            .HasForeignKey(o => o.Id)
+            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 

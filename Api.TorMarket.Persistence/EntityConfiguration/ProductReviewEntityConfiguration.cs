@@ -13,7 +13,7 @@ public class ProductReviewEntityConfiguration : EntityConfigurationBase<ProductR
     protected override void ConfigureColumns(EntityTypeBuilder<ProductReviewEntity> builder)
     {
         builder
-            .Property(x => x.Id)
+            .Property(x => x.ProductReviewId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -36,7 +36,7 @@ public class ProductReviewEntityConfiguration : EntityConfigurationBase<ProductR
     protected override void ConfigureKeys(EntityTypeBuilder<ProductReviewEntity> builder)
     {
         builder
-            .HasKey(x => x.Id);
+            .HasKey(x => x.ProductReviewId);
 
         builder
             .HasOne(x => x.User)

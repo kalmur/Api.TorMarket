@@ -13,7 +13,7 @@ public class ProductCategoryEntityConfiguration : EntityConfigurationBase<Produc
     protected override void ConfigureColumns(EntityTypeBuilder<ProductCategoryEntity> builder)
     {
         builder
-            .Property(x => x.Id)
+            .Property(x => x.ProductCategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -24,7 +24,7 @@ public class ProductCategoryEntityConfiguration : EntityConfigurationBase<Produc
     protected override void ConfigureKeys(EntityTypeBuilder<ProductCategoryEntity> builder)
     {
         builder
-            .HasKey(x => x.Id);
+            .HasKey(x => x.ProductCategoryId);
 
         builder
             .HasMany(x => x.Products)

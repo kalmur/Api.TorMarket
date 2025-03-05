@@ -2,7 +2,7 @@
 
 public class OrderStatusEntity
 {
-    public int Id { get; set; }
+    public int OrderStatusId { get; set; }
     public string? Status { get; set; }
 
     public virtual ICollection<OrderEntity> Orders { get; set; } = null!;

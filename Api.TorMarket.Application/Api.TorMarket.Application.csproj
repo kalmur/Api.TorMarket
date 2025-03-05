@@ -25,7 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Workflows\" />
+    <Folder Include="Repositories\Interfaces\" />
+    <Folder Include="Workflows\Product\Queries\" />
   </ItemGroup>
 
 </Project>

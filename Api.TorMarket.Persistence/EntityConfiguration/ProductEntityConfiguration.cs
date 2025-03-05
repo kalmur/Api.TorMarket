@@ -13,7 +13,7 @@ public class ProductEntityConfiguration : EntityConfigurationBase<ProductEntity>
     protected override void ConfigureColumns(EntityTypeBuilder<ProductEntity> builder)
     {
         builder
-            .Property(x => x.Id)
+            .Property(x => x.ProductId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -25,24 +25,28 @@ public class ProductEntityConfiguration : EntityConfigurationBase<ProductEntity>
 
         builder
             .Property(x => x.Name)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.SellLease)
-            .IsRequired();
+            .Property(x => x.Price)
+            .HasColumnOrder(ColumnOrder++)
+            .HasColumnType("decimal(18,2)");
 
         builder
-            .Property(x => x.Description);
+            .Property(x => x.Description)
+            .HasColumnOrder(ColumnOrder++);
 
         builder
-            .Property(x => x.Image);
+            .Property(x => x.AvailableFrom)
+            .HasColumnOrder(ColumnOrder++);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ProductEntity> builder)
     {
         builder
             .ToTable(TableNames.Product)
-            .HasKey(x => x.Id);
+            .HasKey(x => x.ProductId);
 
         builder
             .HasOne(p => p.User)

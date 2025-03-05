@@ -19,7 +19,7 @@ public static class DataSeed
             string status
         ) => new()
         {
-            Id = id,
+            OrderStatusId = id,
             Status = status
         };
 
@@ -41,7 +41,7 @@ public static class DataSeed
             string name
         ) => new()
         {
-            Id = id,
+            ProductCategoryId = id,
             Name = name
         };
 

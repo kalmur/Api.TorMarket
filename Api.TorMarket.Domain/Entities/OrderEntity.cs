@@ -2,7 +2,7 @@
 
 public class OrderEntity
 {
-    public int Id { get; set; }
+    public int OrderId { get; set; }
     public int UserId { get; set; }
     public int ShippingAddress { get; set; }
     public int OrderStatus { get; set; }

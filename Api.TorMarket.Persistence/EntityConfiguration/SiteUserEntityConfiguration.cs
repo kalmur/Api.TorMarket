@@ -13,29 +13,22 @@ public class SiteUserEntityConfiguration : EntityConfigurationBase<SiteUserEntit
     protected override void ConfigureColumns(EntityTypeBuilder<SiteUserEntity> builder)
     {
         builder
-            .Property(x => x.Id)
+            .Property(x => x.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.UserName)
+            .Property(x => x.ProviderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
-
-        builder
-            .Property(x => x.EmailAddress)
-            .HasColumnOrder(ColumnOrder++)
-            .IsRequired();
-
-        builder.Property(x => x.ProviderId);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<SiteUserEntity> builder)
     {
         builder
             .ToTable(TableNames.SiteUser)
-            .HasKey(x => x.Id);
+            .HasKey(x => x.UserId);
 
         builder
             .HasMany(u => u.Products)

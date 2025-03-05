@@ -1,8 +1,10 @@
 ﻿using Api.TorMarket.Domain.Entities;
+using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Application.Interfaces.Repository;
 
 public interface ISiteUserRepository
 {
-    Task AddUserAsync(SiteUserEntity user, CancellationToken ct);
+    Task CreateUserAsync(SiteUserEntity user, CancellationToken cancellationToken);
+    Task<SiteUser?> GetByIdAsync(int userId, CancellationToken cancellationToken);
 }

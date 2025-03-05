@@ -5,19 +5,6 @@ namespace Api.TorMarket.Application.Interfaces.Services;
 public interface IAuth0Service
 {
     /// <summary>
-    ///     Create a user in the external identity provider's system.
-    /// </summary>
-    /// <param name="user">
-    ///     The <see cref="CreateUserDto" /> containing the necessary user information.
-    ///     Email is <b>required</b>.
-    /// </param>
-    /// <returns>
-    ///     An <see cref="ApiResult" /> indicating whether the operation was a success, and containing
-    ///     a <see cref="Auth0.ManagementApi.Models.User" /> with the external identity provider's identifier for the user.
-    /// </returns>
-    Task<ApiResult<UserModel>> CreateUserAsync(CreateUserModel user);
-
-    /// <summary>
     ///     Update a user in the external identity provider's system.
     /// </summary>
     /// <param name="identityProviderId">The ID used by the external identity provider</param>

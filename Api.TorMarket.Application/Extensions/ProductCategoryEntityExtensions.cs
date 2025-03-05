@@ -1,5 +1,9 @@
-﻿namespace Api.TorMarket.Application.Extensions;
+﻿using Api.TorMarket.Application.Repositories.Requests;
+using Api.TorMarket.Domain.Entities;
 
-internal class ProductCategoryEntityExtensions
+namespace Api.TorMarket.Application.Extensions;
+
+public static class ProductCategoryEntityExtensions
 {
+   
 }

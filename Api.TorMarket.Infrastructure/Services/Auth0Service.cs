@@ -14,51 +14,16 @@ public class Auth0Service : IAuth0Service
 {
     private const string ProviderName = "Auth0";
     private readonly IAuth0UsersClient _usersClient;
-    private readonly IPasswordService _passwordService;
     private readonly Auth0Options _options;
 
     public Auth0Service
     (
         IAuth0UsersClient usersClient,
-        IPasswordService passwordService,
         IOptions<Auth0Options> options
     )
     {
         _usersClient = usersClient;
-        _passwordService = passwordService;
         _options = options.Value;
-    }
-
-    public virtual async Task<ApiResult<UserrModel>> CreateUserAsync(CreateUserModel user)
-    {
-        var password = _passwordService.GetNewPassword();
-
-        Auth0User auth0User;
-        try
-        {
-            auth0User = await _usersClient.CreateAsync(new UserCreateRequest
-            {
-                Connection = _options.Connection,
-                Email = user.Email,
-                Password = password,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                FullName = $"{user.FirstName} {user.LastName}",
-                UserMetadata = new Auth0Metadata
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    PhoneNumber = user.PhoneNumber,
-                },
-                EmailVerified = true
-            }).ConfigureAwait(false);
-        }
-        catch (ErrorApiException e)
-        {
-            return Failure<ApiResult<UserrModel>>(e);
-        }
-
-        return Success(auth0User);
     }
 
     public virtual async Task<ApiResult<UserrModel>> UpdateUserAsync(

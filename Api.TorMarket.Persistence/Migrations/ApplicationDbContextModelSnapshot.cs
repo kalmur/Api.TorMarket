@@ -24,7 +24,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
@@ -45,7 +45,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -54,7 +54,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderLineId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
@@ -75,19 +75,19 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(4);
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderLineId");
 
                     b.ToTable("OrderLine", (string)null);
                 });
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("OrderStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderStatusId"));
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -95,51 +95,51 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderStatusId");
 
                     b.ToTable("OrderStatus", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            OrderStatusId = 1,
                             Status = "Pending"
                         },
                         new
                         {
-                            Id = 2,
+                            OrderStatusId = 2,
                             Status = "Processing"
                         },
                         new
                         {
-                            Id = 3,
+                            OrderStatusId = 3,
                             Status = "Shipped"
                         },
                         new
                         {
-                            Id = 4,
+                            OrderStatusId = 4,
                             Status = "Delivered"
                         },
                         new
                         {
-                            Id = 5,
+                            OrderStatusId = 5,
                             Status = "Cancelled"
                         });
                 });
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductCategoryEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductCategoryId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductCategoryId");
 
                     b.HasIndex("Name");
 
@@ -148,71 +148,75 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            ProductCategoryId = 1,
                             Name = "Electronics"
                         },
                         new
                         {
-                            Id = 2,
+                            ProductCategoryId = 2,
                             Name = "Games"
                         },
                         new
                         {
-                            Id = 3,
+                            ProductCategoryId = 3,
                             Name = "Toys"
                         },
                         new
                         {
-                            Id = 4,
+                            ProductCategoryId = 4,
                             Name = "Clothing"
                         },
                         new
                         {
-                            Id = 5,
+                            ProductCategoryId = 5,
                             Name = "Vehicles"
                         },
                         new
                         {
-                            Id = 6,
+                            ProductCategoryId = 6,
                             Name = "Pets"
                         },
                         new
                         {
-                            Id = 7,
+                            ProductCategoryId = 7,
                             Name = "Other"
                         });
                 });
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
+
+                    b.Property<DateTimeOffset>("AvailableFrom")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(6);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(5);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(3);
 
-                    b.Property<int>("SellLease")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnOrder(4);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
 
@@ -223,12 +227,12 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductReviewEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductReviewId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductReviewId"));
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -248,7 +252,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductReviewId");
 
                     b.HasIndex("ProductId");
 
@@ -262,18 +266,18 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ShoppingCartId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartId"));
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("ShoppingCartId");
 
                     b.HasIndex("UserId");
 
@@ -282,12 +286,12 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartItemEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ShoppingCartItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartItemId"));
 
                     b.Property<int>("CartId")
                         .HasColumnType("int")
@@ -301,7 +305,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(4);
 
-                    b.HasKey("Id");
+                    b.HasKey("ShoppingCartItemId");
 
                     b.HasIndex("CartId");
 
@@ -312,43 +316,34 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.SiteUserEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("EmailAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(3);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("ProviderId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UserName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.HasIndex("ProviderId")
-                        .IsUnique()
-                        .HasFilter("[ProviderId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("SiteUser", (string)null);
                 });
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserAddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserAddressId"));
 
                     b.Property<string>("AddressLine")
                         .IsRequired()
@@ -393,7 +388,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
-                    b.HasKey("Id");
+                    b.HasKey("UserAddressId");
 
                     b.HasIndex("UserId");
 
@@ -404,19 +399,19 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     b.HasOne("Api.TorMarket.Domain.Entities.OrderStatusEntity", "StatusEntity")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Domain.Entities.UserAddressEntity", "Address")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -431,13 +426,13 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "OrderEntity")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Domain.Entities.ProductEntity", "Product")
                         .WithMany("OrderLines")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

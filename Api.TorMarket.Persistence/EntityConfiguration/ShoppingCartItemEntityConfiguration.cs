@@ -13,7 +13,7 @@ public class ShoppingCartItemEntityConfiguration : EntityConfigurationBase<Shopp
     protected override void ConfigureColumns(EntityTypeBuilder<ShoppingCartItemEntity> builder)
     {
         builder
-            .Property(sci => sci.Id)
+            .Property(sci => sci.ShoppingCartItemId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -37,7 +37,7 @@ public class ShoppingCartItemEntityConfiguration : EntityConfigurationBase<Shopp
     protected override void ConfigureKeys(EntityTypeBuilder<ShoppingCartItemEntity> builder)
     {
         builder
-            .HasKey(sci => sci.Id);
+            .HasKey(sci => sci.ShoppingCartItemId);
 
         builder
             .HasOne(sci => sci.ShoppingCart)

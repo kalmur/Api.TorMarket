@@ -13,7 +13,7 @@ public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEnt
     protected override void ConfigureColumns(EntityTypeBuilder<OrderLineEntity> builder)
     {
         builder
-            .Property(ol => ol.Id)
+            .Property(ol => ol.OrderLineId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -43,18 +43,18 @@ public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEnt
     protected override void ConfigureKeys(EntityTypeBuilder<OrderLineEntity> builder)
     {
         builder
-            .HasKey(ol => ol.Id);
+            .HasKey(ol => ol.OrderLineId);
 
         builder
             .HasOne(ol => ol.Product)
             .WithMany(p => p.OrderLines)
-            .HasForeignKey(ol => ol.Id)
+            .HasForeignKey(ol => ol.OrderLineId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(ol => ol.OrderEntity)
             .WithMany()
-            .HasForeignKey(ol => ol.Id)
+            .HasForeignKey(ol => ol.OrderLineId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

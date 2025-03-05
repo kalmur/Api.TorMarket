@@ -13,7 +13,7 @@ public class UserAddressEntityConfiguration : EntityConfigurationBase<UserAddres
     protected override void ConfigureColumns(EntityTypeBuilder<UserAddressEntity> builder)
     {
         builder
-            .Property(a => a.Id)
+            .Property(a => a.UserAddressId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -68,7 +68,7 @@ public class UserAddressEntityConfiguration : EntityConfigurationBase<UserAddres
     protected override void ConfigureKeys(EntityTypeBuilder<UserAddressEntity> builder)
     {
         builder
-            .HasKey(a => a.Id);
+            .HasKey(a => a.UserAddressId);
 
         builder
             .HasOne(ua => ua.User)

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Api.TorMarket.Application.Services;
-using Api.TorMarket.Application.Interfaces.Services;
 
 namespace Api.TorMarket.Application;
 
@@ -17,11 +15,6 @@ public static class DependencyInjection
         services.AddMediatR(config => 
             config.RegisterServicesFromAssembly(currentAssembly)
         );
-
-        services
-            .AddSingleton<IPasswordService, PasswordService>()
-            .AddSingleton<IPasswordGenerator, PasswordGenerator>()
-            .AddSingleton<IPasswordValidator, PasswordValidator>();
 
         return services;
     }

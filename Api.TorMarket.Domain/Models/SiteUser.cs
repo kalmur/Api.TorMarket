@@ -1,5 +1,7 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public class SiteUser
+public record SiteUser
 {
+    public required int UserId { get; set; }
+    public required string ProviderId { get; set; }
 }
