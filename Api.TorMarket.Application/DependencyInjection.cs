@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using Api.TorMarket.Application.Workflows;
+﻿using Api.TorMarket.Application.Workflows;
 using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
 using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
 using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;

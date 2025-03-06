@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
-using Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Application.Extensions;

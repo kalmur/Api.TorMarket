@@ -1,5 +1,4 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
-using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
 
 namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
 
