@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Domain.Models.External;
+﻿using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+using Api.TorMarket.Domain.Models.External;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions;
 using Api.TorMarket.WebApi.Extensions.Models;
@@ -10,23 +11,18 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductController : ControllerBase
+public class ProductController(IMediator mediator) : ControllerBase
 {
-    private readonly IMediator _mediator;
-
-    public ProductController(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
-
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUserModel))]
     public async Task<IActionResult> CreateAsync(
-        [FromQuery] CreateProductRequestDto request
+        [FromBody] CreateProductRequestDto request,
+        CancellationToken cancellationToken
     )
     {
-        var result = await _mediator.Send(
-            request.ToCommand()
+        var result = await mediator.Send(
+            request.ToCommand(),
+            cancellationToken
         );
 
         return result.IsError
@@ -39,5 +35,28 @@ public class ProductController : ControllerBase
             );
 
         // CreatedAtAction maybe
+    }
+
+    [HttpGet]
+    [Route("categories/{name}")]
+    public async Task<IActionResult> GetCategoryByNameAsync(
+        string name,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            name.ToQuery(),
+            cancellationToken
+        );
+
+        //return result.IsError
+        //    ? BadRequest(
+        //        result.Error.ToFailureResponseDto()
+        //    )
+        //    : Ok(
+        //        result.Result.ToModel()
+        //    );
+
+        return Ok();
     }
 }

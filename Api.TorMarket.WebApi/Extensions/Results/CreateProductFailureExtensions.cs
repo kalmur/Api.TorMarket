@@ -7,10 +7,10 @@ namespace Api.TorMarket.WebApi.Extensions.Results;
 public static class CreateProductFailureExtensions
 {
     public static CreateProductFailureResponseDto ToCreateProductFailureResponseDto(
-        this CreateProductFailure errors
+        this CreateProductFailure failure
     ) => new()
     {
-        Errors = errors.Errors.Select(
+        Errors = failure.Errors.Select(
             error => error.ToErrorMessage()
         )
     };

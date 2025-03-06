@@ -1,7 +1,7 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Models;
 
-namespace Api.TorMarket.Application.Interfaces.Repository;
+namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface ISiteUserRepository
 {

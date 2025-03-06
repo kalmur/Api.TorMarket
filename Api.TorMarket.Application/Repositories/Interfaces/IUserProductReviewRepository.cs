@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Domain.Entities;
 
-namespace Api.TorMarket.Application.Interfaces.Repository;
+namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IUserProductReviewRepository
 {

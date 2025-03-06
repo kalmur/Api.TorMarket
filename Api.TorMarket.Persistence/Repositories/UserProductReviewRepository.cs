@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.Interfaces;
-using Api.TorMarket.Application.Interfaces.Repository;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
