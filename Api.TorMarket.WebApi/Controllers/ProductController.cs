@@ -26,11 +26,11 @@ public class ProductController(IMediator mediator) : ControllerBase
 
         return result.IsError
             ? UnprocessableEntity(
-                result.Error.ToCreateProductFailureResponseDto()
+                result.Error.ToFailureResponseDto()
             )
             : StatusCode(
                 StatusCodes.Status201Created, 
-                result.Result.ToCreateProductResponseDto()
+                result.Result.ToResponseDto()
             );
 
         // CreatedAtAction maybe
@@ -38,7 +38,8 @@ public class ProductController(IMediator mediator) : ControllerBase
 
     [HttpGet]
     [Route("categories/{name}")]
-    public async Task<IActionResult> GetCategoryByNameAsync(
+    [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(CreateUserModel))]
+    public async Task<IActionResult> GetProductCategoryByNameAsync(
         string name,
         CancellationToken cancellationToken
     )
@@ -48,14 +49,12 @@ public class ProductController(IMediator mediator) : ControllerBase
             cancellationToken
         );
 
-        //return result.IsError
-        //    ? BadRequest(
-        //        result.Error.ToFailureResponseDto()
-        //    )
-        //    : Ok(
-        //        result.Result.ToModel()
-        //    );
-
-        return Ok();
+        return result.IsError
+            ? BadRequest(
+                result.Error.ToFailureResponseDto()
+            )
+            : Ok(
+                result.Result.ToResponseDto()
+            );
     }
 }

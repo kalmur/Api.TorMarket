@@ -25,8 +25,8 @@ public class GetCategoryByNameHandler(
 
         return (
             await productCategoryRepository.GetByNameAsync(
-            request.Name,
-            cancellationToken
+                request.Name,
+                cancellationToken
             )
         )!;
     }

@@ -6,7 +6,7 @@ namespace Api.TorMarket.WebApi.Extensions.Results;
 
 public static class CreateProductFailureExtensions
 {
-    public static CreateProductFailureResponseDto ToCreateProductFailureResponseDto(
+    public static CreateProductFailureResponseDto ToFailureResponseDto(
         this CreateProductFailure failure
     ) => new()
     {

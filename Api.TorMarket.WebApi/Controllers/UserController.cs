@@ -7,24 +7,24 @@ namespace Api.TorMarket.WebApi.Controllers;
 [Route("api/[controller]")]
 public class UserController(IMediator mediator) : ControllerBase
 {
-    //[HttpPost]
-    //public async Task<IActionResult> CreateAsync(
-    //    [FromBody] CreateUserRequestDto createUserDto,
-    //    CancellationToken cancellationToken
-    //)
-    //{
-    //    var result = await mediator.Send(
-    //        createUserDto.ToCommand(),
-    //        cancellationToken
-    //    );
+    [HttpPost]
+    public async Task<IActionResult> CreateAsync(
+        [FromBody] CreateUserRequestDto createUserDto,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            createUserDto.ToCommand(),
+            cancellationToken
+        );
 
-    //    return result.IsError
-    //        ? UnprocessableEntity(
-    //            result.Error.ToCreateUserFailureResponseDto()
-    //        )
-    //        : StatusCode(
-    //            StatusCodes.Status201Created,
-    //            result.Result.ToCreateUserResponseDto()
-    //        );
-    //}
+        return result.IsError
+            ? UnprocessableEntity(
+                result.Error.ToCreateUserFailureResponseDto()
+            )
+            : StatusCode(
+                StatusCodes.Status201Created,
+                result.Result.ToCreateUserResponseDto()
+            );
+    }
 }
