@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Extensions;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
@@ -20,7 +21,7 @@ public class CreateUserHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        return siteUserRepository.CreateUserAsync(
+        return await siteUserRepository.CreateUserAsync(
             command.ToRequest(),
             cancellationToken
         );

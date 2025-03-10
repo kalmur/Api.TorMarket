@@ -2,9 +2,14 @@
 
 namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
 
-public class CreateUserValidator(ISiteUserRepository userRepository) : IValidator<CreateUserCommand, CreateUserFailure>
+public class CreateUserValidator(
+    ISiteUserRepository userRepository
+) : IValidator<CreateUserCommand, CreateUserFailure>
 {
-    public async Task<CreateUserFailure> ValidateAsync(CreateUserCommand command, CancellationToken cancellationToken)
+    public async Task<CreateUserFailure> ValidateAsync(
+        CreateUserCommand command, 
+        CancellationToken cancellationToken
+    )
     {
         var errors = new List<ErrorType>();
 
@@ -25,12 +30,12 @@ public class CreateUserValidator(ISiteUserRepository userRepository) : IValidato
         return null;
     }
 
-    public async Task<bool> UserExists(
+    private async Task<bool> UserExists(
         CreateUserCommand command,
         CancellationToken cancellationToken
     ) => (
-        await userRepository.GetByIdAsync(
-            command.UserId, 
+        await userRepository.GetByProviderIdAsync(
+            command.ProviderId, 
             cancellationToken
         )
     ) is not null;

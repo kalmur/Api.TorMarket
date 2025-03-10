@@ -1,5 +1,6 @@
 ﻿using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
+using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
 using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Models;
 
@@ -44,6 +45,14 @@ public static class ProductEntityExtensions
             Price = command.Price,
             Description = command.Description,
             AvailableFrom = command.AvailableFrom
+        };
+    }
+
+    public static CreateUserRequest ToRequest(this CreateUserCommand command)
+    {
+        return new CreateUserRequest
+        {
+            ProviderId = command.ProviderId
         };
     }
 }

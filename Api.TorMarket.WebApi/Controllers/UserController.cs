@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using Api.TorMarket.WebApi.DTOs.Requests;
+using Api.TorMarket.WebApi.Extensions.Models;
+using Api.TorMarket.WebApi.Extensions.Results;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.TorMarket.WebApi.Controllers;
@@ -20,11 +23,11 @@ public class UserController(IMediator mediator) : ControllerBase
 
         return result.IsError
             ? UnprocessableEntity(
-                result.Error.ToCreateUserFailureResponseDto()
+                result.Error.ToFailureResponseDto()
             )
             : StatusCode(
                 StatusCodes.Status201Created,
-                result.Result.ToCreateUserResponseDto()
+                result.Result.ToResponseDto()
             );
     }
 }

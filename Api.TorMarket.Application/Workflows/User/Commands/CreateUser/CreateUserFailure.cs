@@ -2,7 +2,7 @@
 
 public record CreateUserFailure
 {
-    public IEnumerable<ErrorType> Errors { get; init; }
+    public required IEnumerable<ErrorType> Errors { get; init; }
 }
 
 public enum ErrorType
