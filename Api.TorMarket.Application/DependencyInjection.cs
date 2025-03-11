@@ -1,25 +1,33 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Api.TorMarket.Application.Workflows;
+using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
+using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Services;
 
 namespace Api.TorMarket.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
-    {
-        var currentAssembly = typeof(DependencyInjection).Assembly;
+    public static IServiceCollection AddApplication(
+        this IServiceCollection services, 
+        IConfiguration configuration
+    ) => services
+            .AddMediator()
+            .AddValidators();
 
-        services.AddMediatR(config => 
-            config.RegisterServicesFromAssembly(currentAssembly)
-        );
+    private static IServiceCollection AddMediator(
+        this IServiceCollection services
+    ) => services.AddMediatR(config =>
+        config.RegisterServicesFromAssembly(
+            typeof(DependencyInjection).Assembly
+        )
+    );
 
-        services
-            .AddSingleton<IPasswordService, PasswordService>()
-            .AddSingleton<IPasswordGenerator, PasswordGenerator>()
-            .AddSingleton<IPasswordValidator, PasswordValidator>();
-
-        return services;
-    }
+    private static IServiceCollection AddValidators(
+        this IServiceCollection services
+    ) => services
+            .AddScoped<IValidator<CreateProductCommand, CreateProductFailure>, CreateProductValidator>()
+            .AddScoped<IValidator<CreateUserCommand, CreateUserFailure>, CreateUserValidator>()
+            .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>, GetCategoryByNameValidator>();
 }

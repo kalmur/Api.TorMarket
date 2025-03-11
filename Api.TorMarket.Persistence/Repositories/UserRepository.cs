@@ -1,21 +1,45 @@
-﻿using Api.TorMarket.Application.Abstractions;
+﻿using Api.TorMarket.Application.Extensions;
 using Api.TorMarket.Application.Interfaces;
-using User = Api.TorMarket.Domain.Entities.User;
+using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Application.Repositories.Requests;
+using Api.TorMarket.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class UserRepository : IUserRepository
+public class UserRepository(
+    IApplicationDbContext context
+) : IUserRepository
 {
-    private readonly IApplicationDbContext _context;
-
-    public UserRepository(IApplicationDbContext context)
+    public async Task<User> CreateUserAsync(
+        CreateUserRequest request, 
+        CancellationToken cancellationToken
+    )
     {
-        _context = context;
+        var user = request.ToEntity();
+
+        context.SiteUser.Add(user);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return user.ToModel();
     }
 
-    public async Task AddUserAsync(User user, CancellationToken ct)
-    {
-        _context.User.Add(user);
-        await _context.SaveChangesAsync(ct);
-    }
+    public async Task<User?> GetByIdAsync(
+        int userId, 
+        CancellationToken cancellationToken
+    ) => (
+        await context.SiteUser.FirstOrDefaultAsync(u => 
+            u.UserId == userId, 
+            cancellationToken
+        ))?.ToModel();
+
+    public async Task<User?> GetByProviderIdAsync(
+        string providerId,
+        CancellationToken cancellationToken
+    ) => (
+        await context.SiteUser.FirstOrDefaultAsync(u =>
+            u.ProviderId == providerId,
+            cancellationToken
+        ))?.ToModel();
 }

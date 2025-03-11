@@ -2,10 +2,14 @@
 
 public class TableNames
 {
-    internal const string Category = nameof(Category);
-    internal const string Listings = nameof(Listings);
-    internal const string Photos = nameof(Photos);
-    internal const string Review = nameof(Review);
-    internal const string Role = nameof(Role);
+    internal const string Order = nameof(Order);
+    internal const string OrderLine = nameof(OrderLine);
+    internal const string OrderStatus = nameof(OrderStatus);
+    internal const string Product = nameof(Product);
+    internal const string ProductCategory = nameof(ProductCategory);
+    internal const string ShoppingCart = nameof(ShoppingCart);
+    internal const string ShoppingCartItem = nameof(ShoppingCartItem);
     internal const string User = nameof(User);
+    internal const string UserAddress = nameof(UserAddress);
+    internal const string ProductReviews = nameof(ProductReviews);
 }

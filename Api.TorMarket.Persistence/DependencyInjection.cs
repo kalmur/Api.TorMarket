@@ -1,5 +1,6 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Interfaces;
+﻿using Api.TorMarket.Application.Interfaces;
+using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Persistence.Context;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,25 +10,40 @@ namespace Api.TorMarket.Persistence;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence
-    (
+    public static IServiceCollection AddPersistence(
+        this IServiceCollection services,
+        IConfiguration configuration
+    ) => services
+        .ConfigureDatabase(configuration)
+        .AddRepositories();
+
+    private static IServiceCollection ConfigureDatabase(
         this IServiceCollection services,
         IConfiguration configuration
     )
     {
-        services.AddDbContext<ApplicationDbContext>(
-            options => options.UseSqlServer(
-                configuration.GetConnectionString("Default")));
+        var connectionString = configuration.GetConnectionString("Default");
 
-        services
-            .AddScoped<IApplicationDbContext, ApplicationDbContext>()
-            .AddScoped<ICategoryRepository, CategoryRepository>()
-            .AddScoped<IListingRepository, ListingRepository>()
-            .AddScoped<IPhotoRepository, PhotoRepository>()
-            .AddScoped<IReviewRepository, ReviewRepository>()
-            .AddScoped<IRoleRepository, RoleRepository>()
-            .AddScoped<IUserRepository, UserRepository>();
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            options.UseSqlServer(
+                connectionString,
+                sqlOptions =>
+                {
+                    sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName!);
+                }
+            );
+        });
+
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
 
         return services;
     }
+
+    private static IServiceCollection AddRepositories(
+        this IServiceCollection services
+    ) => services
+        .AddScoped<IProductRepository, ProductRepository>()
+        .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
+        .AddScoped<IUserRepository, UserRepository>();
 }
