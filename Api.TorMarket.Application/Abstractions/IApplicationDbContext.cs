@@ -13,7 +13,7 @@ public interface IApplicationDbContext
     DbSet<ProductReviewEntity> ProductReview { get; }
     DbSet<ShoppingCartEntity> ShoppingCart { get; }
     DbSet<ShoppingCartItemEntity> ShoppingCartItem { get; }
-    DbSet<SiteUserEntity> SiteUser { get; }
+    DbSet<UserEntity> SiteUser { get; }
     DbSet<UserAddressEntity> UserAddress { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

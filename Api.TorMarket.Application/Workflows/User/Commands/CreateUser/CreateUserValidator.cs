@@ -3,7 +3,7 @@
 namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
 
 public class CreateUserValidator(
-    ISiteUserRepository userRepository
+    IUserRepository userRepository
 ) : IValidator<CreateUserCommand, CreateUserFailure>
 {
     public async Task<CreateUserFailure> ValidateAsync(

@@ -1,9 +1,11 @@
-﻿namespace Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Domain.Entities.Common;
 
-public class SiteUserEntity
+namespace Api.TorMarket.Domain.Entities;
+
+public class UserEntity : AuditableEntity
 {
     public int UserId { get; set; }
-    public string? ProviderId { get; set; }
+    public string ProviderId { get; set; } = string.Empty;
 
     public virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
     public virtual ICollection<ProductEntity> Products { get; set; } = null!;

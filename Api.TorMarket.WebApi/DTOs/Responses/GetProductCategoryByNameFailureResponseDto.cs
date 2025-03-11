@@ -1,6 +1,5 @@
 ﻿namespace Api.TorMarket.WebApi.DTOs.Responses;
 
-public record GetProductCategoryByNameFailureResponseDto
+public record GetProductCategoryByNameFailureResponseDto : FailureResponseDto
 {
-    public required IEnumerable<string> Errors { get; set; }
 }

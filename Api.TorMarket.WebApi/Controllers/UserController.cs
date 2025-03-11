@@ -22,7 +22,7 @@ public class UserController(IMediator mediator) : ControllerBase
         );
 
         return result.IsError
-            ? UnprocessableEntity(
+            ? BadRequest(
                 result.Error.ToFailureResponseDto()
             )
             : StatusCode(

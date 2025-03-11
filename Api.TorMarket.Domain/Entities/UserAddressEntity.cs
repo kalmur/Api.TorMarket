@@ -12,5 +12,5 @@ public class UserAddressEntity
     public string? Country { get; set; }
     public bool IsDefault { get; set; }
 
-    public virtual SiteUserEntity User { get; set; } = null!;
+    public virtual UserEntity User { get; set; } = null!;
 }

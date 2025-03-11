@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class SiteUserRepository(
+public class UserRepository(
     IApplicationDbContext context
-) : ISiteUserRepository
+) : IUserRepository
 {
-    public async Task<SiteUser> CreateUserAsync(
+    public async Task<User> CreateUserAsync(
         CreateUserRequest request, 
         CancellationToken cancellationToken
     )
@@ -25,7 +25,7 @@ public class SiteUserRepository(
         return user.ToModel();
     }
 
-    public async Task<SiteUser?> GetByIdAsync(
+    public async Task<User?> GetByIdAsync(
         int userId, 
         CancellationToken cancellationToken
     ) => (
@@ -34,7 +34,7 @@ public class SiteUserRepository(
             cancellationToken
         ))?.ToModel();
 
-    public async Task<SiteUser?> GetByProviderIdAsync(
+    public async Task<User?> GetByProviderIdAsync(
         string providerId,
         CancellationToken cancellationToken
     ) => (

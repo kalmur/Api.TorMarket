@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250304160721_InitialMigration")]
+    [Migration("20250311003922_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -32,6 +32,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
 
@@ -43,6 +46,9 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTimeOffset>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -62,6 +68,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
+                    b.Property<int?>("OrderEntityOrderId")
+                        .HasColumnType("int");
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -79,6 +88,8 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(4);
 
                     b.HasKey("OrderLineId");
+
+                    b.HasIndex("OrderEntityOrderId");
 
                     b.ToTable("OrderLine", (string)null);
                 });
@@ -202,6 +213,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("datetimeoffset");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(5);
@@ -214,6 +228,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnOrder(4);
+
+                    b.Property<DateTimeOffset>("UpdatedOn")
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -238,6 +255,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductReviewId"));
 
                     b.Property<string>("Comment")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("CreatedOn")
@@ -246,7 +264,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RatingValue")
+                    b.Property<int>("RatingValue")
                         .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("UpdatedOn")
@@ -317,28 +335,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.ToTable("ShoppingCartItem", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.SiteUserEntity", b =>
-                {
-                    b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
-
-                    b.Property<string>("ProviderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasColumnOrder(2);
-
-                    b.HasKey("UserId");
-
-                    b.HasIndex("ProviderId")
-                        .IsUnique();
-
-                    b.ToTable("SiteUser", (string)null);
-                });
-
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
                 {
                     b.Property<int>("UserAddressId")
@@ -398,6 +394,36 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.ToTable("UserAddress", (string)null);
                 });
 
+            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+
+                    b.Property<DateTimeOffset>("CreatedOn")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("ProviderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnOrder(2);
+
+                    b.Property<DateTimeOffset>("UpdatedOn")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(4);
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("ProviderId")
+                        .IsUnique();
+
+                    b.ToTable("User", (string)null);
+                });
+
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
                 {
                     b.HasOne("Api.TorMarket.Domain.Entities.OrderStatusEntity", "StatusEntity")
@@ -412,7 +438,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -427,7 +453,11 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "OrderEntity")
+                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", null)
+                        .WithMany("OrderLines")
+                        .HasForeignKey("OrderEntityOrderId");
+
+                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "Order")
                         .WithMany()
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,7 +469,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OrderEntity");
+                    b.Navigation("Order");
 
                     b.Navigation("Product");
                 });
@@ -452,7 +482,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -471,7 +501,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
                         .WithMany("ProductReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -484,7 +514,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -514,13 +544,18 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.SiteUserEntity", "User")
+                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+                {
+                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
@@ -547,7 +582,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.SiteUserEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
                 {
                     b.Navigation("Addresses");
 

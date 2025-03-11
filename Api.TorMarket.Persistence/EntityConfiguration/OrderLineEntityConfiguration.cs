@@ -52,7 +52,7 @@ public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEnt
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(ol => ol.OrderEntity)
+            .HasOne(ol => ol.Order)
             .WithMany()
             .HasForeignKey(ol => ol.OrderLineId)
             .OnDelete(DeleteBehavior.Cascade);

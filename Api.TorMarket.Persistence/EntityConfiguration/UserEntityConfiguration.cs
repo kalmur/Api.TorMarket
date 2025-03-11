@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class SiteUserEntityConfiguration : EntityConfigurationBase<SiteUserEntity>
+public class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
 {
-    protected override string TableName => TableNames.SiteUser;
+    protected override string TableName => TableNames.User;
 
-    protected override void ConfigureColumns(EntityTypeBuilder<SiteUserEntity> builder)
+    protected override void ConfigureColumns(EntityTypeBuilder<UserEntity> builder)
     {
         builder
             .Property(x => x.UserId)
@@ -22,12 +22,21 @@ public class SiteUserEntityConfiguration : EntityConfigurationBase<SiteUserEntit
             .Property(x => x.ProviderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
+
+        builder
+            .Property(x => x.CreatedOn)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
+            .Property(x => x.UpdatedOn)
+            .HasColumnOrder(ColumnOrder++);
     }
 
-    protected override void ConfigureKeys(EntityTypeBuilder<SiteUserEntity> builder)
+    protected override void ConfigureKeys(EntityTypeBuilder<UserEntity> builder)
     {
         builder
-            .ToTable(TableNames.SiteUser)
+            .ToTable(TableNames.User)
             .HasKey(x => x.UserId);
 
         builder
@@ -49,7 +58,7 @@ public class SiteUserEntityConfiguration : EntityConfigurationBase<SiteUserEntit
             .OnDelete(DeleteBehavior.NoAction);
     }
 
-    protected override void ConfigureIndexes(EntityTypeBuilder<SiteUserEntity> builder)
+    protected override void ConfigureIndexes(EntityTypeBuilder<UserEntity> builder)
     {
         builder
             .HasIndex(su => su.ProviderId)

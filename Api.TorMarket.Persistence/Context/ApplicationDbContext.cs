@@ -20,7 +20,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<ProductReviewEntity> ProductReview => Set<ProductReviewEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
-    public DbSet<SiteUserEntity> SiteUser => Set<SiteUserEntity>();
+    public DbSet<UserEntity> SiteUser => Set<UserEntity>();
     public DbSet<UserAddressEntity> UserAddress => Set<UserAddressEntity>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

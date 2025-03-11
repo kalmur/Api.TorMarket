@@ -9,5 +9,5 @@ public class OrderLineEntity
     public decimal Price { get; set; }
 
     public virtual ProductEntity Product { get; set; } = null!;
-    public virtual OrderEntity OrderEntity { get; set; } = null!;
+    public virtual OrderEntity Order { get; set; } = null!;
 }

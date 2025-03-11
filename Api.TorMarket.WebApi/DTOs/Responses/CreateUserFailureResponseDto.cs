@@ -1,6 +1,5 @@
 ﻿namespace Api.TorMarket.WebApi.DTOs.Responses;
 
-public record CreateUserFailureResponseDto
+public record CreateUserFailureResponseDto : FailureResponseDto
 {
-    public required IEnumerable<string> Errors { get; init; }
 }

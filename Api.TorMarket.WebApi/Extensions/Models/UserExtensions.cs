@@ -16,7 +16,7 @@ public static class UserExtensions
     }
 
     public static UserDto ToResponseDto(
-        this SiteUser user
+        this User user
     ) => new()
     {
         UserId = user.UserId,

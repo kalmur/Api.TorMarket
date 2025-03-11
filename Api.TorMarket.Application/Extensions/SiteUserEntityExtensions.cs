@@ -6,15 +6,15 @@ namespace Api.TorMarket.Application.Extensions;
 
 public static class SiteUserEntityExtensions
 {
-    public static SiteUser ToModel(
-        this SiteUserEntity entity
+    public static User ToModel(
+        this UserEntity entity
     ) => new()
     {
         UserId = entity.UserId,
         ProviderId = entity.ProviderId ?? string.Empty
     };
 
-    public static SiteUserEntity ToEntity(
+    public static UserEntity ToEntity(
         this CreateUserRequest request
     ) => new()
     {

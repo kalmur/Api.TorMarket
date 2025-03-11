@@ -62,6 +62,12 @@ public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
             .WithMany()
             .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+            .HasMany(o => o.OrderLines)
+            .WithOne(o => o.Order)
+            .HasForeignKey(o => o.OrderId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<OrderEntity> builder)

@@ -9,7 +9,7 @@ public class TableNames
     internal const string ProductCategory = nameof(ProductCategory);
     internal const string ShoppingCart = nameof(ShoppingCart);
     internal const string ShoppingCartItem = nameof(ShoppingCartItem);
-    internal const string SiteUser = nameof(SiteUser);
+    internal const string User = nameof(User);
     internal const string UserAddress = nameof(UserAddress);
     internal const string ProductReviews = nameof(ProductReviews);
 }

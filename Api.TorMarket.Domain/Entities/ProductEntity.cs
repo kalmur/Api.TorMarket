@@ -1,6 +1,8 @@
-﻿namespace Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Domain.Entities.Common;
 
-public class ProductEntity
+namespace Api.TorMarket.Domain.Entities;
+
+public class ProductEntity : AuditableEntity
 {
     public int ProductId { get; set; }
     public int UserId { get; set; }
@@ -12,7 +14,7 @@ public class ProductEntity
 
     // Add image later down the line
 
-    public virtual SiteUserEntity User { get; set; } = null!;
+    public virtual UserEntity User { get; set; } = null!;
     public virtual ProductCategoryEntity ProductCategoryEntity { get; set; } = null!;
     public virtual ICollection<ProductReviewEntity> UserProductReviews { get; set; } = null!;
     public virtual ICollection<ShoppingCartItemEntity> ShoppingCartItems { get; set; } = null!;

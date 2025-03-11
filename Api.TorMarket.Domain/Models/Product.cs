@@ -2,7 +2,7 @@
 
 public class Product
 {
-    public const int ProductName_MaxLength = 100;
+    public const int ProductNameMaxLength = 100;
 
     public int ProductId { get; set; }
     public int UserId { get; set; }

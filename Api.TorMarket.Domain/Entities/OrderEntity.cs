@@ -1,6 +1,8 @@
-﻿namespace Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Domain.Entities.Common;
 
-public class OrderEntity
+namespace Api.TorMarket.Domain.Entities;
+
+public class OrderEntity : AuditableEntity
 {
     public int OrderId { get; set; }
     public int UserId { get; set; }
@@ -9,7 +11,8 @@ public class OrderEntity
     public decimal TotalPrice { get; set; }
     public DateTimeOffset OrderDate { get; set; }
 
-    public virtual SiteUserEntity User { get; set; } = null!;
+    public virtual UserEntity User { get; set; } = null!;
     public virtual UserAddressEntity Address { get; set; } = null!;
     public virtual OrderStatusEntity StatusEntity { get; set; } = null!;
+    public virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;
 }
