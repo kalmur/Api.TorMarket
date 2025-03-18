@@ -8,8 +8,8 @@ public class UserEntity : AuditableEntity
     public string ProviderId { get; set; } = string.Empty;
 
     public virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
-    public virtual ICollection<ProductEntity> Products { get; set; } = null!;
-    public virtual ICollection<ProductReviewEntity> ProductReviews { get; set; } = null!;
+    public virtual ICollection<ListingEntity> Products { get; set; } = null!;
+    public virtual ICollection<ListingReviewEntity> ProductReviews { get; set; } = null!;
     public virtual ICollection<OrderEntity> Orders { get; set; } = null!;
     public virtual ICollection<ShoppingCartEntity> ShoppingCarts { get; set; } = null!;
 }

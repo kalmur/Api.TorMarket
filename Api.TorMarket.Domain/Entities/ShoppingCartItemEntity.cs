@@ -8,5 +8,5 @@ public class ShoppingCartItemEntity
     public int Quantity { get; set; }
 
     public virtual ShoppingCartEntity ShoppingCart { get; set; } = null!;
-    public virtual ProductEntity Product { get; set; } = null!;
+    public virtual ListingEntity Product { get; set; } = null!;
 }

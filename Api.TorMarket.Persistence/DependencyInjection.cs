@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Persistence.Context;
 using Api.TorMarket.Persistence.Repositories;
@@ -43,7 +43,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(
         this IServiceCollection services
     ) => services
-        .AddScoped<IProductRepository, ProductRepository>()
-        .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
+        .AddScoped<IListingRepository, ListingRepository>()
+        .AddScoped<IProductCategoryRepository, ListingCategoryRepository>()
         .AddScoped<IUserRepository, UserRepository>();
 }

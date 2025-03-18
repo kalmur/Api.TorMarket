@@ -9,7 +9,7 @@ public record CreateProductRequestDto
     public required int UserId { get; set; }
 
     [Required(AllowEmptyStrings = false)]
-    [StringLength(Product.ProductNameMaxLength)]
+    [StringLength(Listing.ListingNameMaxLength)]
     public required string Name { get; set; }
 
     [Required]

@@ -1,7 +1,7 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public record ProductCategory
+public record ListingCategory
 {
-    public required int ProductCategoryId { get; init; }
+    public required int CategoryId { get; init; }
     public required string Name { get; init; }
 }

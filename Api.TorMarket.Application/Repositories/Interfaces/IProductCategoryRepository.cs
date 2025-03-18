@@ -4,5 +4,5 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IProductCategoryRepository
 {
-    Task<ProductCategory?> GetByNameAsync(string name, CancellationToken cancellationToken);
+    Task<ListingCategory?> GetByNameAsync(string name, CancellationToken cancellationToken);
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
 
-public class CreateProductCommand : IRequest<ResultOrError<Domain.Models.Product, CreateProductFailure>>
+public class CreateProductCommand : IRequest<ResultOrError<Domain.Models.Listing, CreateProductFailure>>
 {
     public int UserId { get; set; }
 

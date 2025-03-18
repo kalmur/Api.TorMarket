@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class ProductReviewEntityConfiguration : EntityConfigurationBase<ProductReviewEntity>
+public class ListingReviewEntityConfiguration : EntityConfigurationBase<ListingReviewEntity>
 {
-    protected override string TableName => TableNames.ProductReviews;
+    protected override string TableName => TableNames.ListingReviews;
 
-    protected override void ConfigureColumns(EntityTypeBuilder<ProductReviewEntity> builder)
+    protected override void ConfigureColumns(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .Property(x => x.ProductReviewId)
+            .Property(x => x.ListingReviewId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -33,10 +33,10 @@ public class ProductReviewEntityConfiguration : EntityConfigurationBase<ProductR
             .Property(x => x.Comment);
     }
 
-    protected override void ConfigureKeys(EntityTypeBuilder<ProductReviewEntity> builder)
+    protected override void ConfigureKeys(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .HasKey(x => x.ProductReviewId);
+            .HasKey(x => x.ListingReviewId);
 
         builder
             .HasOne(x => x.User)
@@ -51,7 +51,7 @@ public class ProductReviewEntityConfiguration : EntityConfigurationBase<ProductR
             .OnDelete(DeleteBehavior.Cascade);
     }
 
-    protected override void ConfigureIndexes(EntityTypeBuilder<ProductReviewEntity> builder)
+    protected override void ConfigureIndexes(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
             .HasIndex(pr => new

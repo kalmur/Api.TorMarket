@@ -8,11 +8,11 @@ namespace Api.TorMarket.Application.Extensions;
 
 public static class ProductEntityExtensions
 {
-    public static Product ToModel(this ProductEntity entity)
+    public static Listing ToModel(this ListingEntity entity)
     {
-        return new Product
+        return new Listing
         {
-            ProductId = entity.ProductId,
+            ListingId = entity.ListingId,
             UserId = entity.UserId,
             CategoryId = entity.CategoryId,
             Name = entity.Name,
@@ -22,9 +22,9 @@ public static class ProductEntityExtensions
         };
     }
 
-    public static ProductEntity ToEntity(this CreateProductRequest request)
+    public static ListingEntity ToEntity(this CreateListingRequest request)
     {
-        return new ProductEntity
+        return new ListingEntity
         {
             UserId = request.UserId,
             CategoryId = request.CategoryId,
@@ -35,9 +35,9 @@ public static class ProductEntityExtensions
         };
     }
 
-    public static CreateProductRequest ToRequest(this CreateProductCommand command)
+    public static CreateListingRequest ToRequest(this CreateProductCommand command)
     {
-        return new CreateProductRequest
+        return new CreateListingRequest
         {
             UserId = command.UserId,
             CategoryId = command.CategoryId,

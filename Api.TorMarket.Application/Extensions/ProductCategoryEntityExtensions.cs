@@ -5,11 +5,11 @@ namespace Api.TorMarket.Application.Extensions;
 
 public static class ProductCategoryEntityExtensions
 {
-    public static ProductCategory? ToModel(
-        this ProductCategoryEntity entity
+    public static ListingCategory? ToModel(
+        this ListingCategoryEntity entity
     ) => new()
     {
-        ProductCategoryId = entity.ProductCategoryId,
+        CategoryId = entity.ListingCategoryId,
         Name = entity.Name ?? string.Empty
     };
 }

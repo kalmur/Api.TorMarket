@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class ProductEntityConfiguration : EntityConfigurationBase<ProductEntity>
+public class ListingEntityConfiguration : EntityConfigurationBase<ListingEntity>
 {
-    protected override string TableName => TableNames.Product;
+    protected override string TableName => TableNames.Listing;
 
-    protected override void ConfigureColumns(EntityTypeBuilder<ProductEntity> builder)
+    protected override void ConfigureColumns(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .Property(x => x.ProductId)
+            .Property(x => x.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -42,11 +42,11 @@ public class ProductEntityConfiguration : EntityConfigurationBase<ProductEntity>
             .HasColumnOrder(ColumnOrder++);
     }
 
-    protected override void ConfigureKeys(EntityTypeBuilder<ProductEntity> builder)
+    protected override void ConfigureKeys(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .ToTable(TableNames.Product)
-            .HasKey(x => x.ProductId);
+            .ToTable(TableNames.Listing)
+            .HasKey(x => x.ListingId);
 
         builder
             .HasOne(p => p.User)
@@ -67,7 +67,7 @@ public class ProductEntityConfiguration : EntityConfigurationBase<ProductEntity>
             .OnDelete(DeleteBehavior.NoAction);
     }
 
-    protected override void ConfigureIndexes(EntityTypeBuilder<ProductEntity> builder)
+    protected override void ConfigureIndexes(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
             .HasIndex(pr => pr.UserId);

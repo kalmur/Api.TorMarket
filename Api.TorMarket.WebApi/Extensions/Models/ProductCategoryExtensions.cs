@@ -7,10 +7,10 @@ namespace Api.TorMarket.WebApi.Extensions.Models;
 public static class ProductCategoryExtensions
 {
     public static ProductCategoryDto ToResponseDto(
-       this ProductCategory product
+       this ListingCategory product
    ) => new()
    {
-       ProductCategoryId = product.ProductCategoryId,
+       ProductCategoryId = product.CategoryId,
        Name = product.Name
    };
 

@@ -4,8 +4,8 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IUserProductReviewRepository
 {
-    Task<ProductReviewEntity?> GetReviewById(int id, CancellationToken cancellationToken);
-    Task<ProductReviewEntity?> DeleteReview(int id, CancellationToken cancellationToken);
-    Task AddReviewAsync(ProductReviewEntity review, CancellationToken ct);
-    Task RemoveReviewAsync(ProductReviewEntity review, CancellationToken ct);
+    Task<ListingReviewEntity?> GetReviewById(int id, CancellationToken cancellationToken);
+    Task<ListingReviewEntity?> DeleteReview(int id, CancellationToken cancellationToken);
+    Task AddReviewAsync(ListingReviewEntity review, CancellationToken ct);
+    Task RemoveReviewAsync(ListingReviewEntity review, CancellationToken ct);
 }

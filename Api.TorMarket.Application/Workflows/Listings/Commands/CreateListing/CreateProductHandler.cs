@@ -7,10 +7,10 @@ namespace Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
 
 public class CreateProductHandler(
     IValidator<CreateProductCommand, CreateProductFailure> validator,
-    IProductRepository productRepository
-) : IRequestHandler<CreateProductCommand, ResultOrError<Domain.Models.Product, CreateProductFailure>>
+    IListingRepository productRepository
+) : IRequestHandler<CreateProductCommand, ResultOrError<Domain.Models.Listing, CreateProductFailure>>
 {
-    public async Task<ResultOrError<Domain.Models.Product, CreateProductFailure>> Handle(
+    public async Task<ResultOrError<Domain.Models.Listing, CreateProductFailure>> Handle(
         CreateProductCommand command, 
         CancellationToken cancellationToken
     )

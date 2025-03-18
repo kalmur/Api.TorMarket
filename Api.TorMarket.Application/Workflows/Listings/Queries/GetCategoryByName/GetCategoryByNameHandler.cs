@@ -8,9 +8,9 @@ namespace Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
 public class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
     IProductCategoryRepository productCategoryRepository
-) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ProductCategory ,GetCategoryByNameFailure>>
+) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ListingCategory ,GetCategoryByNameFailure>>
 {
-    public async Task<ResultOrError<ProductCategory, GetCategoryByNameFailure>> Handle(
+    public async Task<ResultOrError<ListingCategory, GetCategoryByNameFailure>> Handle(
         GetCategoryByNameQuery request, 
         CancellationToken cancellationToken
     )

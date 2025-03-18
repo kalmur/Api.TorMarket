@@ -1,5 +1,5 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public class ProductReview
+public class ListingReview
 {
 }

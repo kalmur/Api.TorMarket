@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Entities.Common;
 using Microsoft.EntityFrameworkCore;
@@ -15,12 +15,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<OrderEntity> Order => Set<OrderEntity>();
     public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
     public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
-    public DbSet<ProductEntity> Product => Set<ProductEntity>();
-    public DbSet<ProductCategoryEntity> ProductCategory => Set<ProductCategoryEntity>();
-    public DbSet<ProductReviewEntity> ProductReview => Set<ProductReviewEntity>();
+    public DbSet<ListingEntity> Listing => Set<ListingEntity>();
+    public DbSet<ListingCategoryEntity> ListingCategory => Set<ListingCategoryEntity>();
+    public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
-    public DbSet<UserEntity> SiteUser => Set<UserEntity>();
+    public DbSet<UserEntity> User => Set<UserEntity>();
     public DbSet<UserAddressEntity> UserAddress => Set<UserAddressEntity>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

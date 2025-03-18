@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Application.Repositories.Requests;
 
-public record CreateProductRequest
+public record CreateListingRequest
 {
     public required int UserId { get; set; }
     public required string Name { get; set; }

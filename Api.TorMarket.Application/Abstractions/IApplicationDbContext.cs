@@ -1,19 +1,19 @@
 ﻿using Api.TorMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.TorMarket.Application.Interfaces;
+namespace Api.TorMarket.Application.Abstractions;
 
 public interface IApplicationDbContext
 {
     DbSet<OrderEntity> Order { get; }
     DbSet<OrderLineEntity> OrderLine { get; }
     DbSet<OrderStatusEntity> OrderStatus { get; }
-    DbSet<ProductEntity> Product { get; }
-    DbSet<ProductCategoryEntity> ProductCategory { get; }
-    DbSet<ProductReviewEntity> ProductReview { get; }
+    DbSet<ListingEntity> Listing { get; }
+    DbSet<ListingCategoryEntity> ListingCategory { get; }
+    DbSet<ListingReviewEntity> ListingReview { get; }
     DbSet<ShoppingCartEntity> ShoppingCart { get; }
     DbSet<ShoppingCartItemEntity> ShoppingCartItem { get; }
-    DbSet<UserEntity> SiteUser { get; }
+    DbSet<UserEntity> User { get; }
     DbSet<UserAddressEntity> UserAddress { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

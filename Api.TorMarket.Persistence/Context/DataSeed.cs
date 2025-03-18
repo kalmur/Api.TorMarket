@@ -36,16 +36,16 @@ public static class DataSeed
 
     private static void SeedProductCategories(ModelBuilder builder)
     {
-        static ProductCategoryEntity CreateProductCategories(
+        static ListingCategoryEntity CreateProductCategories(
             int id,
             string name
         ) => new()
         {
-            ProductCategoryId = id,
+            ListingCategoryId = id,
             Name = name
         };
 
-        IImmutableList<ProductCategoryEntity> productCategories = ImmutableList.Create(
+        IImmutableList<ListingCategoryEntity> productCategories = ImmutableList.Create(
             CreateProductCategories(1, "Electronics"),
             CreateProductCategories(2, "Games"),
             CreateProductCategories(3, "Toys"),
@@ -55,6 +55,6 @@ public static class DataSeed
             CreateProductCategories(7, "Other")
         );
 
-        builder.Entity<ProductCategoryEntity>().HasData(productCategories);
+        builder.Entity<ListingCategoryEntity>().HasData(productCategories);
     }
 }

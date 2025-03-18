@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.EntityConfiguration;
 
-public class ProductCategoryEntityConfiguration : EntityConfigurationBase<ProductCategoryEntity>
+public class ListingCategoryEntityConfiguration : EntityConfigurationBase<ListingCategoryEntity>
 {
-    protected override string TableName => TableNames.ProductCategory;
+    protected override string TableName => TableNames.ListingCategory;
 
-    protected override void ConfigureColumns(EntityTypeBuilder<ProductCategoryEntity> builder)
+    protected override void ConfigureColumns(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
-            .Property(x => x.ProductCategoryId)
+            .Property(x => x.ListingCategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -21,10 +21,10 @@ public class ProductCategoryEntityConfiguration : EntityConfigurationBase<Produc
         builder.Property(x => x.Name);
     }
 
-    protected override void ConfigureKeys(EntityTypeBuilder<ProductCategoryEntity> builder)
+    protected override void ConfigureKeys(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
-            .HasKey(x => x.ProductCategoryId);
+            .HasKey(x => x.ListingCategoryId);
 
         builder
             .HasMany(x => x.Products)
@@ -33,7 +33,7 @@ public class ProductCategoryEntityConfiguration : EntityConfigurationBase<Produc
             .OnDelete(DeleteBehavior.Cascade);
     }
 
-    protected override void ConfigureIndexes(EntityTypeBuilder<ProductCategoryEntity> builder)
+    protected override void ConfigureIndexes(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
             .HasIndex(pc => pc.Name);
