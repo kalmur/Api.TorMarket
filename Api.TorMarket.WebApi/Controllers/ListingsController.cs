@@ -1,7 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Api.TorMarket.Application.Workflows.Listings.Queries.GetAllListings;
 using Api.TorMarket.Domain.Models;
-using Api.TorMarket.Domain.Models.External;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
@@ -15,7 +14,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 public class ListingsController(ISender mediator) : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUserModel))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Listing))]
     public async Task<IActionResult> CreateAsync(
         [FromBody] CreateListingRequestDto request,
         CancellationToken cancellationToken

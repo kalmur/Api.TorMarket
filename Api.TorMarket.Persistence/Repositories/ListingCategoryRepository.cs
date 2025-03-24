@@ -1,12 +1,12 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class ListingCategoryRepository(
+internal class ListingCategoryRepository(
     IApplicationDbContext context
 ) : IProductCategoryRepository
 {

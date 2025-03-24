@@ -1,10 +1,10 @@
-﻿using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+﻿using Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 
 namespace Api.TorMarket.WebApi.Extensions.Models;
 
-public static class ListingCategoryExtensions
+internal static class ListingCategoryExtensions
 {
     public static ListingCategoryDto ToResponseDto(
        this ListingCategory product
@@ -15,7 +15,7 @@ public static class ListingCategoryExtensions
    };
 
     public static GetCategoryByNameQuery ToQuery(
-        this string name
+        string name
     ) => new()
     {
         Name = name

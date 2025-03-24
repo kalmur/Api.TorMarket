@@ -3,7 +3,7 @@ using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+namespace Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 
 public class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,

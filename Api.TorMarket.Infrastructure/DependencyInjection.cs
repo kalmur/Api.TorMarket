@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Application.Interfaces.Services;
-using Api.TorMarket.Infrastructure.Options;
+﻿using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services;
+using Api.TorMarket.Infrastructure.Services.Interfaces;
 using Auth0Net.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

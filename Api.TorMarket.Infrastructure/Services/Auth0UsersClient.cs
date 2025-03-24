@@ -1,8 +1,8 @@
-﻿using Auth0.ManagementApi.Clients;
+﻿using Api.TorMarket.Infrastructure.Services.Interfaces;
+using Auth0.ManagementApi.Clients;
 using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Paging;
 using Auth0.ManagementApi;
-using Api.TorMarket.Application.Interfaces.Services;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -31,12 +31,12 @@ public class Auth0UsersClient : IAuth0UsersClient
         return _client.UpdateAsync(id, request);
     }
 
-    public Task<User> GetAsync(string id, string fields = null, bool includeFields = true)
+    public Task<User> GetAsync(string id, string? fields = null, bool includeFields = true)
     {
         return _client.GetAsync(id, fields, includeFields);
     }
 
-    public Task<IList<User>> GetUsersByEmailAsync(string email, string fields = null, bool? includeFields = null)
+    public Task<IList<User>> GetUsersByEmailAsync(string email, string? fields = null, bool? includeFields = null)
     {
         return _client.GetUsersByEmailAsync(email, fields, includeFields);
     }

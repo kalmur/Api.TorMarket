@@ -1,12 +1,15 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
-namespace Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+namespace Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 
-public class GetCategoryByNameValidator(
+internal class GetCategoryByNameValidator(
     IProductCategoryRepository categoryRepository
-) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
+) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure?>
 {
-    public async Task<GetCategoryByNameFailure> ValidateAsync(GetCategoryByNameQuery command, CancellationToken cancellationToken)
+    public async Task<GetCategoryByNameFailure?> ValidateAsync(
+        GetCategoryByNameQuery command, 
+        CancellationToken cancellationToken
+    )
     {
         var errors = new List<ErrorType>();
 

@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+﻿namespace Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 
 public record GetCategoryByNameFailure
 {

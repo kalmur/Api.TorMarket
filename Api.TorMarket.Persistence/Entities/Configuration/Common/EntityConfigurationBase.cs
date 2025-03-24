@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration.Common;
 
-public abstract class EntityConfigurationBase<T> : IEntityTypeConfiguration<T> where T : class
+internal abstract class EntityConfigurationBase<T> : IEntityTypeConfiguration<T> where T : class
 {
     public void Configure(EntityTypeBuilder<T> builder)
     {

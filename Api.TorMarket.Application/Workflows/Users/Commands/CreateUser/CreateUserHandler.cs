@@ -1,9 +1,9 @@
-﻿using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Unions;
 using MediatR;
 
-namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+namespace Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 
 public class CreateUserHandler(
     IValidator<CreateUserCommand, CreateUserFailure> validator,

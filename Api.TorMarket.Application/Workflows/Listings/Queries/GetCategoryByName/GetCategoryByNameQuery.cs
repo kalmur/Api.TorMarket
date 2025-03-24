@@ -2,7 +2,7 @@
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
+namespace Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 
 public class GetCategoryByNameQuery : IRequest<ResultOrError<ListingCategory, GetCategoryByNameFailure>>
 {

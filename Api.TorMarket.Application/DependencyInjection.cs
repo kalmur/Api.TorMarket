@@ -1,7 +1,7 @@
 ﻿using Api.TorMarket.Application.Workflows;
-using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
-using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
-using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+using Api.TorMarket.Application.Workflows.Listings.Commands.CreateListing;
+using Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
+using Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +27,7 @@ public static class DependencyInjection
     private static IServiceCollection AddValidators(
         this IServiceCollection services
     ) => services
-            .AddScoped<IValidator<CreateProductCommand, CreateProductFailure>, CreateProductValidator>()
-            .AddScoped<IValidator<CreateUserCommand, CreateUserFailure>, CreateUserValidator>()
-            .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>, GetCategoryByNameValidator>();
+            .AddScoped<IValidator<CreateListingCommand, CreateListingFailure?>, CreateListingValidator>()
+            .AddScoped<IValidator<CreateUserCommand, CreateUserFailure?>, CreateUserValidator>()
+            .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure?>, GetCategoryByNameValidator>();
 }

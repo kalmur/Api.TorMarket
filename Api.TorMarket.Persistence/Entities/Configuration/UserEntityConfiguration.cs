@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
+internal class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
 {
     protected override string TableName => TableNames.User;
 

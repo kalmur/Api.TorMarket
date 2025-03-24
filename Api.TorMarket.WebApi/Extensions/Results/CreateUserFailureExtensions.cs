@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+using Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Extensions.Results

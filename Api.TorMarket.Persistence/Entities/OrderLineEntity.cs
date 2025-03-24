@@ -1,13 +1,13 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class OrderLineEntity
+internal class OrderLineEntity
 {
-    public int OrderLineId { get; set; }
-    public int ProductId { get; set; }
-    public int OrderId { get; set; }
-    public int Quantity { get; set; }
-    public decimal Price { get; set; }
+    internal int OrderLineId { get; set; }
+    internal int ProductId { get; set; }
+    internal int OrderId { get; set; }
+    internal int Quantity { get; set; }
+    internal decimal Price { get; set; }
 
-    public virtual ListingEntity Product { get; set; } = null!;
-    public virtual OrderEntity Order { get; set; } = null!;
+    internal virtual ListingEntity Product { get; set; } = null!;
+    internal virtual OrderEntity Order { get; set; } = null!;
 }

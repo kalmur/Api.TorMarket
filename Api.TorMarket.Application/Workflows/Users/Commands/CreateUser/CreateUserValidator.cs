@@ -1,12 +1,12 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
-namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+namespace Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 
 public class CreateUserValidator(
     IUserRepository userRepository
-) : IValidator<CreateUserCommand, CreateUserFailure>
+) : IValidator<CreateUserCommand, CreateUserFailure?>
 {
-    public async Task<CreateUserFailure> ValidateAsync(
+    public async Task<CreateUserFailure?> ValidateAsync(
         CreateUserCommand command, 
         CancellationToken cancellationToken
     )

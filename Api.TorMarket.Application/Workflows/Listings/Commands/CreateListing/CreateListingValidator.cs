@@ -1,13 +1,13 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
-namespace Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
+namespace Api.TorMarket.Application.Workflows.Listings.Commands.CreateListing;
 
-public class CreateProductValidator(
+public class CreateListingValidator(
     IUserRepository userRepository
-) : IValidator<CreateProductCommand, CreateProductFailure>
+) : IValidator<CreateListingCommand, CreateListingFailure?>
 {
-    public async Task<CreateProductFailure> ValidateAsync(
-        CreateProductCommand command, 
+    public async Task<CreateListingFailure?> ValidateAsync(
+        CreateListingCommand command, 
         CancellationToken cancellationToken
     )
     {
@@ -28,7 +28,7 @@ public class CreateProductValidator(
 
         if (errors.Count > 0)
         {
-            return new CreateProductFailure
+            return new CreateListingFailure
             {
                 Errors = errors
             };

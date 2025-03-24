@@ -1,12 +1,12 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class ShoppingCartItemEntity
+internal class ShoppingCartItemEntity
 {
-    public int ShoppingCartItemId { get; set; }
-    public int CartId { get; set; }
-    public int ProductId { get; set; }
-    public int Quantity { get; set; }
+    internal int ShoppingCartItemId { get; set; }
+    internal int CartId { get; set; }
+    internal int ProductId { get; set; }
+    internal int Quantity { get; set; }
 
-    public virtual ShoppingCartEntity ShoppingCart { get; set; } = null!;
-    public virtual ListingEntity Product { get; set; } = null!;
+    internal virtual ShoppingCartEntity ShoppingCart { get; set; } = null!;
+    internal virtual ListingEntity Product { get; set; } = null!;
 }

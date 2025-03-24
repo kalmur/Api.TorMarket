@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+﻿namespace Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 
 public record CreateUserFailure
 {

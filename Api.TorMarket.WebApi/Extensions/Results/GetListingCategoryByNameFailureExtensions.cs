@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Application.Workflows.Product.Queries.GetCategoryByName;
-using Api.TorMarket.WebApi.DTOs.Responses;
+﻿using Api.TorMarket.WebApi.DTOs.Responses;
 using System.ComponentModel;
+using Api.TorMarket.Application.Workflows.Listings.Queries.GetCategoryByName;
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 

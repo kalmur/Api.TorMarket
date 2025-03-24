@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+﻿using Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Results;

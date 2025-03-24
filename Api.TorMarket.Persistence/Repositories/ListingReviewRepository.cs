@@ -1,20 +1,20 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using ListingReviewEntity = Api.TorMarket.Persistence.Entities.ListingReviewEntity;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class ListingReviewRepository(IApplicationDbContext context) : IListingReviewRepository
+internal class ListingReviewRepository(IApplicationDbContext context) : IListingReviewRepository
 {
-    public async Task<ListingReviewEntity?> GetReviewById(
+    public async Task<ListingReview?> GetReviewById(
         int id, 
         CancellationToken cancellationToken
     ) =>
         await context.ListingReview.FirstOrDefaultAsync(x =>
             x.ListingReviewId == id, 
             cancellationToken
-        );
+        ).ToModel();
 
     public async Task<ListingReviewEntity?> DeleteReview(
         int id, 

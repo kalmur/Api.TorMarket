@@ -5,7 +5,7 @@ using Api.TorMarket.Persistence.Entities.Configuration.Common;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
+internal class OrderEntityConfiguration : EntityConfigurationBase<OrderEntity>
 {
     protected override string TableName => TableNames.Order;
 

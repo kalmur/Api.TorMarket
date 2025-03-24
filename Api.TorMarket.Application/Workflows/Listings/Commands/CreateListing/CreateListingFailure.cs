@@ -1,6 +1,6 @@
-﻿namespace Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
+﻿namespace Api.TorMarket.Application.Workflows.Listings.Commands.CreateListing;
 
-public record CreateProductFailure
+public record CreateListingFailure
 {
     public required IEnumerable<ErrorType> Errors { get; set; }
 }

@@ -1,9 +1,9 @@
 ﻿using Api.TorMarket.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.TorMarket.Application.Abstractions;
+namespace Api.TorMarket.Persistence.Abstractions;
 
-public interface IApplicationDbContext
+internal interface IApplicationDbContext
 {
     DbSet<OrderEntity> Order { get; }
     DbSet<OrderLineEntity> OrderLine { get; }

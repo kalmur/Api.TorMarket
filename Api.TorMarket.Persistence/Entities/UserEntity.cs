@@ -1,13 +1,13 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class UserEntity : AuditableEntity
+internal class UserEntity : AuditableEntity
 {
-    public int UserId { get; set; }
-    public string ProviderId { get; set; } = string.Empty;
+    internal int UserId { get; set; }
+    internal string ProviderId { get; set; } = string.Empty;
 
-    public virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
-    public virtual ICollection<ListingEntity> Products { get; set; } = null!;
-    public virtual ICollection<ListingReviewEntity> ProductReviews { get; set; } = null!;
-    public virtual ICollection<OrderEntity> Orders { get; set; } = null!;
-    public virtual ICollection<ShoppingCartEntity> ShoppingCarts { get; set; } = null!;
+    internal virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
+    internal virtual ICollection<ListingEntity> Products { get; set; } = null!;
+    internal virtual ICollection<ListingReviewEntity> ProductReviews { get; set; } = null!;
+    internal virtual ICollection<OrderEntity> Orders { get; set; } = null!;
+    internal virtual ICollection<ShoppingCartEntity> ShoppingCarts { get; set; } = null!;
 }

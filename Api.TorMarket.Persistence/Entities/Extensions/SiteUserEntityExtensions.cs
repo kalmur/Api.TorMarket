@@ -1,10 +1,9 @@
 ﻿using Api.TorMarket.Application.Repositories.Requests;
-using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Models;
 
-namespace Api.TorMarket.Application.Extensions;
+namespace Api.TorMarket.Persistence.Entities.Extensions;
 
-public static class SiteUserEntityExtensions
+internal static class SiteUserEntityExtensions
 {
     public static User ToModel(
         this UserEntity entity

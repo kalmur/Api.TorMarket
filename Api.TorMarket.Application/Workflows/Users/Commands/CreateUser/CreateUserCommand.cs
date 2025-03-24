@@ -1,7 +1,7 @@
 ﻿using Api.TorMarket.Application.Unions;
 using MediatR;
 
-namespace Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+namespace Api.TorMarket.Application.Workflows.Users.Commands.CreateUser;
 
 public record CreateUserCommand : IRequest<ResultOrError<Domain.Models.User, CreateUserFailure>>
 {
