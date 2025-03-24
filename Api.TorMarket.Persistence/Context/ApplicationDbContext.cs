@@ -1,7 +1,17 @@
 ﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Entities;
 using Api.TorMarket.Domain.Entities.Common;
+using Api.TorMarket.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
+using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
+using ListingEntity = Api.TorMarket.Persistence.Entities.ListingEntity;
+using ListingReviewEntity = Api.TorMarket.Persistence.Entities.ListingReviewEntity;
+using OrderEntity = Api.TorMarket.Persistence.Entities.OrderEntity;
+using OrderLineEntity = Api.TorMarket.Persistence.Entities.OrderLineEntity;
+using OrderStatusEntity = Api.TorMarket.Persistence.Entities.OrderStatusEntity;
+using ShoppingCartEntity = Api.TorMarket.Persistence.Entities.ShoppingCartEntity;
+using ShoppingCartItemEntity = Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity;
+using UserAddressEntity = Api.TorMarket.Persistence.Entities.UserAddressEntity;
+using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 

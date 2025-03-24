@@ -1,6 +1,7 @@
 ﻿using System.Collections.Immutable;
-using Api.TorMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
+using OrderStatusEntity = Api.TorMarket.Persistence.Entities.OrderStatusEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 

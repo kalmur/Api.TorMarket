@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Domain.Entities;
+﻿using Api.TorMarket.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Application.Abstractions;
