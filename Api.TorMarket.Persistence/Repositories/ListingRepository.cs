@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
-using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class ListingRepository(IApplicationDbContext context) : IListingRepository
+internal class ListingRepository(IApplicationDbContext context) : IListingRepository
 {
     public async Task<Listing> CreateAsync(
         CreateListingRequest request, 

@@ -2,6 +2,6 @@
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class OrderStatusRepository : IOrderStatusRepository
+internal class OrderStatusRepository : IOrderStatusRepository
 {
 }

@@ -1,13 +1,13 @@
-﻿using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
-using Api.TorMarket.WebApi.DTOs.Responses;
+﻿using Api.TorMarket.WebApi.DTOs.Responses;
 using System.ComponentModel;
+using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 
 public static class CreateListingFailureExtensions
 {
     public static CreateProductFailureResponseDto ToFailureResponseDto(
-        this CreateProductFailure failure
+        this CreateListingFailure failure
     ) => new()
     {
         Errors = failure.Errors.Select(

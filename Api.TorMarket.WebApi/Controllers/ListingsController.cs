@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using Api.TorMarket.Application.Workflows.Listings.Queries.GetAllListings;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.External;
 using Api.TorMarket.WebApi.DTOs.Requests;

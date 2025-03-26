@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Workflows.Product.Commands.CreateProduct;
+﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Results;
@@ -19,9 +19,9 @@ public static class ListingExtensions
         AvailableFrom = product.AvailableFrom
     };
 
-    public static CreateProductCommand ToCommand(this CreateListingRequestDto request)
+    public static CreateListingCommand ToCommand(this CreateListingRequestDto request)
     {
-        return new CreateProductCommand
+        return new CreateListingCommand
         {
             UserId = request.UserId,
             CategoryId = request.CategoryId,

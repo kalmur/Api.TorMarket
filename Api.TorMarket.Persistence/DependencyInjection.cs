@@ -1,5 +1,5 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Context;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +35,9 @@ public static class DependencyInjection
             );
         });
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(provider => 
+            provider.GetService<ApplicationDbContext>()!
+        );
 
         return services;
     }

@@ -1,13 +1,13 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Extensions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class UserRepository(IApplicationDbContext context) : IUserRepository
+internal class UserRepository(IApplicationDbContext context) : IUserRepository
 {
     public async Task<User> CreateUserAsync(
         CreateUserRequest request, 

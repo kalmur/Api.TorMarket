@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Domain.Entities.Common;
+﻿using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
@@ -15,7 +14,7 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+internal class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
