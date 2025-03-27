@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class OrderEntity : AuditableEntity
+internal class OrderEntity : AuditableEntity
 {
     public int OrderId { get; set; }
     public int UserId { get; set; }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
+internal class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
 {
-    protected override string TableName => TableNames.User;
+    protected override string TableName => TableNames.Users;
 
     protected override void ConfigureColumns(EntityTypeBuilder<UserEntity> builder)
     {
@@ -35,7 +35,7 @@ public class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
     protected override void ConfigureKeys(EntityTypeBuilder<UserEntity> builder)
     {
         builder
-            .ToTable(TableNames.User)
+            .ToTable(TableNames.Users)
             .HasKey(x => x.UserId);
 
         builder

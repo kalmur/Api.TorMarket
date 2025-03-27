@@ -8,7 +8,7 @@ namespace Api.TorMarket.Persistence.Repositories;
 
 internal class ListingCategoryRepository(
     IApplicationDbContext context
-) : IProductCategoryRepository
+) : IListingCategoryRepository
 {
     public async Task<ListingCategory?> GetByNameAsync(
         string name,

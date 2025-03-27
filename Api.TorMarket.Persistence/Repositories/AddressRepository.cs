@@ -2,6 +2,6 @@
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-public class AddressRepository : IAddressRepository
+internal class AddressRepository : IAddressRepository
 {
 }

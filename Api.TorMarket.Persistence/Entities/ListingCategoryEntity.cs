@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class ListingCategoryEntity
+internal class ListingCategoryEntity
 {
     public int ListingCategoryId { get; set; }
     public string? Name { get; set; }

@@ -1,9 +1,7 @@
 using Api.TorMarket.Application;
 using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
-using Api.TorMarket.WebApi.Responses;
 using Microsoft.OpenApi.Models;
-using HttpResponse = Api.TorMarket.WebApi.Responses.HttpResponse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,9 +35,6 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration)
     .AddControllers();
-
-builder.Services
-    .AddScoped<IHttpResponse, HttpResponse>();
 
 var app = builder.Build();
 

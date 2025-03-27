@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class UserAddressEntityConfiguration : EntityConfigurationBase<UserAddressEntity>
+internal class UserAddressEntityConfiguration : EntityConfigurationBase<UserAddressEntity>
 {
-    protected override string TableName => TableNames.UserAddress;
+    protected override string TableName => TableNames.UserAddresses;
 
     protected override void ConfigureColumns(EntityTypeBuilder<UserAddressEntity> builder)
     {

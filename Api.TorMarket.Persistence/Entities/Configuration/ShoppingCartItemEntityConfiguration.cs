@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class ShoppingCartItemEntityConfiguration : EntityConfigurationBase<ShoppingCartItemEntity>
+internal class ShoppingCartItemEntityConfiguration : EntityConfigurationBase<ShoppingCartItemEntity>
 {
-    protected override string TableName => TableNames.ShoppingCartItem;
+    protected override string TableName => TableNames.ShoppingCartItems;
 
     protected override void ConfigureColumns(EntityTypeBuilder<ShoppingCartItemEntity> builder)
     {

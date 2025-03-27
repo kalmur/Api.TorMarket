@@ -46,6 +46,6 @@ public static class DependencyInjection
         this IServiceCollection services
     ) => services
         .AddScoped<IListingRepository, ListingRepository>()
-        .AddScoped<IProductCategoryRepository, ListingCategoryRepository>()
+        .AddScoped<IListingCategoryRepository, ListingCategoryRepository>()
         .AddScoped<IUserRepository, UserRepository>();
 }

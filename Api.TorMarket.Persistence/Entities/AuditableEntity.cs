@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class AuditableEntity
+internal class AuditableEntity
 {
     public DateTimeOffset CreatedOn { get; set; }
     public DateTimeOffset UpdatedOn { get; set; }

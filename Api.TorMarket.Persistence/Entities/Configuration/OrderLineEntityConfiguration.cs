@@ -5,9 +5,9 @@ using Api.TorMarket.Persistence.Entities.Configuration.Common;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEntity>
+internal class OrderLineEntityConfiguration : EntityConfigurationBase<OrderLineEntity>
 {
-    protected override string TableName => TableNames.OrderLine;
+    protected override string TableName => TableNames.OrderLines;
 
     protected override void ConfigureColumns(EntityTypeBuilder<OrderLineEntity> builder)
     {

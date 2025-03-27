@@ -5,7 +5,7 @@ using User = Api.TorMarket.Domain.Models.User;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-internal class CreateUserHandler(
+public class CreateUserHandler(
     IValidator<CreateUserCommand, CreateUserFailure> validator,
     IUserRepository siteUserRepository
 ) : IRequestHandler<CreateUserCommand, ResultOrError<User, CreateUserFailure>>

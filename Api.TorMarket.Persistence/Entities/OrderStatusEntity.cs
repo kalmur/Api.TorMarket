@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class OrderStatusEntity
+internal class OrderStatusEntity
 {
     public int OrderStatusId { get; set; }
     public string Status { get; set; } = string.Empty;

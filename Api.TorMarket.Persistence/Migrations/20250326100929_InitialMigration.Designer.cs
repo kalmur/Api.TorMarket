@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250321122343_InitialMigration")]
+    [Migration("20250326100929_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingCategoryEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
                 {
                     b.Property<int>("ListingCategoryId")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("Name");
 
-                    b.ToTable("ListingCategory", (string)null);
+                    b.ToTable("ListingCategories", (string)null);
 
                     b.HasData(
                         new
@@ -81,7 +81,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
                     b.Property<int>("ListingId")
                         .ValueGeneratedOnAdd()
@@ -126,10 +126,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Listing", (string)null);
+                    b.ToTable("Listings", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingReviewEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingReviewEntity", b =>
                 {
                     b.Property<int>("ListingReviewId")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.ToTable("ListingReviews", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -202,10 +202,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Orders", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
                     b.Property<int>("OrderLineId")
                         .ValueGeneratedOnAdd()
@@ -235,10 +235,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("OrderEntityOrderId");
 
-                    b.ToTable("OrderLine", (string)null);
+                    b.ToTable("OrderLines", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>
                 {
                     b.Property<int>("OrderStatusId")
                         .ValueGeneratedOnAdd()
@@ -255,7 +255,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatus", (string)null);
+                    b.ToTable("OrderStatuses", (string)null);
 
                     b.HasData(
                         new
@@ -285,7 +285,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Property<int>("ShoppingCartId")
                         .ValueGeneratedOnAdd()
@@ -302,10 +302,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartItemEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity", b =>
                 {
                     b.Property<int>("ShoppingCartItemId")
                         .ValueGeneratedOnAdd()
@@ -332,10 +332,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCartItem", (string)null);
+                    b.ToTable("ShoppingCartItems", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserAddressEntity", b =>
                 {
                     b.Property<int>("UserAddressId")
                         .ValueGeneratedOnAdd()
@@ -391,10 +391,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddress", (string)null);
+                    b.ToTable("UserAddresses", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -421,18 +421,18 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasIndex("ProviderId")
                         .IsUnique();
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ListingCategoryEntity", "ProductCategoryEntity")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", "ProductCategoryEntity")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -443,15 +443,15 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingReviewEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingReviewEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ListingEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("UserProductReviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("ProductReviews")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -462,21 +462,21 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderStatusEntity", "StatusEntity")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderStatusEntity", "StatusEntity")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserAddressEntity", "Address")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "Address")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -489,19 +489,19 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", null)
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", null)
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderEntityOrderId");
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.ListingEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "Order")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", "Order")
                         .WithMany()
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -512,9 +512,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -523,15 +523,15 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartItemEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ShoppingCartEntity", "ShoppingCart")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", "ShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.ListingEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -542,9 +542,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserAddressEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -553,12 +553,12 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingCategoryEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ListingEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
                     b.Navigation("OrderLines");
 
@@ -567,22 +567,22 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("UserProductReviews");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
                 {
                     b.Navigation("OrderLines");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>
                 {
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
                 {
                     b.Navigation("Addresses");
 

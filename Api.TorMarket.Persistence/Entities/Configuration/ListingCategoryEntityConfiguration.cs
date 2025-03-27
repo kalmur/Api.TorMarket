@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class ListingCategoryEntityConfiguration : EntityConfigurationBase<ListingCategoryEntity>
+internal class ListingCategoryEntityConfiguration : EntityConfigurationBase<ListingCategoryEntity>
 {
-    protected override string TableName => TableNames.ListingCategory;
+    protected override string TableName => TableNames.ListingCategories;
 
     protected override void ConfigureColumns(EntityTypeBuilder<ListingCategoryEntity> builder)
     {

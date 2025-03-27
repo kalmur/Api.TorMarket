@@ -3,10 +3,10 @@
 public record CreateUserFailure
 {
     public required IEnumerable<ErrorType> Errors { get; init; }
-}
 
-public enum ErrorType
-{
-    InvalidProviderId,
-    UserAlreadyExists
+    public enum ErrorType
+    {
+        InvalidProviderId,
+        UserAlreadyExists
+    }
 }

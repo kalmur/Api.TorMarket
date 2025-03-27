@@ -5,7 +5,7 @@ using OrderStatusEntity = Api.TorMarket.Persistence.Entities.OrderStatusEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-public static class DataSeed
+internal static class DataSeed
 {
     public static void SeedData(ModelBuilder builder)
     {

@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class OrderLineEntity
+internal class OrderLineEntity
 {
     public int OrderLineId { get; set; }
     public int ProductId { get; set; }

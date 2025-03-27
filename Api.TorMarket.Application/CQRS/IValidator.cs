@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Application.CQRS;
 
-internal interface IValidator<TCommand, TFailure>
+public interface IValidator<TCommand, TFailure>
 {
     Task<TFailure?> ValidateAsync(
         TCommand command,

@@ -1,5 +1,7 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
+using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUserFailure;
+
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
 public class CreateUserValidator(

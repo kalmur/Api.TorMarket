@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class ListingReviewEntity : AuditableEntity
+internal class ListingReviewEntity : AuditableEntity
 {
     public int ListingReviewId { get; set; }
     public int UserId { get; set; }

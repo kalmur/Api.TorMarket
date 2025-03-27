@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -14,7 +13,7 @@ namespace Api.TorMarket.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ListingCategory",
+                name: "ListingCategories",
                 columns: table => new
                 {
                     ListingCategoryId = table.Column<int>(type: "int", nullable: false)
@@ -23,11 +22,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListingCategory", x => x.ListingCategoryId);
+                    table.PrimaryKey("PK_ListingCategories", x => x.ListingCategoryId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderStatus",
+                name: "OrderStatuses",
                 columns: table => new
                 {
                     OrderStatusId = table.Column<int>(type: "int", nullable: false)
@@ -36,11 +35,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderStatus", x => x.OrderStatusId);
+                    table.PrimaryKey("PK_OrderStatuses", x => x.OrderStatusId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -51,11 +50,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Listing",
+                name: "Listings",
                 columns: table => new
                 {
                     ListingId = table.Column<int>(type: "int", nullable: false)
@@ -71,21 +70,21 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Listing", x => x.ListingId);
+                    table.PrimaryKey("PK_Listings", x => x.ListingId);
                     table.ForeignKey(
-                        name: "FK_Listing_ListingCategory_CategoryId",
+                        name: "FK_Listings_ListingCategories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "ListingCategory",
+                        principalTable: "ListingCategories",
                         principalColumn: "ListingCategoryId");
                     table.ForeignKey(
-                        name: "FK_Listing_User_UserId",
+                        name: "FK_Listings_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCart",
+                name: "ShoppingCarts",
                 columns: table => new
                 {
                     ShoppingCartId = table.Column<int>(type: "int", nullable: false)
@@ -94,17 +93,17 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCart", x => x.ShoppingCartId);
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.ShoppingCartId);
                     table.ForeignKey(
-                        name: "FK_ShoppingCart_User_UserId",
+                        name: "FK_ShoppingCarts_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAddress",
+                name: "UserAddresses",
                 columns: table => new
                 {
                     UserAddressId = table.Column<int>(type: "int", nullable: false)
@@ -120,11 +119,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAddress", x => x.UserAddressId);
+                    table.PrimaryKey("PK_UserAddresses", x => x.UserAddressId);
                     table.ForeignKey(
-                        name: "FK_UserAddress_User_UserId",
+                        name: "FK_UserAddresses_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId");
                 });
 
@@ -145,20 +144,20 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_ListingReviews", x => x.ListingReviewId);
                     table.ForeignKey(
-                        name: "FK_ListingReviews_Listing_ProductId",
+                        name: "FK_ListingReviews_Listings_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Listing",
+                        principalTable: "Listings",
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ListingReviews_User_UserId",
+                        name: "FK_ListingReviews_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCartItem",
+                name: "ShoppingCartItems",
                 columns: table => new
                 {
                     ShoppingCartItemId = table.Column<int>(type: "int", nullable: false)
@@ -169,23 +168,23 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartItem", x => x.ShoppingCartItemId);
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemId);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItem_Listing_ProductId",
+                        name: "FK_ShoppingCartItems_Listings_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Listing",
+                        principalTable: "Listings",
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItem_ShoppingCart_CartId",
+                        name: "FK_ShoppingCartItems_ShoppingCarts_CartId",
                         column: x => x.CartId,
-                        principalTable: "ShoppingCart",
+                        principalTable: "ShoppingCarts",
                         principalColumn: "ShoppingCartId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false),
@@ -199,29 +198,29 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                     table.ForeignKey(
-                        name: "FK_Order_OrderStatus_OrderId",
+                        name: "FK_Orders_OrderStatuses_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "OrderStatus",
+                        principalTable: "OrderStatuses",
                         principalColumn: "OrderStatusId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Order_UserAddress_OrderId",
+                        name: "FK_Orders_UserAddresses_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "UserAddress",
+                        principalTable: "UserAddresses",
                         principalColumn: "UserAddressId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Order_User_OrderId",
+                        name: "FK_Orders_Users_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderLine",
+                name: "OrderLines",
                 columns: table => new
                 {
                     OrderLineId = table.Column<int>(type: "int", nullable: false),
@@ -233,28 +232,28 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderLine", x => x.OrderLineId);
+                    table.PrimaryKey("PK_OrderLines", x => x.OrderLineId);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Listing_OrderLineId",
+                        name: "FK_OrderLines_Listings_OrderLineId",
                         column: x => x.OrderLineId,
-                        principalTable: "Listing",
+                        principalTable: "Listings",
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLine_Order_OrderEntityOrderId",
+                        name: "FK_OrderLines_Orders_OrderEntityOrderId",
                         column: x => x.OrderEntityOrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderId");
                     table.ForeignKey(
-                        name: "FK_OrderLine_Order_OrderLineId",
+                        name: "FK_OrderLines_Orders_OrderLineId",
                         column: x => x.OrderLineId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "ListingCategory",
+                table: "ListingCategories",
                 columns: new[] { "ListingCategoryId", "Name" },
                 values: new object[,]
                 {
@@ -268,7 +267,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "OrderStatus",
+                table: "OrderStatuses",
                 columns: new[] { "OrderStatusId", "Status" },
                 values: new object[,]
                 {
@@ -280,18 +279,8 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Listing_CategoryId",
-                table: "Listing",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Listing_UserId",
-                table: "Listing",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ListingCategory_Name",
-                table: "ListingCategory",
+                name: "IX_ListingCategories_Name",
+                table: "ListingCategories",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
@@ -311,40 +300,50 @@ namespace Api.TorMarket.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_UserId",
-                table: "Order",
+                name: "IX_Listings_CategoryId",
+                table: "Listings",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Listings_UserId",
+                table: "Listings",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderLine_OrderEntityOrderId",
-                table: "OrderLine",
+                name: "IX_OrderLines_OrderEntityOrderId",
+                table: "OrderLines",
                 column: "OrderEntityOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCart_UserId",
-                table: "ShoppingCart",
+                name: "IX_Orders_UserId",
+                table: "Orders",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItem_CartId",
-                table: "ShoppingCartItem",
+                name: "IX_ShoppingCartItems_CartId",
+                table: "ShoppingCartItems",
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItem_ProductId",
-                table: "ShoppingCartItem",
+                name: "IX_ShoppingCartItems_ProductId",
+                table: "ShoppingCartItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_ProviderId",
-                table: "User",
-                column: "ProviderId",
-                unique: true);
+                name: "IX_ShoppingCarts_UserId",
+                table: "ShoppingCarts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserAddress_UserId",
-                table: "UserAddress",
+                name: "IX_UserAddresses_UserId",
+                table: "UserAddresses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_ProviderId",
+                table: "Users",
+                column: "ProviderId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -354,31 +353,31 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "ListingReviews");
 
             migrationBuilder.DropTable(
-                name: "OrderLine");
+                name: "OrderLines");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCartItem");
+                name: "ShoppingCartItems");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Listing");
+                name: "Listings");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCart");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
-                name: "OrderStatus");
+                name: "OrderStatuses");
 
             migrationBuilder.DropTable(
-                name: "UserAddress");
+                name: "UserAddresses");
 
             migrationBuilder.DropTable(
-                name: "ListingCategory");
+                name: "ListingCategories");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Users");
         }
     }
 }

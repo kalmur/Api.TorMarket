@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-public class ListingEntityConfiguration : EntityConfigurationBase<ListingEntity>
+internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntity>
 {
-    protected override string TableName => TableNames.Listing;
+    protected override string TableName => TableNames.Listings;
 
     protected override void ConfigureColumns(EntityTypeBuilder<ListingEntity> builder)
     {
@@ -44,7 +44,7 @@ public class ListingEntityConfiguration : EntityConfigurationBase<ListingEntity>
     protected override void ConfigureKeys(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .ToTable(TableNames.Listing)
+            .ToTable(TableNames.Listings)
             .HasKey(x => x.ListingId);
 
         builder

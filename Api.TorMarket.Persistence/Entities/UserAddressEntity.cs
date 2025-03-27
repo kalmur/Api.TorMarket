@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class UserAddressEntity
+internal class UserAddressEntity
 {
     public int UserAddressId { get; set; }
     public int UserId { get; set; }

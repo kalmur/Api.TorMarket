@@ -3,7 +3,7 @@
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
 
 public class GetCategoryByNameValidator(
-    IProductCategoryRepository categoryRepository
+    IListingCategoryRepository categoryRepository
 ) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
 {
     public async Task<GetCategoryByNameFailure?> ValidateAsync(

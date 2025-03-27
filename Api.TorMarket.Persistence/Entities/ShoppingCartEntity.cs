@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-public class ShoppingCartEntity
+internal class ShoppingCartEntity
 {
     public int ShoppingCartId { get; set; }
     public int UserId { get; set; }
