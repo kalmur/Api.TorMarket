@@ -2,15 +2,15 @@
 
 internal class UserAddressEntity
 {
-    public int UserAddressId { get; set; }
-    public int UserId { get; set; }
-    public int UnitNumber { get; set; }
-    public int StreetNumber { get; set; }
-    public string? AddressLine { get; set; }
-    public string? City { get; set; }
-    public string? PostalCode { get; set; }
-    public string? Country { get; set; }
-    public bool IsDefault { get; set; }
+    internal int UserAddressId { get; set; }
+    internal int UserId { get; set; }
+    internal int UnitNumber { get; set; }
+    internal int StreetNumber { get; set; }
+    internal string? AddressLine { get; set; }
+    internal string? City { get; set; }
+    internal string? PostalCode { get; set; }
+    internal string? Country { get; set; }
+    internal bool IsDefault { get; set; }
 
-    public virtual UserEntity User { get; set; } = null!;
+    internal virtual UserEntity User { get; set; } = null!;
 }

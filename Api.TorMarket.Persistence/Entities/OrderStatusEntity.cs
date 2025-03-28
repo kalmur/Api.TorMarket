@@ -2,8 +2,8 @@
 
 internal class OrderStatusEntity
 {
-    public int OrderStatusId { get; set; }
-    public string Status { get; set; } = string.Empty;
+    internal int OrderStatusId { get; set; }
+    internal string Status { get; set; } = string.Empty;
 
-    public virtual ICollection<OrderEntity> Orders { get; set; } = null!;
+    internal virtual ICollection<OrderEntity> Orders { get; set; } = null!;
 }
