@@ -1,6 +1,7 @@
 ﻿using Api.TorMarket.WebApi.DTOs.Responses;
 using System.ComponentModel;
 using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
+using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.CreateListingFailure;
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 

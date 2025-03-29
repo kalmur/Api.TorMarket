@@ -3,11 +3,7 @@ using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Persistence.Entities.Extensions;
 
-<<<<<<<< HEAD:Api.TorMarket.Persistence/Entities/Extensions/UserExtensions.cs
 internal static class UserExtensions
-========
-internal static class SiteUserEntityExtensions
->>>>>>>> f8f3b56d68edbc9497d2ebac4fad9ad486dc6822:Api.TorMarket.Persistence/Entities/Extensions/SiteUserEntityExtensions.cs
 {
     public static User ToModel(
         this UserEntity entity

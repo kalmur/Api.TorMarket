@@ -26,19 +26,6 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
                ?? throw new InvalidOperationException("Product creation failed.");
     }
 
-    public async Task<Listing?> GetByIdAsync(
-        int productId, 
-        CancellationToken cancellationToken
-    ) => (
-        await context.Listing
-            .Include(p => p.User)
-            .Include(p => p.ProductCategoryEntity)
-            .FirstOrDefaultAsync(p => 
-                p.ListingId == productId, 
-                cancellationToken
-            )
-    )?.ToModel();
-
     public async Task<ImmutableArray<Listing>> GetAllAsync(
         CancellationToken cancellationToken
     ) => (
@@ -47,5 +34,33 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Include(p => p.ProductCategoryEntity)
             .Select(p => p.ToModel())
             .ToListAsync(cancellationToken)
+    ).ToImmutableArray();
+
+    public async Task<Listing?> GetByIdAsync(
+        int productId,
+        CancellationToken cancellationToken
+    ) => (
+        await context.Listing
+            .Include(p => p.User)
+            .Include(p => p.ProductCategoryEntity)
+            .FirstOrDefaultAsync(p =>
+                    p.ListingId == productId,
+                cancellationToken
+            )
+    )?.ToModel();
+
+    public async Task<ImmutableArray<Listing>> GetListingsForUserAsync(
+        int userId,
+        CancellationToken cancellationToken
+    ) => (
+        await context.Listing
+            .Include(p => p.User)
+            .Include(p => p.ProductCategoryEntity)
+            .Where(p => 
+                p.UserId == userId
+            )
+            .Select(p => 
+                p.ToModel()
+            ).ToListAsync(cancellationToken)
     ).ToImmutableArray();
 }

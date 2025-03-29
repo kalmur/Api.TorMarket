@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using static Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName.GetCategoryByNameFailure;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
 

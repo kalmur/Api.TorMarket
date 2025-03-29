@@ -1,6 +1,7 @@
 ﻿using Api.TorMarket.Application.CQRS;
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Domain.Models;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
@@ -10,7 +11,7 @@ namespace Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
 [TestFixture]
 internal class CreateUserHandlerTests
 {
-    private IUserRepository? _userRepository;
+    private IUserRepository _userRepository;
     private IValidator<CreateUserCommand, CreateUserFailure> _validator;
 
     private CreateUserHandler _handler;
@@ -37,8 +38,9 @@ internal class CreateUserHandlerTests
         };
 
         // Act
-        var result = await _handler.Handle(createUserCommand, CancellationToken.None)
+        var result = await _handler.Handle(createUserCommand, CancellationToken.None);
 
         // Assert
+        result.ShouldNotBeOfType<User>();
     }
 }

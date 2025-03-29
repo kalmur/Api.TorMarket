@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.CreateListingFailure;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
@@ -11,7 +12,7 @@ public class CreateListingValidator(
         CancellationToken cancellationToken
     )
     {
-        var errors = new List<ErrorType>();
+        var errors = new List<CreateListingFailure.ErrorType>();
 
         if (await UserDoesNotExist(command.UserId, cancellationToken))
             errors.Add(ErrorType.UserDoesNotExist);
