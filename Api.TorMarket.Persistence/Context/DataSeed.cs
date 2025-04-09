@@ -8,10 +8,10 @@ internal static class DataSeed
 {
     public static void SeedData(ModelBuilder builder)
     {
-        //SeedOrderStatuses(builder);
-        //SeedListingCategories(builder);
-        //SeedAdminUser(builder);
-        //SeedMockListings(builder);
+        SeedOrderStatuses(builder);
+        SeedListingCategories(builder);
+        SeedAdminUser(builder);
+        SeedMockListings(builder);
     }
 
     private static void SeedOrderStatuses(ModelBuilder builder)
