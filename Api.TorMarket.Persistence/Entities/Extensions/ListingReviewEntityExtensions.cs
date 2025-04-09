@@ -1,5 +1,5 @@
 ﻿namespace Api.TorMarket.Persistence.Entities.Extensions;
 
-internal class ProductReviewEntityExtensions
+internal class ListingReviewEntityExtensions
 {
 }

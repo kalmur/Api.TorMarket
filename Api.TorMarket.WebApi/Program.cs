@@ -20,15 +20,17 @@ builder.Services
         );
     });
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(corsBuilder =>
+builder.Services
+    .AddCors(options =>
     {
-        corsBuilder.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        options.AddDefaultPolicy(corsBuilder =>
+        {
+            corsBuilder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
     });
-});
 
 builder.Services
     .AddApplication(builder.Configuration)
@@ -42,6 +44,8 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors();
 
 app.UseAuthorization();
 

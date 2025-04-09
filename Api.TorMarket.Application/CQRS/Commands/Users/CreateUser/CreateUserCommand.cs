@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-public record CreateUserCommand : IRequest<ResultOrError<User, CreateUserFailure>>
+public sealed record CreateUserCommand : IRequest<ResultOrError<User, CreateUserFailure>>
 {
     public required string ProviderId { get; init; }
 

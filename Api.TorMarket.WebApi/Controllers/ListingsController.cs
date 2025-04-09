@@ -39,9 +39,7 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ImmutableArray<Listing>))]
-    public async Task<IActionResult> GetAllAsync(
-        CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
             new GetAllListingsQuery(),

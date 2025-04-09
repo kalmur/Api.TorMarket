@@ -25,5 +25,7 @@ public class GetListingsForUserHandler(
             user.UserId, 
             cancellationToken
         );
+
+        return listings;
     }
 }

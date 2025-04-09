@@ -4,6 +4,6 @@ public class GetListingsForUserValidator : IValidator<GetListingsForUserQuery, G
 {
     public Task<GetListingsForUserFailure?> ValidateAsync(GetListingsForUserQuery command, CancellationToken cancellationToken)
     {
-        
+        return null;
     }
 }

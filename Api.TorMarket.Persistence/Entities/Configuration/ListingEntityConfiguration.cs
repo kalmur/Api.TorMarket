@@ -23,6 +23,11 @@ internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntit
             .IsRequired();
 
         builder
+            .Property(x => x.CategoryId)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
             .Property(x => x.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();

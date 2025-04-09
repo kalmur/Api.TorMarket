@@ -1,6 +1,7 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
 using Api.TorMarket.WebApi.DTOs.Responses;
 using System.ComponentModel;
+using static Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName.GetCategoryByNameFailure;
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 

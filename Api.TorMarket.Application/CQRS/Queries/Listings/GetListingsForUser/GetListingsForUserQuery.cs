@@ -5,7 +5,7 @@ using System.Collections.Immutable;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForUser;
 
-public record GetListingsForUserQuery : IRequest<ResultOrError<ImmutableArray<Listing>, GetListingsForUserFailure>>
+public sealed record GetListingsForUserQuery : IRequest<ResultOrError<ImmutableArray<Listing>, GetListingsForUserFailure>>
 {
-    public string ProviderId { get; init; }
+    public required string ProviderId { get; init; }
 }

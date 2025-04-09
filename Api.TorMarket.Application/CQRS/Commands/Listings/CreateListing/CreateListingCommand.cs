@@ -5,19 +5,19 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-public record CreateListingCommand : IRequest<ResultOrError<Listing, CreateListingFailure>>
+public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, CreateListingFailure>>
 {
-    public required int UserId { get; set; }
+    public required int UserId { get; init; }
 
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
-    public required int CategoryId { get; set; }
+    public required int CategoryId { get; init; }
 
-    public required decimal Price { get; set; }
+    public required decimal Price { get; init; }
 
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
-    public DateTimeOffset AvailableFrom { get; set; }
+    public DateTimeOffset AvailableFrom { get; init; }
 
     internal CreateListingRequest ToRequest()
         => new()

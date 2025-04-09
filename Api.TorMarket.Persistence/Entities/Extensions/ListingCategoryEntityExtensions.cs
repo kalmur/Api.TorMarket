@@ -2,7 +2,7 @@
 
 namespace Api.TorMarket.Persistence.Entities.Extensions;
 
-internal static class ProductCategoryEntityExtensions
+internal static class ListingCategoryEntityExtensions
 {
     public static ListingCategory? ToModel(
         this ListingCategoryEntity entity

@@ -39,43 +39,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("ListingCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ListingCategoryId = 1,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 2,
-                            Name = "Games"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 3,
-                            Name = "Toys"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 4,
-                            Name = "Clothing"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 5,
-                            Name = "Vehicles"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 6,
-                            Name = "Pets"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 7,
-                            Name = "Other"
-                        });
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
@@ -89,29 +52,24 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<DateTimeOffset>("AvailableFrom")
                         .HasColumnType("datetimeoffset")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(7);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("int")
+                        .HasColumnOrder(3);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(4);
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnOrder(5);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -139,17 +97,11 @@ namespace Api.TorMarket.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("RatingValue")
                         .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -173,9 +125,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
 
@@ -187,9 +136,6 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -209,9 +155,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<int?>("OrderEntityOrderId")
-                        .HasColumnType("int");
-
                     b.Property<int>("OrderId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -229,8 +172,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(4);
 
                     b.HasKey("OrderLineId");
-
-                    b.HasIndex("OrderEntityOrderId");
 
                     b.ToTable("OrderLines", (string)null);
                 });
@@ -253,33 +194,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasKey("OrderStatusId");
 
                     b.ToTable("OrderStatuses", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            OrderStatusId = 1,
-                            Status = "Pending"
-                        },
-                        new
-                        {
-                            OrderStatusId = 2,
-                            Status = "Processing"
-                        },
-                        new
-                        {
-                            OrderStatusId = 3,
-                            Status = "Shipped"
-                        },
-                        new
-                        {
-                            OrderStatusId = 4,
-                            Status = "Delivered"
-                        },
-                        new
-                        {
-                            OrderStatusId = 5,
-                            Status = "Cancelled"
-                        });
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
@@ -488,10 +402,6 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", null)
-                        .WithMany("OrderLines")
-                        .HasForeignKey("OrderEntityOrderId");
-
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderLineId")
@@ -562,11 +472,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("ShoppingCartItems");
 
                     b.Navigation("UserProductReviews");
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>

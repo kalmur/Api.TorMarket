@@ -26,13 +26,16 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
                ?? throw new InvalidOperationException("Product creation failed.");
     }
 
-    public async Task<ImmutableArray<Listing>> GetAllAsync(
+    public async Task<ImmutableArray<ListingWithUserAndCategory>> GetAllInRandomOrder(
         CancellationToken cancellationToken
     ) => (
         await context.Listing
             .Include(p => p.User)
             .Include(p => p.ProductCategoryEntity)
-            .Select(p => p.ToModel())
+            .OrderBy(_ => Guid.NewGuid())
+            .Select(p => 
+                p.ToModelWithUserAndCategory()
+            )
             .ToListAsync(cancellationToken)
     ).ToImmutableArray();
 
