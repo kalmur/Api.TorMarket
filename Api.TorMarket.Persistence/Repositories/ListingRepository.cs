@@ -35,16 +35,6 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Select(p => p.ToModelWithUserAndCategory())
             .ToListAsync(cancellationToken);
 
-    public async Task<IEnumerable<ListingWithCategory?>> GetListingsForCategoryAsync(
-        string categoryName, 
-        CancellationToken cancellationToken
-    ) =>
-        await context.Listing
-            .Include(p => p.ListingCategory)
-            .Where(p => p.ListingCategory.Name == categoryName)
-            .Select(p => p.ToModelWithCategory())
-            .ToListAsync(cancellationToken);
-
     public async Task<Listing?> GetByIdAsync(
         int productId,
         CancellationToken cancellationToken
@@ -58,7 +48,17 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             )
     )?.ToModel();
 
-    public async Task<IEnumerable<Listing>> GetListingsForUserAsync(
+    public async Task<IEnumerable<ListingWithCategory>> GetByNameAsync(
+        string name,
+        CancellationToken ct
+    ) =>
+        await context.Listing
+            .Include(p => p.ListingCategory)
+            .Where(p => p.Name == name)
+            .Select(p => p.ToModelWithCategory())
+            .ToListAsync(ct);
+
+    public async Task<IEnumerable<Listing>> GetByUserIdAsync(
         int userId,
         CancellationToken cancellationToken
     ) =>
@@ -71,4 +71,14 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Select(p =>
                 p.ToModel()
             ).ToListAsync(cancellationToken);
+
+    public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
+        string categoryName,
+        CancellationToken cancellationToken
+    ) =>
+        await context.Listing
+            .Include(p => p.ListingCategory)
+            .Where(p => p.ListingCategory.Name == categoryName)
+            .Select(p => p.ToModelWithCategory())
+            .ToListAsync(cancellationToken);
 }

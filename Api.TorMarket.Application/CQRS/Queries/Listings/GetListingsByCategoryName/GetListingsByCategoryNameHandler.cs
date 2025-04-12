@@ -4,13 +4,13 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForCategory;
 
-public class GetListingsForCategoryHandler(IListingRepository repository) : IRequestHandler<GetListingsForCategoryQuery, IEnumerable<ListingWithCategory?>>
+public class GetListingsByCategoryNameHandler(IListingRepository repository) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithCategory?>>
 {
     public async Task<IEnumerable<ListingWithCategory?>> Handle(
-        GetListingsForCategoryQuery request,
+        GetListingsByCategoryNameQuery request,
         CancellationToken cancellationToken
     ) =>
-        await repository.GetListingsForCategoryAsync(
+        await repository.GetByCategoryNameAsync(
             request.CategoryName,
             cancellationToken
         );

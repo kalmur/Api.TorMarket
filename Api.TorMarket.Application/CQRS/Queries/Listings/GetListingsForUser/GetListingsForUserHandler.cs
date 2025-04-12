@@ -21,7 +21,7 @@ public class GetListingsForUserHandler(
             cancellationToken
         );
 
-        var listings = await listingRepository.GetListingsForUserAsync(
+        var listings = await listingRepository.GetByUserIdAsync(
             user.UserId, 
             cancellationToken
         );

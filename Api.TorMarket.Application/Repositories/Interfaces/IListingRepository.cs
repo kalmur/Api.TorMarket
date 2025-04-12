@@ -5,9 +5,10 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IListingRepository
 {
-    Task<Listing> CreateAsync(CreateListingRequest request, CancellationToken cancellationToken);
-    Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(CancellationToken cancellationToken);
-    Task<IEnumerable<ListingWithCategory?>> GetListingsForCategoryAsync(string categoryName, CancellationToken cancellationToken);
-    Task<Listing?> GetByIdAsync(int productId, CancellationToken cancellationToken);
-    Task<IEnumerable<Listing>> GetListingsForUserAsync(int userId, CancellationToken cancellationToken);
+    Task<Listing> CreateAsync(CreateListingRequest request, CancellationToken ct);
+    Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(CancellationToken ct);
+    Task<Listing?> GetByIdAsync(int productId, CancellationToken ct);
+    Task<ListingWithCategory> GetByName(string name, CancellationToken ct);
+    Task<IEnumerable<Listing>> GetByUserIdAsync(int userId, CancellationToken ct);
+    Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(string categoryName, CancellationToken ct);
 }

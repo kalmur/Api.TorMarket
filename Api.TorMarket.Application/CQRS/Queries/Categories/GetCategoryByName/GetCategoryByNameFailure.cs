@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
+﻿namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
 public record GetCategoryByNameFailure
 {

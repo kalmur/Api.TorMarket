@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForCategory;
 
-public sealed record GetListingsForCategoryQuery : IRequest<IEnumerable<ListingWithCategory?>>
+public sealed record GetListingsByCategoryNameQuery : IRequest<IEnumerable<ListingWithCategory?>>
 {
     public required string CategoryName { get; init; }
 }

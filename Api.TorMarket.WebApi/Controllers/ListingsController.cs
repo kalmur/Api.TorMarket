@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllCategories;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Domain.Models;
@@ -52,7 +53,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetListingsForCategoryAsync(
+    public async Task<IActionResult> GetByCategoryNameAsync(
         [FromQuery] string category,
         CancellationToken cancellationToken
     )
@@ -65,7 +66,22 @@ public class ListingsController(ISender mediator) : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet]
+    [Route("[name]")]
+    public async Task<IActionResult> GeyByName(
+       string name,
+       CancellationToken cancellationToken
+   )
+    {
+        var result = await mediator.Send(
+            name.ToGetByNameQuery(),
+            cancellationToken
+        );
 
+        return Ok(result);
+    }
+
+    //TODO - Move to a separate controller
     [HttpGet]
     [Route("categories/all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]

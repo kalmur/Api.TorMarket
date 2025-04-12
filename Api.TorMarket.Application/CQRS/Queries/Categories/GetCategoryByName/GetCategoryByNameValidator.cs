@@ -1,14 +1,14 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
-using static Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName.GetCategoryByNameFailure;
+using static Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName.GetCategoryByNameFailure;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
+namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
 public class GetCategoryByNameValidator(
     IListingCategoryRepository categoryRepository
 ) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
 {
     public async Task<GetCategoryByNameFailure?> ValidateAsync(
-        GetCategoryByNameQuery command, 
+        GetCategoryByNameQuery command,
         CancellationToken cancellationToken
     )
     {
@@ -34,7 +34,7 @@ public class GetCategoryByNameValidator(
     private async Task<bool> CategoryDoesNotExist(
         string categoryName,
         CancellationToken cancellationToken
-    ) => 
+    ) =>
         await categoryRepository.GetByNameAsync(
             categoryName,
             cancellationToken

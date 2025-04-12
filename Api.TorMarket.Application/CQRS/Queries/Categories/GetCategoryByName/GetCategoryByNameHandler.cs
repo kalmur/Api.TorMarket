@@ -3,20 +3,20 @@ using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
+namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
 internal class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
     IListingCategoryRepository productCategoryRepository
-) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ListingCategory ,GetCategoryByNameFailure>>
+) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ListingCategory, GetCategoryByNameFailure>>
 {
     public async Task<ResultOrError<ListingCategory, GetCategoryByNameFailure>> Handle(
-        GetCategoryByNameQuery request, 
+        GetCategoryByNameQuery request,
         CancellationToken cancellationToken
     )
     {
         var validationErrors = await validator.ValidateAsync(
-            request, 
+            request,
             cancellationToken
         );
 
