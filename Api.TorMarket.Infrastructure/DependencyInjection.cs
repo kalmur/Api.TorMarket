@@ -14,9 +14,13 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
        
-        services.Configure<Auth0Options>(configuration.GetSection(Auth0Options.SectionName));
+        services.Configure<Auth0Settings>(
+            configuration.GetSection(Auth0Settings.SectionName)
+        );
 
-        var options = configuration.GetSection(Auth0Options.SectionName).Get<Auth0Options>();
+        var options = configuration
+            .GetSection(Auth0Settings.SectionName)
+            .Get<Auth0Settings>();
 
         services.AddAuth0AuthenticationClient(config =>
         {
