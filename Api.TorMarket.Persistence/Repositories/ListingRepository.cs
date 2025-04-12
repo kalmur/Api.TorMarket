@@ -14,12 +14,15 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
         CancellationToken cancellationToken
     )
     {
-        var product = request.ToEntity();
+        var listing = request.ToEntity();
 
-        context.Listing.Add(product);
+        context.Listing.Add(listing);
         await context.SaveChangesAsync(cancellationToken);
 
-        var createdProduct = await GetByIdAsync(product.ListingId, cancellationToken);
+        var createdProduct = await GetByIdAsync(
+            listing.ListingId, 
+            cancellationToken
+        );
 
         return createdProduct 
                ?? throw new InvalidOperationException("Product creation failed.");
@@ -32,9 +35,7 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Include(p => p.User)
             .Include(p => p.ListingCategory)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(p => 
-                p.ToModelWithUserAndCategory()
-            )
+            .Select(p => p.ToModelWithUserAndCategory())
             .ToListAsync(cancellationToken);
 
     public async Task<Listing?> GetByIdAsync(
@@ -50,18 +51,14 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             )
     )?.ToModel();
 
-    public async Task<IEnumerable<ListingWithCategory>> GetByNameAsync(
+    public async Task<List<ListingWithCategory>> GetByNameAsync(
         string name,
         CancellationToken ct
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => 
-                p.Name == name
-            )
-            .Select(p => 
-                p.ToModelWithCategory()
-            )
+            .Where(p => p.Name == name)
+            .Select(p => p.ToModelWithCategory())
             .ToListAsync(ct);
 
     public async Task<IEnumerable<Listing>> GetByUserIdAsync(
@@ -71,12 +68,9 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
         await context.Listing
             .Include(p => p.User)
             .Include(p => p.ListingCategory)
-            .Where(p =>
-                p.UserId == userId
-            )
-            .Select(p =>
-                p.ToModel()
-            ).ToListAsync(cancellationToken);
+            .Where(p => p.UserId == userId)
+            .Select(p => p.ToModel())
+            .ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
         string categoryName,
@@ -84,11 +78,7 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => 
-                p.ListingCategory.Name == categoryName
-            )
-            .Select(p => 
-                p.ToModelWithCategory()
-            )
+            .Where(p => p.ListingCategory.Name == categoryName)
+            .Select(p => p.ToModelWithCategory())
             .ToListAsync(cancellationToken);
 }

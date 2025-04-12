@@ -23,7 +23,7 @@ public class GetListingsByNameHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        return await listingRepository.GetByNameAsync(
+         return await listingRepository.GetByNameAsync(
             request.Name,
             cancellationToken
         );
