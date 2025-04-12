@@ -32,7 +32,9 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Include(p => p.User)
             .Include(p => p.ListingCategory)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(p => p.ToModelWithUserAndCategory())
+            .Select(p => 
+                p.ToModelWithUserAndCategory()
+            )
             .ToListAsync(cancellationToken);
 
     public async Task<Listing?> GetByIdAsync(
@@ -54,8 +56,12 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => p.Name == name)
-            .Select(p => p.ToModelWithCategory())
+            .Where(p => 
+                p.Name == name
+            )
+            .Select(p => 
+                p.ToModelWithCategory()
+            )
             .ToListAsync(ct);
 
     public async Task<IEnumerable<Listing>> GetByUserIdAsync(
@@ -78,7 +84,11 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => p.ListingCategory.Name == categoryName)
-            .Select(p => p.ToModelWithCategory())
+            .Where(p => 
+                p.ListingCategory.Name == categoryName
+            )
+            .Select(p => 
+                p.ToModelWithCategory()
+            )
             .ToListAsync(cancellationToken);
 }

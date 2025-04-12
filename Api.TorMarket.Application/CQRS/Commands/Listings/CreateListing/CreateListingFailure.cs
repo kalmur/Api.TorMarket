@@ -1,6 +1,6 @@
 ﻿ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-public record CreateListingFailure
+public sealed record CreateListingFailure
 {
     public required IEnumerable<ErrorType> Errors { get; set; }
 

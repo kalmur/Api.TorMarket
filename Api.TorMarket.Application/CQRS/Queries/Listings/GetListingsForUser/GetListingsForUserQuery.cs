@@ -1,7 +1,5 @@
-﻿using Api.TorMarket.Application.Unions;
-using Api.TorMarket.Domain.Models;
+﻿using Api.TorMarket.Domain.Models;
 using MediatR;
-using System.Collections.Immutable;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForUser;
 

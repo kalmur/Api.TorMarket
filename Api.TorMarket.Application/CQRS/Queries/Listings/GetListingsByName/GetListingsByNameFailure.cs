@@ -1,14 +1,12 @@
 ﻿namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
 
-public class GetListingsByNameFailure
+public sealed record GetListingsByNameFailure
 {
-    public ErrorType Error { get; set; }
+    public required IEnumerable<ErrorType> Errors { get; set; }
 
     public enum ErrorType
     {
-        NotFound,
-        InvalidInput,
-        Unauthorized,
-        Unknown
+        InvalidName,
+        NotFound
     }
 }

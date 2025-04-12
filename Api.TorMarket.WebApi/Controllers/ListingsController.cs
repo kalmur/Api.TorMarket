@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-using Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllCategories;
+﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
