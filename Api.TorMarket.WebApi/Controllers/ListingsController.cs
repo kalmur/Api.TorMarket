@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllCategories;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
@@ -38,11 +39,29 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Route("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ImmutableArray<Listing>))]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
             new GetAllListingsQuery(),
+            cancellationToken
+        );
+
+        return Ok(result);
+    }
+
+
+    [HttpGet]
+    [Route("categories/all")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    public async Task<IActionResult> GetAllListingCategoriesAsync(
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            new GetAllCategoriesRequest(),
             cancellationToken
         );
 
