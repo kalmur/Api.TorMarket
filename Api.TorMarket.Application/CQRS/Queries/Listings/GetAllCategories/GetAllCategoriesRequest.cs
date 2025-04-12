@@ -1,0 +1,8 @@
+﻿using Api.TorMarket.Domain.Models;
+using MediatR;
+
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllCategories;
+
+public sealed record GetAllCategoriesRequest : IRequest<IEnumerable<ListingCategory>>
+{
+}
