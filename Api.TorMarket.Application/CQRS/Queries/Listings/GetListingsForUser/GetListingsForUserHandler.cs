@@ -9,9 +9,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForUser;
 public class GetListingsForUserHandler(
     IListingRepository listingRepository,
     IUserRepository userRepository
-) : IRequestHandler<GetListingsForUserQuery, ResultOrError<ImmutableArray<Listing>, GetListingsForUserFailure>>
+) : IRequestHandler<GetListingsForUserQuery, IEnumerable<Listing>>
 {
-    public async Task<ResultOrError<ImmutableArray<Listing>, GetListingsForUserFailure>> Handle(
+    public async Task<IEnumerable<Listing>> Handle(
         GetListingsForUserQuery request, 
         CancellationToken cancellationToken
     )

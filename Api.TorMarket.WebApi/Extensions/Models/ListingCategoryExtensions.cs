@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetCategoryByName;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsForCategory;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 
@@ -19,5 +20,12 @@ public static class ListingCategoryExtensions
     ) => new()
     {
         Name = name
+    };
+
+    public static GetListingsForCategoryQuery ToListingsForCategory(
+        this string name
+    ) => new()
+    {
+        CategoryName = name
     };
 }

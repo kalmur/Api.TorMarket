@@ -59,7 +59,7 @@ internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntit
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(x => x.ProductCategoryEntity)
+            .HasOne(x => x.ListingCategory)
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);

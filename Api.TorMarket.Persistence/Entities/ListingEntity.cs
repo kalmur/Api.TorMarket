@@ -13,7 +13,7 @@ internal class ListingEntity : AuditableEntity
     // Add image later down the line
 
     internal virtual UserEntity User { get; set; } = null!;
-    internal virtual ListingCategoryEntity ProductCategoryEntity { get; set; } = null!;
+    internal virtual ListingCategoryEntity ListingCategory { get; set; } = null!;
     internal virtual ICollection<ListingReviewEntity> UserProductReviews { get; set; } = null!;
     internal virtual ICollection<ShoppingCartItemEntity> ShoppingCartItems { get; set; } = null!;
     internal virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;

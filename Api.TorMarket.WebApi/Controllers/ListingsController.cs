@@ -40,11 +40,25 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [Route("all")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ImmutableArray<Listing>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Listing>))]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
             new GetAllListingsQuery(),
+            cancellationToken
+        );
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetListingsForCategoryAsync(
+        [FromQuery] string category,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            category.ToListingsForCategory(),
             cancellationToken
         );
 

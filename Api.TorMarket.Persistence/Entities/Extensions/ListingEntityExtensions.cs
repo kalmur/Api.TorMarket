@@ -33,7 +33,21 @@ internal static class ListingEntityExtensions
         Description = entity.Description,
         AvailableFrom = entity.AvailableFrom,
         User = entity.User.ToModel(),
-        Category = entity.ProductCategoryEntity.ToModel()
+        Category = entity.ListingCategory.ToModel()
+    };
+
+    public static ListingWithCategory ToModelWithCategory(
+        this ListingEntity entity
+    ) => new()
+    {
+        ListingId = entity.ListingId,
+        UserId = entity.UserId,
+        CategoryId = entity.CategoryId,
+        Name = entity.Name,
+        Price = entity.Price,
+        Description = entity.Description,
+        AvailableFrom = entity.AvailableFrom,
+        Category = entity.ListingCategory.ToModel()
     };
 
     public static ListingEntity ToEntity(

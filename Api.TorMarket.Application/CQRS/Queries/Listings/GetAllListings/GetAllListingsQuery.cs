@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 
-public sealed class GetAllListingsQuery : IRequest<ImmutableArray<ListingWithUserAndCategory>>
+public sealed record GetAllListingsQuery() : IRequest<IEnumerable<ListingWithUserAndCategory>>
 {
 }

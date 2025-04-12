@@ -7,13 +7,10 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 
 internal class GetAllListingsHandler(
     IListingRepository repository
-) : IRequestHandler<GetAllListingsQuery, ImmutableArray<ListingWithUserAndCategory>>
+) : IRequestHandler<GetAllListingsQuery, IEnumerable<ListingWithUserAndCategory>>
 {
-    public async Task<ImmutableArray<ListingWithUserAndCategory>> Handle(
+    public async Task<IEnumerable<ListingWithUserAndCategory>> Handle(
         GetAllListingsQuery request, 
         CancellationToken cancellationToken
-    )
-    {
-        return await repository.GetAllInRandomOrder(cancellationToken);
-    }
+    ) => await repository.GetAllInRandomOrder(cancellationToken);
 }

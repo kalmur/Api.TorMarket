@@ -1,7 +1,6 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
-using System.Collections.Immutable;
 using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -26,18 +25,25 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
                ?? throw new InvalidOperationException("Product creation failed.");
     }
 
-    public async Task<ImmutableArray<ListingWithUserAndCategory>> GetAllInRandomOrder(
+    public async Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(
         CancellationToken cancellationToken
-    ) => (
+    ) =>
         await context.Listing
             .Include(p => p.User)
-            .Include(p => p.ProductCategoryEntity)
+            .Include(p => p.ListingCategory)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(p => 
-                p.ToModelWithUserAndCategory()
-            )
-            .ToListAsync(cancellationToken)
-    ).ToImmutableArray();
+            .Select(p => p.ToModelWithUserAndCategory())
+            .ToListAsync(cancellationToken);
+
+    public async Task<IEnumerable<ListingWithCategory?>> GetListingsForCategoryAsync(
+        string categoryName, 
+        CancellationToken cancellationToken
+    ) =>
+        await context.Listing
+            .Include(p => p.ListingCategory)
+            .Where(p => p.ListingCategory.Name == categoryName)
+            .Select(p => p.ToModelWithCategory())
+            .ToListAsync(cancellationToken);
 
     public async Task<Listing?> GetByIdAsync(
         int productId,
@@ -45,25 +51,24 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
     ) => (
         await context.Listing
             .Include(p => p.User)
-            .Include(p => p.ProductCategoryEntity)
-            .FirstOrDefaultAsync(p =>
-                    p.ListingId == productId,
+            .Include(p => p.ListingCategory)
+            .FirstOrDefaultAsync(p => 
+                p.ListingId == productId,
                 cancellationToken
             )
     )?.ToModel();
 
-    public async Task<ImmutableArray<Listing>> GetListingsForUserAsync(
+    public async Task<IEnumerable<Listing>> GetListingsForUserAsync(
         int userId,
         CancellationToken cancellationToken
-    ) => (
+    ) =>
         await context.Listing
             .Include(p => p.User)
-            .Include(p => p.ProductCategoryEntity)
-            .Where(p => 
+            .Include(p => p.ListingCategory)
+            .Where(p =>
                 p.UserId == userId
             )
-            .Select(p => 
+            .Select(p =>
                 p.ToModel()
-            ).ToListAsync(cancellationToken)
-    ).ToImmutableArray();
+            ).ToListAsync(cancellationToken);
 }
