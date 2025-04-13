@@ -53,13 +53,13 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
 
     public async Task<List<ListingWithCategory>> GetByNameAsync(
         string name,
-        CancellationToken ct
+        CancellationToken cancellationToken
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => p.Name == name)
+            .Where(p => p.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
             .Select(p => p.ToModelWithCategory())
-            .ToListAsync(ct);
+            .ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<Listing>> GetByUserIdAsync(
         int userId,

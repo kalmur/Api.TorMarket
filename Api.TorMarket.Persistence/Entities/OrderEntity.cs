@@ -12,5 +12,6 @@ internal class OrderEntity : AuditableEntity
     internal virtual UserEntity User { get; set; } = null!;
     internal virtual UserAddressEntity Address { get; set; } = null!;
     internal virtual OrderStatusEntity StatusEntity { get; set; } = null!;
+
     internal virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;
 }

@@ -6,5 +6,6 @@ internal class ShoppingCartEntity
     internal int UserId { get; set; }
 
     internal virtual UserEntity User { get; set; } = null!;
+
     internal virtual ICollection<ShoppingCartItemEntity> Items { get; set; } = null!;
 }

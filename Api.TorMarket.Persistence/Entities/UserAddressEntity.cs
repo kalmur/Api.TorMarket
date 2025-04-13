@@ -3,14 +3,14 @@
 internal class UserAddressEntity
 {
     internal int UserAddressId { get; set; }
-    internal int UserId { get; set; }
-    internal int UnitNumber { get; set; }
-    internal int StreetNumber { get; set; }
-    internal string? AddressLine { get; set; }
-    internal string? City { get; set; }
-    internal string? PostalCode { get; set; }
-    internal string? Country { get; set; }
-    internal bool IsDefault { get; set; }
+    internal required int UserId { get; set; }
+    internal required int UnitNumber { get; set; }
+    internal required int StreetNumber { get; set; }
+    internal required string AddressLine { get; set; }
+    internal required string City { get; set; }
+    internal required string PostalCode { get; set; }
+    internal required string Country { get; set; }
+    internal required bool IsDefault { get; set; }
 
     internal virtual UserEntity User { get; set; } = null!;
 }

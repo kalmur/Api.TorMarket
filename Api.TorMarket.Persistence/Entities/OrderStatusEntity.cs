@@ -3,7 +3,7 @@
 internal class OrderStatusEntity
 {
     internal int OrderStatusId { get; set; }
-    internal string Status { get; set; } = string.Empty;
+    internal required string Status { get; set; }
 
     internal virtual ICollection<OrderEntity> Orders { get; set; } = null!;
 }
