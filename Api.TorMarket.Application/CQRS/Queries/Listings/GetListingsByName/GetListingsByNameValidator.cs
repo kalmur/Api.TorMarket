@@ -4,7 +4,7 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
 
 public class GetListingByNameValidator(
     IListingRepository listingRepository
-) : IValidator<GetListingsByNameQuery, GetListingsByNameFailure?>
+) : IValidator<GetListingsByNameQuery, GetListingsByNameFailure>
 {
     public async Task<GetListingsByNameFailure?> ValidateAsync(
         GetListingsByNameQuery query, 

@@ -32,6 +32,4 @@ public static class DependencyInjection
             .AddScoped<IValidator<CreateUserCommand, CreateUserFailure>, CreateUserValidator>()
             .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>, GetCategoryByNameValidator>()
             .AddScoped<IValidator<GetListingsByNameQuery, GetListingsByNameFailure>, GetListingByNameValidator>();
-
-
 }
