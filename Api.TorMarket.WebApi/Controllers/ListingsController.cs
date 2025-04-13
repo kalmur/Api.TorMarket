@@ -39,7 +39,7 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [Route("all")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Listing>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
@@ -51,6 +51,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
         [FromQuery] string category,
         CancellationToken cancellationToken
@@ -65,7 +66,8 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("[name]")]
+    [Route("{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GeyByName(
        string name,
        CancellationToken cancellationToken
@@ -77,45 +79,5 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return Ok(result);
-    }
-
-    //TODO - Move to a separate controller
-    [HttpGet]
-    [Route("categories/all")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAllListingCategoriesAsync(
-        CancellationToken cancellationToken
-    )
-    {
-        var result = await mediator.Send(
-            new GetAllCategoriesRequest(),
-            cancellationToken
-        );
-
-        return Ok(result);
-    }
-
-    [HttpGet]
-    [Route("categories/{name}")]
-    [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(ListingCategory))]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetListingCategoryByNameAsync(
-        string name,
-        CancellationToken cancellationToken
-    )
-    {
-        var result = await mediator.Send(
-            name.ToQuery(),
-            cancellationToken
-        );
-
-        return result.IsError
-            ? BadRequest(
-                result.Error.ToFailureResponseDto()
-            )
-            : Ok(
-                result.Result.ToResponseDto()
-            );
     }
 }

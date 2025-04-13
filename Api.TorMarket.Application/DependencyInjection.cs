@@ -2,6 +2,7 @@
 using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,5 +30,8 @@ public static class DependencyInjection
     ) => services
             .AddScoped<IValidator<CreateListingCommand, CreateListingFailure>, CreateListingValidator>()
             .AddScoped<IValidator<CreateUserCommand, CreateUserFailure>, CreateUserValidator>()
-            .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>, GetCategoryByNameValidator>();
+            .AddScoped<IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>, GetCategoryByNameValidator>()
+            .AddScoped<IValidator<GetListingsByNameQuery, GetListingsByNameFailure>, GetListingByNameValidator>();
+
+
 }
