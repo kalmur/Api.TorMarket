@@ -12,7 +12,7 @@ public class CreateListingValidator(
         CancellationToken cancellationToken
     )
     {
-        var errors = new List<CreateListingFailure.ErrorType>();
+        var errors = new List<ErrorType>();
 
         if (await UserDoesNotExist(command.UserId, cancellationToken))
             errors.Add(ErrorType.UserDoesNotExist);

@@ -8,11 +8,10 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
 public class GetListingsByNameHandler(
     IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
-    IListingRepository listingRepository,
-    ILogger<GetListingsByNameHandler> logger
-) : IRequestHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure?>>
+    IListingRepository listingRepository
+) : IRequestHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure>>
 {
-    public async Task<ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure?>> Handle(
+    public async Task<ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure>> Handle(
         GetListingsByNameQuery query,
         CancellationToken cancellationToken
     )
@@ -25,9 +24,7 @@ public class GetListingsByNameHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        logger.LogInformation("Getting listings with name {name}", query.Name);
-
-         return await listingRepository.GetByNameAsync(
+        return await listingRepository.GetByNameAsync(
             query.Name,
             cancellationToken
         );

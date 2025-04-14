@@ -63,7 +63,7 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? BadRequest(
+            ? UnprocessableEntity(
                 resultOrError.Error.ToFailureResponseDto()
             )
             : Ok(resultOrError.Result);

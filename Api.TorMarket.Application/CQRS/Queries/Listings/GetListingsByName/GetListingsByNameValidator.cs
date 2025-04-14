@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using static Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName.GetListingsByNameFailure;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
@@ -11,13 +12,13 @@ public class GetListingByNameValidator(
         CancellationToken cancellationToken
     )
     {
-        var errors = new List<GetListingsByNameFailure.ErrorType>();
+        var errors = new List<ErrorType>();
 
         if (string.IsNullOrWhiteSpace(query.Name))
-            errors.Add(GetListingsByNameFailure.ErrorType.InvalidName);
+            errors.Add(ErrorType.InvalidName);
 
         if (await ListingsNotFound(query.Name, cancellationToken))
-            errors.Add(GetListingsByNameFailure.ErrorType.NotFound);
+            errors.Add(ErrorType.NotFound);
 
         if (errors.Count > 0)
         {
@@ -38,5 +39,6 @@ public class GetListingByNameValidator(
             await listingRepository.GetByNameAsync(
                 name, 
                 cancellationToken
-            )).Count == 0;
+            )
+        ).Count == 0;
 }
