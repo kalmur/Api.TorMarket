@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
+﻿namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
 public sealed record GetListingsByNameFailure
 {

@@ -2,7 +2,7 @@
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
 public sealed record GetListingsByNameQuery : IRequest<ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure?>>
 {

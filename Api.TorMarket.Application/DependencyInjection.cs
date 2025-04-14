@@ -2,7 +2,7 @@
 using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

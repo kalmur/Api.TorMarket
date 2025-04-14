@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Models;
@@ -20,18 +19,18 @@ public class ListingsController(ISender mediator) : ControllerBase
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var resultOrError = await mediator.Send(
             request.ToCommand(),
             cancellationToken
         );
 
-        return result.IsError
+        return resultOrError.IsError
             ? UnprocessableEntity(
-                result.Error.ToFailureResponseDto()
+                resultOrError.Error.ToFailureResponseDto()
             )
             : StatusCode(
                 StatusCodes.Status201Created, 
-                result.Result.ToResponseDto()
+                resultOrError.Result.ToResponseDto()
             );
 
         // CreatedAtAction maybe
@@ -51,6 +50,26 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Route("{name}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    public async Task<IActionResult> GeyByNameAsync(
+       [FromRoute] string name,
+       CancellationToken cancellationToken
+    )
+    {
+        var resultOrError = await mediator.Send(
+            name.ToGetByNameQuery(),
+            cancellationToken
+        );
+
+        return resultOrError.IsError
+            ? BadRequest(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Ok(resultOrError.Result);
+    }
+
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
         [FromQuery] string category,
@@ -59,22 +78,6 @@ public class ListingsController(ISender mediator) : ControllerBase
     {
         var result = await mediator.Send(
             category.ToListingsForCategory(),
-            cancellationToken
-        );
-
-        return Ok(result);
-    }
-
-    [HttpGet]
-    [Route("{name}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
-    public async Task<IActionResult> GeyByName(
-       string name,
-       CancellationToken cancellationToken
-   )
-    {
-        var result = await mediator.Send(
-            name.ToGetByNameQuery(),
             cancellationToken
         );
 

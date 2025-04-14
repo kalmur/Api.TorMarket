@@ -57,7 +57,7 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
     ) =>
         await context.Listing
             .Include(p => p.ListingCategory)
-            .Where(p => p.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+            .Where(p => p.Name.ToLower().Contains(name.ToLower()))
             .Select(p => p.ToModelWithCategory())
             .ToListAsync(cancellationToken);
 

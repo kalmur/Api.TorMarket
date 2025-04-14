@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListing;
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
 public class GetListingByNameValidator(
     IListingRepository listingRepository
