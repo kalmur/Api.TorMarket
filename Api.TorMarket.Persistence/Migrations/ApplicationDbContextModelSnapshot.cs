@@ -22,15 +22,707 @@ namespace Api.TorMarket.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
+                {
+                    b.Property<int>("ListingCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingCategoryId"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ListingCategoryId");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("ListingCategories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ListingCategoryId = 1,
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 2,
+                            Name = "Games"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 3,
+                            Name = "Toys"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 4,
+                            Name = "Clothing"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 5,
+                            Name = "Vehicles"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 6,
+                            Name = "Pets"
+                        },
+                        new
+                        {
+                            ListingCategoryId = 7,
+                            Name = "Other"
+                        });
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
+                {
+                    b.Property<int>("ListingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingId"));
+
+                    b.Property<DateTimeOffset>("AvailableFrom")
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(7);
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(6);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(4);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnOrder(5);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("ListingId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Listings", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ListingId = 1,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "High-performance gaming laptop with a powerful GPU and fast processor.",
+                            Name = "MSI GE76 Raider",
+                            Price = 2500m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 2,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2025, 4, 9, 9, 45, 52, 995, DateTimeKind.Unspecified).AddTicks(5975), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "Precision gaming mouse with customizable buttons and RGB lighting.",
+                            Name = "Logitech GPROX",
+                            Price = 130m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 3,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "Wireless noise-canceling headphones with superior sound quality.",
+                            Name = "Sony WH-1000XM4",
+                            Price = 350m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 4,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "High-end tablet with M1 chip and large Retina display.",
+                            Name = "Apple iPad Pro 12.9",
+                            Price = 1100m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 5,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "Compact laptop with a sleek design and high-resolution display.",
+                            Name = "Dell XPS 13",
+                            Price = 1400m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 6,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "Latest smartphone with advanced camera features and high performance.",
+                            Name = "Samsung Galaxy S23 Ultra",
+                            Price = 1200m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 7,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "55-inch OLED TV with stunning color accuracy and contrast.",
+                            Name = "LG OLED TV 55\"",
+                            Price = 1800m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 8,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 1,
+                            Description = "Wireless headphones with world-class noise cancellation and comfortable fit.",
+                            Name = "Bose QuietComfort 35 II",
+                            Price = 300m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 9,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Next-gen gaming console with immersive graphics.",
+                            Name = "PlayStation 5",
+                            Price = 499m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 10,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Powerful gaming console with a sleek design.",
+                            Name = "Xbox Series X",
+                            Price = 499m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 11,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Portable gaming console with vibrant display.",
+                            Name = "Nintendo Switch OLED",
+                            Price = 349m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 12,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Realistic racing wheel for driving games.",
+                            Name = "Logitech G29 Racing Wheel",
+                            Price = 299m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 13,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Gaming headset with surround sound.",
+                            Name = "Razer Kraken Headset",
+                            Price = 79m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 14,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Mechanical keyboard with RGB lighting.",
+                            Name = "Corsair K95 Keyboard",
+                            Price = 199m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 15,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Gaming mouse with dual sensors.",
+                            Name = "SteelSeries Rival 600",
+                            Price = 89m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 16,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 2,
+                            Description = "Comfortable gaming headset with great sound.",
+                            Name = "HyperX Cloud II",
+                            Price = 99m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 17,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Iconic LEGO set for Star Wars fans.",
+                            Name = "LEGO Star Wars Millennium Falcon",
+                            Price = 159m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 18,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Luxury dollhouse with interactive features.",
+                            Name = "Barbie Dreamhouse",
+                            Price = 199m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 19,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Massive garage playset for Hot Wheels cars.",
+                            Name = "Hot Wheels Ultimate Garage",
+                            Price = 99m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 20,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "High-capacity foam dart blaster.",
+                            Name = "NERF Ultra One Blaster",
+                            Price = 49m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 21,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Interactive learning toy for toddlers.",
+                            Name = "Fisher-Price Laugh & Learn",
+                            Price = 39m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 22,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Creative playset for making pretend food.",
+                            Name = "Play-Doh Kitchen Creations",
+                            Price = 29m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 23,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Action figure that transforms into a truck.",
+                            Name = "Transformers Optimus Prime",
+                            Price = 49m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 24,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 3,
+                            Description = "Classic board game for family fun.",
+                            Name = "Monopoly Classic",
+                            Price = 19m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 25,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Stylish leather jacket for men.",
+                            Name = "Men's Leather Jacket",
+                            Price = 120m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 26,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Warm and comfortable winter coat.",
+                            Name = "Women's Winter Coat",
+                            Price = 150m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 27,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Durable rain boots for kids.",
+                            Name = "Kids' Rain Boots",
+                            Price = 30m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 28,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Breathable t-shirt for sports activities.",
+                            Name = "Sports T-Shirt",
+                            Price = 25m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 29,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Elegant formal dress for special occasions.",
+                            Name = "Formal Dress",
+                            Price = 200m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 30,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Comfortable sneakers for everyday wear.",
+                            Name = "Casual Sneakers",
+                            Price = 60m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 31,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Soft and warm wool scarf.",
+                            Name = "Wool Scarf",
+                            Price = 20m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 32,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 4,
+                            Description = "Classic baseball cap for sunny days.",
+                            Name = "Baseball Cap",
+                            Price = 15m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 33,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Durable mountain bike for off-road adventures.",
+                            Name = "Mountain Bike",
+                            Price = 500m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 34,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Eco-friendly electric scooter for city commuting.",
+                            Name = "Electric Scooter",
+                            Price = 300m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 35,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Convenient roof rack for carrying extra luggage.",
+                            Name = "Car Roof Rack",
+                            Price = 150m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 36,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Safety helmet for motorcycle riders.",
+                            Name = "Motorcycle Helmet",
+                            Price = 100m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 37,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Secure car seat for children.",
+                            Name = "Child Car Seat",
+                            Price = 80m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 38,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Durable tires for all weather conditions.",
+                            Name = "All-Weather Tires",
+                            Price = 400m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 39,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Secure lock for bicycles.",
+                            Name = "Bike Lock",
+                            Price = 20m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 40,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 5,
+                            Description = "Protective cover for cars.",
+                            Name = "Car Cover",
+                            Price = 50m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 41,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Comfortable bed for dogs.",
+                            Name = "Dog Bed",
+                            Price = 40m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 42,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Durable scratching post for cats.",
+                            Name = "Cat Scratching Post",
+                            Price = 30m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 43,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Spacious cage for pet birds.",
+                            Name = "Bird Cage",
+                            Price = 100m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 44,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Large tank for pet fish.",
+                            Name = "Fish Tank",
+                            Price = 200m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 45,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Outdoor hutch for rabbits.",
+                            Name = "Rabbit Hutch",
+                            Price = 150m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 46,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Durable leash for walking dogs.",
+                            Name = "Dog Leash",
+                            Price = 20m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 47,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Easy-to-clean litter box for cats.",
+                            Name = "Cat Litter Box",
+                            Price = 25m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 48,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 6,
+                            Description = "Exercise wheel for hamsters.",
+                            Name = "Hamster Wheel",
+                            Price = 15m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 49,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Spacious tent for outdoor camping.",
+                            Name = "Camping Tent",
+                            Price = 100m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 50,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Non-slip mat for yoga and exercise.",
+                            Name = "Yoga Mat",
+                            Price = 20m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 51,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Portable toolbox with essential tools.",
+                            Name = "Toolbox",
+                            Price = 50m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 52,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Fast-boiling electric kettle.",
+                            Name = "Electric Kettle",
+                            Price = 30m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 53,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Powerful vacuum cleaner for home use.",
+                            Name = "Vacuum Cleaner",
+                            Price = 150m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 54,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Compact heater for small spaces.",
+                            Name = "Portable Heater",
+                            Price = 80m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 55,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Adjustable desk lamp with LED light.",
+                            Name = "Desk Lamp",
+                            Price = 25m,
+                            UserId = 1
+                        },
+                        new
+                        {
+                            ListingId = 56,
+                            AvailableFrom = new DateTimeOffset(new DateTime(2024, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CategoryId = 7,
+                            Description = "Durable backpack for travel and school.",
+                            Name = "Backpack",
+                            Price = 40m,
+                            UserId = 1
+                        });
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingReviewEntity", b =>
+                {
+                    b.Property<int>("ListingReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingReviewId"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RatingValue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ListingReviewId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId", "ProductId")
+                        .IsUnique();
+
+                    b.ToTable("ListingReviews", (string)null);
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset");
@@ -44,9 +736,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
@@ -55,18 +744,15 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order", (string)null);
+                    b.ToTable("Orders", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
                     b.Property<int>("OrderLineId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
-
-                    b.Property<int?>("OrderEntityOrderId")
-                        .HasColumnType("int");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int")
@@ -86,12 +772,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasKey("OrderLineId");
 
-                    b.HasIndex("OrderEntityOrderId");
-
-                    b.ToTable("OrderLine", (string)null);
+                    b.ToTable("OrderLines", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>
                 {
                     b.Property<int>("OrderStatusId")
                         .ValueGeneratedOnAdd()
@@ -108,7 +792,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasKey("OrderStatusId");
 
-                    b.ToTable("OrderStatus", (string)null);
+                    b.ToTable("OrderStatuses", (string)null);
 
                     b.HasData(
                         new
@@ -138,151 +822,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductCategoryEntity", b =>
-                {
-                    b.Property<int>("ProductCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductCategoryId"));
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ProductCategoryId");
-
-                    b.HasIndex("Name");
-
-                    b.ToTable("ProductCategory", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ProductCategoryId = 1,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 2,
-                            Name = "Games"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 3,
-                            Name = "Toys"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 4,
-                            Name = "Clothing"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 5,
-                            Name = "Vehicles"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 6,
-                            Name = "Pets"
-                        },
-                        new
-                        {
-                            ProductCategoryId = 7,
-                            Name = "Other"
-                        });
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductEntity", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductId"));
-
-                    b.Property<DateTimeOffset>("AvailableFrom")
-                        .HasColumnType("datetimeoffset")
-                        .HasColumnOrder(6);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(5);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(3);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(4);
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
-                    b.HasKey("ProductId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Product", (string)null);
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductReviewEntity", b =>
-                {
-                    b.Property<int>("ProductReviewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductReviewId"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RatingValue")
-                        .HasColumnType("int");
-
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductReviewId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId", "ProductId")
-                        .IsUnique();
-
-                    b.ToTable("ProductReviews", (string)null);
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Property<int>("ShoppingCartId")
                         .ValueGeneratedOnAdd()
@@ -299,10 +839,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ShoppingCart", (string)null);
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartItemEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity", b =>
                 {
                     b.Property<int>("ShoppingCartItemId")
                         .ValueGeneratedOnAdd()
@@ -329,10 +869,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ShoppingCartItem", (string)null);
+                    b.ToTable("ShoppingCartItems", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserAddressEntity", b =>
                 {
                     b.Property<int>("UserAddressId")
                         .ValueGeneratedOnAdd()
@@ -388,10 +928,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddress", (string)null);
+                    b.ToTable("UserAddresses", (string)null);
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -418,24 +958,71 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasIndex("ProviderId")
                         .IsUnique();
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            ProviderId = "auth0|67b6687fb71ed3cae5848607",
+                            UpdatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                        });
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderStatusEntity", "StatusEntity")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", "ProductCategoryEntity")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
+                        .WithMany("Products")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ProductCategoryEntity");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingReviewEntity", b =>
+                {
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
+                        .WithMany("UserProductReviews")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
+                        .WithMany("ProductReviews")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
+                {
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderStatusEntity", "StatusEntity")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserAddressEntity", "Address")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "Address")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -448,20 +1035,16 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderLineEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", null)
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("OrderLines")
-                        .HasForeignKey("OrderEntityOrderId");
-
-                    b.HasOne("Api.TorMarket.Domain.Entities.OrderEntity", "Order")
-                        .WithMany()
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.ProductEntity", "Product")
-                        .WithMany("OrderLines")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", "Order")
+                        .WithMany()
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -471,47 +1054,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ProductCategoryEntity", "ProductCategoryEntity")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
-                        .WithMany("Products")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ProductCategoryEntity");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductReviewEntity", b =>
-                {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ProductEntity", "Product")
-                        .WithMany("UserProductReviews")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
-                        .WithMany("ProductReviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
-                {
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -520,15 +1065,15 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartItemEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.ShoppingCartEntity", "ShoppingCart")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", "ShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Domain.Entities.ProductEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -539,9 +1084,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserAddressEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserAddressEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Domain.Entities.UserEntity", "User")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -550,22 +1095,12 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderEntity", b =>
-                {
-                    b.Navigation("OrderLines");
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.OrderStatusEntity", b =>
-                {
-                    b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductCategoryEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ProductEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
                     b.Navigation("OrderLines");
 
@@ -574,12 +1109,17 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("UserProductReviews");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.ShoppingCartEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Domain.Entities.UserEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
                 {
                     b.Navigation("Addresses");
 

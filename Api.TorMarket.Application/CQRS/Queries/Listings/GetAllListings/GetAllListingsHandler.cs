@@ -1,0 +1,15 @@
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Domain.Models;
+using MediatR;
+
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+
+internal class GetAllListingsHandler(
+    IListingRepository repository
+) : IRequestHandler<GetAllListingsQuery, IEnumerable<ListingWithUserAndCategory>>
+{
+    public async Task<IEnumerable<ListingWithUserAndCategory>> Handle(
+        GetAllListingsQuery request, 
+        CancellationToken cancellationToken
+    ) => await repository.GetAllInRandomOrder(cancellationToken);
+}

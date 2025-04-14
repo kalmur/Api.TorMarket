@@ -1,11 +1,20 @@
-﻿using Api.TorMarket.Application.Interfaces;
-using Api.TorMarket.Domain.Entities;
-using Api.TorMarket.Domain.Entities.Common;
+﻿using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
+using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
+using ListingEntity = Api.TorMarket.Persistence.Entities.ListingEntity;
+using ListingReviewEntity = Api.TorMarket.Persistence.Entities.ListingReviewEntity;
+using OrderEntity = Api.TorMarket.Persistence.Entities.OrderEntity;
+using OrderLineEntity = Api.TorMarket.Persistence.Entities.OrderLineEntity;
+using OrderStatusEntity = Api.TorMarket.Persistence.Entities.OrderStatusEntity;
+using ShoppingCartEntity = Api.TorMarket.Persistence.Entities.ShoppingCartEntity;
+using ShoppingCartItemEntity = Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity;
+using UserAddressEntity = Api.TorMarket.Persistence.Entities.UserAddressEntity;
+using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-public class ApplicationDbContext : DbContext, IApplicationDbContext
+internal class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
@@ -15,12 +24,12 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<OrderEntity> Order => Set<OrderEntity>();
     public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
     public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
-    public DbSet<ProductEntity> Product => Set<ProductEntity>();
-    public DbSet<ProductCategoryEntity> ProductCategory => Set<ProductCategoryEntity>();
-    public DbSet<ProductReviewEntity> ProductReview => Set<ProductReviewEntity>();
+    public DbSet<ListingEntity> Listing => Set<ListingEntity>();
+    public DbSet<ListingCategoryEntity> ListingCategory => Set<ListingCategoryEntity>();
+    public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
-    public DbSet<UserEntity> SiteUser => Set<UserEntity>();
+    public DbSet<UserEntity> User => Set<UserEntity>();
     public DbSet<UserAddressEntity> UserAddress => Set<UserAddressEntity>();
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

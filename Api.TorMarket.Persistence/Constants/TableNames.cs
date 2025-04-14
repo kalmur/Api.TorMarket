@@ -1,15 +1,15 @@
 ﻿namespace Api.TorMarket.Persistence.Constants;
 
-public class TableNames
+internal class TableNames
 {
-    internal const string Order = nameof(Order);
-    internal const string OrderLine = nameof(OrderLine);
-    internal const string OrderStatus = nameof(OrderStatus);
-    internal const string Product = nameof(Product);
-    internal const string ProductCategory = nameof(ProductCategory);
-    internal const string ShoppingCart = nameof(ShoppingCart);
-    internal const string ShoppingCartItem = nameof(ShoppingCartItem);
-    internal const string User = nameof(User);
-    internal const string UserAddress = nameof(UserAddress);
-    internal const string ProductReviews = nameof(ProductReviews);
+    internal const string Orders = nameof(Orders);
+    internal const string OrderLines = nameof(OrderLines);
+    internal const string OrderStatuses = nameof(OrderStatuses);
+    internal const string Listings = nameof(Listings);
+    internal const string ListingCategories = nameof(ListingCategories);
+    internal const string ShoppingCarts = nameof(ShoppingCarts);
+    internal const string ShoppingCartItems = nameof(ShoppingCartItems);
+    internal const string Users = nameof(Users);
+    internal const string UserAddresses = nameof(UserAddresses);
+    internal const string ListingReviews = nameof(ListingReviews);
 }

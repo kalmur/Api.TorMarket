@@ -1,5 +1,5 @@
-﻿using Api.TorMarket.Application.Interfaces;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Context;
 using Api.TorMarket.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +35,9 @@ public static class DependencyInjection
             );
         });
 
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+        services.AddScoped<IApplicationDbContext>(provider => 
+            provider.GetService<ApplicationDbContext>()!
+        );
 
         return services;
     }
@@ -43,7 +45,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(
         this IServiceCollection services
     ) => services
-        .AddScoped<IProductRepository, ProductRepository>()
-        .AddScoped<IProductCategoryRepository, ProductCategoryRepository>()
+        .AddScoped<IListingRepository, ListingRepository>()
+        .AddScoped<IListingCategoryRepository, ListingCategoryRepository>()
         .AddScoped<IUserRepository, UserRepository>();
 }

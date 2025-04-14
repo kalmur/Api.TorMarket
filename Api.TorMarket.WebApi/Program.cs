@@ -1,9 +1,7 @@
 using Api.TorMarket.Application;
 using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
-using Api.TorMarket.WebApi.Responses;
 using Microsoft.OpenApi.Models;
-using HttpResponse = Api.TorMarket.WebApi.Responses.HttpResponse;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,15 +20,17 @@ builder.Services
         );
     });
 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(corsBuilder =>
+builder.Services
+    .AddCors(options =>
     {
-        corsBuilder.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        options.AddDefaultPolicy(corsBuilder =>
+        {
+            corsBuilder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
     });
-});
 
 builder.Services
     .AddApplication(builder.Configuration)
@@ -38,15 +38,14 @@ builder.Services
     .AddPersistence(builder.Configuration)
     .AddControllers();
 
-builder.Services
-    .AddScoped<IHttpResponse, HttpResponse>();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors();
 
 app.UseAuthorization();
 

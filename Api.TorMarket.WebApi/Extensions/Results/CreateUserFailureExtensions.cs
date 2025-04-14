@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
-using Api.TorMarket.Application.Workflows.User.Commands.CreateUser;
+using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.WebApi.DTOs.Responses;
+using ErrorType = Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUserFailure.ErrorType;
 
 namespace Api.TorMarket.WebApi.Extensions.Results
 {

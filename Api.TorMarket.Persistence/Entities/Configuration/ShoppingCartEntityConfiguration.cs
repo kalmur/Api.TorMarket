@@ -1,0 +1,43 @@
+﻿using Api.TorMarket.Persistence.Constants;
+using Api.TorMarket.Persistence.Entities.Configuration.Common;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Api.TorMarket.Persistence.Entities.Configuration;
+
+internal class ShoppingCartEntityConfiguration : EntityConfigurationBase<ShoppingCartEntity>
+{
+    protected override string TableName => TableNames.ShoppingCarts;
+
+    protected override void ConfigureColumns(EntityTypeBuilder<ShoppingCartEntity> builder)
+    {
+        builder
+            .Property(sc => sc.ShoppingCartId)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired()
+            .ValueGeneratedOnAdd();
+
+        builder
+            .Property(sc => sc.UserId)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+    }
+
+    protected override void ConfigureKeys(EntityTypeBuilder<ShoppingCartEntity> builder)
+    {
+        builder
+            .HasKey(sc => sc.ShoppingCartId);
+
+        builder
+            .HasOne(sc => sc.User)
+            .WithMany(u => u.ShoppingCarts)
+            .HasForeignKey(sc => sc.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
+    protected override void ConfigureIndexes(EntityTypeBuilder<ShoppingCartEntity> builder)
+    {
+        builder
+            .HasIndex(pr => pr.UserId);
+    }
+}
