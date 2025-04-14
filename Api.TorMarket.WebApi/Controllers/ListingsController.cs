@@ -29,11 +29,17 @@ public class ListingsController(ISender mediator) : ControllerBase
                 resultOrError.Error.ToFailureResponseDto()
             )
             : StatusCode(
-                StatusCodes.Status201Created, 
+                StatusCodes.Status201Created,
                 resultOrError.Result.ToResponseDto()
             );
 
-        // CreatedAtAction maybe
+            //TODO - GeyById endpoint
+
+            //: CreatedAtAction(
+            //    "GetById",
+            //    new { id = resultOrError.Result.ListingId },
+            //    resultOrError.Result.ToResponseDto()
+            //);
     }
 
     [HttpGet]
