@@ -19,13 +19,10 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
         context.Listing.Add(listing);
         await context.SaveChangesAsync(cancellationToken);
 
-        var createdProduct = await GetByIdAsync(
+        return await GetByIdAsync(
             listing.ListingId, 
             cancellationToken
-        );
-
-        return createdProduct 
-               ?? throw new InvalidOperationException("Product creation failed.");
+        ) ?? throw new InvalidOperationException("Product creation failed.");
     }
 
     public async Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(
@@ -38,18 +35,18 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Select(p => p.ToModelWithUserAndCategory())
             .ToListAsync(cancellationToken);
 
-    public async Task<Listing?> GetByIdAsync(
-        int productId,
+    public async Task<ListingWithCategory> GetByIdAsync(
+        int listingId,
         CancellationToken cancellationToken
     ) => (
         await context.Listing
             .Include(p => p.User)
             .Include(p => p.ListingCategory)
             .FirstOrDefaultAsync(p => 
-                p.ListingId == productId,
+                p.ListingId == listingId,
                 cancellationToken
             )
-    )?.ToModel();
+    )?.ToModelWithCategory() ?? new ListingWithCategory();
 
     public async Task<List<ListingWithCategory>> GetByNameAsync(
         string name,

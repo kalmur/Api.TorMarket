@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
@@ -56,7 +57,23 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("{name}")]
+    [Route("id/{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    public async Task<IActionResult> GetByIdAsync(
+        [FromRoute] int id, 
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            new GetListingByIdQuery(id),
+            cancellationToken
+        );
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    [Route("name/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GeyByNameAsync(
         [FromRoute] string name,
