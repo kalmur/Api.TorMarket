@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.WebApi.DTOs.Requests;
+using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;

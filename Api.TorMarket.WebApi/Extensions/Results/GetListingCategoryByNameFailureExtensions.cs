@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.WebApi.DTOs.Responses;
+using Api.TorMarket.WebApi.DTOs.Responses.Failures;
 using System.ComponentModel;
 using static Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName.GetCategoryByNameFailure;
 

@@ -1,9 +1,9 @@
-﻿using Api.TorMarket.Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingByCategoryName;
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 
-public sealed record GetListingsByCategoryNameQuery : IRequest<IEnumerable<ListingWithCategory?>>
-{
-    public required string CategoryName { get; init; }
-}
+public sealed record GetListingsByCategoryNameQuery(
+    [Required] string CategoryName
+) : IRequest<IEnumerable<ListingWithCategory?>>;

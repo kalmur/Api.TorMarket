@@ -2,9 +2,11 @@
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
-namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingByCategoryName;
+namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 
-public class GetListingsByCategoryNameHandler(IListingRepository repository) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithCategory?>>
+public class GetListingsByCategoryNameHandler(
+    IListingRepository repository
+) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithCategory?>>
 {
     public async Task<IEnumerable<ListingWithCategory?>> Handle(
         GetListingsByCategoryNameQuery request,

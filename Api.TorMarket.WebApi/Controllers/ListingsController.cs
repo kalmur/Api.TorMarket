@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Models;
@@ -43,7 +44,6 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -59,8 +59,8 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("{name}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GeyByNameAsync(
-       [FromRoute] string name,
-       CancellationToken cancellationToken
+        [FromRoute] string name,
+        CancellationToken cancellationToken
     )
     {
         var resultOrError = await mediator.Send(
@@ -76,14 +76,35 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Route("user/{providerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    public async Task<IActionResult> GetByProviderId(
+        [FromRoute] string providerId,
+        CancellationToken cancellationToken
+    )
+    {
+        var resultOrError = await mediator.Send(
+            new GetListingsByProviderIdQuery(providerId),
+            cancellationToken
+        );
+
+        return resultOrError.IsError
+            ? NotFound(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Ok(resultOrError.Result);
+    }
+
+    [HttpGet]
+    [Route("category/{category}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
-        [FromQuery] string category,
+        [FromRoute] string category,
         CancellationToken cancellationToken
     )
     {
         var result = await mediator.Send(
-            category.ToListingsForCategory(),
+            category.ToGetByCategoryNameQuery(),
             cancellationToken
         );
 

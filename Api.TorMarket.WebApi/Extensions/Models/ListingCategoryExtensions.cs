@@ -1,8 +1,8 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingByCategoryName;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Domain.Models;
-using Api.TorMarket.WebApi.Extensions.Results;
+using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Extensions.Models;
 
@@ -12,28 +12,11 @@ public static class ListingCategoryExtensions
        this ListingCategory product
    ) => new()
    {
-       ProductCategoryId = product.CategoryId,
+       CategoryId = product.CategoryId,
        Name = product.Name
    };
 
     public static GetCategoryByNameQuery ToQuery(
         this string name
-    ) => new()
-    {
-        Name = name
-    };
-    
-    public static GetListingsByNameQuery ToGetByNameQuery(
-        this string name
-    ) => new()
-    {
-        Name = name
-    };
-
-    public static GetListingsByCategoryNameQuery ToListingsForCategory(
-        this string name
-    ) => new()
-    {
-        CategoryName = name
-    };
+    ) => new(name);
 }

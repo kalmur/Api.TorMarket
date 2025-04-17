@@ -1,7 +1,7 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
-using Api.TorMarket.WebApi.Extensions.Results;
+using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Extensions.Models;
 

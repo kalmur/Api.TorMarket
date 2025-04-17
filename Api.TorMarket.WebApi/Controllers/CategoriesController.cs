@@ -12,7 +12,6 @@ namespace Api.TorMarket.WebApi.Controllers;
 public class CategoriesController(ISender mediator) : ControllerBase
 {
     [HttpGet]
-    [Route("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetAllListingCategoriesAsync(

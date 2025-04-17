@@ -9,6 +9,6 @@ public interface IListingRepository
     Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(CancellationToken ct);
     Task<Listing?> GetByIdAsync(int productId, CancellationToken ct);
     Task<List<ListingWithCategory>> GetByNameAsync(string name, CancellationToken ct);
-    Task<IEnumerable<Listing>> GetByUserIdAsync(int userId, CancellationToken ct);
+    Task<List<ListingWithCategory>> GetByProviderIdAsync(string providerId, CancellationToken ct);
     Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(string categoryName, CancellationToken ct);
 }

@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.WebApi.Extensions.Results;
+﻿namespace Api.TorMarket.WebApi.DTOs.Responses;
 
 public record ListingDto
 {

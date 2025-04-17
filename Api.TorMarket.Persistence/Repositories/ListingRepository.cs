@@ -61,15 +61,15 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
             .Select(p => p.ToModelWithCategory())
             .ToListAsync(cancellationToken);
 
-    public async Task<IEnumerable<Listing>> GetByUserIdAsync(
-        int userId,
+    public async Task<List<ListingWithCategory>> GetByProviderIdAsync(
+        string providerId,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
             .Include(p => p.User)
             .Include(p => p.ListingCategory)
-            .Where(p => p.UserId == userId)
-            .Select(p => p.ToModel())
+            .Where(p => p.User.ProviderId == providerId)
+            .Select(p => p.ToModelWithCategory())
             .ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(

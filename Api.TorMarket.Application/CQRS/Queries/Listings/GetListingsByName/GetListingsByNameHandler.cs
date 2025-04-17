@@ -2,7 +2,6 @@
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
