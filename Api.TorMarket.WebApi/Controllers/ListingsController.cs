@@ -30,18 +30,11 @@ public class ListingsController(ISender mediator) : ControllerBase
             ? UnprocessableEntity(
                 resultOrError.Error.ToFailureResponseDto()
             )
-            : StatusCode(
-                StatusCodes.Status201Created,
+            : CreatedAtAction(
+                "GetById",
+                new { id = resultOrError.Result.ListingId },
                 resultOrError.Result.ToResponseDto()
             );
-
-            //TODO - GeyById endpoint
-
-            //: CreatedAtAction(
-            //    "GetById",
-            //    new { id = resultOrError.Result.ListingId },
-            //    resultOrError.Result.ToResponseDto()
-            //);
     }
 
     [HttpGet]

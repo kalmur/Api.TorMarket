@@ -1,4 +1,6 @@
-﻿using Api.TorMarket.WebApi.DTOs.Requests;
+﻿using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
+using Api.TorMarket.Domain.Models;
+using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
@@ -31,5 +33,21 @@ public class UsersController(ISender mediator) : ControllerBase
                 StatusCodes.Status201Created,
                 result.Result.ToResponseDto()
             );
+    }
+
+    [HttpGet]
+    [Route("{providerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    public async Task<IActionResult> GetByProviderIdAsync(
+        [FromRoute] string providerId,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            new GetUserByProviderIdQuery(providerId),
+            cancellationToken
+        );
+
+        return Ok(result);
     }
 }
