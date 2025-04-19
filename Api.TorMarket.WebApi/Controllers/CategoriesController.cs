@@ -4,6 +4,7 @@ using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -14,9 +15,7 @@ public class CategoriesController(ISender mediator) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetAllListingCategoriesAsync(
-        CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
             new GetAllCategoriesRequest(),
@@ -30,8 +29,8 @@ public class CategoriesController(ISender mediator) : ControllerBase
     [Route("{name}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingCategory))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> GetListingCategoryByNameAsync(
-        string name,
+    public async Task<IActionResult> GetByCategoryNameAsync(
+        [FromRoute] [Required] string name,
         CancellationToken cancellationToken
     )
     {
@@ -41,11 +40,7 @@ public class CategoriesController(ISender mediator) : ControllerBase
         );
 
         return result.IsError
-            ? BadRequest(
-                result.Error.ToFailureResponseDto()
-            )
-            : Ok(
-                result.Result.ToResponseDto()
-            );
+            ? BadRequest(result.Error.ToFailureResponseDto())
+            : Ok(result.Result.ToResponseDto());
     }
 }

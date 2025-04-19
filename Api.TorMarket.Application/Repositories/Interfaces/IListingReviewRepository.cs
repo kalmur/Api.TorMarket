@@ -1,9 +1,12 @@
-﻿namespace Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Requests;
+using Api.TorMarket.Domain.Models;
 
-internal interface IListingReviewRepository
+namespace Api.TorMarket.Application.Repositories.Interfaces;
+
+public interface IListingReviewRepository
 {
-    //Task<ListingReview?> GetReviewById(int id, CancellationToken cancellationToken);
-    //Task<ListingReviewEntity?> DeleteReview(int id, CancellationToken cancellationToken);
-    //Task AddReviewAsync(ListingReviewEntity review, CancellationToken ct);
-    //Task RemoveReviewAsync(ListingReviewEntity review, CancellationToken ct);
+    Task<ListingWithReviewAndCategory> CreateAsync(CreateListingReviewRequest review, CancellationToken ct);
+    Task<ListingWithReviewAndCategory?> GetByReviewIdAsync(int id, CancellationToken ct);
+    Task<IEnumerable<ListingReview>> GetByListingIdAsync(int listingId, CancellationToken cancellationToken);
+    Task<ListingReview?> GetByUserAndListingIdAsync(int userId, int listingId, CancellationToken cancellationToken);
 }

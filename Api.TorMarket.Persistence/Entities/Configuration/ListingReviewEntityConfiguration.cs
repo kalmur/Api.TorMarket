@@ -22,11 +22,11 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
             .IsRequired();
 
         builder
-            .Property(x => x.ProductId)
+            .Property(x => x.ListingId)
             .IsRequired();
 
         builder
-            .Property(x => x.RatingValue);
+            .Property(x => x.Value);
 
         builder
             .Property(x => x.Comment);
@@ -44,9 +44,9 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(x => x.Product)
+            .HasOne(x => x.Listing)
             .WithMany(x => x.UserProductReviews)
-            .HasForeignKey(x => x.ProductId)
+            .HasForeignKey(x => x.ListingId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
@@ -56,7 +56,7 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
             .HasIndex(pr => new
             {
                 pr.UserId,
-                pr.ProductId
+                pr.ListingId
             })
             .IsUnique();
 
@@ -64,6 +64,6 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
             .HasIndex(pr => pr.UserId);
 
         builder
-            .HasIndex(pr => pr.ProductId);
+            .HasIndex(pr => pr.ListingId);
     }
 }

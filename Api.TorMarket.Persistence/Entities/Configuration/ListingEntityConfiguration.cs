@@ -66,8 +66,8 @@ internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntit
 
         builder
             .HasMany(x => x.UserProductReviews)
-            .WithOne(x => x.Product)
-            .HasForeignKey(x => x.ProductId)
+            .WithOne(x => x.Listing)
+            .HasForeignKey(x => x.ListingId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

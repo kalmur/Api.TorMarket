@@ -1,4 +1,4 @@
-﻿ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
+﻿namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 public sealed record CreateListingFailure
 {

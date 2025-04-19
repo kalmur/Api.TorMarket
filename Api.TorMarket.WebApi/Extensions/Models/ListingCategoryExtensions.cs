@@ -1,6 +1,4 @@
 ﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Responses;
 

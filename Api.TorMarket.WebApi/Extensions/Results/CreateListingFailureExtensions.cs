@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
 using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
-using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.CreateListingFailure;
 using Api.TorMarket.WebApi.DTOs.Responses.Failures;
+using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.CreateListingFailure;
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 
 public static class CreateListingFailureExtensions
 {
-    public static CreateProductFailureResponseDto ToFailureResponseDto(
+    public static CreateListingFailureResponseDto ToFailureResponseDto(
         this CreateListingFailure failure
     ) => new()
     {

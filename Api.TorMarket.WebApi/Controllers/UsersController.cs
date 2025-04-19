@@ -6,6 +6,7 @@ using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -16,7 +17,7 @@ public class UsersController(ISender mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] CreateUserRequestDto createUserDto,
+        [FromBody] [Required] CreateUserRequestDto createUserDto,
         CancellationToken cancellationToken
     )
     {
@@ -26,11 +27,9 @@ public class UsersController(ISender mediator) : ControllerBase
         );
 
         return result.IsError
-            ? BadRequest(
-                result.Error.ToFailureResponseDto()
-            )
+            ? BadRequest(result.Error.ToFailureResponseDto())
             : StatusCode(
-                StatusCodes.Status201Created,
+                StatusCodes.Status201Created, 
                 result.Result.ToResponseDto()
             );
     }
@@ -39,7 +38,7 @@ public class UsersController(ISender mediator) : ControllerBase
     [Route("{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetByProviderIdAsync(
-        [FromRoute] string providerId,
+        [FromRoute] [Required] string providerId,
         CancellationToken cancellationToken
     )
     {

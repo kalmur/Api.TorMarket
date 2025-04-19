@@ -2,7 +2,6 @@
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 
-using GetListingsByName;
 using static GetListingsByProviderIdFailure;
 
 public class GetListingsByProviderIdValidator(IUserRepository repository) : IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure>

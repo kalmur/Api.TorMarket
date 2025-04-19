@@ -7,6 +7,7 @@ using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -17,7 +18,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Listing))]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] CreateListingRequestDto request,
+        [FromBody] [Required] CreateListingRequestDto request,
         CancellationToken cancellationToken
     )
     {
@@ -27,9 +28,7 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? UnprocessableEntity(
-                resultOrError.Error.ToFailureResponseDto()
-            )
+            ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
             : CreatedAtAction(
                 "GetById",
                 new { id = resultOrError.Result.ListingId },
@@ -53,7 +52,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("id/{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByIdAsync(
-        [FromRoute] int id, 
+        [FromRoute] [Required] int id, 
         CancellationToken cancellationToken
     )
     {
@@ -69,7 +68,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("name/{name}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GeyByNameAsync(
-        [FromRoute] string name,
+        [FromRoute] [Required] string name,
         CancellationToken cancellationToken
     )
     {
@@ -79,9 +78,7 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? UnprocessableEntity(
-                resultOrError.Error.ToFailureResponseDto()
-            )
+            ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
             : Ok(resultOrError.Result);
     }
 
@@ -89,7 +86,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("user/{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByProviderId(
-        [FromRoute] string providerId,
+        [FromRoute] [Required] string providerId,
         CancellationToken cancellationToken
     )
     {
@@ -99,9 +96,7 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? NotFound(
-                resultOrError.Error.ToFailureResponseDto()
-            )
+            ? NotFound(resultOrError.Error.ToFailureResponseDto())
             : Ok(resultOrError.Result);
     }
 
@@ -109,7 +104,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("category/{category}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
-        [FromRoute] string category,
+        [FromRoute] [Required] string category,
         CancellationToken cancellationToken
     )
     {
