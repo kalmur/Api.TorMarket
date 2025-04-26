@@ -32,12 +32,4 @@ public static class ListingExtensions
         Description = request.Description,
         AvailableFrom = request.AvailableFrom
     };
-
-    public static GetListingsByNameQuery ToGetByNameQuery(
-        this string name
-    ) => new(name);
-
-    public static GetListingsByCategoryNameQuery ToGetByCategoryNameQuery(
-        this string name
-    ) => new(name);
 }

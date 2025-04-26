@@ -16,6 +16,7 @@ public class UsersController(ISender mediator) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> CreateAsync(
         [FromBody] [Required] CreateUserRequestDto createUserDto,
         CancellationToken cancellationToken

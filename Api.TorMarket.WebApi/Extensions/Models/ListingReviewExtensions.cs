@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
+using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewByUserAndListingId;
 using Api.TorMarket.WebApi.DTOs.Requests;
 
 namespace Api.TorMarket.WebApi.Extensions.Models;
@@ -15,4 +16,11 @@ public static class ListingReviewExtensions
             Value = dto.Value,
             Comment = dto.Comment
         };
+
+    public static GetReviewByUserAndListingIdQuery ToQuery(
+        this GetReviewByUserAndListingIdDto dto
+    ) => new(
+        dto.UserId, 
+        dto.ListingId
+    );
 }

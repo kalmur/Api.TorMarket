@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Reviews.GetListingReviewByReviewId;
-using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewsByListingId;
+﻿using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewsByListingId;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Models;
@@ -16,8 +15,9 @@ public class ReviewsController(ISender mediator) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ListingWithReviewAndCategory))]
+    [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] [Required] CreateListingReviewDto request,
+        [FromBody][Required] CreateListingReviewDto request,
         CancellationToken cancellationToken
     )
     {
@@ -37,15 +37,14 @@ public class ReviewsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("id/{reviewId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingWithReviewAndCategory))]
-    public async Task<IActionResult> GetByReviewIdAsync(
-        [FromRoute] [Required] int reviewId,
+    public async Task<IActionResult> GetByUserAndListingIdAsync(
+        [FromBody][Required] GetReviewByUserAndListingIdDto request,
         CancellationToken cancellationToken
     )
     {
         var result = await mediator.Send(
-            new GetReviewByReviewIdQuery(reviewId),
+            request.ToQuery(),
             cancellationToken
         );
 
@@ -56,7 +55,7 @@ public class ReviewsController(ISender mediator) : ControllerBase
     [Route("listing/{listingId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingReview>))]
     public async Task<IActionResult> GetByListingIdAsync(
-        [FromRoute] [Required] int listingId,
+        [FromRoute][Required] int listingId,
         CancellationToken cancellationToken
     )
     {
