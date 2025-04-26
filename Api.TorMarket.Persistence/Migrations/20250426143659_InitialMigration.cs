@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
 namespace Api.TorMarket.Persistence.Migrations
 {
@@ -16,7 +19,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     ListingCategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -108,7 +111,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     UnitNumber = table.Column<int>(type: "int", nullable: false),
                     StreetNumber = table.Column<int>(type: "int", nullable: false),
                     AddressLine = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    City = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
+                    City = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     PostalCode = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
                     Country = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false)
@@ -127,19 +130,19 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "ListingReviews",
                 columns: table => new
                 {
-                    ListingReviewId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
                     RatingValue = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListingReviews", x => x.ListingReviewId);
+                    table.PrimaryKey("PK_ListingReviews", x => new { x.UserId, x.ListingId });
                     table.ForeignKey(
-                        name: "FK_ListingReviews_Listings_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_ListingReviews_Listings_ListingId",
+                        column: x => x.ListingId,
                         principalTable: "Listings",
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
@@ -238,25 +241,51 @@ namespace Api.TorMarket.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ListingCategories",
+                columns: new[] { "ListingCategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Electronics" },
+                    { 2, "Games" },
+                    { 3, "Toys" },
+                    { 4, "Clothing" },
+                    { 5, "Vehicles" },
+                    { 6, "Pets" },
+                    { 7, "Other" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "OrderStatuses",
+                columns: new[] { "OrderStatusId", "Status" },
+                values: new object[,]
+                {
+                    { 1, "Pending" },
+                    { 2, "Processing" },
+                    { 3, "Shipped" },
+                    { 4, "Delivered" },
+                    { 5, "Cancelled" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "CreatedOn", "ProviderId", "UpdatedOn" },
+                values: new object[] { 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "auth0|67b6687fb71ed3cae5848607", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ListingCategories_Name",
                 table: "ListingCategories",
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ListingReviews_ProductId",
+                name: "IX_ListingReviews_ListingId",
                 table: "ListingReviews",
-                column: "ProductId");
+                column: "ListingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ListingReviews_UserId",
+                name: "IX_ListingReviews_UserId_ListingId",
                 table: "ListingReviews",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ListingReviews_UserId_ProductId",
-                table: "ListingReviews",
-                columns: new[] { "UserId", "ProductId" },
+                columns: new[] { "UserId", "ListingId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

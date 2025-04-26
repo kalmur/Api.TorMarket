@@ -16,12 +16,15 @@ internal class ListingReviewRepository(IApplicationDbContext context) : IListing
         context.ListingReview.Add(review);
         await context.SaveChangesAsync(ct);
 
-        return await GetByReviewIdAsync(
-            review.ListingReviewId,
-            ct
-        ) ?? throw new InvalidOperationException("Review creation failed.");
+        return new ListingWithReviewAndCategory();
+
+        //return await GetByReviewIdAsync(
+        //    review.ListingReviewId,
+        //    ct
+        //) ?? throw new InvalidOperationException("Review creation failed.");
     }
 
+    // CHANGE BACK FIRSTORDEFAULT
     public async Task<ListingWithReviewAndCategory?> GetByReviewIdAsync(
         int reviewId,
         CancellationToken cancellationToken
@@ -31,7 +34,7 @@ internal class ListingReviewRepository(IApplicationDbContext context) : IListing
             .Include(lr => lr.Listing)
             .ThenInclude(l => l.ListingCategory)
             .FirstOrDefaultAsync(
-                p => p.ListingReviewId == reviewId,
+                p => p.UserId == reviewId,
                 cancellationToken
             )
         )?.ToModel() ?? throw new InvalidOperationException("ListingReview not found");

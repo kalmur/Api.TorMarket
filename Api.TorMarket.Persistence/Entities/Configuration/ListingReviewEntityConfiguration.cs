@@ -12,34 +12,46 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
     protected override void ConfigureColumns(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .Property(x => x.ListingReviewId)
-            .HasColumnOrder(ColumnOrder++)
-            .IsRequired()
-            .ValueGeneratedOnAdd();
-
-        builder
             .Property(x => x.UserId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(x => x.ListingId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Value);
+            .Property(x => x.RatingValue)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
 
         builder
-            .Property(x => x.Comment);
+            .Property(x => x.Comment)
+            .HasColumnOrder(ColumnOrder++);
+
+        builder
+            .Property(x => x.CreatedOn)
+            .HasColumnOrder(ColumnOrder++);
+
+        builder
+            .Property(x => x.UpdatedOn)
+            .HasColumnOrder(ColumnOrder++);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .HasKey(x => x.ListingReviewId);
+            .HasKey(x => new 
+            { 
+                x.UserId, 
+                x.ListingId 
+            }
+        );
 
         builder
             .HasOne(x => x.User)
-            .WithMany(x => x.ProductReviews)
+            .WithMany(x => x.ListingReviews)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
@@ -59,11 +71,5 @@ internal class ListingReviewEntityConfiguration : EntityConfigurationBase<Listin
                 pr.ListingId
             })
             .IsUnique();
-
-        builder
-            .HasIndex(pr => pr.UserId);
-
-        builder
-            .HasIndex(pr => pr.ListingId);
     }
 }

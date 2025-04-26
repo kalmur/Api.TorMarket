@@ -6,8 +6,8 @@ internal class UserEntity : AuditableEntity
     internal string ProviderId { get; set; } = string.Empty;
 
     internal virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
-    internal virtual ICollection<ListingEntity> Products { get; set; } = null!;
-    internal virtual ICollection<ListingReviewEntity> ProductReviews { get; set; } = null!;
+    internal virtual ICollection<ListingEntity> Listings { get; set; } = null!;
+    internal virtual ICollection<ListingReviewEntity> ListingReviews { get; set; } = null!;
     internal virtual ICollection<OrderEntity> Orders { get; set; } = null!;
     internal virtual ICollection<ShoppingCartEntity> ShoppingCarts { get; set; } = null!;
 }

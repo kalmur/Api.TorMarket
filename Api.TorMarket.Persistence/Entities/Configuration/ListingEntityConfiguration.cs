@@ -54,7 +54,7 @@ internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntit
 
         builder
             .HasOne(p => p.User)
-            .WithMany(u => u.Products)
+            .WithMany(u => u.Listings)
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 

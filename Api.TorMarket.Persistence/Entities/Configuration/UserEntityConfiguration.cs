@@ -39,13 +39,13 @@ internal class UserEntityConfiguration : EntityConfigurationBase<UserEntity>
             .HasKey(x => x.UserId);
 
         builder
-            .HasMany(u => u.Products)
+            .HasMany(u => u.Listings)
             .WithOne(p => p.User)
             .HasForeignKey(u => u.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.ProductReviews)
+            .HasMany(x => x.ListingReviews)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.NoAction);

@@ -11,7 +11,7 @@ internal static class ListingReviewEntityExtensions
     {
         UserId = entity.UserId,
         ListingId = entity.ListingId,
-        Value = entity.Value,
+        Value = entity.RatingValue,
         Comment = entity.Comment,
         Listing = entity.Listing.ToModel(),
         Category = entity.Listing.ListingCategory.ToModel()
@@ -23,7 +23,7 @@ internal static class ListingReviewEntityExtensions
     {
         UserId = request.UserId,
         ListingId = request.ListingId,
-        Value = request.Value,
+        RatingValue = request.Value,
         Comment = request.Comment
     };
 }
