@@ -52,7 +52,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("id/{id}")]
+    [Route("id/{listingId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByListingIdAsync(
         [FromRoute][Required] int listingId, 
@@ -68,7 +68,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("name/{name}")]
+    [Route("name/{listingName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> SearchByListingNameAsync(
@@ -106,7 +106,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("category/{category}")]
+    [Route("category/{categoryName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
         [FromRoute][Required] string categoryName,
