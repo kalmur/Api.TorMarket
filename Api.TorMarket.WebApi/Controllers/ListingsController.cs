@@ -30,13 +30,15 @@ public class ListingsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
+
         return resultOrError.IsError
             ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
-            : CreatedAtAction(
-                "GetById",
-                new { id = resultOrError.Result.ListingId },
-                resultOrError.Result.ToResponseDto()
-            );
+            : Created();
+            //: CreatedAtAction(
+            //    actionName,
+            //    new { listingId = resultOrError.Result.ListingId },
+            //    resultOrError.Result.ToResponseDto()
+            //);
     }
 
     [HttpGet]
@@ -52,7 +54,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [Route("id/{listingId}")]
+    [Route("id/{listingId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
     public async Task<IActionResult> GetByListingIdAsync(
         [FromRoute][Required] int listingId, 
