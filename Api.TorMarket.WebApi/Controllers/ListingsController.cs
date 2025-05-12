@@ -10,6 +10,7 @@ using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -18,7 +19,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 public class ListingsController(ISender mediator) : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Listing))]
+    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ListingDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> CreateAsync(
         [FromBody][Required] CreateListingRequestDto request,
@@ -42,7 +43,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
     {
         var result = await mediator.Send(
@@ -57,7 +58,7 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [Route("id/{listingId:int}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetByListingIdAsync(
         [FromRoute][Required] int listingId, 
         CancellationToken cancellationToken
@@ -75,7 +76,7 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [Route("name/{listingName}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingDto>))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> SearchByListingNameAsync(
         [FromRoute][Required] string listingName,

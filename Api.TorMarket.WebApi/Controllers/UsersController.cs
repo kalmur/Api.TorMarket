@@ -48,6 +48,8 @@ public class UsersController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 }

@@ -59,9 +59,8 @@ internal class ListingRepository(
         await context.Listing
             .Include(l => l.ListingCategory)
             .Where(
-                l => l.Name.ToLower().Equals(
-                    name.ToLower(), 
-                    StringComparison.OrdinalIgnoreCase
+                l => l.Name.ToLower().Contains(
+                    name.ToLower()
                 )
             )
             .Select(
@@ -86,9 +85,10 @@ internal class ListingRepository(
     ) =>
         await context.Listing
             .Include(l => l.ListingCategory)
-            .Where(l => l.ListingCategory.Name.Equals(
-                categoryName,
-                StringComparison.OrdinalIgnoreCase)
+            .Where(
+               l => l.ListingCategory.Name.ToLower().Contains(
+                   categoryName.ToLower()
+                )
             )
             .Select(
                 l => l.ToModelWithCategory()

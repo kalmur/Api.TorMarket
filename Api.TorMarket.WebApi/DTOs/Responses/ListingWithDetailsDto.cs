@@ -2,6 +2,6 @@
 
 public record ListingWithDetailsDto : ListingDto
 {
-    public required ListingCategoryDto Category { get; init; }
-    public required UserDto User { get; init; }
+    public required ListingCategoryDto? Category { get; init; }
+    public required UserDto? User { get; init; }
 }
