@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal class ListingRepository(IApplicationDbContext context) : IListingRepository
+internal class ListingRepository(
+    IApplicationDbContext context
+) : IListingRepository
 {
     public async Task<Listing> CreateAsync(
         CreateListingRequest request, 
@@ -29,13 +31,15 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(p => p.User)
-            .Include(p => p.ListingCategory)
+            .Include(l => l.User)
+            .Include(l => l.ListingCategory)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(p => p.ToModelWithUserAndCategory())
+            .Select(l => 
+                l.ToModelWithUserAndCategory()
+            )
             .ToListAsync(cancellationToken);
 
-    public async Task<ListingWithCategory> GetByIdAsync(
+    public async Task<ListingWithUserAndCategory> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
     ) => (
@@ -46,36 +50,47 @@ internal class ListingRepository(IApplicationDbContext context) : IListingReposi
                 p.ListingId == listingId,
                 cancellationToken
             )
-    )?.ToModelWithCategory() ?? new ListingWithCategory();
+    )?.ToModelWithUserAndCategory() ?? new ListingWithUserAndCategory();
 
     public async Task<List<ListingWithCategory>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(p => p.ListingCategory)
-            .Where(p => p.Name.ToLower().Contains(name.ToLower()))
-            .Select(p => p.ToModelWithCategory())
-            .ToListAsync(cancellationToken);
+            .Include(l => l.ListingCategory)
+            .Where(
+                l => l.Name.ToLower().Equals(
+                    name.ToLower(), 
+                    StringComparison.OrdinalIgnoreCase
+                )
+            )
+            .Select(
+                l => l.ToModelWithCategory()
+            ).ToListAsync(cancellationToken);
 
     public async Task<List<ListingWithCategory>> GetByProviderIdAsync(
         string providerId,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(p => p.User)
-            .Include(p => p.ListingCategory)
-            .Where(p => p.User.ProviderId == providerId)
-            .Select(p => p.ToModelWithCategory())
-            .ToListAsync(cancellationToken);
+            .Include(l => l.User)
+            .Include(l => l.ListingCategory)
+            .Where(l => l.User.ProviderId == providerId)
+            .Select(
+                l => l.ToModelWithCategory()
+            ).ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
         string categoryName,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(p => p.ListingCategory)
-            .Where(p => p.ListingCategory.Name == categoryName)
-            .Select(p => p.ToModelWithCategory())
-            .ToListAsync(cancellationToken);
+            .Include(l => l.ListingCategory)
+            .Where(l => l.ListingCategory.Name.Equals(
+                categoryName,
+                StringComparison.OrdinalIgnoreCase)
+            )
+            .Select(
+                l => l.ToModelWithCategory()
+            ).ToListAsync(cancellationToken);
 }

@@ -6,4 +6,4 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 
 public sealed record GetListingByIdQuery(
     [Required] int Id
-) : IRequest<ListingWithCategory>;
+) : IRequest<ListingWithUserAndCategory>;

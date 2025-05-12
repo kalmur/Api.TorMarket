@@ -5,6 +5,8 @@ using Api.TorMarket.WebApi.Extensions.Results;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -21,25 +23,31 @@ public class CategoriesController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 
     [HttpGet]
-    [Route("{name}")]
+    [Route("{categoryName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingCategory))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> GetByCategoryNameAsync(
-        [FromRoute] [Required] string name,
+        [FromRoute][Required] string categoryName,
         CancellationToken cancellationToken
     )
     {
         var result = await mediator.Send(
-            name.ToQuery(),
+            new GetCategoryByNameQuery(categoryName),
             cancellationToken
         );
 
         return result.IsError
-            ? BadRequest(result.Error.ToFailureResponseDto())
-            : Ok(result.Result.ToResponseDto());
+            ? BadRequest(
+                result.Error.ToFailureResponseDto()
+            )
+            : Ok(
+                result.Result.ToResponseDto()
+            );
     }
 }

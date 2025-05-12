@@ -28,12 +28,15 @@ public class ReviewsController(ISender mediator) : ControllerBase
 
         // Return Toresponse
         return resultOrError.IsError
-            ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
-            : CreatedAtAction(
-                "GetByIdAsync",
-                new { id = resultOrError.Result.ListingReviewId },
-                resultOrError.Result
-            );
+            ? UnprocessableEntity(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Created();
+        //: CreatedAtAction(
+        //    "GetByIdAsync",
+        //    new { id = resultOrError.Result.ListingReviewId },
+        //    resultOrError.Result
+        //);
     }
 
     [HttpGet]
@@ -48,7 +51,9 @@ public class ReviewsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result
+        );
     }
 
     [HttpGet]
@@ -64,6 +69,8 @@ public class ReviewsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 }

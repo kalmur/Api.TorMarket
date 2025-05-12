@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.Domain.Models;
+﻿using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Extensions.Models;
@@ -14,7 +13,7 @@ public static class ListingCategoryExtensions
        Name = product.Name
    };
 
-    public static GetCategoryByNameQuery ToQuery(
-        this string name
-    ) => new(name);
+    public static IEnumerable<ListingCategoryDto> ToResponseDto(
+        this IEnumerable<ListingCategory> listings
+    ) => listings.Select(ToResponseDto);
 }

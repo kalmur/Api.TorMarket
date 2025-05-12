@@ -6,9 +6,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 
 public class GetListingByIdHandler(
     IListingRepository repository
-) : IRequestHandler<GetListingByIdQuery, ListingWithCategory>
+) : IRequestHandler<GetListingByIdQuery, ListingWithUserAndCategory>
 {
-    public async Task<ListingWithCategory> Handle(
+    public async Task<ListingWithUserAndCategory> Handle(
         GetListingByIdQuery request, 
         CancellationToken cancellationToken
     ) => await repository.GetByIdAsync(

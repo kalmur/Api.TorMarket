@@ -36,7 +36,10 @@ builder.Services
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddPersistence(builder.Configuration)
-    .AddControllers();
+    .AddControllers(options =>
+    {
+        options.SuppressAsyncSuffixInActionNames = false;
+    });
 
 var app = builder.Build();
 

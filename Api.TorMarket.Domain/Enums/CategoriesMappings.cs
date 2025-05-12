@@ -15,7 +15,10 @@ public static class CategoryMappings
 
     public static string GetStringValue(Categories category)
     {
-        return _categoryToStringMap.TryGetValue(category, out var stringValue) 
+        return _categoryToStringMap.TryGetValue(
+            category, 
+            out var stringValue
+        ) 
             ? stringValue 
             : category.ToString();
     }

@@ -30,15 +30,15 @@ public class ListingsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-
         return resultOrError.IsError
-            ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
-            : Created();
-            //: CreatedAtAction(
-            //    actionName,
-            //    new { listingId = resultOrError.Result.ListingId },
-            //    resultOrError.Result.ToResponseDto()
-            //);
+            ? UnprocessableEntity(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : CreatedAtAction(
+                nameof(GetByListingIdAsync),
+                new { listingId = resultOrError.Result.ListingId },
+                resultOrError.Result.ToResponseDto()
+            );
     }
 
     [HttpGet]
@@ -50,7 +50,9 @@ public class ListingsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 
     [HttpGet]
@@ -66,7 +68,9 @@ public class ListingsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 
     [HttpGet]
@@ -84,8 +88,12 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? UnprocessableEntity(resultOrError.Error.ToFailureResponseDto())
-            : Ok(resultOrError.Result);
+            ? UnprocessableEntity(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Ok(
+                resultOrError.Result.ToResponseDto()
+            );
     }
 
     [HttpGet]
@@ -103,8 +111,12 @@ public class ListingsController(ISender mediator) : ControllerBase
         );
 
         return resultOrError.IsError
-            ? NotFound(resultOrError.Error.ToFailureResponseDto())
-            : Ok(resultOrError.Result);
+            ? NotFound(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Ok(
+                resultOrError.Result.ToResponseDto()
+            );
     }
 
     [HttpGet]
@@ -120,6 +132,8 @@ public class ListingsController(ISender mediator) : ControllerBase
             cancellationToken
         );
 
-        return Ok(result);
+        return Ok(
+            result.ToResponseDto()
+        );
     }
 }
