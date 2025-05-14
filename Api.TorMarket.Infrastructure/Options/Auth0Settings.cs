@@ -7,11 +7,11 @@ public record Auth0Settings
     public const string SectionName = "Auth0";
 
     [Required]
-    public required string Domain { get; set; }
+    public required string Domain { get; init; }
     [Required]
-    public required string ClientId { get; set; }
+    public required string ClientId { get; init; }
     [Required]
-    public required string ClientSecret { get; set; }
+    public required string ClientSecret { get; init; }
     [Required]
-    public required string Connection { get; set; }
+    public required string Connection { get; init; }
 }
