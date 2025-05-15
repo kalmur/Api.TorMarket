@@ -2,7 +2,7 @@
 
 namespace Api.TorMarket.Infrastructure.Services.Interfaces;
 
-public interface IAzureBlobService
+public interface IBlobService
 {
     Task<BlobInfo> GetBlobAsync(string blobName);
     Task<IEnumerable<string>> ListBlobsAsync();

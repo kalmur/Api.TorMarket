@@ -67,6 +67,6 @@ public static class DependencyInjection
             )
         );
 
-        services.AddSingleton<IAzureBlobService, AzureBlobService>();
+        services.AddSingleton<IBlobService, BlobService>();
     }
 }

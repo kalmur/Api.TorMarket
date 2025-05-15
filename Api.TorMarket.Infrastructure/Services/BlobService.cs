@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
-public class AzureBlobService : IAzureBlobService
+public class BlobService : IBlobService
 {
     private const string ContainerName = "images";
 
     private readonly BlobServiceClient _blobServiceClient;
     private readonly BlobContainerClient _containerClient;
 
-    public AzureBlobService(BlobServiceClient blobServiceClient)
+    public BlobService(BlobServiceClient blobServiceClient)
     {
         _blobServiceClient = blobServiceClient 
             ?? throw new ArgumentNullException(nameof(blobServiceClient)

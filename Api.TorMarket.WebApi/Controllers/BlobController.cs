@@ -6,7 +6,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class BlobController(
-    IAzureBlobService azureBlobService
+    IBlobService azureBlobService
 ) : ControllerBase
 {
     [HttpGet("{blobName}")]
