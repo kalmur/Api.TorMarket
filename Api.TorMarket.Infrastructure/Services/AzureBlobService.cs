@@ -65,7 +65,7 @@ public class AzureBlobService : IAzureBlobService
     public async Task UploadContentBlobAsync(
         string content, 
         string fileName
-    )
+        )
     {
         var blobClient = _containerClient.GetBlobClient(fileName);
 
