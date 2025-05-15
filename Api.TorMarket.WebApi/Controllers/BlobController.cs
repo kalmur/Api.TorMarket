@@ -1,4 +1,6 @@
-﻿using Api.TorMarket.Infrastructure.Services.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.Infrastructure.Services.Interfaces;
+using Api.TorMarket.WebApi.DTOs.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.TorMarket.WebApi.Controllers;
@@ -10,7 +12,10 @@ public class BlobController(
 ) : ControllerBase
 {
     [HttpGet("{blobName}")]
-    public async Task<IActionResult> GetBlob(string blobName)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
+    public async Task<IActionResult> GetBlob(
+        [Required] string blobName
+    )
     {
         var blob = await azureBlobService.GetBlobAsync(blobName);
 
@@ -21,6 +26,7 @@ public class BlobController(
     }
 
     [HttpGet("list")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
     public async Task<IActionResult> ListBlobs()
     {
         var blobs = await azureBlobService.ListBlobsAsync();
@@ -28,25 +34,39 @@ public class BlobController(
         return Ok(blobs);
     }
 
-    [HttpPost("upload")]
-    public async Task<IActionResult> UploadFileBlob(IFormFile file)
+    [HttpPost("uploadfile")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UploadFileBlob(
+        [FromBody][Required] UploadFileRequest request
+    )
     {
-        if (file.Length == 0)
-            return BadRequest("File is empty");
-
-        using var stream = file.OpenReadStream();
-
         await azureBlobService.UploadFileBlobAsync(
-            //TODO - Work on this
-            stream.ToString(), 
-            file.FileName
+            request.FilePath, 
+            request.FileName    
+        );
+
+        return Ok();
+    }
+
+    [HttpPost("uploadcontent")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UploadFileBlob(
+        [FromBody][Required] UploadContentRequest request
+    )
+    {
+        await azureBlobService.UploadContentBlobAsync(
+            request.Content,
+            request.FileName
         );
 
         return Ok();
     }
 
     [HttpDelete("{blobName}")]
-    public async Task<IActionResult> DeleteBlob(string blobName)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteBlob(
+        [Required] string blobName
+    )
     {
         await azureBlobService.DeleteBlobAsync(blobName);
 
