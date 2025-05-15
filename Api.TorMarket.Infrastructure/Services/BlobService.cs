@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Text;
+using BlobInfo = Api.TorMarket.Infrastructure.Models.BlobInfo;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -22,13 +23,13 @@ public class BlobService : IBlobService
         );
     }
 
-    public async Task<Models.BlobInfo> GetBlobAsync(string blobName)
+    public async Task<BlobInfo> GetBlobAsync(string blobName)
     {
         var blobClient = _containerClient.GetBlobClient(blobName);
 
         var downloadInfo = await blobClient.DownloadAsync();
 
-        return new Models.BlobInfo(
+        return new BlobInfo(
             downloadInfo.Value.Content,
             downloadInfo.Value.ContentType
         );
@@ -65,7 +66,7 @@ public class BlobService : IBlobService
     public async Task UploadContentBlobAsync(
         string content, 
         string fileName
-        )
+    )
     {
         var blobClient = _containerClient.GetBlobClient(fileName);
 
