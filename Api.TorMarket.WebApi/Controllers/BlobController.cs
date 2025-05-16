@@ -8,7 +8,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class BlobController(
-    IBlobService azureBlobService
+    IBlobService blobService
 ) : ControllerBase
 {
     [HttpGet("{blobName}")]
@@ -17,7 +17,7 @@ public class BlobController(
         [Required] string blobName
     )
     {
-        var blob = await azureBlobService.GetBlobAsync(blobName);
+        var blob = await blobService.GetBlobAsync(blobName);
 
         return File(
             blob.Content, 
@@ -29,7 +29,7 @@ public class BlobController(
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
     public async Task<IActionResult> ListAsync()
     {
-        var blobs = await azureBlobService.ListBlobsAsync();
+        var blobs = await blobService.ListBlobsAsync();
 
         return Ok(blobs);
     }
@@ -40,7 +40,7 @@ public class BlobController(
         [FromBody][Required] UploadFileRequest request
     )
     {
-        await azureBlobService.UploadFileBlobAsync(
+        await blobService.UploadFileBlobAsync(
             request.FilePath, 
             request.FileName    
         );
@@ -54,7 +54,7 @@ public class BlobController(
         [FromBody][Required] UploadContentRequest request
     )
     {
-        await azureBlobService.UploadContentBlobAsync(
+        await blobService.UploadContentBlobAsync(
             request.Content,
             request.FileName
         );
@@ -68,7 +68,7 @@ public class BlobController(
         [Required] string blobName
     )
     {
-        await azureBlobService.DeleteBlobAsync(blobName);
+        await blobService.DeleteBlobAsync(blobName);
 
         return NoContent();
     }

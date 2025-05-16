@@ -10,6 +10,11 @@ public class BlobService : IBlobService
 {
     private const string ContainerName = "images";
 
+    private static readonly BlobHttpHeaders DefaultTextHeaders = new()
+    {
+        ContentType = "text/plain"
+    };
+
     private readonly BlobServiceClient _blobServiceClient;
     private readonly BlobContainerClient _containerClient;
 
@@ -56,10 +61,7 @@ public class BlobService : IBlobService
 
         await blobClient.UploadAsync(
             filePath,
-            new BlobHttpHeaders
-            {
-                ContentType = "text/plain"
-            }
+            DefaultTextHeaders
         );
     }
 
@@ -76,10 +78,7 @@ public class BlobService : IBlobService
 
         await blobClient.UploadAsync(
             memoryStream,
-            new BlobHttpHeaders
-            {
-                ContentType = "text/plain"
-            }
+            DefaultTextHeaders
         );
     }
 
