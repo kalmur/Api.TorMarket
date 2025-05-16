@@ -93,4 +93,19 @@ internal class ListingRepository(
             .Select(
                 l => l.ToModelWithCategory()
             ).ToListAsync(cancellationToken);
+
+    public async Task UpdateBlobUrlsAsync(
+        int listingId,
+        IEnumerable<string> blobUrls,
+        CancellationToken cancellationToken
+    )
+    {
+        var listing = await context.Listing.FirstOrDefaultAsync(l => 
+            l.ListingId == listingId, 
+            cancellationToken
+        ) ?? throw new InvalidOperationException($"Listing with ID {listingId} not found.");
+
+        listing.BlobUrls = blobUrls.ToList();
+        await context.SaveChangesAsync(cancellationToken);
+    }
 }
