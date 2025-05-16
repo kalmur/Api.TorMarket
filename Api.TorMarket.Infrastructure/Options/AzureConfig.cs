@@ -16,6 +16,9 @@ public record AzureConfig
     [Required]
     public required string StorageAccountName { get; init; }
 
+    [Required]
+    public required string ListingsContainerName { get; init; }
+
     internal static IConfigurationSection GetAzureConfig(
         IConfiguration configuration
     ) => configuration.GetSection(SectionName);
@@ -38,5 +41,4 @@ public record AzureConfig
 
         return azureConfig;
     }
-
 }

@@ -65,7 +65,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageUrls = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    BlobUrls = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

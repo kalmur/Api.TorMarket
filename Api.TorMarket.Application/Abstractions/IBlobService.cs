@@ -29,5 +29,7 @@ public interface IBlobService
         string blobName, 
         CancellationToken cancellationToken
     );
+
+    string GenerateBlobUrl(string blobName);
 }
 

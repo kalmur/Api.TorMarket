@@ -9,7 +9,7 @@ internal class ListingEntity : AuditableEntity
     internal required string Name { get; set; }
     internal required decimal Price { get; set; }
     internal required string? Description { get; set; }
-    internal required List<string>? ImageUrls { get; set; }
+    internal required List<string>? BlobUrls { get; set; }
 
     // Add image later down the line
 

@@ -20,5 +20,5 @@ public record CreateListingRequestDto
 
     public string? Description { get; init; }
 
-    public List<string>? ImageUrls { get; init; }
+    public List<string>? FilePaths { get; init; }
 }

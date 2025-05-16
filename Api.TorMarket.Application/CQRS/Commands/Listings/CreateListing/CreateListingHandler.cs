@@ -30,19 +30,29 @@ internal class CreateListingHandler(
             cancellationToken
         );
 
-        if (command.ImageUrls is null) 
-            return listing;
+        if (command.FilePaths is not null && !command.FilePaths.Any())
+        {
+            var imageUrls = new List<string>();
 
-        var uploadTasks = command.ImageUrls
-            .Select(
-                imageUrl => blobService.UploadFileBlobAsync(
-                    imageUrl,
-                    $"{listing.ListingId}\\{Path.GetFileName(imageUrl)}",
-                    cancellationToken
-                )
-            );
+            var uploadTasks = command.FilePaths
+                .Select(
+                    async filePath =>
+                    {
+                        var uniqueFileName = $"{listing.ListingId}/{Guid.NewGuid()}_{Path.GetFileName(filePath)}";
 
-        await Task.WhenAll(uploadTasks);
+                        await blobService.UploadFileBlobAsync(
+                            filePath,
+                            uniqueFileName,
+                            cancellationToken
+                        );
+
+                        var blobUrl = blobService.GenerateBlobUrl(uniqueFileName);
+                        imageUrls.Add(blobUrl);
+                    }
+                );
+
+            await Task.WhenAll(uploadTasks);
+        }
 
         return listing;
     }

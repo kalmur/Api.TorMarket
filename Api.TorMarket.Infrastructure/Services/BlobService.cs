@@ -3,28 +3,28 @@ using Azure.Storage.Blobs.Models;
 using System.Text;
 using Api.TorMarket.Application.Abstractions;
 using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
+using Microsoft.Extensions.Options;
+using Api.TorMarket.Infrastructure.Options;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
 public class BlobService : IBlobService
 {
-    private const string ContainerName = "images";
-
-    private static readonly BlobHttpHeaders DefaultTextHeaders = new()
-    {
-        ContentType = "text/plain"
-    };
-
+    private readonly AzureConfig options;
     private readonly BlobServiceClient _blobServiceClient;
     private readonly BlobContainerClient _containerClient;
 
-    public BlobService(BlobServiceClient blobServiceClient)
+    public BlobService(IOptions<AzureConfig> config)
     {
-        _blobServiceClient = blobServiceClient 
-            ?? throw new ArgumentNullException(nameof(blobServiceClient)
+        options = config?.Value
+            ?? throw new ArgumentNullException(nameof(config));
+
+        _blobServiceClient = new BlobServiceClient(
+            options.ConnectionString
         );
+
         _containerClient = _blobServiceClient.GetBlobContainerClient(
-            ContainerName
+            options.ListingsContainerName
         );
     }
 
@@ -66,7 +66,10 @@ public class BlobService : IBlobService
 
         await blobClient.UploadAsync(
             filePath,
-            DefaultTextHeaders,
+            new BlobHttpHeaders
+            {
+                ContentType = "text/plain"
+            },
             cancellationToken: cancellationToken
         );
     }
@@ -85,7 +88,10 @@ public class BlobService : IBlobService
 
         await blobClient.UploadAsync(
             memoryStream,
-            DefaultTextHeaders,
+            new BlobHttpHeaders
+            {
+                ContentType = "text/plain"
+            },
             cancellationToken: cancellationToken
         );
     }
@@ -100,5 +106,11 @@ public class BlobService : IBlobService
         await blobClient.DeleteIfExistsAsync(
             cancellationToken: cancellationToken
         );
+    }
+
+    public string GenerateBlobUrl(string blobName)
+    {
+        var blobUri = new Uri($"https://{options.StorageAccountName}.blob.core.windows.net/{options.ConnectionString}/{blobName}");
+        return blobUri.ToString();
     }
 }

@@ -88,6 +88,10 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingId"));
 
+                    b.Property<string>("BlobUrls")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(7);
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -95,10 +99,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnOrder(6);
-
-                    b.Property<string>("ImageUrls")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(7);
 
                     b.Property<string>("Name")
                         .IsRequired()
