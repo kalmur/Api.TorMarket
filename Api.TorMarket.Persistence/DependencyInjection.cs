@@ -13,9 +13,10 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistence(
         this IServiceCollection services,
         IConfiguration configuration
-    ) => services
-        .ConfigureDatabase(configuration)
-        .AddRepositories();
+    ) => 
+        services
+            .ConfigureDatabase(configuration)
+            .AddRepositories();
 
     private static IServiceCollection ConfigureDatabase(
         this IServiceCollection services,
@@ -30,7 +31,9 @@ public static class DependencyInjection
                 connectionString,
                 sqlOptions =>
                 {
-                    sqlOptions.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName!);
+                    sqlOptions.MigrationsAssembly(
+                        typeof(ApplicationDbContext).Assembly.FullName!
+                    );
                 }
             );
         });

@@ -12,33 +12,45 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services,
-        IConfiguration configuration
+        IConfigurationManager configuration
+    ) =>
+        services
+            .LoadOptions(configuration)
+            .AddAuth0Services(configuration)
+            .AddAzureServices(configuration);
+    
+    private static IServiceCollection LoadOptions(
+        this IServiceCollection services,
+        IConfigurationManager configuration
     )
     {
-        AddAuth0Services(services, configuration);
-        AddAzureServices(services, configuration);
+        services
+            .AddOptions<Auth0Config>()
+            .Bind(
+                Auth0Config.GetAuth0ConfigSection(configuration)
+            ).ValidateOnStart();
+
+        services
+            .AddOptions<AzureConfig>()
+            .Bind(
+                AzureConfig.GetAzureConfig(configuration)
+            ).ValidateOnStart();
 
         return services;
     }
 
-    private static void AddAuth0Services(
-        IServiceCollection services, 
-        IConfiguration configuration
+    private static IServiceCollection AddAuth0Services(
+        this IServiceCollection services,
+        IConfigurationManager configuration
     )
     {
-        services.Configure<Auth0Settings>(
-            configuration.GetSection(Auth0Settings.SectionName)
-        );
-
-        var auth0Options = configuration
-            .GetSection(Auth0Settings.SectionName)
-            .Get<Auth0Settings>();
+        var auth0Config = Auth0Config.LoadFromConfiguration(configuration);
 
         services.AddAuth0AuthenticationClient(config =>
         {
-            config.Domain = auth0Options!.Domain!;
-            config.ClientId = auth0Options.ClientId;
-            config.ClientSecret = auth0Options.ClientSecret;
+            config.Domain = auth0Config.Domain;
+            config.ClientId = auth0Config.ClientId;
+            config.ClientSecret = auth0Config.ClientSecret;
         });
 
         services
@@ -46,27 +58,25 @@ public static class DependencyInjection
             .AddScoped<IAuth0Service, Auth0Service>()
             .AddAuth0ManagementClient()
             .AddManagementAccessToken();
+
+        return services;
     }
 
-    private static void AddAzureServices(
-        IServiceCollection services, 
-        IConfiguration configuration
+    private static IServiceCollection AddAzureServices(
+        this IServiceCollection services, 
+        IConfigurationManager configuration
     )
     {
-        services.Configure<AzureSettings>(
-            configuration.GetSection(AzureSettings.SectionName)
-        );
-
-        var azureOptions = configuration
-            .GetSection(AzureSettings.SectionName)
-            .Get<AzureSettings>();
+        var azureConfig = AzureConfig.LoadFromConfiguration(configuration);
 
         services.AddSingleton(
             config => new BlobServiceClient(
-                azureOptions!.ConnectionString
+                azureConfig.ConnectionString
             )
         );
 
         services.AddSingleton<IBlobService, BlobService>();
+
+        return services;
     }
 }
