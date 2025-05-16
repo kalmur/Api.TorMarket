@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Api.TorMarket.Application.Abstractions;
+using Microsoft.Extensions.Options;
 using Api.TorMarket.Infrastructure.Options;
-using Api.TorMarket.Infrastructure.Services.Interfaces;
 
 namespace Api.TorMarket.Infrastructure.Services;
 

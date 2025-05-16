@@ -18,7 +18,7 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        AvailableFrom = entity.AvailableFrom
+        ImageUrls = entity.ImageUrls
     };
 
     public static ListingWithUserAndCategory ToModelWithUserAndCategory(
@@ -31,7 +31,7 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        AvailableFrom = entity.AvailableFrom,
+        ImageUrls = entity.ImageUrls,
         User = entity.User.ToModel(),
         Category = entity.ListingCategory.ToModel()
     };
@@ -46,7 +46,7 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        AvailableFrom = entity.AvailableFrom,
+        ImageUrls = entity.ImageUrls,
         Category = entity.ListingCategory.ToModel()
     };
 
@@ -59,7 +59,7 @@ internal static class ListingEntityExtensions
         Name = request.Name,
         Price = request.Price,
         Description = request.Description,
-        AvailableFrom = request.AvailableFrom
+        ImageUrls = request.ImageUrls
     };
 
     public static CreateListingRequest ToRequest(
@@ -71,7 +71,7 @@ internal static class ListingEntityExtensions
         Name = command.Name,
         Price = command.Price,
         Description = command.Description,
-        AvailableFrom = command.AvailableFrom
+        ImageUrls = command.ImageUrls
     };
 
     public static CreateUserRequest ToRequest(

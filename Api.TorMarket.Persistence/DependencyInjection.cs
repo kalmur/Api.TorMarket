@@ -25,21 +25,23 @@ public static class DependencyInjection
     {
         var connectionString = configuration.GetConnectionString("Default");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
-        {
-            options.UseSqlServer(
-                connectionString,
-                sqlOptions =>
-                {
-                    sqlOptions.MigrationsAssembly(
-                        typeof(ApplicationDbContext).Assembly.FullName!
-                    );
-                }
-            );
-        });
+        services.AddDbContext<ApplicationDbContext>(
+            options =>
+            {
+                options.UseSqlServer(
+                    connectionString,
+                    sqlOptions =>
+                    {
+                        sqlOptions.MigrationsAssembly(
+                            typeof(ApplicationDbContext).Assembly.FullName!
+                        );
+                    }
+                );
+            }
+        );
 
-        services.AddScoped<IApplicationDbContext>(provider => 
-            provider.GetService<ApplicationDbContext>()!
+        services.AddScoped<IApplicationDbContext>(
+            provider => provider.GetService<ApplicationDbContext>()!
         );
 
         return services;

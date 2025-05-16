@@ -10,5 +10,5 @@ public class Listing
     public string? Name { get; set; }
     public decimal Price { get; set; }
     public string? Description { get; set; }
-    public DateTimeOffset AvailableFrom { get; set; }
+    public IEnumerable<string> ImageUrls { get; set; }
 }

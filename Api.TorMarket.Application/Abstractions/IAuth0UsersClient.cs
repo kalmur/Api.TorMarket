@@ -1,7 +1,7 @@
 ﻿using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Paging;
 
-namespace Api.TorMarket.Infrastructure.Services.Interfaces;
+namespace Api.TorMarket.Application.Abstractions;
 
 public interface IAuth0UsersClient
 {

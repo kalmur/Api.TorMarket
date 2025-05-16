@@ -7,7 +7,8 @@ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 internal class CreateListingHandler(
     IValidator<CreateListingCommand, CreateListingFailure> validator,
-    IListingRepository listingRepository
+    IListingRepository listingRepository,
+    IBlobService blobService
 ) : IRequestHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>>
 {
     public async Task<ResultOrError<Listing, CreateListingFailure>> Handle(

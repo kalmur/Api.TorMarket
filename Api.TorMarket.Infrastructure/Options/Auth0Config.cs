@@ -1,5 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Configuration;
 
 namespace Api.TorMarket.Infrastructure.Options;

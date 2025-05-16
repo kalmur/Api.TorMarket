@@ -9,7 +9,7 @@ internal class ListingEntity : AuditableEntity
     internal required string Name { get; set; }
     internal required decimal Price { get; set; }
     internal required string? Description { get; set; }
-    internal required DateTimeOffset AvailableFrom { get; set; }
+    internal required IEnumerable<string>? ImageUrls { get; set; }
 
     // Add image later down the line
 

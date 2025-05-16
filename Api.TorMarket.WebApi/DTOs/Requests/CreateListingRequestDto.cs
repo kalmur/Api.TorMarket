@@ -6,19 +6,19 @@ namespace Api.TorMarket.WebApi.DTOs.Requests;
 public record CreateListingRequestDto
 {
     [Required]
-    public required int UserId { get; set; }
+    public required int UserId { get; init; }
 
     [Required(AllowEmptyStrings = false)]
     [StringLength(Listing.ListingNameMaxLength)]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
     [Required]
-    public required int CategoryId { get; set; }
+    public required int CategoryId { get; init; }
 
     [Required]
-    public required decimal Price { get; set; }
+    public required decimal Price { get; init; }
 
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
-    public DateTimeOffset AvailableFrom { get; set; }
+    public IEnumerable<string>? ImageUrls { get; init; }
 }

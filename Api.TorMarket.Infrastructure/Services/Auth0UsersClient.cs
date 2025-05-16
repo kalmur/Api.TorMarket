@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Infrastructure.Services.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
 using Auth0.ManagementApi.Clients;
 using Auth0.ManagementApi.Models;
 using Auth0.ManagementApi.Paging;

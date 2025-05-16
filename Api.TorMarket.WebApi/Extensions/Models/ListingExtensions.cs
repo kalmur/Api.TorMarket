@@ -16,7 +16,7 @@ public static class ListingExtensions
         Name = product.Name,
         Price = product.Price,
         Description = product.Description,
-        AvailableFrom = product.AvailableFrom
+        ImageUrls = product.ImageUrls
     };
 
     public static ListingWithDetailsDto ToResponseDto(
@@ -28,7 +28,7 @@ public static class ListingExtensions
         Name = model.Name ?? string.Empty,
         Price = model.Price,
         Description = model.Description,
-        AvailableFrom = model.AvailableFrom,
+        ImageUrls = model.ImageUrls,
         Category = model.Category?.ToResponseDto() ?? null,
         User = null
     };
@@ -46,7 +46,7 @@ public static class ListingExtensions
         Name = model.Name,
         Price = model.Price,
         Description = model.Description,
-        AvailableFrom = model.AvailableFrom,
+        ImageUrls = model.ImageUrls,
         Category = model.Category?.ToResponseDto() ?? null,
         User = model.User?.ToResponseDto() ?? null
     };
@@ -64,6 +64,6 @@ public static class ListingExtensions
         Name = request.Name,
         Price = request.Price,
         Description = request.Description,
-        AvailableFrom = request.AvailableFrom
+        ImageUrls = request.ImageUrls
     };
 }

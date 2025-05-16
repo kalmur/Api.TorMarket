@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
-using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 
 namespace Api.TorMarket.WebApi.Controllers;
 

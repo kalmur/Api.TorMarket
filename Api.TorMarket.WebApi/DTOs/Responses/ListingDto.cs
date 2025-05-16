@@ -7,5 +7,5 @@ public record ListingDto
     public required string Name { get; set; }
     public required decimal Price { get; set; }
     public string? Description { get; set; }
-    public DateTimeOffset AvailableFrom { get; set; }
+    public IEnumerable<string>? ImageUrls { get; set; }
 }

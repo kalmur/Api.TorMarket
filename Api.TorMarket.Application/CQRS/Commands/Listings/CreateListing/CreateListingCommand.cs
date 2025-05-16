@@ -17,7 +17,7 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
 
     public string? Description { get; init; }
 
-    public DateTimeOffset AvailableFrom { get; init; }
+    public IEnumerable<string>? ImageUrls { get; init; }
 
     internal CreateListingRequest ToRequest()
         => new()
@@ -27,6 +27,6 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
             CategoryId = CategoryId,
             Price = Price,
             Description = Description,
-            AvailableFrom = AvailableFrom,
+            ImageUrls = ImageUrls,
         };
 }

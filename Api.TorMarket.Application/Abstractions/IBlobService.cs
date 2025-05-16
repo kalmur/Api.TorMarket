@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Infrastructure.Models;
+﻿using Azure.Storage.Blobs.Models;
 
-namespace Api.TorMarket.Infrastructure.Services.Interfaces;
+namespace Api.TorMarket.Application.Abstractions;
 
 public interface IBlobService
 {

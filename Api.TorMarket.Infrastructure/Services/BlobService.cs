@@ -1,7 +1,7 @@
-﻿using Api.TorMarket.Infrastructure.Services.Interfaces;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Text;
+using Api.TorMarket.Application.Abstractions;
 using BlobInfo = Api.TorMarket.Infrastructure.Models.BlobInfo;
 
 namespace Api.TorMarket.Infrastructure.Services;

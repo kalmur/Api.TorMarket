@@ -42,7 +42,7 @@ internal class ListingEntityConfiguration : EntityConfigurationBase<ListingEntit
             .HasColumnOrder(ColumnOrder++);
 
         builder
-            .Property(x => x.AvailableFrom)
+            .Property(x => x.ImageUrls)
             .HasColumnOrder(ColumnOrder++);
     }
 

@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Infrastructure.Options;
+﻿using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services;
-using Api.TorMarket.Infrastructure.Services.Interfaces;
 using Auth0Net.DependencyInjection;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
@@ -70,7 +70,7 @@ public static class DependencyInjection
         var azureConfig = AzureConfig.LoadFromConfiguration(configuration);
 
         services.AddSingleton(
-            config => new BlobServiceClient(
+            _ => new BlobServiceClient(
                 azureConfig.ConnectionString
             )
         );
