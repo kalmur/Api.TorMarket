@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Api.TorMarket.Infrastructure.Models;
+namespace Api.TorMarket.Domain.Models.External;
 
 public record BlobInfo(
     [Required] Stream Content,

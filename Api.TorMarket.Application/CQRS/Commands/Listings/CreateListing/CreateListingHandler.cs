@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
@@ -24,9 +25,25 @@ internal class CreateListingHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        return await listingRepository.CreateAsync(
+        var listing = await listingRepository.CreateAsync(
             command.ToRequest(),
             cancellationToken
         );
+
+        if (command.ImageUrls is null) 
+            return listing;
+
+        var uploadTasks = command.ImageUrls
+            .Select(
+                imageUrl => blobService.UploadFileBlobAsync(
+                    imageUrl,
+                    $"{listing.ListingId}\\{Path.GetFileName(imageUrl)}",
+                    cancellationToken
+                )
+            );
+
+        await Task.WhenAll(uploadTasks);
+
+        return listing;
     }
 }

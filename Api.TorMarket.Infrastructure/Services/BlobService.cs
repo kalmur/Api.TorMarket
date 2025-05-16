@@ -2,7 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using System.Text;
 using Api.TorMarket.Application.Abstractions;
-using BlobInfo = Api.TorMarket.Infrastructure.Models.BlobInfo;
+using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -28,11 +28,14 @@ public class BlobService : IBlobService
         );
     }
 
-    public async Task<BlobInfo> GetBlobAsync(string blobName)
+    public async Task<BlobInfo> GetBlobAsync(
+        string blobName, 
+        CancellationToken cancellationToken
+    )
     {
         var blobClient = _containerClient.GetBlobClient(blobName);
 
-        var downloadInfo = await blobClient.DownloadAsync();
+        var downloadInfo = await blobClient.DownloadAsync(cancellationToken);
 
         return new BlobInfo(
             downloadInfo.Value.Content,
@@ -40,11 +43,12 @@ public class BlobService : IBlobService
         );
     }
 
-    public async Task<IEnumerable<string>> ListBlobsAsync()
+    public async Task<IEnumerable<string>> ListBlobsAsync(CancellationToken cancellationToken)
     {
         var items = new List<string>();
 
-        await foreach (var blobItem in _containerClient.GetBlobsAsync())
+        await foreach (var blobItem in _containerClient.GetBlobsAsync(
+                           cancellationToken: cancellationToken))
         {
             items.Add(blobItem.Name);
         }
@@ -54,20 +58,23 @@ public class BlobService : IBlobService
 
     public async Task UploadFileBlobAsync(
         string filePath, 
-        string fileName
+        string fileName,
+        CancellationToken cancellationToken
     )
     {
         var blobClient = _containerClient.GetBlobClient(fileName);
 
         await blobClient.UploadAsync(
             filePath,
-            DefaultTextHeaders
+            DefaultTextHeaders,
+            cancellationToken: cancellationToken
         );
     }
 
     public async Task UploadContentBlobAsync(
         string content, 
-        string fileName
+        string fileName,
+        CancellationToken cancellationToken
     )
     {
         var blobClient = _containerClient.GetBlobClient(fileName);
@@ -78,14 +85,20 @@ public class BlobService : IBlobService
 
         await blobClient.UploadAsync(
             memoryStream,
-            DefaultTextHeaders
+            DefaultTextHeaders,
+            cancellationToken: cancellationToken
         );
     }
 
-    public async Task DeleteBlobAsync(string blobName)
+    public async Task DeleteBlobAsync(
+        string blobName,
+        CancellationToken cancellationToken
+    )
     {
         var blobClient = _containerClient.GetBlobClient(blobName);
 
-        await blobClient.DeleteIfExistsAsync();
+        await blobClient.DeleteIfExistsAsync(
+            cancellationToken: cancellationToken
+        );
     }
 }

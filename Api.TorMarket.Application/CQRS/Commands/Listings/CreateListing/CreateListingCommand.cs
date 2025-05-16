@@ -17,7 +17,7 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
 
     public string? Description { get; init; }
 
-    public IEnumerable<string>? ImageUrls { get; init; }
+    public List<string>? ImageUrls { get; init; }
 
     internal CreateListingRequest ToRequest()
         => new()

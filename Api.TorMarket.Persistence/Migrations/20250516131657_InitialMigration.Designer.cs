@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516123630_InitialMigration")]
+    [Migration("20250516131657_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />

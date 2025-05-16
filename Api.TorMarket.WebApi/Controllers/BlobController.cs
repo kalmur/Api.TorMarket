@@ -14,10 +14,14 @@ public class BlobController(
     [HttpGet("{blobName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
     public async Task<IActionResult> GetByNameAsync(
-        [Required] string blobName
+        [Required] string blobName,
+        CancellationToken cancellationToken
     )
     {
-        var blob = await blobService.GetBlobAsync(blobName);
+        var blob = await blobService.GetBlobAsync(
+            blobName, 
+            cancellationToken
+        );
 
         return File(
             blob.Content, 
@@ -27,9 +31,11 @@ public class BlobController(
 
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
-    public async Task<IActionResult> ListAsync()
+    public async Task<IActionResult> ListAsync(
+        CancellationToken cancellationToken
+    )
     {
-        var blobs = await blobService.ListBlobsAsync();
+        var blobs = await blobService.ListBlobsAsync(cancellationToken);
 
         return Ok(blobs);
     }
@@ -37,12 +43,14 @@ public class BlobController(
     [HttpPost("file")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFileAsync(
-        [FromBody][Required] UploadFileRequest request
+        [FromBody][Required] UploadFileRequest request,
+        CancellationToken cancellationToken
     )
     {
         await blobService.UploadFileBlobAsync(
             request.FilePath, 
-            request.FileName    
+            request.FileName,
+            cancellationToken
         );
 
         return Ok();
@@ -51,12 +59,14 @@ public class BlobController(
     [HttpPost("content")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadContentAsync(
-        [FromBody][Required] UploadContentRequest request
+        [FromBody][Required] UploadContentRequest request,
+        CancellationToken cancellationToken
     )
     {
         await blobService.UploadContentBlobAsync(
             request.Content,
-            request.FileName
+            request.FileName,
+            cancellationToken
         );
 
         return Ok();
@@ -65,10 +75,14 @@ public class BlobController(
     [HttpDelete("{blobName}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> DeleteAsync(
-        [Required] string blobName
+        [Required] string blobName,
+        CancellationToken cancellationToken
     )
     {
-        await blobService.DeleteBlobAsync(blobName);
+        await blobService.DeleteBlobAsync(
+            blobName, 
+            cancellationToken
+        );
 
         return NoContent();
     }
