@@ -53,7 +53,7 @@ internal class CreateListingHandler(
 
             await Task.WhenAll(uploadTasks);
 
-            await listingRepository.UpdateBlobUrlsAsync(
+            return await listingRepository.UpdateBlobUrlsAsync(
                 listing.ListingId,
                 blobUrls,
                 cancellationToken

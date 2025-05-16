@@ -94,7 +94,7 @@ internal class ListingRepository(
                 l => l.ToModelWithCategory()
             ).ToListAsync(cancellationToken);
 
-    public async Task UpdateBlobUrlsAsync(
+    public async Task<Listing> UpdateBlobUrlsAsync(
         int listingId,
         IEnumerable<string> blobUrls,
         CancellationToken cancellationToken
@@ -107,5 +107,10 @@ internal class ListingRepository(
 
         listing.BlobUrls = blobUrls.ToList();
         await context.SaveChangesAsync(cancellationToken);
+
+        return await GetByIdAsync(
+            listing.ListingId,
+            cancellationToken
+        );
     }
 }

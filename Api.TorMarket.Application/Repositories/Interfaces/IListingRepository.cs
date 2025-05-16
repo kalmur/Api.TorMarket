@@ -28,7 +28,7 @@ public interface IListingRepository
         string categoryName, 
         CancellationToken ct
     );
-    Task UpdateBlobUrlsAsync(
+    Task<Listing> UpdateBlobUrlsAsync(
         int listingId,
         IEnumerable<string> blobUrls,
         CancellationToken cancellationToken
