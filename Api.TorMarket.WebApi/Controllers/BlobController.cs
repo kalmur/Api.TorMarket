@@ -13,7 +13,7 @@ public class BlobController(
 {
     [HttpGet("{blobName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
-    public async Task<IActionResult> GetBlob(
+    public async Task<IActionResult> GetByNameAsync(
         [Required] string blobName
     )
     {
@@ -25,18 +25,18 @@ public class BlobController(
         );
     }
 
-    [HttpGet("list")]
+    [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
-    public async Task<IActionResult> ListBlobs()
+    public async Task<IActionResult> ListAsync()
     {
         var blobs = await azureBlobService.ListBlobsAsync();
 
         return Ok(blobs);
     }
 
-    [HttpPost("uploadfile")]
+    [HttpPost("file")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> UploadFileBlob(
+    public async Task<IActionResult> UploadFileAsync(
         [FromBody][Required] UploadFileRequest request
     )
     {
@@ -48,9 +48,9 @@ public class BlobController(
         return Ok();
     }
 
-    [HttpPost("uploadcontent")]
+    [HttpPost("content")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> UploadFileBlob(
+    public async Task<IActionResult> UploadContentAsync(
         [FromBody][Required] UploadContentRequest request
     )
     {
@@ -64,7 +64,7 @@ public class BlobController(
 
     [HttpDelete("{blobName}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> DeleteBlob(
+    public async Task<IActionResult> DeleteAsync(
         [Required] string blobName
     )
     {
