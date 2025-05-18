@@ -96,7 +96,7 @@ internal class ListingRepository(
 
     public async Task<Listing> UpdateBlobUrlsAsync(
         int listingId,
-        IEnumerable<string> blobUrls,
+        string blobUrl,
         CancellationToken cancellationToken
     )
     {
@@ -105,7 +105,7 @@ internal class ListingRepository(
             cancellationToken
         ) ?? throw new InvalidOperationException($"Listing with ID {listingId} not found.");
 
-        listing.BlobUrls = blobUrls.ToList();
+        listing.BlobUrls = [blobUrl];
         await context.SaveChangesAsync(cancellationToken);
 
         return await GetByIdAsync(

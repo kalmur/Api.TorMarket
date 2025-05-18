@@ -9,28 +9,34 @@ public interface IListingRepository
         CreateListingRequest request,
         CancellationToken ct
     );
+
     Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(
         CancellationToken ct
     );
+
     Task<ListingWithUserAndCategory> GetByIdAsync(
         int listingId, 
         CancellationToken ct
     );
+
     Task<List<ListingWithCategory>> GetByNameAsync(
         string name, 
         CancellationToken ct
     );
+
     Task<List<ListingWithCategory>> GetByProviderIdAsync(
         string providerId, 
         CancellationToken ct
     );
+
     Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
         string categoryName, 
         CancellationToken ct
     );
+
     Task<Listing> UpdateBlobUrlsAsync(
         int listingId,
-        IEnumerable<string> blobUrls,
+        string blobUrl,
         CancellationToken cancellationToken
     );
 }

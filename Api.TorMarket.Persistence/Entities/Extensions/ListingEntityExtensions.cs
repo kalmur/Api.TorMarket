@@ -59,7 +59,7 @@ internal static class ListingEntityExtensions
         Name = request.Name,
         Price = request.Price,
         Description = request.Description,
-        BlobUrls = request.FilePaths
+        BlobUrls = null
     };
 
     public static CreateListingRequest ToRequest(
@@ -71,7 +71,6 @@ internal static class ListingEntityExtensions
         Name = command.Name,
         Price = command.Price,
         Description = command.Description,
-        FilePaths = command.FilePaths
     };
 
     public static CreateUserRequest ToRequest(

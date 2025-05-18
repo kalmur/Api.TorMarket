@@ -19,6 +19,4 @@ public record CreateListingRequestDto
     public required decimal Price { get; init; }
 
     public string? Description { get; init; }
-
-    public List<string>? FilePaths { get; init; }
 }

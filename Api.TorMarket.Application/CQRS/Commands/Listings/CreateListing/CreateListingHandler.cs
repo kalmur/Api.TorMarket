@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
@@ -8,8 +7,7 @@ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 internal class CreateListingHandler(
     IValidator<CreateListingCommand, CreateListingFailure> validator,
-    IListingRepository listingRepository,
-    IBlobService blobService
+    IListingRepository listingRepository
 ) : IRequestHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>>
 {
     public async Task<ResultOrError<Listing, CreateListingFailure>> Handle(
@@ -25,41 +23,9 @@ internal class CreateListingHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        var listing = await listingRepository.CreateAsync(
+        return await listingRepository.CreateAsync(
             command.ToRequest(),
             cancellationToken
         );
-
-        if (command.FilePaths is not null && command.FilePaths.Any())
-        {
-            var blobUrls = new List<string>();
-
-            var uploadTasks = command.FilePaths
-                .Select(
-                    async filePath =>
-                    {
-                        var uniqueFileName = $"{listing.ListingId}/{Guid.NewGuid()}_{Path.GetFileName(filePath)}";
-
-                        await blobService.UploadFileBlobAsync(
-                            filePath,
-                            uniqueFileName,
-                            cancellationToken
-                        );
-
-                        var blobUrl = blobService.GenerateBlobUrl(uniqueFileName);
-                        blobUrls.Add(blobUrl);
-                    }
-                );
-
-            await Task.WhenAll(uploadTasks);
-
-            return await listingRepository.UpdateBlobUrlsAsync(
-                listing.ListingId,
-                blobUrls,
-                cancellationToken
-            );
-        }
-
-        return listing;
     }
 }

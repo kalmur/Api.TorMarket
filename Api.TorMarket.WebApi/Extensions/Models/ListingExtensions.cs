@@ -64,6 +64,5 @@ public static class ListingExtensions
         Name = request.Name,
         Price = request.Price,
         Description = request.Description,
-        FilePaths = request.FilePaths
     };
 }

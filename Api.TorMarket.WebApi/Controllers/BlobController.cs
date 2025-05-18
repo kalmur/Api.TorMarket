@@ -40,6 +40,29 @@ public class BlobController(
         return Ok(blobs);
     }
 
+    [HttpPost("upload")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UploadFileFromStreamAsync(
+        [FromForm] IFormFile file,
+        CancellationToken cancellationToken
+    )
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("File is required");
+
+        await using var stream = file.OpenReadStream();
+
+        var blobUrl = await blobService.UploadFileFromStreamAsync(
+            stream,
+            file.FileName,
+            file.ContentType,
+            cancellationToken
+        );
+
+        return Ok(new { url = blobUrl });
+    }
+
     [HttpPost("file")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> UploadFileAsync(

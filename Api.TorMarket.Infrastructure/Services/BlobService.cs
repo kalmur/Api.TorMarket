@@ -2,9 +2,9 @@
 using Azure.Storage.Blobs.Models;
 using System.Text;
 using Api.TorMarket.Application.Abstractions;
-using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
 using Microsoft.Extensions.Options;
 using Api.TorMarket.Infrastructure.Options;
+using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
@@ -108,9 +108,37 @@ public class BlobService : IBlobService
         );
     }
 
+    public async Task<string> UploadFileFromStreamAsync(
+    Stream fileStream,
+    string fileName,
+    string contentType,
+    CancellationToken cancellationToken
+)
+    {
+        if (fileStream == null || fileStream.Length == 0)
+            throw new ArgumentException("File stream cannot be null or empty", nameof(fileStream));
+
+        var shortGuid = Guid.NewGuid().ToString("N").Substring(0, 15);
+
+        var uniqueFileName = $"{shortGuid}_{fileName}";
+
+        var blobClient = _containerClient.GetBlobClient(uniqueFileName);
+
+        await blobClient.UploadAsync(
+            fileStream,
+            new BlobHttpHeaders
+            {
+                ContentType = contentType
+            },
+            cancellationToken: cancellationToken
+        );
+
+        return GenerateBlobUrl(uniqueFileName);
+    }
+
     public string GenerateBlobUrl(string blobName)
     {
-        var blobUri = new Uri($"https://{options.StorageAccountName}.blob.core.windows.net/{options.ConnectionString}/{blobName}");
+        var blobUri = new Uri($"https://{options.StorageAccountName}.blob.core.windows.net/{options.ListingsContainerName}/{blobName}");
         return blobUri.ToString();
     }
 }

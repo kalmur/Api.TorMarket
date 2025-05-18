@@ -17,8 +17,6 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
 
     public string? Description { get; init; }
 
-    public List<string>? FilePaths { get; init; }
-
     internal CreateListingRequest ToRequest()
         => new()
         {
@@ -26,7 +24,6 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
             Name = Name,
             CategoryId = CategoryId,
             Price = Price,
-            Description = Description,
-            FilePaths = FilePaths,
+            Description = Description
         };
 }

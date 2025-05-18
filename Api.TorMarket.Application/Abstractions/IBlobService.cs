@@ -30,6 +30,15 @@ public interface IBlobService
         CancellationToken cancellationToken
     );
 
-    string GenerateBlobUrl(string blobName);
+    Task<string> UploadFileFromStreamAsync(
+        Stream fileStream,
+        string fileName,
+        string contentType,
+        CancellationToken cancellationToken
+    );
+
+    string GenerateBlobUrl(
+        string blobName
+    );
 }
 

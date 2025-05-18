@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516182414_InitialMigration")]
+    [Migration("20250518010139_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -411,7 +411,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         {
                             UserId = 1,
                             CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
-                            ProviderId = "auth0|67b6687fb71ed3cae5848607",
+                            ProviderId = "auth0|6821c63e7bd4b1c29438d9e3",
                             UpdatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
                         });
                 });

@@ -11,6 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.DTOs.Responses;
+using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -136,5 +137,24 @@ public class ListingsController(ISender mediator) : ControllerBase
         return Ok(
             result.ToResponseDto()
         );
+    }
+
+    [HttpPut]
+    [Route("blob/{listingId:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
+    public async Task<IActionResult> UpdateListingBlobUrlsAsync(
+        [FromRoute][Required] int listingId,
+        [FromBody] UpdateBlobUrlRequestDto request,
+        CancellationToken cancellationToken
+    )
+    {
+        var resultOrError = await mediator.Send(
+            new UpdateListingBlobUrlsCommand(listingId, request.BlobUrl.Url),
+            cancellationToken
+        );
+
+        return Ok(resultOrError);
     }
 }
