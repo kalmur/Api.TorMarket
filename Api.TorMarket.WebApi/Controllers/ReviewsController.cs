@@ -11,7 +11,9 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReviewsController(ISender mediator) : ControllerBase
+public class ReviewsController(
+    ISender mediator
+) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ListingWithReviewAndCategory))]
@@ -40,23 +42,6 @@ public class ReviewsController(ISender mediator) : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingWithReviewAndCategory))]
-    public async Task<IActionResult> GetByUserAndListingIdAsync(
-        [FromBody][Required] GetReviewByUserAndListingIdDto request,
-        CancellationToken cancellationToken
-    )
-    {
-        var result = await mediator.Send(
-            request.ToQuery(),
-            cancellationToken
-        );
-
-        return Ok(
-            result
-        );
-    }
-
-    [HttpGet]
     [Route("listing/{listingId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingReview>))]
     public async Task<IActionResult> GetByListingIdAsync(
@@ -71,6 +56,23 @@ public class ReviewsController(ISender mediator) : ControllerBase
 
         return Ok(
             result.ToResponseDto()
+        );
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingWithReviewAndCategory))]
+    public async Task<IActionResult> GetByListingAndUserIdAsync(
+        [FromBody][Required] GetReviewByUserAndListingIdDto request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.Send(
+            request.ToQuery(),
+            cancellationToken
+        );
+
+        return Ok(
+            result
         );
     }
 }

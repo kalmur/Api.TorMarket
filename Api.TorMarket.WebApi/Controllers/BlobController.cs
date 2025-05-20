@@ -31,7 +31,7 @@ public class BlobController(
 
     [HttpGet("all")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
-    public async Task<IActionResult> ListAsync(
+    public async Task<IActionResult> GetAllAsync(
         CancellationToken cancellationToken
     )
     {
@@ -60,7 +60,9 @@ public class BlobController(
             cancellationToken
         );
 
-        return Ok(new { url = blobUrl });
+        return Ok(
+            new { url = blobUrl }
+        );
     }
 
     [HttpPost("file")]
@@ -70,7 +72,7 @@ public class BlobController(
         CancellationToken cancellationToken
     )
     {
-        await blobService.UploadFileBlobAsync(
+        await blobService.UploadFileAsync(
             request.FilePath, 
             request.FileName,
             cancellationToken
@@ -86,7 +88,7 @@ public class BlobController(
         CancellationToken cancellationToken
     )
     {
-        await blobService.UploadContentBlobAsync(
+        await blobService.UploadContentAsync(
             request.Content,
             request.FileName,
             cancellationToken

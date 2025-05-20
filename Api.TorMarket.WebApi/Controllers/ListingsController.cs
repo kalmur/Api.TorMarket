@@ -11,13 +11,14 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.DTOs.Responses;
-using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ListingsController(ISender mediator) : ControllerBase
+public class ListingsController(
+    ISender mediator
+) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ListingDto))]
@@ -37,7 +38,7 @@ public class ListingsController(ISender mediator) : ControllerBase
                 resultOrError.Error.ToFailureResponseDto()
             )
             : CreatedAtAction(
-                nameof(GetByListingIdAsync),
+                nameof(GetByIdAsync),
                 new { listingId = resultOrError.Result.ListingId },
                 resultOrError.Result.ToResponseDto()
             );
@@ -45,7 +46,9 @@ public class ListingsController(ISender mediator) : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAllAsync(
+        CancellationToken cancellationToken
+    )
     {
         var result = await mediator.Send(
             new GetAllListingsQuery(),
@@ -60,7 +63,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [HttpGet]
     [Route("id/{listingId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
-    public async Task<IActionResult> GetByListingIdAsync(
+    public async Task<IActionResult> GetByIdAsync(
         [FromRoute][Required] int listingId, 
         CancellationToken cancellationToken
     )
@@ -79,7 +82,7 @@ public class ListingsController(ISender mediator) : ControllerBase
     [Route("name/{listingName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingDto>))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> SearchByListingNameAsync(
+    public async Task<IActionResult> GetByName(
         [FromRoute][Required] string listingName,
         CancellationToken cancellationToken
     )
@@ -144,14 +147,14 @@ public class ListingsController(ISender mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> UpdateListingBlobUrlsAsync(
+    public async Task<IActionResult> UpdateBlobUrlsAsync(
         [FromRoute][Required] int listingId,
         [FromBody] UpdateBlobUrlRequestDto request,
         CancellationToken cancellationToken
     )
     {
         var resultOrError = await mediator.Send(
-            new UpdateListingBlobUrlsCommand(listingId, request.BlobUrl.Url),
+            request.ToCommand(listingId),
             cancellationToken
         );
 
