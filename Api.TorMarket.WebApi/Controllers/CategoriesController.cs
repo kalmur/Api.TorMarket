@@ -11,7 +11,9 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class CategoriesController(ISender mediator) : ControllerBase
+public class CategoriesController(
+    ISender mediator
+) : ControllerBase
 {
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
@@ -31,7 +33,7 @@ public class CategoriesController(ISender mediator) : ControllerBase
     [Route("{categoryName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingCategory))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
-    public async Task<IActionResult> GetByCategoryNameAsync(
+    public async Task<IActionResult> GetByNameAsync(
         [FromRoute][Required] string categoryName,
         CancellationToken cancellationToken
     )

@@ -13,13 +13,13 @@ public interface IBlobService
         CancellationToken cancellationToken
     );
 
-    Task UploadFileBlobAsync(
+    Task UploadFileAsync(
         string filePath, 
         string fileName, 
         CancellationToken cancellationToken
     );
 
-    Task UploadContentBlobAsync(
+    Task UploadContentAsync(
         string content, 
         string fileName, 
         CancellationToken cancellationToken

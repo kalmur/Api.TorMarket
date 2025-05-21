@@ -21,27 +21,23 @@ public static class ListingReviewExtensions
 
     public static GetReviewByUserAndListingIdQuery ToQuery(
         this GetReviewByUserAndListingIdDto dto
-    ) => new(
-        dto.UserId, 
-        dto.ListingId
-    );
-
-    //public static ListingWithReviewDto ToResponseDto(
-    //    this ListingWithReviewAndCategory models
-    //) => new()
-    //{
-    //    //TODO
-    //}
+    ) 
+        => new(
+            dto.UserId, 
+            dto.ListingId
+        );
 
     public static ReviewDto ToResponseDto(
         this ListingReview model
-    ) => new()
-    {
-        RatingValue = model.Value,
-        Comment = model.Comment
-    };
+    ) => 
+        new()
+        {
+            RatingValue = model.Value,
+            Comment = model.Comment
+        };
 
     public static IEnumerable<ReviewDto> ToResponseDto(
         this IEnumerable<ListingReview> models
-    ) => models.Select(ToResponseDto);
+    ) => 
+        models.Select(ToResponseDto);
 }

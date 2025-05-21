@@ -12,7 +12,9 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController(ISender mediator) : ControllerBase
+public class UsersController(
+    ISender mediator
+) : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]

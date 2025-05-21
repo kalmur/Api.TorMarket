@@ -56,7 +56,7 @@ public class BlobService : IBlobService
         return items;
     }
 
-    public async Task UploadFileBlobAsync(
+    public async Task UploadFileAsync(
         string filePath, 
         string fileName,
         CancellationToken cancellationToken
@@ -74,7 +74,7 @@ public class BlobService : IBlobService
         );
     }
 
-    public async Task UploadContentBlobAsync(
+    public async Task UploadContentAsync(
         string content, 
         string fileName,
         CancellationToken cancellationToken

@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
+using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
@@ -65,4 +66,13 @@ public static class ListingExtensions
         Price = request.Price,
         Description = request.Description,
     };
+
+    public static UpdateListingBlobUrlsCommand ToCommand(
+        this UpdateBlobUrlRequestDto request,
+        int listingId
+    ) 
+        => new(
+            listingId, 
+            request.BlobUrl.Url
+        );
 }
