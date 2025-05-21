@@ -41,22 +41,24 @@ public class BlobController(
     }
 
     [HttpPost("upload")]
+    [Consumes("multipart/form-data")]
+    [ApiExplorerSettings(IgnoreApi = false)]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UploadFileFromStreamAsync(
-        [FromForm] IFormFile file,
+        [FromForm] UploadFileForm form,
         CancellationToken cancellationToken
     )
     {
-        if (file == null || file.Length == 0)
+        if (form.File == null || form.File.Length == 0)
             return BadRequest("File is required");
 
-        await using var stream = file.OpenReadStream();
+        await using var stream = form.File.OpenReadStream();
 
         var blobUrl = await blobService.UploadFileFromStreamAsync(
             stream,
-            file.FileName,
-            file.ContentType,
+            form.File.FileName,
+            form.File.ContentType,
             cancellationToken
         );
 
