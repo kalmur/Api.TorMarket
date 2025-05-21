@@ -36,9 +36,5 @@ public interface IBlobService
         string contentType,
         CancellationToken cancellationToken
     );
-
-    string GenerateBlobUrl(
-        string blobName
-    );
 }
 

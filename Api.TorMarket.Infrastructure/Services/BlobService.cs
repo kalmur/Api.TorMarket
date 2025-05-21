@@ -8,7 +8,7 @@ using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
-public class BlobService : IBlobService
+internal sealed class BlobService : IBlobService
 {
     private readonly AzureConfig options;
     private readonly BlobServiceClient _blobServiceClient;
@@ -109,11 +109,11 @@ public class BlobService : IBlobService
     }
 
     public async Task<string> UploadFileFromStreamAsync(
-    Stream fileStream,
-    string fileName,
-    string contentType,
-    CancellationToken cancellationToken
-)
+        Stream fileStream,
+        string fileName,
+        string contentType,
+        CancellationToken cancellationToken
+    )
     {
         if (fileStream == null || fileStream.Length == 0)
             throw new ArgumentException("File stream cannot be null or empty", nameof(fileStream));
@@ -136,7 +136,7 @@ public class BlobService : IBlobService
         return GenerateBlobUrl(uniqueFileName);
     }
 
-    public string GenerateBlobUrl(string blobName)
+    private string GenerateBlobUrl(string blobName)
     {
         var blobUri = new Uri($"https://{options.StorageAccountName}.blob.core.windows.net/{options.ListingsContainerName}/{blobName}");
         return blobUri.ToString();

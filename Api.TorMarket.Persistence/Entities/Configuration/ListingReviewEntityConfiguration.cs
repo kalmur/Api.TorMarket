@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-internal class ListingReviewEntityConfiguration : EntityConfigurationBase<ListingReviewEntity>
+internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase<ListingReviewEntity>
 {
     protected override string TableName => TableNames.ListingReviews;
 

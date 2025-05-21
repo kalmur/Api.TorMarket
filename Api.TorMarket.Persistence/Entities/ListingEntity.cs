@@ -11,8 +11,6 @@ internal class ListingEntity : AuditableEntity
     internal required string? Description { get; set; }
     internal required List<string>? BlobUrls { get; set; }
 
-    // Add image later down the line
-
     internal virtual UserEntity User { get; set; } = null!;
     internal virtual ListingCategoryEntity ListingCategory { get; set; } = null!;
 

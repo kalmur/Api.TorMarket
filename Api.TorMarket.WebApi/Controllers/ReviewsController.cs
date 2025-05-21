@@ -11,7 +11,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ReviewsController(
+public sealed class ReviewsController(
     ISender mediator
 ) : ControllerBase
 {

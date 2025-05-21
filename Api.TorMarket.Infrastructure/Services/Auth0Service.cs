@@ -4,7 +4,7 @@ using Api.TorMarket.Infrastructure.Options;
 
 namespace Api.TorMarket.Infrastructure.Services;
 
-internal class Auth0Service : IAuth0Service
+internal sealed class Auth0Service : IAuth0Service
 {
     private const string ProviderName = "Auth0";
 
