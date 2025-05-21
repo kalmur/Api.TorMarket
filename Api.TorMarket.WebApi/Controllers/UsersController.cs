@@ -12,7 +12,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController(
+public sealed class UsersController(
     ISender mediator
 ) : ControllerBase
 {

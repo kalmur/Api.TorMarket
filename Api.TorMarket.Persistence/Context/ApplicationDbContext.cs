@@ -14,7 +14,7 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-internal class ApplicationDbContext : DbContext, IApplicationDbContext
+internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options)
@@ -35,10 +35,11 @@ internal class ApplicationDbContext : DbContext, IApplicationDbContext
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<AuditableEntity>()
-                     .Where(q => 
-                         q.State is EntityState.Added or 
-                                    EntityState.Modified
-                     ))
+                     .Where(
+                            q => q.State is EntityState.Added or 
+                                            EntityState.Modified
+                        )
+                     )
         {
             if (entry.State == EntityState.Added)
             {
