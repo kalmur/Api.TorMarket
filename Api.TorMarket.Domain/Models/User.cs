@@ -4,6 +4,6 @@ public record User
 {
     public const int ProviderIdMaxLength = 20;
 
-    public required int UserId { get; set; }
-    public required string ProviderId { get; set; }
+    public required int UserId { get; init; }
+    public required string ProviderId { get; init; }
 }
