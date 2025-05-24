@@ -3,7 +3,7 @@ using Api.TorMarket.Application.CQRS;
 using NSubstitute;
 using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUserFailure;
 
-namespace Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
+namespace Api.TorMarket.Application.Tests.CQRS.Commands.Users.CreateUser;
 
 internal static class CreateUserValidatorExtensions
 {
@@ -11,7 +11,7 @@ internal static class CreateUserValidatorExtensions
         this IValidator<CreateUserCommand, CreateUserFailure> validator
     ) =>
         validator.ValidateAsync(
-            Arg.Any<CreateUserCommand>(), 
+            Arg.Any<CreateUserCommand>(),
             Arg.Any<CancellationToken>()
         ).Returns(
             (CreateUserFailure?)null
@@ -22,7 +22,7 @@ internal static class CreateUserValidatorExtensions
         ErrorType error
     ) =>
         validator.ValidateAsync(
-            Arg.Any<CreateUserCommand>(), 
+            Arg.Any<CreateUserCommand>(),
             Arg.Any<CancellationToken>()
         ).Returns(
             new CreateUserFailure

@@ -2,13 +2,15 @@
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
+using Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
 using Api.TorMarket.Domain.Models;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
 using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUserFailure;
 
-namespace Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
+#nullable disable
+namespace Api.TorMarket.Application.Tests.CQRS.Commands.Users.CreateUser;
 
 [TestFixture]
 internal sealed class CreateUserHandlerTests
@@ -45,13 +47,13 @@ internal sealed class CreateUserHandlerTests
         _validator.SetupToPassValidation();
 
         _userRepository.CreateUserAsync(
-            Arg.Any<CreateUserRequest>(), 
+            Arg.Any<CreateUserRequest>(),
             Arg.Any<CancellationToken>()
         ).Returns(expectedResult);
 
         // Act
         var result = await _handler.Handle(
-            command, 
+            command,
             CancellationToken.None
         );
 
@@ -81,14 +83,13 @@ internal sealed class CreateUserHandlerTests
         result.Error.Errors.ShouldContain(ErrorType.InvalidProviderId);
 
         await _validator.Received(1).ValidateAsync(
-            command, 
+            command,
             Arg.Any<CancellationToken>()
         );
 
         await _userRepository.DidNotReceive().CreateUserAsync(
-            Arg.Any<CreateUserRequest>(), 
+            Arg.Any<CreateUserRequest>(),
             Arg.Any<CancellationToken>()
         );
     }
-
 }

@@ -1,12 +1,14 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
+using Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
 using Api.TorMarket.Domain.Models;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
 using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUserFailure;
 
-namespace Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
+#nullable disable
+namespace Api.TorMarket.Application.Tests.CQRS.Commands.Users.CreateUser;
 
 [TestFixture]
 internal sealed class CreateUserValidatorTests
@@ -39,7 +41,7 @@ internal sealed class CreateUserValidatorTests
 
         // Act
         var result = await _validator.ValidateAsync(
-            command, 
+            command,
             CancellationToken.None
         );
 
@@ -59,7 +61,7 @@ internal sealed class CreateUserValidatorTests
 
         // Act
         var result = await _validator.ValidateAsync(
-            command, 
+            command,
             CancellationToken.None
         );
 
@@ -75,7 +77,7 @@ internal sealed class CreateUserValidatorTests
         var command = CreateUserCommandGenerator.GenerateCommand("auth|007");
 
         _userRepository.GetByProviderIdAsync(
-            command.ProviderId, 
+            command.ProviderId,
             Arg.Any<CancellationToken>()
         ).Returns(
             new User
@@ -87,7 +89,7 @@ internal sealed class CreateUserValidatorTests
 
         // Act
         var result = await _validator.ValidateAsync(
-            command, 
+            command,
             CancellationToken.None
         );
 
