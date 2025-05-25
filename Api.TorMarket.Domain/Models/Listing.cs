@@ -2,6 +2,7 @@
 
 public class Listing
 {
+    // Rename to title?!
     public const int ListingNameMaxLength = 100;
 
     public int ListingId { get; set; }
