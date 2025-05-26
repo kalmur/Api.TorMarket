@@ -8,5 +8,5 @@ internal class ShoppingCartItemEntity
     internal int Quantity { get; set; }
 
     internal virtual ShoppingCartEntity ShoppingCart { get; set; } = null!;
-    internal virtual ListingEntity Product { get; set; } = null!;
+    internal virtual ListingEntity Listing { get; set; } = null!;
 }

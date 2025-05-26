@@ -12,60 +12,64 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
     protected override void ConfigureColumns(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .Property(o => o.OrderId)
+            .Property(order => order.OrderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(o => o.UserId)
+            .Property(order => order.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(o => o.OrderStatus)
+            .Property(order => order.OrderStatus)
             .IsRequired();
 
         builder
-            .Property(o => o.ShippingAddress)
+            .Property(order => order.ShippingAddress)
             .IsRequired();
 
         builder
-            .Property(o => o.TotalPrice)
+            .Property(order => order.TotalPrice)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
         builder
-            .Property(o => o.OrderDate)
+            .Property(order => order.OrderDate)
             .IsRequired();
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<OrderEntity> builder)
     {
         builder
-            .HasKey(o => o.OrderId);
+            .HasKey(order => order.OrderId);
 
         builder
-            .HasOne(o => o.User)
-            .WithMany(u => u.Orders)
-            .HasForeignKey(o => o.OrderId)
+            .HasOne(order => order.User)
+            .WithMany(user => user.Orders)
+            .HasForeignKey(user => user.OrderId)
+            .HasPrincipalKey(order => order.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(o => o.StatusEntity)
-            .WithMany(s => s.Orders)
-            .HasForeignKey(o => o.OrderId)
+            .HasOne(order => order.StatusEntity)
+            .WithMany(status => status.Orders)
+            .HasForeignKey(status => status.OrderId)
+            .HasPrincipalKey(order => order.OrderStatusId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(o => o.Address)
+        // TODO - Confirm
+        builder
+            .HasOne(order => order.Address)
             .WithMany()
             .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasMany(o => o.OrderLines)
-            .WithOne(o => o.Order)
-            .HasForeignKey(o => o.OrderId)
+            .HasMany(order => order.OrderLines)
+            .WithOne(orderLine => orderLine.Order)
+            .HasForeignKey(orderLine => orderLine.OrderId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 

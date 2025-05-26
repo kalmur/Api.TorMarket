@@ -12,29 +12,30 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
     protected override void ConfigureColumns(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
-            .Property(x => x.ListingCategoryId)
+            .Property(listingCategory => listingCategory.ListingCategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        builder.Property(x => x.Name);
+        builder.Property(listingCategory => listingCategory.Name);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
-            .HasKey(x => x.ListingCategoryId);
+            .HasKey(listingCategory => listingCategory.ListingCategoryId);
 
         builder
-            .HasMany(x => x.Products)
-            .WithOne(x => x.ListingCategory)
-            .HasForeignKey(x => x.CategoryId)
+            .HasMany(listingCategory => listingCategory.Products)
+            .WithOne(product => product.ListingCategory)
+            .HasForeignKey(product => product.CategoryId)
+            .HasPrincipalKey(listingCategory => listingCategory.ListingCategoryId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingCategoryEntity> builder)
     {
         builder
-            .HasIndex(pc => pc.Name);
+            .HasIndex(listingCategory => listingCategory.Name);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,23 +13,23 @@ internal sealed class ShoppingCartItemEntityConfiguration : EntityConfigurationB
     protected override void ConfigureColumns(EntityTypeBuilder<ShoppingCartItemEntity> builder)
     {
         builder
-            .Property(sci => sci.ShoppingCartItemId)
+            .Property(shoppingCartItem => shoppingCartItem.ShoppingCartItemId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(sci => sci.CartId)
+            .Property(shoppingCartItem => shoppingCartItem.CartId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(sci => sci.ProductId)
+            .Property(shoppingCartItem => shoppingCartItem.ProductId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(sci => sci.Quantity)
+            .Property(shoppingCartItem => shoppingCartItem.Quantity)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
     }
@@ -36,18 +37,19 @@ internal sealed class ShoppingCartItemEntityConfiguration : EntityConfigurationB
     protected override void ConfigureKeys(EntityTypeBuilder<ShoppingCartItemEntity> builder)
     {
         builder
-            .HasKey(sci => sci.ShoppingCartItemId);
+            .HasKey(shoppingCartItem => shoppingCartItem.ShoppingCartItemId);
 
         builder
-            .HasOne(sci => sci.ShoppingCart)
-            .WithMany(sc => sc.Items)
-            .HasForeignKey(sci => sci.CartId)
+            .HasOne(shoppingCartItem => shoppingCartItem.ShoppingCart)
+            .WithMany(shoppingCart => shoppingCart.Items)
+            .HasForeignKey(shoppingCart => shoppingCart.CartId)
+            .HasPrincipalKey(shoppingCartItem => shoppingCartItem.ShoppingCartId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // TODO - Check constraint
         builder
-            .HasOne(sci => sci.Product)
-            .WithMany(p => p.ShoppingCartItems)
-            .HasForeignKey(sci => sci.ProductId)
+            .HasOne(shoppingCart => shoppingCart.Listing)
+            .WithMany(listing => listing.ShoppingCartItems)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

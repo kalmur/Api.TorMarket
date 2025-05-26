@@ -12,13 +12,13 @@ internal sealed class ShoppingCartEntityConfiguration : EntityConfigurationBase<
     protected override void ConfigureColumns(EntityTypeBuilder<ShoppingCartEntity> builder)
     {
         builder
-            .Property(sc => sc.ShoppingCartId)
+            .Property(shoppingCart => shoppingCart.ShoppingCartId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(sc => sc.UserId)
+            .Property(shoppingCart => shoppingCart.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
     }
@@ -26,12 +26,13 @@ internal sealed class ShoppingCartEntityConfiguration : EntityConfigurationBase<
     protected override void ConfigureKeys(EntityTypeBuilder<ShoppingCartEntity> builder)
     {
         builder
-            .HasKey(sc => sc.ShoppingCartId);
+            .HasKey(shoppingCart => shoppingCart.ShoppingCartId);
 
         builder
-            .HasOne(sc => sc.User)
-            .WithMany(u => u.ShoppingCarts)
-            .HasForeignKey(sc => sc.UserId)
+            .HasOne(shoppingCart => shoppingCart.User)
+            .WithMany(user => user.ShoppingCarts)
+            .HasForeignKey(user => user.UserId)
+            .HasPrincipalKey(shoppingCart => shoppingCart.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

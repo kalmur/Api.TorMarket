@@ -8,6 +8,6 @@ internal class OrderLineEntity
     internal int Quantity { get; set; }
     internal decimal Price { get; set; }
 
-    internal virtual ListingEntity Product { get; set; } = null!;
+    internal virtual ListingEntity Listing { get; set; } = null!;
     internal virtual OrderEntity Order { get; set; } = null!;
 }

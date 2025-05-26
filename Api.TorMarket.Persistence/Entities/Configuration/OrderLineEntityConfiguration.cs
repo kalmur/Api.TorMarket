@@ -12,28 +12,28 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
     protected override void ConfigureColumns(EntityTypeBuilder<OrderLineEntity> builder)
     {
         builder
-            .Property(ol => ol.OrderLineId)
+            .Property(orderLine => orderLine.OrderLineId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(ol => ol.ProductId)
+            .Property(orderLine => orderLine.ProductId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(ol => ol.OrderId)
+            .Property(orderLine => orderLine.OrderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(ol => ol.Quantity)
+            .Property(orderLine => orderLine.Quantity)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(ol => ol.Price)
+            .Property(orderLine => orderLine.Price)
             .HasColumnOrder(ColumnOrder++)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
@@ -42,18 +42,20 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
     protected override void ConfigureKeys(EntityTypeBuilder<OrderLineEntity> builder)
     {
         builder
-            .HasKey(ol => ol.OrderLineId);
+            .HasKey(orderLine => orderLine.OrderLineId);
 
         builder
-            .HasOne(ol => ol.Product)
-            .WithMany(p => p.OrderLines)
-            .HasForeignKey(ol => ol.OrderLineId)
+            .HasOne(orderLine => orderLine.Listing)
+            .WithMany(listing => listing.OrderLines)
+            .HasForeignKey(listing => listing.OrderLineId)
+            .HasPrincipalKey(orderLine => orderLine.ListingId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        // TODO - Check this constraint
         builder
-            .HasOne(ol => ol.Order)
-            .WithMany()
-            .HasForeignKey(ol => ol.OrderLineId)
+            .HasOne(orderLine => orderLine.Order)
+            .WithMany(order => order.OrderLines)
+            .HasForeignKey(orderLine => orderLine.OrderLineId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

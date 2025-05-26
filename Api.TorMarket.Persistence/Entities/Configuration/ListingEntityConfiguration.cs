@@ -12,37 +12,40 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
     protected override void ConfigureColumns(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .Property(x => x.ListingId)
+            .Property(listing => listing.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.UserId)
+            .Property(listing => listing.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.CategoryId)
+            .Property(listing => listing.CategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Name)
+            .Property(listing => listing.Name)
             .HasColumnOrder(ColumnOrder++)
+            .HasMaxLength(ListingEntity.ListingEntity_NameMaxLength)
             .IsRequired();
 
         builder
-            .Property(x => x.Price)
+            .Property(listing => listing.Price)
             .HasColumnOrder(ColumnOrder++)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType("decimal(18,2)")
+            .IsRequired();
 
         builder
-            .Property(x => x.Description)
-            .HasColumnOrder(ColumnOrder++);
+            .Property(listing => listing.Description)
+            .HasColumnOrder(ColumnOrder++)
+            .HasMaxLength(ListingEntity.ListingEntity_DescriptionMaxLength);
 
         builder
-            .Property(x => x.BlobUrls)
+            .Property(listing => listing.BlobUrls)
             .HasColumnOrder(ColumnOrder++);
     }
 
@@ -50,33 +53,36 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
     {
         builder
             .ToTable(TableNames.Listings)
-            .HasKey(x => x.ListingId);
+            .HasKey(listing => listing.ListingId);
 
         builder
-            .HasOne(p => p.User)
-            .WithMany(u => u.Listings)
-            .HasForeignKey(p => p.UserId)
+            .HasOne(listing => listing.User)
+            .WithMany(user => user.Listings)
+            .HasForeignKey(user => user.UserId)
+            .HasPrincipalKey(listing => listing.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(x => x.ListingCategory)
-            .WithMany(x => x.Products)
-            .HasForeignKey(x => x.CategoryId)
+            .HasOne(listing => listing.ListingCategory)
+            .WithMany(listingCategory => listingCategory.Products)
+            .HasForeignKey(listingCategory => listingCategory.CategoryId)#
+            .HasPrincipalKey(listing => listing.ListingCategoryId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.UserProductReviews)
-            .WithOne(x => x.Listing)
-            .HasForeignKey(x => x.ListingId)
+            .HasMany(listing => listing.ListingReviews)
+            .WithOne(listingReviews => listingReviews.Listing)
+            .HasForeignKey(listingReviews => listingReviews.ListingId)
+            .HasPrincipalKey(listing => listing.ListingId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .HasIndex(pr => pr.UserId);
+            .HasIndex(listing => listing.UserId);
 
         builder
-            .HasIndex(pr => pr.CategoryId);
+            .HasIndex(listing => listing.CategoryId);
     }
 }
