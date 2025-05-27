@@ -13,7 +13,7 @@ namespace Api.TorMarket.Infrastructure;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(
+    public static IServiceCollection AddInfrastructureDependencies(
         this IServiceCollection services,
         IConfigurationManager configuration
     ) =>

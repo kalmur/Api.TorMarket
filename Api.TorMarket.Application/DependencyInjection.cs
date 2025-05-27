@@ -12,7 +12,7 @@ namespace Api.TorMarket.Application;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddApplication(
+    public static IServiceCollection AddApplicationDependencies(
         this IServiceCollection services, 
         IConfiguration configuration
     ) => services

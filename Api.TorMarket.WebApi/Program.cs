@@ -33,9 +33,9 @@ builder.Services
     });
 
 builder.Services
-    .AddApplication(builder.Configuration)
-    .AddInfrastructure(builder.Configuration)
-    .AddPersistence(builder.Configuration)
+    .AddApplicationDependencies(builder.Configuration)
+    .AddInfrastructureDependencies(builder.Configuration)
+    .AddPersistenceDependencies(builder.Configuration)
     .AddControllers(options =>
     {
         options.SuppressAsyncSuffixInActionNames = false;
