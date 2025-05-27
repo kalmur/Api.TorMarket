@@ -26,9 +26,9 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
             .HasKey(listingCategory => listingCategory.ListingCategoryId);
 
         builder
-            .HasMany(listingCategory => listingCategory.Products)
-            .WithOne(product => product.ListingCategory)
-            .HasForeignKey(product => product.CategoryId)
+            .HasMany(listingCategory => listingCategory.Listings)
+            .WithOne(listing => listing.ListingCategory)
+            .HasForeignKey(listing => listing.CategoryId)
             .HasPrincipalKey(listingCategory => listingCategory.ListingCategoryId)
             .OnDelete(DeleteBehavior.Cascade);
     }

@@ -14,6 +14,8 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
+
+// TODO - Generate new migration
 internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 

@@ -3,7 +3,7 @@
 internal class OrderLineEntity
 {
     internal int OrderLineId { get; set; }
-    internal int ProductId { get; set; }
+    internal int ListingId { get; set; }
     internal int OrderId { get; set; }
     internal int Quantity { get; set; }
     internal decimal Price { get; set; }

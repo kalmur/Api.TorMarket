@@ -23,20 +23,24 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .IsRequired();
 
         builder
-            .Property(order => order.OrderStatus)
+            .Property(order => order.StatusId)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(order => order.ShippingAddress)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
             .Property(order => order.TotalPrice)
+            .HasColumnOrder(ColumnOrder++)
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
         builder
             .Property(order => order.OrderDate)
+            .HasColumnOrder(ColumnOrder++)
             .IsRequired();
     }
 
@@ -53,7 +57,7 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .OnDelete(DeleteBehavior.Restrict);
 
         builder
-            .HasOne(order => order.StatusEntity)
+            .HasOne(order => order.OrderStatus)
             .WithMany(status => status.Orders)
             .HasForeignKey(status => status.OrderId)
             .HasPrincipalKey(order => order.OrderStatusId)
@@ -61,7 +65,7 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
 
         // TODO - Confirm
         builder
-            .HasOne(order => order.Address)
+            .HasOne(order => order.UserAddress)
             .WithMany()
             .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.Restrict);

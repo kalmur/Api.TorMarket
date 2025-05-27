@@ -32,7 +32,7 @@ internal sealed class OrderStatusEntityConfiguration : EntityConfigurationBase<O
         // TODO - Check constraint
         builder
             .HasMany(orderStatus => orderStatus.Orders)
-            .WithOne(order => order.StatusEntity)
+            .WithOne(order => order.OrderStatus)
             .HasForeignKey(order => order.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }

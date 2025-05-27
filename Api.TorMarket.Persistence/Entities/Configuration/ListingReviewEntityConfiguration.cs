@@ -29,7 +29,7 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
         builder
             .Property(x => x.Comment)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(ListingReviewEntity.ListingReviewEntity_CommentMaxLength)
+            .HasMaxLength(ListingReviewEntity.ListingReviewEntity_CommentMaxLength);
 
         builder
             .Property(x => x.CreatedOn)
@@ -66,7 +66,7 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingReviewEntity> builder)
     {
-        // Remove in case there are too many updates on the entity
+        // TODO - Remove in case there are too many updates on the entity
         builder
             .HasIndex(pr => new
             {

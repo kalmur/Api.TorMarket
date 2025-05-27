@@ -6,6 +6,9 @@ using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Api.TorMarket.Infrastructure.Tests")]
 namespace Api.TorMarket.Infrastructure;
 
 public static class DependencyInjection

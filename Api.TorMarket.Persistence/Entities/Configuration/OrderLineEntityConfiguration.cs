@@ -18,7 +18,7 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(orderLine => orderLine.ProductId)
+            .Property(orderLine => orderLine.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
@@ -47,15 +47,16 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
         builder
             .HasOne(orderLine => orderLine.Listing)
             .WithMany(listing => listing.OrderLines)
-            .HasForeignKey(listing => listing.OrderLineId)
-            .HasPrincipalKey(orderLine => orderLine.ListingId)
+            .HasForeignKey(orderLine => orderLine.OrderLineId)
+            .HasPrincipalKey(listing => listing.ListingId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // TODO - Check this constraint
         builder
             .HasOne(orderLine => orderLine.Order)
             .WithMany(order => order.OrderLines)
-            .HasForeignKey(orderLine => orderLine.OrderLineId)
+            .HasForeignKey(orderLine => orderLine.OrderId)
+            .HasPrincipalKey(order => order.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
