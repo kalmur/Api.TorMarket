@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
+using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
@@ -21,7 +22,7 @@ internal sealed class OrderStatusEntityConfiguration : EntityConfigurationBase<O
             .Property(orderStatus => orderStatus.Status)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(OrderStatusEntity.OrderStatusEntity_StatusMaxLength);
+            .HasMaxLength(OrderStatus.Status_MaxLength);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<OrderStatusEntity> builder)

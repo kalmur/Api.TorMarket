@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -36,27 +37,27 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
             .Property(userAddress => userAddress.AddressLine)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserAddressEntity.AddressLine_MaxLength)
+            .HasMaxLength(UserAddress.AddressLine_MaxLength)
             .IsUnicode(false);
 
         builder
             .Property(userAddress => userAddress.City)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(UserAddressEntity.City_MaxLength)
+            .HasMaxLength(UserAddress.City_MaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.PostalCode)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserAddressEntity.PostalCode_MaxLength)
+            .HasMaxLength(UserAddress.PostalCode_MaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.Country)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserAddressEntity.Country_MaxLength)
+            .HasMaxLength(UserAddress.Country_MaxLength)
             .IsUnicode(false);
 
         builder

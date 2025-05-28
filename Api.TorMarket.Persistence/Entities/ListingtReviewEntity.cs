@@ -4,8 +4,6 @@ namespace Api.TorMarket.Persistence.Entities;
 
 internal class ListingReviewEntity : AuditableEntity
 {
-    internal const int ListingReviewEntity_CommentMaxLength = 250;
-
     internal required int UserId { get; set; }
     internal required int ListingId { get; set; }
     internal required int RatingValue { get; set; }

@@ -4,9 +4,6 @@ namespace Api.TorMarket.Persistence.Entities;
 
 internal class ListingEntity : AuditableEntity
 {
-    internal const int Name_MaxLength = 100;
-    internal const int Description_MaxLength = 500;
-
     internal int ListingId { get; set; }
     internal required int UserId { get; set; }
     internal required int CategoryId { get; set; }

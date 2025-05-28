@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,7 +32,7 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .Property(listing => listing.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(ListingEntity.Name_MaxLength);
+            .HasMaxLength(Listing.Name_MaxLength);
 
         builder
             .Property(listing => listing.Price)
@@ -41,7 +42,7 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
         builder
             .Property(listing => listing.Description)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(ListingEntity.Description_MaxLength);
+            .HasMaxLength(Listing.Description_MaxLength);
 
         builder
             .Property(user => user.CreatedDate)

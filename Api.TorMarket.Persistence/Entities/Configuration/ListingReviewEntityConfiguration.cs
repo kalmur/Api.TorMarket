@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -29,7 +30,7 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
         builder
             .Property(x => x.Comment)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(ListingReviewEntity.ListingReviewEntity_CommentMaxLength);
+            .HasMaxLength(ListingReview.Comment_MaxLength);
 
         builder
             .Property(x => x.CreatedDate)

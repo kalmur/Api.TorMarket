@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,7 +22,7 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
             .Property(x => x.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(ListingCategoryEntity.Name_MaxLength);
+            .HasMaxLength(ListingCategory.Name_MaxLength);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingCategoryEntity> builder)

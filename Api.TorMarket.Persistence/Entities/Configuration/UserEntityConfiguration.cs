@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -21,7 +22,7 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
             .Property(user => user.ProviderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserEntity.ProviderId_MaxLength);
+            .HasMaxLength(User.ProviderId_MaxLength);
 
         builder
             .Property(user => user.CreatedDate)

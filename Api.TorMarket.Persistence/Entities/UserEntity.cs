@@ -4,8 +4,6 @@ namespace Api.TorMarket.Persistence.Entities;
 
 internal class UserEntity : AuditableEntity
 {
-    internal const int ProviderId_MaxLength = 50;
-
     internal int UserId { get; set; }
     internal required string ProviderId { get; set; } = string.Empty;
 

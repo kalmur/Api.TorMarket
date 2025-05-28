@@ -9,7 +9,7 @@ public record CreateListingRequestDto
     public required int UserId { get; init; }
 
     [Required(AllowEmptyStrings = false)]
-    [StringLength(Listing.ListingNameMaxLength)]
+    [StringLength(Listing.Name_MaxLength)]
     public required string Name { get; init; }
 
     [Required]
@@ -18,5 +18,6 @@ public record CreateListingRequestDto
     [Required]
     public required decimal Price { get; init; }
 
+    [StringLength(Listing.Description_MaxLength)]
     public string? Description { get; init; }
 }

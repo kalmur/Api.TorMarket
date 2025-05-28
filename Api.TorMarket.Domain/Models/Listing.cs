@@ -2,8 +2,8 @@
 
 public record Listing
 {
-    // Rename to title?!
-    public const int ListingNameMaxLength = 100;
+    public const int Name_MaxLength = 100;
+    public const int Description_MaxLength = 500;
 
     public int ListingId { get; init; }
     public int UserId { get; init; }
