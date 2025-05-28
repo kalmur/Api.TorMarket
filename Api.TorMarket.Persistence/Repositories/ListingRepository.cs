@@ -32,7 +32,7 @@ internal class ListingRepository(
     ) =>
         await context.Listing
             .Include(listing => listing.User)
-            .Include(listing => listing.ListingCategory)
+            .Include(listing => listing.Category)
             .OrderBy(_ => Guid.NewGuid())
             .Select(listing => 
                 listing.ToModelWithUserAndCategory()
@@ -45,7 +45,7 @@ internal class ListingRepository(
     ) => (
         await context.Listing
             .Include(listing => listing.User)
-            .Include(listing => listing.ListingCategory)
+            .Include(listing => listing.Category)
             .FirstOrDefaultAsync(
                 listing => listing.ListingId == listingId,
                 cancellationToken
@@ -57,7 +57,7 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(listing => listing.ListingCategory)
+            .Include(listing => listing.Category)
             .Where(
                 listing => listing.Name.ToLower().Contains(
                     name.ToLower()
@@ -73,7 +73,7 @@ internal class ListingRepository(
     ) =>
         await context.Listing
             .Include(listing => listing.User)
-            .Include(listing => listing.ListingCategory)
+            .Include(listing => listing.Category)
             .Where(
                 listing => listing.User.ProviderId == providerId
             )
@@ -86,9 +86,9 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(listing => listing.ListingCategory)
+            .Include(listing => listing.Category)
             .Where(
-               listing => listing.ListingCategory.Name.ToLower().Contains(
+               listing => listing.Category.Name.ToLower().Contains(
                    categoryName.ToLower()
                )
             )

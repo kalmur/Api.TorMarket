@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBase<ListingCategoryEntity>
+internal sealed class CategoryEntityConfiguration : EntityConfigurationBase<CategoryEntity>
 {
-    protected override string TableName => TableNames.ListingCategories;
+    protected override string TableName => TableNames.Categories;
 
-    protected override void ConfigureColumns(EntityTypeBuilder<ListingCategoryEntity> builder)
+    protected override void ConfigureColumns(EntityTypeBuilder<CategoryEntity> builder)
     {
         builder
-            .Property(listingCategory => listingCategory.ListingCategoryId)
+            .Property(listingCategory => listingCategory.CategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -22,22 +22,22 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
             .Property(x => x.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(ListingCategory.Name_MaxLength);
+            .HasMaxLength(Category.Name_MaxLength);
     }
 
-    protected override void ConfigureKeys(EntityTypeBuilder<ListingCategoryEntity> builder)
+    protected override void ConfigureKeys(EntityTypeBuilder<CategoryEntity> builder)
     {
         builder
-            .HasKey(listingCategory => listingCategory.ListingCategoryId);
+            .HasKey(listingCategory => listingCategory.CategoryId);
 
         builder
             .HasMany(x => x.Listings)
-            .WithOne(x => x.ListingCategory)
+            .WithOne(x => x.Category)
             .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
-    protected override void ConfigureIndexes(EntityTypeBuilder<ListingCategoryEntity> builder)
+    protected override void ConfigureIndexes(EntityTypeBuilder<CategoryEntity> builder)
     {
         builder
             .HasIndex(listingCategory => listingCategory.Name);

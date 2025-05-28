@@ -4,11 +4,11 @@ namespace Api.TorMarket.Persistence.Entities.Extensions;
 
 internal static class ListingCategoryEntityExtensions
 {
-    public static ListingCategory? ToModel(
-        this ListingCategoryEntity entity
+    public static Category? ToModel(
+        this CategoryEntity entity
     ) => new()
     {
-        CategoryId = entity.ListingCategoryId,
+        CategoryId = entity.CategoryId,
         Name = entity.Name ?? string.Empty
     };
 }

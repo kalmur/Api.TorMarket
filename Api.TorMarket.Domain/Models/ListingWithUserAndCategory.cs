@@ -3,5 +3,5 @@
 public record ListingWithUserAndCategory : Listing
 {
     public User? User { get; set; }
-    public ListingCategory? Category { get; set; }
+    public Category? Category { get; set; }
 }

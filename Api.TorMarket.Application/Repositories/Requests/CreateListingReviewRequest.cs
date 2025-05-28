@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Application.Repositories.Requests;
 
-public record CreateListingReviewRequest
+public sealed record CreateListingReviewRequest
 {
     public required int UserId { get; init; }
 

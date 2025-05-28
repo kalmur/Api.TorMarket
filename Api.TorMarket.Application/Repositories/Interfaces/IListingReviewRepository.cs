@@ -7,13 +7,13 @@ public interface IListingReviewRepository
 {
     Task<ListingWithReviewAndCategory> CreateAsync(
         CreateListingReviewRequest review, 
-        CancellationToken ct
+        CancellationToken cancelationToken
     );
 
     Task<ListingWithReviewAndCategory?> GetByUserAndListingIdAsync(
         int userId, 
         int listingId, 
-        CancellationToken ct
+        CancellationToken cancelationToken
     );
 
     Task<IEnumerable<ListingReview>> GetByListingIdAsync(

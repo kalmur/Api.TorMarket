@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
 
-public sealed record GetAllCategoriesRequest : IRequest<IEnumerable<ListingCategory>>
+public sealed record GetAllCategoriesRequest : IRequest<IEnumerable<Category>>
 {
 }

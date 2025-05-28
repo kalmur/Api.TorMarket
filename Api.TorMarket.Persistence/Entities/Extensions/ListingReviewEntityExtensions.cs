@@ -14,7 +14,7 @@ internal static class ListingReviewEntityExtensions
         Value = entity.RatingValue,
         Comment = entity.Comment,
         Listing = entity.Listing.ToModel(),
-        Category = entity.Listing.ListingCategory.ToModel()
+        Category = entity.Listing.Category.ToModel()
     };
 
     internal static ListingReviewEntity ToEntity(

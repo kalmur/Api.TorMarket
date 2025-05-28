@@ -11,11 +11,11 @@ internal class ListingEntity : AuditableEntity
     internal required decimal Price { get; set; }
     internal required string? Description { get; set; }
 
+    internal virtual CategoryEntity Category { get; set; } = null!;
     internal virtual UserEntity User { get; set; } = null!;
-    internal virtual ListingCategoryEntity ListingCategory { get; set; } = null!;
 
     internal virtual ICollection<ListingBlobEntity> ListingBlobs { get; set; } = null!;
     internal virtual ICollection<ListingReviewEntity> ListingReviews { get; set; } = null!;
-    internal virtual ICollection<ShoppingCartItemEntity> ShoppingCartItems { get; set; } = null!;
     internal virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;
+    internal virtual ICollection<ShoppingCartItemEntity> ShoppingCartItems { get; set; } = null!;
 }

@@ -37,7 +37,7 @@ internal sealed class ListingReviewRepository(
             await context.ListingReview
             .Include(lr => lr.User)
             .Include(lr => lr.Listing)
-            .ThenInclude(l => l.ListingCategory)
+            .ThenInclude(l => l.Category)
             .FirstOrDefaultAsync(p => 
                 p.UserId == userId && 
                 p.ListingId == listingId,

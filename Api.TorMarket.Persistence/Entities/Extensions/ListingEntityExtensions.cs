@@ -31,7 +31,7 @@ internal static class ListingEntityExtensions
         Price = entity.Price,
         Description = entity.Description,
         User = entity.User.ToModel(),
-        Category = entity.ListingCategory.ToModel()
+        Category = entity.Category.ToModel()
     };
 
     internal static ListingWithCategory ToModelWithCategory(
@@ -44,7 +44,7 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        Category = entity.ListingCategory.ToModel()
+        Category = entity.Category.ToModel()
     };
 
     internal static ListingEntity ToEntity(

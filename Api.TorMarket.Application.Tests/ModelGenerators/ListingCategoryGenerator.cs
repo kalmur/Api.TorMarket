@@ -4,7 +4,7 @@ namespace Api.TorMarket.Application.Tests.ModelGenerators;
 
 internal static class ListingCategoryGenerator
 {
-    internal static ListingCategory GenerateListingCategory(
+    internal static Category GenerateListingCategory(
         int categoryId = 1
     ) => new()
     {

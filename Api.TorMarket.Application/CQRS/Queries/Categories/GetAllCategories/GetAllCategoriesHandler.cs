@@ -5,10 +5,10 @@ using MediatR;
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
 
 internal sealed class GetAllCategoriesHandler(
-    IListingCategoryRepository repository
-) : IRequestHandler<GetAllCategoriesRequest, IEnumerable<ListingCategory>>
+    ICategoryRepository repository
+) : IRequestHandler<GetAllCategoriesRequest, IEnumerable<Category>>
 {
-    public async Task<IEnumerable<ListingCategory>> Handle(
+    public async Task<IEnumerable<Category>> Handle(
         GetAllCategoriesRequest request,
         CancellationToken cancellationToken
     )

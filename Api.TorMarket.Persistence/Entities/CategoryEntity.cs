@@ -1,8 +1,8 @@
 ﻿namespace Api.TorMarket.Persistence.Entities;
 
-internal class ListingCategoryEntity
+internal class CategoryEntity
 {
-    internal int ListingCategoryId { get; set; }
+    internal int CategoryId { get; set; }
     internal required string Name { get; set; }
 
     internal virtual ICollection<ListingEntity> Listings { get; set; } = null!;

@@ -7,4 +7,4 @@ namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
 public sealed record GetCategoryByNameQuery(
     [Required] string Name
-) : IRequest<ResultOrError<ListingCategory, GetCategoryByNameFailure>>;
+) : IRequest<ResultOrError<Category, GetCategoryByNameFailure>>;

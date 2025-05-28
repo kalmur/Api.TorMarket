@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250528170351_InitialMigration")]
+    [Migration("20250528184827_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -24,6 +24,65 @@ namespace Api.TorMarket.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CategoryEntity", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("CategoryId");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            Name = "Games"
+                        },
+                        new
+                        {
+                            CategoryId = 3,
+                            Name = "Toys"
+                        },
+                        new
+                        {
+                            CategoryId = 4,
+                            Name = "Clothing"
+                        },
+                        new
+                        {
+                            CategoryId = 5,
+                            Name = "Vehicles"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            Name = "Pets"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            Name = "Other"
+                        });
+                });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingBlobEntity", b =>
                 {
@@ -56,65 +115,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("ListingBlobs", (string)null);
-                });
-
-            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
-                {
-                    b.Property<int>("ListingCategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnOrder(1);
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingCategoryId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)")
-                        .HasColumnOrder(2);
-
-                    b.HasKey("ListingCategoryId");
-
-                    b.HasIndex("Name");
-
-                    b.ToTable("ListingCategories", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            ListingCategoryId = 1,
-                            Name = "Electronics"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 2,
-                            Name = "Games"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 3,
-                            Name = "Toys"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 4,
-                            Name = "Clothing"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 5,
-                            Name = "Vehicles"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 6,
-                            Name = "Pets"
-                        },
-                        new
-                        {
-                            ListingCategoryId = 7,
-                            Name = "Other"
-                        });
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
@@ -476,7 +476,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", "ListingCategory")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.CategoryEntity", "Category")
                         .WithMany("Listings")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -488,7 +488,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ListingCategory");
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
@@ -599,7 +599,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CategoryEntity", b =>
                 {
                     b.Navigation("Listings");
                 });

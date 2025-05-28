@@ -37,16 +37,16 @@ internal static class DataSeed
 
     private static void SeedListingCategories(ModelBuilder builder)
     {
-        static ListingCategoryEntity CreateListingCategory(
+        static CategoryEntity CreateListingCategory(
             int listingCategoryId,
             string categoryName
         ) => new()
         {
-            ListingCategoryId = listingCategoryId,
+            CategoryId = listingCategoryId,
             Name = categoryName
         };
 
-        IImmutableList<ListingCategoryEntity> listingCategories = ImmutableList.Create(
+        IImmutableList<CategoryEntity> listingCategories = ImmutableList.Create(
             CreateListingCategory(1, "Electronics"),
             CreateListingCategory(2, "Games"),
             CreateListingCategory(3, "Toys"),
@@ -56,7 +56,7 @@ internal static class DataSeed
             CreateListingCategory(7, "Other")
         );
 
-        builder.Entity<ListingCategoryEntity>().HasData(listingCategories);
+        builder.Entity<CategoryEntity>().HasData(listingCategories);
     }
     private static void SeedAdminUser(ModelBuilder builder)
     {

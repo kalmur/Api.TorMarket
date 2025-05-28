@@ -2,5 +2,5 @@
 
 public record ListingWithCategory : Listing
 {
-    public ListingCategory? Category { get; set; }
+    public Category? Category { get; set; }
 }

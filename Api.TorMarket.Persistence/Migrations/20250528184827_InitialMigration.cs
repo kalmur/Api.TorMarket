@@ -14,16 +14,16 @@ namespace Api.TorMarket.Persistence.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ListingCategories",
+                name: "Categories",
                 columns: table => new
                 {
-                    ListingCategoryId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListingCategories", x => x.ListingCategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,10 +72,10 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Listings", x => x.ListingId);
                     table.ForeignKey(
-                        name: "FK_Listings_ListingCategories_CategoryId",
+                        name: "FK_Listings_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "ListingCategories",
-                        principalColumn: "ListingCategoryId");
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId");
                     table.ForeignKey(
                         name: "FK_Listings_Users_UserId",
                         column: x => x.UserId,
@@ -263,8 +263,8 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ListingCategories",
-                columns: new[] { "ListingCategoryId", "Name" },
+                table: "Categories",
+                columns: new[] { "CategoryId", "Name" },
                 values: new object[,]
                 {
                     { 1, "Electronics" },
@@ -294,6 +294,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "auth0|6821c63e7bd4b1c29438d9e3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name",
+                table: "Categories",
+                column: "Name");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ListingBlobs_ListingId",
                 table: "ListingBlobs",
                 column: "ListingId");
@@ -303,11 +308,6 @@ namespace Api.TorMarket.Persistence.Migrations
                 table: "ListingBlobs",
                 column: "Url",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ListingCategories_Name",
-                table: "ListingCategories",
-                column: "Name");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListingReviews_ListingId",
@@ -398,7 +398,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "UserAddresses");
 
             migrationBuilder.DropTable(
-                name: "ListingCategories");
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Users");

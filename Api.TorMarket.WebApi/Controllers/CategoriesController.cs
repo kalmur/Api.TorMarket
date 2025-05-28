@@ -16,8 +16,10 @@ public sealed class CategoriesController(
 ) : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingCategory>))]
-    public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Category>))]
+    public async Task<IActionResult> GetAllAsync(
+        CancellationToken cancellationToken
+    )
     {
         var result = await mediator.Send(
             new GetAllCategoriesRequest(),
@@ -31,7 +33,7 @@ public sealed class CategoriesController(
 
     [HttpGet]
     [Route("{categoryName}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingCategory))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Category))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> GetByNameAsync(
         [FromRoute][Required] string categoryName,

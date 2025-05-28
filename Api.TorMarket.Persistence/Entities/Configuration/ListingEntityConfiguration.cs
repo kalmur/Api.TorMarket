@@ -66,7 +66,7 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(listing => listing.ListingCategory)
+            .HasOne(listing => listing.Category)
             .WithMany(listingCategory => listingCategory.Listings)
             .HasForeignKey(listing => listing.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);

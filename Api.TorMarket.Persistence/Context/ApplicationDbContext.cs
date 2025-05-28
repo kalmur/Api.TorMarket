@@ -2,7 +2,7 @@
 using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Common;
 using Microsoft.EntityFrameworkCore;
-using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
+using CategoryEntity = Api.TorMarket.Persistence.Entities.CategoryEntity;
 using ListingEntity = Api.TorMarket.Persistence.Entities.ListingEntity;
 using ListingReviewEntity = Api.TorMarket.Persistence.Entities.ListingReviewEntity;
 using OrderEntity = Api.TorMarket.Persistence.Entities.OrderEntity;
@@ -22,12 +22,12 @@ internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
     {
     }
 
+    public DbSet<CategoryEntity> Category => Set<CategoryEntity>();
     public DbSet<OrderEntity> Order => Set<OrderEntity>();
     public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
     public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
     public DbSet<ListingEntity> Listing => Set<ListingEntity>();
     public DbSet<ListingBlobEntity> ListingBlob => Set<ListingBlobEntity>();
-    public DbSet<ListingCategoryEntity> ListingCategory => Set<ListingCategoryEntity>();
     public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();

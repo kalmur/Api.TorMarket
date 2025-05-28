@@ -7,10 +7,10 @@ namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
 internal sealed class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
-    IListingCategoryRepository productCategoryRepository
-) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ListingCategory, GetCategoryByNameFailure>>
+    ICategoryRepository productCategoryRepository
+) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<Category, GetCategoryByNameFailure>>
 {
-    public async Task<ResultOrError<ListingCategory, GetCategoryByNameFailure>> Handle(
+    public async Task<ResultOrError<Category, GetCategoryByNameFailure>> Handle(
         GetCategoryByNameQuery request,
         CancellationToken cancellationToken
     )

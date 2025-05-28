@@ -6,24 +6,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal sealed class ListingCategoryRepository(
+internal sealed class CategoryRepository(
     IApplicationDbContext context
-) : IListingCategoryRepository
+) : ICategoryRepository
 {
-    public async Task<List<ListingCategory>> GetAllAsync(
+    public async Task<List<Category>> GetAllAsync(
         CancellationToken cancellationToken
     ) =>
-        await context.ListingCategory
+        await context.Category
             .AsNoTracking()
             .Select(category => category.ToModel()!)
             .ToListAsync(cancellationToken);
 
-    public async Task<ListingCategory?> GetByNameAsync(
+    public async Task<Category?> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
     ) =>
         (
-            await context.ListingCategory.FirstOrDefaultAsync(
+            await context.Category.FirstOrDefaultAsync(
                 category => category.Name == name,
                 cancellationToken
             )

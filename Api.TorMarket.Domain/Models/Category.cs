@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public record ListingCategory
+public record Category
 {
     public const int Name_MaxLength = 15;
 
