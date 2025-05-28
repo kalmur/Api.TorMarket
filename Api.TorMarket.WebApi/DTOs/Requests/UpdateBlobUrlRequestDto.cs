@@ -2,13 +2,13 @@
 
 namespace Api.TorMarket.WebApi.DTOs.Requests;
 
-public record UpdateBlobUrlRequestDto
+public sealed record UpdateBlobUrlRequestDto
 {
     [Required]
-    public BlobUrlDto BlobUrl { get; init; }
+    public required BlobUrlDto BlobUrl { get; init; }
 }
 
-public record BlobUrlDto
+public sealed record BlobUrlDto
 {
     [Required]
     public string Url { get; init; }

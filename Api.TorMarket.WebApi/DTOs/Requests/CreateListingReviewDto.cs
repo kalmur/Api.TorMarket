@@ -2,7 +2,7 @@
 
 namespace Api.TorMarket.WebApi.DTOs.Requests;
 
-public record CreateListingReviewDto
+public sealed record CreateListingReviewDto
 {
     [Required]
     public required int UserId { get; set; }

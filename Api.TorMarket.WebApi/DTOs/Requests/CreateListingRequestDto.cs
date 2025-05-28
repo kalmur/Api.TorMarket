@@ -3,7 +3,7 @@ using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.WebApi.DTOs.Requests;
 
-public record CreateListingRequestDto
+public sealed record CreateListingRequestDto
 {
     [Required]
     public required int UserId { get; init; }

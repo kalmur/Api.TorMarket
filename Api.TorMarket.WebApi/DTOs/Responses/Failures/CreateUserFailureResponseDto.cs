@@ -1,3 +1,5 @@
-﻿namespace Api.TorMarket.WebApi.DTOs.Responses.Failures;
+﻿using Api.TorMarket.WebApi.DTOs.Responses.Failures.Common;
 
-public record CreateUserFailureResponseDto : FailureResponseDto;
+namespace Api.TorMarket.WebApi.DTOs.Responses.Failures;
+
+public sealed record CreateUserFailureResponseDto : FailureResponseDto;

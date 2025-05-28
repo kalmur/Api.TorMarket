@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.TorMarket.WebApi.DTOs.Requests;
 
-public record CreateUserRequestDto
+public sealed record CreateUserRequestDto
 {
     [Required(AllowEmptyStrings = false)]
     [StringLength(User.ProviderId_MaxLength)]

@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.WebApi.DTOs.Responses.Failures;
+﻿namespace Api.TorMarket.WebApi.DTOs.Responses.Failures.Common;
 
 public record FailureResponseDto
 {

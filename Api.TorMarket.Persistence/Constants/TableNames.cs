@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Persistence.Constants;
 
-internal class TableNames
+internal sealed class TableNames
 {
     internal const string Orders = nameof(Orders);
     internal const string OrderLines = nameof(OrderLines);

@@ -1,4 +1,6 @@
-﻿namespace Api.TorMarket.Persistence.Entities.Extensions;
+﻿using Api.TorMarket.Domain.Models;
+
+namespace Api.TorMarket.Persistence.Entities.Extensions;
 
 internal static class ListingBlobEntityExtensions
 {
@@ -14,9 +16,9 @@ internal static class ListingBlobEntityExtensions
             throw new ArgumentException("Blob URL cannot be null or empty.", nameof(blobUrl));
         }
 
-        if (blobUrl.Length > ListingBlobEntity.Url_MaxLength)
+        if (blobUrl.Length > ListingBlob.Url_MaxLength)
         {
-            throw new ArgumentException($"Blob URL exceeds maximum length of {ListingBlobEntity.Url_MaxLength}.", nameof(blobUrl));
+            throw new ArgumentException($"Blob URL exceeds maximum length of {ListingBlob.Url_MaxLength}.", nameof(blobUrl));
         }
 
         var listingBlob = new ListingBlobEntity

@@ -1,7 +1,12 @@
-﻿namespace Api.TorMarket.WebApi.DTOs.Requests;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record UploadFileRequest
+namespace Api.TorMarket.WebApi.DTOs.Requests;
+
+public sealed record UploadFileRequest
 {
+    [Required]
     public required string FilePath { get; init; }
+
+    [Required]
     public required string FileName { get; init; }
 }

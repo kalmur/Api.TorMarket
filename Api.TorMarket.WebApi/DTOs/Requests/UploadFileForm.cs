@@ -2,8 +2,8 @@
 
 namespace Api.TorMarket.WebApi.DTOs.Requests;
 
-public record UploadFileForm
+public sealed record UploadFileForm
 {
     [Required]
-    public IFormFile File { get; set; }
+    public required IFormFile File { get; set; }
 }
