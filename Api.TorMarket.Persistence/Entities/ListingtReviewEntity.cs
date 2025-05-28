@@ -7,7 +7,7 @@ internal class ListingReviewEntity : AuditableEntity
     internal required int UserId { get; set; }
     internal required int ListingId { get; set; }
     internal required int RatingValue { get; set; }
-    internal required string? Comment { get; set; } = string.Empty;
+    internal required string? Comment { get; set; }
 
     internal virtual UserEntity User { get; set; } = null!;
     internal virtual ListingEntity Listing { get; set; } = null!;
