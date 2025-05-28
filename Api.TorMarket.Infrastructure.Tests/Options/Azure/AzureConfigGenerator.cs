@@ -9,11 +9,11 @@ internal static class AzureConfigGenerator
         string connectionString = null,
         string listingsContainerName = null,
         string storageAccountName = null
-    ) => new ()
+    ) => new()
     {
         AccessKey = accessKey,
         ConnectionString = connectionString,
         ListingsContainerName = listingsContainerName,
         StorageAccountName = storageAccountName
-    }
+    };
 }

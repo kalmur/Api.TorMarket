@@ -2,7 +2,7 @@
 
 public record User
 {
-    public const int ProviderIdMaxLength = 20;
+    public const int ProviderId_MaxLength = 20;
 
     public required int UserId { get; init; }
     public required string ProviderId { get; init; }

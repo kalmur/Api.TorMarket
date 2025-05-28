@@ -25,12 +25,14 @@ internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
     public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
     public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
     public DbSet<ListingEntity> Listing => Set<ListingEntity>();
+    public DbSet<ListingBlobEntity> ListingBlob => Set<ListingBlobEntity>();
     public DbSet<ListingCategoryEntity> ListingCategory => Set<ListingCategoryEntity>();
     public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
     public DbSet<UserEntity> User => Set<UserEntity>();
     public DbSet<UserAddressEntity> UserAddress => Set<UserAddressEntity>();
+
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

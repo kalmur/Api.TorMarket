@@ -6,6 +6,6 @@ namespace Api.TorMarket.WebApi.DTOs.Requests;
 public record CreateUserRequestDto
 {
     [Required(AllowEmptyStrings = false)]
-    [StringLength(User.ProviderIdMaxLength)]
+    [StringLength(User.ProviderId_MaxLength)]
     public required string ProviderId { get; init; }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250518010139_InitialMigration")]
+    [Migration("20250527235548_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,6 +25,39 @@ namespace Api.TorMarket.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingBlobEntity", b =>
+                {
+                    b.Property<int>("ListingBlobUrlId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingBlobUrlId"));
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit")
+                        .HasColumnOrder(4);
+
+                    b.Property<int>("ListingId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(3);
+
+                    b.HasKey("ListingBlobUrlId");
+
+                    b.HasIndex("ListingId");
+
+                    b.HasIndex("Url")
+                        .IsUnique();
+
+                    b.ToTable("ListingBlobs", (string)null);
+                });
+
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
                 {
                     b.Property<int>("ListingCategoryId")
@@ -36,7 +69,9 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)")
+                        .HasColumnOrder(2);
 
                     b.HasKey("ListingCategoryId");
 
@@ -90,10 +125,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(1);
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingId"));
-
-                    b.Property<string>("BlobUrls")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnOrder(7);
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int")
@@ -416,10 +447,21 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingBlobEntity", b =>
+                {
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
+                        .WithMany("ListingBlobs")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Listing");
+                });
+
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", "ListingCategory")
-                        .WithMany("Products")
+                        .WithMany("Listings")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -543,11 +585,13 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingCategoryEntity", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Listings");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingEntity", b =>
                 {
+                    b.Navigation("ListingBlobs");
+
                     b.Navigation("OrderLines");
 
                     b.Navigation("ShoppingCartItems");

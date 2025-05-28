@@ -12,55 +12,50 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
     protected override void ConfigureColumns(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .Property(x => x.ListingId)
+            .Property(listing => listing.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.UserId)
+            .Property(listing => listing.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.CategoryId)
+            .Property(listing => listing.CategoryId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Name)
+            .Property(listing => listing.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Price)
+            .Property(listing => listing.Price)
             .HasColumnOrder(ColumnOrder++)
             .HasColumnType("decimal(18,2)");
 
         builder
-            .Property(x => x.Description)
-            .HasColumnOrder(ColumnOrder++);
-
-        builder
-            .Property(x => x.BlobUrls)
+            .Property(listing => listing.Description)
             .HasColumnOrder(ColumnOrder++);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingEntity> builder)
     {
         builder
-            .ToTable(TableNames.Listings)
-            .HasKey(x => x.ListingId);
+            .HasKey(listing => listing.ListingId);
 
         builder
-            .HasOne(p => p.User)
+            .HasOne(listing => listing.User)
             .WithMany(u => u.Listings)
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(x => x.ListingCategory)
-            .WithMany(x => x.Products)
+            .WithMany(x => x.Listings)
             .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);
 

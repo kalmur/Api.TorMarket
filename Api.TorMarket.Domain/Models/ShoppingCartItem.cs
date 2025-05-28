@@ -1,5 +1,5 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public class ShoppingCartItem
+public record ShoppingCartItem
 {
 }

@@ -1,5 +1,5 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public class Order
+public record Order
 {
 }

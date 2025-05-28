@@ -5,7 +5,18 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    Task<User> CreateUserAsync(CreateUserRequest request, CancellationToken cancellationToken);
-    Task<User?> GetByIdAsync(int userId, CancellationToken cancellationToken);
-    Task<User?> GetByProviderIdAsync(string providerId, CancellationToken cancellationToken);
+    Task<User> CreateUserAsync(
+        CreateUserRequest request, 
+        CancellationToken cancellationToken
+    );
+
+    Task<User?> GetByIdAsync(
+        int userId, 
+        CancellationToken cancellationToken
+    );
+
+    Task<User?> GetByProviderIdAsync(
+        string providerId, 
+        CancellationToken cancellationToken
+    );
 }

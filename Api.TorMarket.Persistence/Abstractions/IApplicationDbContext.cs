@@ -9,6 +9,7 @@ internal interface IApplicationDbContext
     DbSet<OrderLineEntity> OrderLine { get; }
     DbSet<OrderStatusEntity> OrderStatus { get; }
     DbSet<ListingEntity> Listing { get; }
+    DbSet<ListingBlobEntity> ListingBlob { get; }
     DbSet<ListingCategoryEntity> ListingCategory { get; }
     DbSet<ListingReviewEntity> ListingReview { get; }
     DbSet<ShoppingCartEntity> ShoppingCart { get; }

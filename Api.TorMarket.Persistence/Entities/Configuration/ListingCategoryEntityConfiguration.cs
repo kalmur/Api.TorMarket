@@ -17,7 +17,11 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
             .IsRequired()
             .ValueGeneratedOnAdd();
 
-        builder.Property(x => x.Name);
+        builder
+            .Property(x => x.Name)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired()
+            .HasMaxLength(ListingCategoryEntity.Name_MaxLength);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingCategoryEntity> builder)
@@ -26,7 +30,7 @@ internal sealed class ListingCategoryEntityConfiguration : EntityConfigurationBa
             .HasKey(x => x.ListingCategoryId);
 
         builder
-            .HasMany(x => x.Products)
+            .HasMany(x => x.Listings)
             .WithOne(x => x.ListingCategory)
             .HasForeignKey(x => x.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);

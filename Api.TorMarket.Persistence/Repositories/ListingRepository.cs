@@ -31,11 +31,11 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(l => l.User)
-            .Include(l => l.ListingCategory)
+            .Include(listing => listing.User)
+            .Include(listing => listing.ListingCategory)
             .OrderBy(_ => Guid.NewGuid())
-            .Select(l => 
-                l.ToModelWithUserAndCategory()
+            .Select(listing => 
+                listing.ToModelWithUserAndCategory()
             )
             .ToListAsync(cancellationToken);
 
@@ -44,10 +44,10 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) => (
         await context.Listing
-            .Include(p => p.User)
-            .Include(p => p.ListingCategory)
-            .FirstOrDefaultAsync(p => 
-                p.ListingId == listingId,
+            .Include(listing => listing.User)
+            .Include(listing => listing.ListingCategory)
+            .FirstOrDefaultAsync(
+                listing => listing.ListingId == listingId,
                 cancellationToken
             )
     )?.ToModelWithUserAndCategory() ?? new ListingWithUserAndCategory();
@@ -57,14 +57,14 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(l => l.ListingCategory)
+            .Include(listing => listing.ListingCategory)
             .Where(
-                l => l.Name.ToLower().Contains(
+                listing => listing.Name.ToLower().Contains(
                     name.ToLower()
                 )
             )
             .Select(
-                l => l.ToModelWithCategory()
+                listing => listing.ToModelWithCategory()
             ).ToListAsync(cancellationToken);
 
     public async Task<List<ListingWithCategory>> GetByProviderIdAsync(
@@ -72,11 +72,13 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(l => l.User)
-            .Include(l => l.ListingCategory)
-            .Where(l => l.User.ProviderId == providerId)
+            .Include(listing => listing.User)
+            .Include(listing => listing.ListingCategory)
+            .Where(
+                listing => listing.User.ProviderId == providerId
+            )
             .Select(
-                l => l.ToModelWithCategory()
+                listing => listing.ToModelWithCategory()
             ).ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
@@ -84,14 +86,14 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
-            .Include(l => l.ListingCategory)
+            .Include(listing => listing.ListingCategory)
             .Where(
-               l => l.ListingCategory.Name.ToLower().Contains(
+               listing => listing.ListingCategory.Name.ToLower().Contains(
                    categoryName.ToLower()
-                )
+               )
             )
             .Select(
-                l => l.ToModelWithCategory()
+                listing => listing.ToModelWithCategory()
             ).ToListAsync(cancellationToken);
 
     public async Task<Listing> UpdateBlobUrlsAsync(
@@ -100,12 +102,21 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     )
     {
-        var listing = await context.Listing.FirstOrDefaultAsync(l => 
-            l.ListingId == listingId, 
-            cancellationToken
-        ) ?? throw new InvalidOperationException($"Listing with ID {listingId} not found.");
+        var listing = await context.Listing
+            .Include(
+                listing => listing.ListingBlobs
+            )
+            .FirstOrDefaultAsync(
+                listing => listing.ListingId == listingId, 
+                cancellationToken
+            ) ?? throw new InvalidOperationException($"Listing with ID {listingId} not found.");
 
-        listing.BlobUrls = [blobUrl];
+        listing.ListingBlobs.AddBlob(
+            listingId, 
+            blobUrl, 
+            isPrimary: true
+        );
+
         await context.SaveChangesAsync(cancellationToken);
 
         return await GetByIdAsync(

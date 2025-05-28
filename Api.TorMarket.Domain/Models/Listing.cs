@@ -1,15 +1,15 @@
 ﻿namespace Api.TorMarket.Domain.Models;
 
-public class Listing
+public record Listing
 {
     // Rename to title?!
     public const int ListingNameMaxLength = 100;
 
-    public int ListingId { get; set; }
-    public int UserId { get; set; }
-    public int CategoryId { get; set; }
+    public int ListingId { get; init; }
+    public int UserId { get; init; }
+    public int CategoryId { get; init; }
     public string? Name { get; set; }
-    public decimal Price { get; set; }
-    public string? Description { get; set; }
-    public List<string>? BlobUrls { get; set; }
+    public decimal Price { get; init; }
+    public string? Description { get; init; }
+    public List<string>? BlobUrls { get; init; }
 }

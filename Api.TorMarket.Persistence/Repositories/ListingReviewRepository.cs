@@ -7,9 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal class ListingReviewRepository(IApplicationDbContext context) : IListingReviewRepository
+internal sealed class ListingReviewRepository(
+    IApplicationDbContext context
+) : IListingReviewRepository
 {
-    public async Task<ListingWithReviewAndCategory> CreateAsync(CreateListingReviewRequest request, CancellationToken cancellationToken)
+    public async Task<ListingWithReviewAndCategory> CreateAsync(
+        CreateListingReviewRequest request, 
+        CancellationToken cancellationToken
+    )
     {
         var review = request.ToEntity();
 
@@ -23,7 +28,7 @@ internal class ListingReviewRepository(IApplicationDbContext context) : IListing
         ) ?? throw new InvalidOperationException("Review creation failed.");
     }
 
-    // CHANGE BACK FIRSTORDEFAULT
+    //Todo - CHANGE BACK FIRSTORDEFAULT
     public async Task<ListingWithReviewAndCategory?> GetByUserAndListingIdAsync(
         int userId,
         int listingId,
@@ -43,7 +48,8 @@ internal class ListingReviewRepository(IApplicationDbContext context) : IListing
     public async Task<IEnumerable<ListingReview>> GetByListingIdAsync(
         int listingId,
         CancellationToken cancellationToken
-    ) => (
+    ) => 
+        (
             await context.ListingReview
                 .Include(lr => lr.User)
                 .Where(p => p.ListingId == listingId)

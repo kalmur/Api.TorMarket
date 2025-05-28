@@ -5,7 +5,7 @@ namespace Api.TorMarket.Persistence.Entities.Extensions;
 
 internal static class ListingReviewEntityExtensions
 {
-    public static ListingWithReviewAndCategory ToModel(
+    internal static ListingWithReviewAndCategory ToModel(
         this ListingReviewEntity entity
     ) => new()
     {
@@ -17,7 +17,7 @@ internal static class ListingReviewEntityExtensions
         Category = entity.Listing.ListingCategory.ToModel()
     };
 
-    public static ListingReviewEntity ToEntity(
+    internal static ListingReviewEntity ToEntity(
         this CreateListingReviewRequest request
     ) => new()
     {

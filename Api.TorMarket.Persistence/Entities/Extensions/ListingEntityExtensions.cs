@@ -7,7 +7,7 @@ namespace Api.TorMarket.Persistence.Entities.Extensions;
 
 internal static class ListingEntityExtensions
 {
-    public static Listing ToModel(
+    internal static Listing ToModel(
         this ListingEntity entity
     ) => new()
     {
@@ -17,11 +17,10 @@ internal static class ListingEntityExtensions
         CategoryId = entity.CategoryId,
         Name = entity.Name,
         Price = entity.Price,
-        Description = entity.Description,
-        BlobUrls = entity.BlobUrls
+        Description = entity.Description
     };
 
-    public static ListingWithUserAndCategory ToModelWithUserAndCategory(
+    internal static ListingWithUserAndCategory ToModelWithUserAndCategory(
         this ListingEntity entity
     ) => new()
     {
@@ -31,12 +30,11 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        BlobUrls = entity.BlobUrls,
         User = entity.User.ToModel(),
         Category = entity.ListingCategory.ToModel()
     };
 
-    public static ListingWithCategory ToModelWithCategory(
+    internal static ListingWithCategory ToModelWithCategory(
         this ListingEntity entity
     ) => new()
     {
@@ -46,11 +44,10 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        BlobUrls = entity.BlobUrls,
         Category = entity.ListingCategory.ToModel()
     };
 
-    public static ListingEntity ToEntity(
+    internal static ListingEntity ToEntity(
         this CreateListingRequest request
     ) => new()
     {
@@ -58,11 +55,10 @@ internal static class ListingEntityExtensions
         CategoryId = request.CategoryId,
         Name = request.Name,
         Price = request.Price,
-        Description = request.Description,
-        BlobUrls = null
+        Description = request.Description
     };
 
-    public static CreateListingRequest ToRequest(
+    internal static CreateListingRequest ToRequest(
         this CreateListingCommand command
     ) => new()
     {
@@ -73,7 +69,7 @@ internal static class ListingEntityExtensions
         Description = command.Description,
     };
 
-    public static CreateUserRequest ToRequest(
+    internal static CreateUserRequest ToRequest(
         this CreateUserCommand command
     ) => new()
     {

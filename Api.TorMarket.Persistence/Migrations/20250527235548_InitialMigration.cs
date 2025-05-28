@@ -19,7 +19,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     ListingCategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,8 +64,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    BlobUrls = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -124,6 +123,27 @@ namespace Api.TorMarket.Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ListingBlobs",
+                columns: table => new
+                {
+                    ListingBlobUrlId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IsPrimary = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ListingBlobs", x => x.ListingBlobUrlId);
+                    table.ForeignKey(
+                        name: "FK_ListingBlobs_Listings_ListingId",
+                        column: x => x.ListingId,
+                        principalTable: "Listings",
+                        principalColumn: "ListingId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,6 +293,17 @@ namespace Api.TorMarket.Persistence.Migrations
                 values: new object[] { 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "auth0|6821c63e7bd4b1c29438d9e3", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ListingBlobs_ListingId",
+                table: "ListingBlobs",
+                column: "ListingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ListingBlobs_Url",
+                table: "ListingBlobs",
+                column: "Url",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ListingCategories_Name",
                 table: "ListingCategories",
                 column: "Name");
@@ -333,6 +364,9 @@ namespace Api.TorMarket.Persistence.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ListingBlobs");
+
             migrationBuilder.DropTable(
                 name: "ListingReviews");
 

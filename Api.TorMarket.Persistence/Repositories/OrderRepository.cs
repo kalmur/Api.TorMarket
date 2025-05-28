@@ -1,5 +1,5 @@
 ﻿namespace Api.TorMarket.Persistence.Repositories;
 
-internal class OrderRepository
+internal sealed class OrderRepository
 {
 }
