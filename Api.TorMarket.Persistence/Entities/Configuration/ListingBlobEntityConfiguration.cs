@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -26,7 +27,7 @@ internal sealed class ListingBlobEntityConfiguration : EntityConfigurationBase<L
             .Property(listingBlob => listingBlob.Url)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(ListingBlobEntity.Url_MaxLength);
+            .HasMaxLength(ListingBlob.Url_MaxLength);
 
         builder
             .Property(listingBlob => listingBlob.IsPrimary)
