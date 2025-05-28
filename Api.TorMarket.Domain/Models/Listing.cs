@@ -4,6 +4,7 @@ public record Listing
 {
     public const int Name_MaxLength = 100;
     public const int Description_MaxLength = 500;
+    public const string Price_ColumnType = "decimal(18,2)";
 
     public int ListingId { get; init; }
     public int UserId { get; init; }

@@ -37,7 +37,7 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
         builder
             .Property(listing => listing.Price)
             .HasColumnOrder(ColumnOrder++)
-            .HasColumnType("decimal(18,2)");
+            .HasColumnType(Listing.Price_ColumnType);
 
         builder
             .Property(listing => listing.Description)
