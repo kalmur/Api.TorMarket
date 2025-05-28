@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
+using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
@@ -35,7 +36,7 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
         builder
             .Property(orderLine => orderLine.Price)
             .HasColumnOrder(ColumnOrder++)
-            .HasColumnType("decimal(18,2)")
+            .HasColumnType(OrderLine.Price_ColumnType)
             .IsRequired();
     }
 
@@ -48,15 +49,12 @@ internal sealed class OrderLineEntityConfiguration : EntityConfigurationBase<Ord
             .HasOne(orderLine => orderLine.Listing)
             .WithMany(listing => listing.OrderLines)
             .HasForeignKey(orderLine => orderLine.OrderLineId)
-            .HasPrincipalKey(listing => listing.ListingId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // TODO - Check this constraint
         builder
             .HasOne(orderLine => orderLine.Order)
             .WithMany(order => order.OrderLines)
             .HasForeignKey(orderLine => orderLine.OrderId)
-            .HasPrincipalKey(order => order.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
