@@ -42,6 +42,15 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .Property(listing => listing.Description)
             .HasColumnOrder(ColumnOrder++)
             .HasMaxLength(ListingEntity.Description_MaxLength);
+
+        builder
+            .Property(user => user.CreatedDate)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
+            .Property(user => user.UpdatedDate)
+            .HasColumnOrder(ColumnOrder++);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingEntity> builder)

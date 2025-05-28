@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
-using Api.TorMarket.Domain.Models;
+﻿using Api.TorMarket.Domain.Models;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 

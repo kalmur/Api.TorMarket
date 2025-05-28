@@ -1,4 +1,6 @@
-﻿namespace Api.TorMarket.Persistence.Entities;
+﻿using Api.TorMarket.Persistence.Entities.Common;
+
+namespace Api.TorMarket.Persistence.Entities;
 
 internal class ListingEntity : AuditableEntity
 {

@@ -2,9 +2,10 @@
 
 internal class UserAddressEntity
 {
-    internal const int UserAddressEntity_CountryMaxLength = 50;
-    internal const int UserAddressEntity_CityMaxLength = 50;
-    internal const int UserAddressEntity_PostalCodeMaxLength = 100;
+    internal const int AddressLine_MaxLength = 100;
+    internal const int Country_MaxLength = 50;
+    internal const int City_MaxLength = 50;
+    internal const int PostalCode_MaxLength = 100;
 
     internal int UserAddressId { get; set; }
     internal required int UserId { get; set; }

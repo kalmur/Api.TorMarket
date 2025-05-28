@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.TorMarket.Persistence.Entities.Configuration;
 
-class ListingBlobEntityConfiguration : EntityConfigurationBase<ListingBlobEntity>
+internal sealed class ListingBlobEntityConfiguration : EntityConfigurationBase<ListingBlobEntity>
 {
     protected override string TableName => TableNames.ListingBlobs;
 
     protected override void ConfigureColumns(EntityTypeBuilder<ListingBlobEntity> builder)
     {
         builder
-            .Property(listingBlob => listingBlob.ListingBlobUrlId)
+            .Property(listingBlob => listingBlob.ListingBlobId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
@@ -37,7 +37,7 @@ class ListingBlobEntityConfiguration : EntityConfigurationBase<ListingBlobEntity
     protected override void ConfigureKeys(EntityTypeBuilder<ListingBlobEntity> builder)
     {
         builder
-            .HasKey(listingBlob => listingBlob.ListingBlobUrlId);
+            .HasKey(listingBlob => listingBlob.ListingBlobId);
 
         builder
             .HasOne(listingBlob => listingBlob.Listing)

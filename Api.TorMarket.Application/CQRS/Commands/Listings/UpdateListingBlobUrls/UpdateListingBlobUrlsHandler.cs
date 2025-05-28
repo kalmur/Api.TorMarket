@@ -1,7 +1,5 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
-using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
+﻿using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 using Api.TorMarket.Application.Repositories.Interfaces;
-using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
 

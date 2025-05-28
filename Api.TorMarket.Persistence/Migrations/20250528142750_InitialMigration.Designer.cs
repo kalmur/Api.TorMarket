@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250528003407_InitialMigration")]
+    [Migration("20250528142750_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -27,12 +27,12 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingBlobEntity", b =>
                 {
-                    b.Property<int>("ListingBlobUrlId")
+                    b.Property<int>("ListingBlobId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingBlobUrlId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ListingBlobId"));
 
                     b.Property<bool>("IsPrimary")
                         .HasColumnType("bit")
@@ -48,7 +48,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(3);
 
-                    b.HasKey("ListingBlobUrlId");
+                    b.HasKey("ListingBlobId");
 
                     b.HasIndex("ListingId");
 
@@ -130,6 +130,10 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(7);
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
@@ -144,6 +148,10 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnOrder(5);
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(8);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -173,16 +181,16 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasColumnOrder(4);
 
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
                         .HasColumnOrder(5);
 
                     b.Property<int>("RatingValue")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset")
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
                         .HasColumnOrder(6);
 
                     b.HasKey("UserId", "ListingId");
@@ -204,11 +212,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<DateTimeOffset>("OrderDate")
                         .HasColumnType("datetimeoffset")
-                        .HasColumnOrder(6);
-
-                    b.Property<int>("ShippingAddress")
-                        .HasColumnType("int")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(5);
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int")
@@ -216,7 +220,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(4);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -428,17 +432,18 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<DateTimeOffset>("CreatedOn")
-                        .HasColumnType("datetimeoffset")
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
                         .HasColumnOrder(3);
 
                     b.Property<string>("ProviderId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnOrder(2);
 
-                    b.Property<DateTimeOffset>("UpdatedOn")
-                        .HasColumnType("datetimeoffset")
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2")
                         .HasColumnOrder(4);
 
                     b.HasKey("UserId");
@@ -452,9 +457,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         new
                         {
                             UserId = 1,
-                            CreatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProviderId = "auth0|6821c63e7bd4b1c29438d9e3",
-                            UpdatedOn = new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0))
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 

@@ -3,7 +3,7 @@
 internal class ShoppingCartEntity
 {
     internal int ShoppingCartId { get; set; }
-    internal int UserId { get; set; }
+    internal required int UserId { get; set; }
 
     internal virtual UserEntity User { get; set; } = null!;
 

@@ -12,51 +12,51 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
     protected override void ConfigureColumns(EntityTypeBuilder<UserAddressEntity> builder)
     {
         builder
-            .Property(a => a.UserAddressId)
+            .Property(userAddress => userAddress.UserAddressId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(ua => ua.UserId)
+            .Property(userAddress => userAddress.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(a => a.UnitNumber)
+            .Property(userAddress => userAddress.UnitNumber)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(a => a.StreetNumber)
+            .Property(userAddress => userAddress.StreetNumber)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(a => a.AddressLine)
+            .Property(userAddress => userAddress.AddressLine)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(100)
+            .HasMaxLength(UserAddressEntity.AddressLine_MaxLength)
             .IsUnicode(false);
 
         builder
-            .Property(a => a.City)
+            .Property(userAddress => userAddress.City)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(UserAddressEntity.UserAddressEntity_CityMaxLength)
+            .HasMaxLength(UserAddressEntity.City_MaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.PostalCode)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserAddressEntity.UserAddressEntity_PostalCodeMaxLength)
+            .HasMaxLength(UserAddressEntity.PostalCode_MaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.Country)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(UserAddressEntity.UserAddressEntity_CountryMaxLength)
+            .HasMaxLength(UserAddressEntity.Country_MaxLength)
             .IsUnicode(false);
 
         builder

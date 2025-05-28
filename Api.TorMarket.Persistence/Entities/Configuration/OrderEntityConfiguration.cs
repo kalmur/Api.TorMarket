@@ -28,11 +28,6 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .IsRequired();
 
         builder
-            .Property(order => order.ShippingAddress)
-            .HasColumnOrder(ColumnOrder++)
-            .IsRequired();
-
-        builder
             .Property(order => order.TotalPrice)
             .HasColumnOrder(ColumnOrder++)
             .HasColumnType("decimal(18,2)")

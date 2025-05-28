@@ -1,9 +1,13 @@
-﻿namespace Api.TorMarket.Persistence.Entities;
+﻿using Api.TorMarket.Persistence.Entities.Common;
+
+namespace Api.TorMarket.Persistence.Entities;
 
 internal class UserEntity : AuditableEntity
 {
+    internal const int ProviderId_MaxLength = 50;
+
     internal int UserId { get; set; }
-    internal string ProviderId { get; set; } = string.Empty;
+    internal required string ProviderId { get; set; } = string.Empty;
 
     internal virtual ICollection<UserAddressEntity> Addresses { get; set; } = null!;
     internal virtual ICollection<ListingEntity> Listings { get; set; } = null!;

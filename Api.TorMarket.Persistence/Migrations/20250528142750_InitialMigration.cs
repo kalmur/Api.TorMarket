@@ -45,9 +45,9 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProviderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    ProviderId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,7 +64,9 @@ namespace Api.TorMarket.Persistence.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -129,7 +131,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "ListingBlobs",
                 columns: table => new
                 {
-                    ListingBlobUrlId = table.Column<int>(type: "int", nullable: false)
+                    ListingBlobId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ListingId = table.Column<int>(type: "int", nullable: false),
                     Url = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -137,7 +139,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ListingBlobs", x => x.ListingBlobUrlId);
+                    table.PrimaryKey("PK_ListingBlobs", x => x.ListingBlobId);
                     table.ForeignKey(
                         name: "FK_ListingBlobs_Listings_ListingId",
                         column: x => x.ListingId,
@@ -153,8 +155,8 @@ namespace Api.TorMarket.Persistence.Migrations
                     ListingId = table.Column<int>(type: "int", nullable: false),
                     RatingValue = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,7 +209,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    ShippingAddress = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
@@ -289,8 +290,8 @@ namespace Api.TorMarket.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "CreatedOn", "ProviderId", "UpdatedOn" },
-                values: new object[] { 1, new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)), "auth0|6821c63e7bd4b1c29438d9e3", new DateTimeOffset(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 0, 0, 0)) });
+                columns: new[] { "UserId", "CreatedDate", "ProviderId", "UpdatedDate" },
+                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "auth0|6821c63e7bd4b1c29438d9e3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ListingBlobs_ListingId",

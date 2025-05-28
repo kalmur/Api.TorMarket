@@ -1,5 +1,6 @@
 ﻿using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities;
+using Api.TorMarket.Persistence.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using ListingCategoryEntity = Api.TorMarket.Persistence.Entities.ListingCategoryEntity;
 using ListingEntity = Api.TorMarket.Persistence.Entities.ListingEntity;
@@ -14,8 +15,6 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-
-// TODO - Generate new migration
 internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
@@ -47,10 +46,10 @@ internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedOn = DateTimeOffset.UtcNow;
+                entry.Entity.CreatedDate = DateTime.UtcNow;
             }
 
-            entry.Entity.UpdatedOn = DateTimeOffset.UtcNow;
+            entry.Entity.UpdatedDate = DateTime.UtcNow;
         }
 
         return base.SaveChangesAsync(cancellationToken);

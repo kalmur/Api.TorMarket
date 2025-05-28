@@ -20,15 +20,16 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
         builder
             .Property(user => user.ProviderId)
             .HasColumnOrder(ColumnOrder++)
-            .IsRequired();
+            .IsRequired()
+            .HasMaxLength(UserEntity.ProviderId_MaxLength);
 
         builder
-            .Property(user => user.CreatedOn)
+            .Property(user => user.CreatedDate)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(user => user.UpdatedOn)
+            .Property(user => user.UpdatedDate)
             .HasColumnOrder(ColumnOrder++);
     }
 
@@ -61,7 +62,7 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
     protected override void ConfigureIndexes(EntityTypeBuilder<UserEntity> builder)
     {
         builder
-            .HasIndex(su => su.ProviderId)
+            .HasIndex(user => user.ProviderId)
             .IsUnique();
     }
 }

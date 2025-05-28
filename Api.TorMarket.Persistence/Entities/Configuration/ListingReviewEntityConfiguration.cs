@@ -32,11 +32,11 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
             .HasMaxLength(ListingReviewEntity.ListingReviewEntity_CommentMaxLength);
 
         builder
-            .Property(x => x.CreatedOn)
+            .Property(x => x.CreatedDate)
             .HasColumnOrder(ColumnOrder++);
 
         builder
-            .Property(x => x.UpdatedOn)
+            .Property(x => x.UpdatedDate)
             .HasColumnOrder(ColumnOrder++);
     }
 
