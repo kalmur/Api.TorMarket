@@ -4,7 +4,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderI
 
 using static GetListingsByProviderIdFailure;
 
-public class GetListingsByProviderIdValidator(IUserRepository repository) : IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure>
+public sealed class GetListingsByProviderIdValidator(
+    IUserRepository repository
+) : IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure>
 {
     public async Task<GetListingsByProviderIdFailure?> ValidateAsync(
         GetListingsByProviderIdQuery query, 

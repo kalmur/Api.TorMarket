@@ -3,7 +3,7 @@ using Api.TorMarket.Application.Repositories.Interfaces;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 
-public class CreateListingReviewValidator(
+public sealed class CreateListingReviewValidator(
     IListingRepository listingRepository,
     IListingReviewRepository listingReviewRepository,
     IUserRepository userRepository
@@ -28,7 +28,7 @@ public class CreateListingReviewValidator(
         if (command.Value > 5)
             errors.Add(CreateListingReviewFailure.ErrorType.InvalidValue);
 
-        // Add sanitization package - Antisamy or similar
+        //TODO - Add sanitization package - Antisamy or similar
         if (string.IsNullOrWhiteSpace(command.Comment))
             errors.Add(CreateListingReviewFailure.ErrorType.InvalidComment);
 

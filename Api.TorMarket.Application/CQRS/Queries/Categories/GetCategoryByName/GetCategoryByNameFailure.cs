@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-public record GetCategoryByNameFailure
+public sealed record GetCategoryByNameFailure
 {
     public required IEnumerable<ErrorType> Errors { get; init; }
 

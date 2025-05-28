@@ -3,7 +3,7 @@ using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.Crea
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-public class CreateListingValidator(
+public sealed class CreateListingValidator(
     IUserRepository userRepository
 ) : IValidator<CreateListingCommand, CreateListingFailure>
 {

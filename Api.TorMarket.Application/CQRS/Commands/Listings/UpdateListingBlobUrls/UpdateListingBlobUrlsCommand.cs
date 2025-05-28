@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 
-public record UpdateListingBlobUrlsCommand(
+public sealed record UpdateListingBlobUrlsCommand(
     [Required] int ListingId, 
     [Required] string BlobUrl
 ) : IRequest<Listing>;

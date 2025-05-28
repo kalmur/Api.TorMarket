@@ -4,4 +4,6 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 
-public record GetUserByProviderIdQuery([Required] string ProviderId) : IRequest<User>;
+public sealed record GetUserByProviderIdQuery(
+    [Required] string ProviderId
+) : IRequest<User>;

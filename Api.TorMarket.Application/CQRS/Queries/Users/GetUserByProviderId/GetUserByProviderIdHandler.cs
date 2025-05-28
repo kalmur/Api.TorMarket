@@ -4,7 +4,9 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 
-public class GetUserByProviderIdHandler(IUserRepository repository) : IRequestHandler<GetUserByProviderIdQuery, User>
+internal sealed class GetUserByProviderIdHandler(
+    IUserRepository repository
+) : IRequestHandler<GetUserByProviderIdQuery, User>
 {
     public async Task<User> Handle(
         GetUserByProviderIdQuery request,

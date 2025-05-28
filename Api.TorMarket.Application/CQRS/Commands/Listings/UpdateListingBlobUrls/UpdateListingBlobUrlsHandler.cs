@@ -4,7 +4,7 @@ using Api.TorMarket.Domain.Models;
 using MediatR;
 
 
-internal class UpdateListingBlobUrlsHandler(
+internal sealed class UpdateListingBlobUrlsHandler(
     IListingRepository repository
 ) : IRequestHandler<UpdateListingBlobUrlsCommand, Listing>
 {

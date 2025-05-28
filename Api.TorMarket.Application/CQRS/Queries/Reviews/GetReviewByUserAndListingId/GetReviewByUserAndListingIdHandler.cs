@@ -4,7 +4,9 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewByUserAndListingId;
 
-internal class GetReviewByUserAndListingIdHandler(IListingReviewRepository repository) : IRequestHandler<GetReviewByUserAndListingIdQuery, ListingWithReviewAndCategory>
+internal sealed class GetReviewByUserAndListingIdHandler(
+    IListingReviewRepository repository
+) : IRequestHandler<GetReviewByUserAndListingIdQuery, ListingWithReviewAndCategory>
 {
     public async Task<ListingWithReviewAndCategory> Handle(
         GetReviewByUserAndListingIdQuery request, 

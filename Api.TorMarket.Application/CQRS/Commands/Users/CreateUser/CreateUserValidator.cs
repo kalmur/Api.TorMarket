@@ -4,7 +4,7 @@ using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUser
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-public class CreateUserValidator(
+public sealed class CreateUserValidator(
     IUserRepository userRepository
 ) : IValidator<CreateUserCommand, CreateUserFailure>
 {

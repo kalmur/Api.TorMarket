@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
-public class GetListingsByNameHandler(
+internal sealed class GetListingsByNameHandler(
     IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
     IListingRepository listingRepository
 ) : IRequestHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure>>

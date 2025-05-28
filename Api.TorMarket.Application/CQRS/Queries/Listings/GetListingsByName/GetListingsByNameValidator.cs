@@ -3,7 +3,7 @@ using static Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName.G
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
-public class GetListingByNameValidator(
+public sealed class GetListingByNameValidator(
     IListingRepository listingRepository
 ) : IValidator<GetListingsByNameQuery, GetListingsByNameFailure>
 {

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 
-public class GetListingByIdHandler(
+internal sealed class GetListingByIdHandler(
     IListingRepository repository
 ) : IRequestHandler<GetListingByIdQuery, ListingWithUserAndCategory>
 {

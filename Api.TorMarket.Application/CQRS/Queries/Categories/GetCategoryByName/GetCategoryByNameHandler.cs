@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-internal class GetCategoryByNameHandler(
+internal sealed class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
     IListingCategoryRepository productCategoryRepository
 ) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<ListingCategory, GetCategoryByNameFailure>>

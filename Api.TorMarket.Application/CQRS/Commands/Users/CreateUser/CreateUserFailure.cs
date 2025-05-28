@@ -1,6 +1,6 @@
 ﻿namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-public record CreateUserFailure
+public sealed record CreateUserFailure
 {
     public required IEnumerable<ErrorType> Errors { get; init; }
 

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 
-public class GetListingsByProviderIdHandler(
+internal sealed class GetListingsByProviderIdHandler(
     IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> validator,
     IListingRepository listingRepository
 ) : IRequestHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByProviderIdFailure>>

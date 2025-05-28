@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewsByListingId;
 
-internal class GetReviewsHandler(
+internal sealed class GetReviewsHandler(
     IListingReviewRepository repository
 ) : IRequestHandler<GetReviewsByListingIdQuery, IEnumerable<ListingReview>>
 {

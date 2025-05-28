@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-internal class CreateListingHandler(
+internal sealed class CreateListingHandler(
     IValidator<CreateListingCommand, CreateListingFailure> validator,
     IListingRepository listingRepository
 ) : IRequestHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>>

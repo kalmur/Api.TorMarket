@@ -3,7 +3,7 @@ using static Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-public class GetCategoryByNameValidator(
+public sealed class GetCategoryByNameValidator(
     IListingCategoryRepository categoryRepository
 ) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
 {
