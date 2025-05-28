@@ -10,7 +10,7 @@ namespace Api.TorMarket.Persistence;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence(
+    public static IServiceCollection AddPersistenceDependencies(
         this IServiceCollection services,
         IConfiguration configuration
     ) => 

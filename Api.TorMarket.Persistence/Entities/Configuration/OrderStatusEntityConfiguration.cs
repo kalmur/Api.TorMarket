@@ -12,27 +12,28 @@ internal sealed class OrderStatusEntityConfiguration : EntityConfigurationBase<O
     protected override void ConfigureColumns(EntityTypeBuilder<OrderStatusEntity> builder)
     {
         builder
-            .Property(os => os.OrderStatusId)
+            .Property(orderStatus => orderStatus.OrderStatusId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(os => os.Status)
+            .Property(orderStatus => orderStatus.Status)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(OrderStatusEntity.OrderStatusEntity_StatusMaxLength);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<OrderStatusEntity> builder)
     {
         builder
-            .HasKey(os => os.OrderStatusId);
+            .HasKey(orderStatus => orderStatus.OrderStatusId);
 
+        // TODO - Check constraint
         builder
-            .HasMany(os => os.Orders)
-            .WithOne(o => o.StatusEntity)
-            .HasForeignKey(o => o.OrderId)
+            .HasMany(orderStatus => orderStatus.Orders)
+            .WithOne(order => order.OrderStatus)
+            .HasForeignKey(order => order.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

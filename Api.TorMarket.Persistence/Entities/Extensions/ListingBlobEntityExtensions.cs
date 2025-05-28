@@ -2,7 +2,7 @@
 
 internal static class ListingBlobEntityExtensions
 {
-    public static void AddBlob(
+    internal static void AddBlob(
         this ICollection<ListingBlobEntity> listingBlobs,
         int listingId,
         string blobUrl,

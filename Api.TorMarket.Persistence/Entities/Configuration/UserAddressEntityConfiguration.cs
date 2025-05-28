@@ -42,21 +42,21 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
         builder
             .Property(a => a.City)
             .HasColumnOrder(ColumnOrder++)
-            .HasMaxLength(50)
+            .HasMaxLength(UserAddressEntity.UserAddressEntity_CityMaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.PostalCode)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(10)
+            .HasMaxLength(UserAddressEntity.UserAddressEntity_PostalCodeMaxLength)
             .IsUnicode(false);
 
         builder
             .Property(a => a.Country)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
-            .HasMaxLength(50)
+            .HasMaxLength(UserAddressEntity.UserAddressEntity_CountryMaxLength)
             .IsUnicode(false);
 
         builder
@@ -67,12 +67,13 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
     protected override void ConfigureKeys(EntityTypeBuilder<UserAddressEntity> builder)
     {
         builder
-            .HasKey(a => a.UserAddressId);
+            .HasKey(userAddress => userAddress.UserAddressId);
 
         builder
-            .HasOne(ua => ua.User)
-            .WithMany(u => u.Addresses)
-            .HasForeignKey(ua => ua.UserId)
+            .HasOne(userAddress => userAddress.User)
+            .WithMany(user => user.Addresses)
+            .HasForeignKey(user => user.UserId)
+            .HasPrincipalKey(userAddress => userAddress.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 

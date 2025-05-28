@@ -3,20 +3,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace Api.TorMarket.Infrastructure.Options;
 
-public record AzureConfig
+internal record AzureConfig
 {
-    public const string SectionName = "Azure";
+    internal const string SectionName = "Azure";
 
-    [Required]
+    [Required(AllowEmptyStrings = false)]
     public required string AccessKey { get; init; }
 
-    [Required]
+    [Required(AllowEmptyStrings = false)]
     public required string ConnectionString { get; init; }
 
-    [Required]
+    [Required(AllowEmptyStrings = false)]
     public required string StorageAccountName { get; init; }
 
-    [Required]
+    [Required(AllowEmptyStrings = false)]
     public required string ListingsContainerName { get; init; }
 
     internal static IConfigurationSection GetAzureConfig(

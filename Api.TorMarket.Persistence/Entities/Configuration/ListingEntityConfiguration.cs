@@ -30,7 +30,8 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
         builder
             .Property(listing => listing.Name)
             .HasColumnOrder(ColumnOrder++)
-            .IsRequired();
+            .IsRequired()
+            .HasMaxLength(ListingEntity.Name_MaxLength);
 
         builder
             .Property(listing => listing.Price)
@@ -39,7 +40,8 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
 
         builder
             .Property(listing => listing.Description)
-            .HasColumnOrder(ColumnOrder++);
+            .HasColumnOrder(ColumnOrder++)
+            .HasMaxLength(ListingEntity.Description_MaxLength);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<ListingEntity> builder)
@@ -54,15 +56,21 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
-            .HasOne(x => x.ListingCategory)
-            .WithMany(x => x.Listings)
-            .HasForeignKey(x => x.CategoryId)
+            .HasOne(listing => listing.ListingCategory)
+            .WithMany(listingCategory => listingCategory.Listings)
+            .HasForeignKey(listing => listing.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.UserProductReviews)
-            .WithOne(x => x.Listing)
-            .HasForeignKey(x => x.ListingId)
+           .HasMany(listing => listing.ListingBlobs)
+           .WithOne(listingBlobs => listingBlobs.Listing)
+           .HasForeignKey(listing => listing.ListingId)
+           .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasMany(listing => listing.ListingReviews)
+            .WithOne(listingReview => listingReview.Listing)
+            .HasForeignKey(listing => listing.ListingId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

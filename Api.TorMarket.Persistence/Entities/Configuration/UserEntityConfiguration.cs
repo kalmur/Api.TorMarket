@@ -12,48 +12,49 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
     protected override void ConfigureColumns(EntityTypeBuilder<UserEntity> builder)
     {
         builder
-            .Property(x => x.UserId)
+            .Property(user => user.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.ProviderId)
+            .Property(user => user.ProviderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.CreatedOn)
+            .Property(user => user.CreatedOn)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.UpdatedOn)
+            .Property(user => user.UpdatedOn)
             .HasColumnOrder(ColumnOrder++);
     }
 
     protected override void ConfigureKeys(EntityTypeBuilder<UserEntity> builder)
     {
         builder
-            .ToTable(TableNames.Users)
-            .HasKey(x => x.UserId);
+            .HasKey(user => user.UserId);
 
         builder
-            .HasMany(u => u.Listings)
-            .WithOne(p => p.User)
-            .HasForeignKey(u => u.UserId)
+            .HasMany(user => user.Listings)
+            .WithOne(listing => listing.User)
+            .HasForeignKey(listing => listing.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.ListingReviews)
-            .WithOne(x => x.User)
-            .HasForeignKey(x => x.UserId)
+            .HasMany(user => user.ListingReviews)
+            .WithOne(listingReviews => listingReviews.User)
+            .HasForeignKey(listingReviews => listingReviews.UserId)
+            .HasPrincipalKey(user => user.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(x => x.Addresses)
-            .WithOne(x => x.User)
-            .HasForeignKey(x => x.UserId)
+            .HasMany(user => user.Addresses)
+            .WithOne(address => address.User)
+            .HasForeignKey(address => address.UserId)
+            .HasPrincipalKey(user => user.UserId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

@@ -28,7 +28,8 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
 
         builder
             .Property(x => x.Comment)
-            .HasColumnOrder(ColumnOrder++);
+            .HasColumnOrder(ColumnOrder++)
+            .HasMaxLength(ListingReviewEntity.ListingReviewEntity_CommentMaxLength);
 
         builder
             .Property(x => x.CreatedOn)
@@ -42,28 +43,30 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
     protected override void ConfigureKeys(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .HasKey(x => new 
-            { 
-                x.UserId, 
-                x.ListingId 
-            }
-        );
+            .HasKey(
+                listingReview => new 
+                { 
+                    listingReview.UserId, 
+                    listingReview.ListingId 
+                }
+            );
 
         builder
-            .HasOne(x => x.User)
+            .HasOne(listingReview => listingReview.User)
             .WithMany(x => x.ListingReviews)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
             .HasOne(x => x.Listing)
-            .WithMany(x => x.UserProductReviews)
+            .WithMany(x => x.ListingReviews)
             .HasForeignKey(x => x.ListingId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingReviewEntity> builder)
     {
+        // TODO - Remove in case there are too many updates on the entity
         builder
             .HasIndex(pr => new
             {

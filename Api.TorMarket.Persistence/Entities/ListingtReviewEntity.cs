@@ -2,10 +2,12 @@
 
 internal class ListingReviewEntity : AuditableEntity
 {
-    internal int UserId { get; set; }
-    internal int ListingId { get; set; }
-    internal int RatingValue { get; set; }
-    internal string Comment { get; set; } = string.Empty;
+    internal const int ListingReviewEntity_CommentMaxLength = 250;
+
+    internal required int UserId { get; set; }
+    internal required int ListingId { get; set; }
+    internal required int RatingValue { get; set; }
+    internal required string? Comment { get; set; } = string.Empty;
 
     internal virtual UserEntity User { get; set; } = null!;
     internal virtual ListingEntity Listing { get; set; } = null!;

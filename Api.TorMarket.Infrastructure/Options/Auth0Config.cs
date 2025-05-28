@@ -7,13 +7,16 @@ public record Auth0Config
 {
     public const string SectionName = "Auth0";
 
-    [Required]
+    [Required(AllowEmptyStrings = false)]
     public required string Domain { get; init; }
-    [Required]
+
+    [Required(AllowEmptyStrings = false)]
     public required string ClientId { get; init; }
-    [Required]
+
+    [Required(AllowEmptyStrings = false)]
     public required string ClientSecret { get; init; }
-    [Required]
+
+    [Required(AllowEmptyStrings = false)]
     public required string Connection { get; init; }
 
     internal static IConfigurationSection GetAuth0ConfigSection(

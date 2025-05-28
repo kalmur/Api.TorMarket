@@ -128,12 +128,14 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(3);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
                         .HasColumnOrder(6);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnOrder(4);
 
                     b.Property<decimal>("Price")
@@ -164,8 +166,8 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(2);
 
                     b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
                         .HasColumnOrder(4);
 
                     b.Property<DateTimeOffset>("CreatedOn")
@@ -198,16 +200,20 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnOrder(1);
 
                     b.Property<DateTimeOffset>("OrderDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
+                        .HasColumnType("datetimeoffset")
+                        .HasColumnOrder(6);
 
                     b.Property<int>("ShippingAddress")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(4);
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(3);
 
                     b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnOrder(5);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")
@@ -227,6 +233,10 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
+                    b.Property<int>("ListingId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
                     b.Property<int>("OrderId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -235,15 +245,13 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnOrder(5);
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasColumnOrder(4);
 
                     b.HasKey("OrderLineId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderLines", (string)null);
                 });
@@ -328,6 +336,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
+                    b.Property<int>("ListingId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
@@ -340,7 +351,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ListingId");
 
                     b.ToTable("ShoppingCartItems", (string)null);
                 });
@@ -381,9 +392,9 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasMaxLength(10)
+                        .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(10)")
+                        .HasColumnType("varchar(100)")
                         .HasColumnOrder(7);
 
                     b.Property<int>("StreetNumber")
@@ -449,7 +460,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("ListingBlobs")
                         .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Listing");
@@ -477,7 +488,7 @@ namespace Api.TorMarket.Persistence.Migrations
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingReviewEntity", b =>
                 {
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
-                        .WithMany("UserProductReviews")
+                        .WithMany("ListingReviews")
                         .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -495,13 +506,13 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderStatusEntity", "StatusEntity")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderStatusEntity", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "Address")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "UserAddress")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -513,30 +524,30 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Address");
-
-                    b.Navigation("StatusEntity");
+                    b.Navigation("OrderStatus");
 
                     b.Navigation("User");
+
+                    b.Navigation("UserAddress");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", "Order")
+                        .WithMany("OrderLines")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderLineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Persistence.Entities.OrderEntity", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderLineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Listing");
 
                     b.Navigation("Order");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
@@ -558,13 +569,13 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Product")
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("ShoppingCartItems")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ListingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Listing");
 
                     b.Navigation("ShoppingCart");
                 });
@@ -589,11 +600,16 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     b.Navigation("ListingBlobs");
 
+                    b.Navigation("ListingReviews");
+
                     b.Navigation("OrderLines");
 
                     b.Navigation("ShoppingCartItems");
+                });
 
-                    b.Navigation("UserProductReviews");
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderEntity", b =>
+                {
+                    b.Navigation("OrderLines");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderStatusEntity", b =>

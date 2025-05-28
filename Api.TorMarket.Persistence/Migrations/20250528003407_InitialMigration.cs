@@ -62,9 +62,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,7 +111,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     StreetNumber = table.Column<int>(type: "int", nullable: false),
                     AddressLine = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     City = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
-                    PostalCode = table.Column<string>(type: "varchar(10)", unicode: false, maxLength: 10, nullable: false),
+                    PostalCode = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
                     Country = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -142,8 +142,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         name: "FK_ListingBlobs_Listings_ListingId",
                         column: x => x.ListingId,
                         principalTable: "Listings",
-                        principalColumn: "ListingId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ListingId");
                 });
 
             migrationBuilder.CreateTable(
@@ -153,7 +152,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ListingId = table.Column<int>(type: "int", nullable: false),
                     RatingValue = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     CreatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedOn = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
@@ -181,14 +180,15 @@ namespace Api.TorMarket.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ListingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemId);
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Listings_ProductId",
-                        column: x => x.ProductId,
+                        name: "FK_ShoppingCartItems_Listings_ListingId",
+                        column: x => x.ListingId,
                         principalTable: "Listings",
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
@@ -206,8 +206,8 @@ namespace Api.TorMarket.Persistence.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     ShippingAddress = table.Column<int>(type: "int", nullable: false),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
                 },
@@ -239,7 +239,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 columns: table => new
                 {
                     OrderLineId = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
@@ -254,8 +254,8 @@ namespace Api.TorMarket.Persistence.Migrations
                         principalColumn: "ListingId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLines_Orders_OrderLineId",
-                        column: x => x.OrderLineId,
+                        name: "FK_OrderLines_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
@@ -330,6 +330,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderLines_OrderId",
+                table: "OrderLines",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
                 table: "Orders",
                 column: "UserId");
@@ -340,9 +345,9 @@ namespace Api.TorMarket.Persistence.Migrations
                 column: "CartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_ProductId",
+                name: "IX_ShoppingCartItems_ListingId",
                 table: "ShoppingCartItems",
-                column: "ProductId");
+                column: "ListingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShoppingCarts_UserId",
