@@ -20,6 +20,7 @@ public static class UserExtensions
     ) => new()
     {
         UserId = user.UserId,
+        RoleId = user.RoleId,
         ProviderId = user.ProviderId
     };
 }

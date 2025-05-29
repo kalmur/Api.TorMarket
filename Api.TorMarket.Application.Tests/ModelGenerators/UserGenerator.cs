@@ -9,6 +9,7 @@ internal static class UserGenerator
     ) => new()
     {
         UserId = userId,
+        RoleId = 1,
         ProviderId = "auth|007"
     };
 }

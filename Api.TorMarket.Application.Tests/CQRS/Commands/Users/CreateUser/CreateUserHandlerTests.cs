@@ -35,11 +35,15 @@ internal sealed class CreateUserHandlerTests
     public async Task Handle_WhenValidationPasses_ReturnsUser()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(
+            roleId: 1, 
+            providerId: "auth|007"
+        );
 
         var expectedResult = new User
         {
             UserId = 1,
+            RoleId = 1,
             ProviderId = command.ProviderId
         };
 
@@ -66,7 +70,10 @@ internal sealed class CreateUserHandlerTests
     public async Task Handle_WhenValidationFails_ReturnsFailure()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(1, "");
+        var command = CreateUserCommandGenerator.GenerateCommand(
+            roleId: 1,
+            providerId: ""
+        );
 
         _validator.SetupToFailValidation(ErrorType.InvalidProviderId);
 

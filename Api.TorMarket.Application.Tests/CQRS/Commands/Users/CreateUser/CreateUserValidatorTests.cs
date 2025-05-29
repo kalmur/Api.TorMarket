@@ -29,7 +29,10 @@ internal sealed class CreateUserValidatorTests
     public async Task ValidateAsync_WhenCommandIsValid_ReturnsNoErrors()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(
+            roleId: 1,
+            providerId: "auth|007"
+        );
 
         _userRepository.GetByProviderIdAsync(
             command.ProviderId,
@@ -56,7 +59,10 @@ internal sealed class CreateUserValidatorTests
     )
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(1, providerId);
+        var command = CreateUserCommandGenerator.GenerateCommand(
+            roleId: 1,
+            providerId
+        );
 
         // Act
         var result = await _validator.ValidateAsync(
@@ -73,7 +79,10 @@ internal sealed class CreateUserValidatorTests
     public async Task ValidateAsync_WhenUserAlreadyExists_ReturnsUserAlreadyExistsError()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(
+            roleId: 1,
+            providerId: "auth|007"
+        );
 
         _userRepository.GetByProviderIdAsync(
             command.ProviderId,
@@ -82,6 +91,7 @@ internal sealed class CreateUserValidatorTests
             new User
             {
                 UserId = 1,
+                RoleId = 1,
                 ProviderId = command.ProviderId
             }
         );

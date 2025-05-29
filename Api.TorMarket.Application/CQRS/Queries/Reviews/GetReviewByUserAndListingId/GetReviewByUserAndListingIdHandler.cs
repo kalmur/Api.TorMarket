@@ -11,9 +11,10 @@ internal sealed class GetReviewByUserAndListingIdHandler(
     public async Task<ListingWithReviewAndCategory> Handle(
         GetReviewByUserAndListingIdQuery request, 
         CancellationToken cancellationToken
-    ) => await repository.GetByUserAndListingIdAsync(
-        request.UserId,
-        request.ListingId,
-        cancellationToken
-    );
+    ) => 
+        await repository.GetByUserAndListingIdAsync(
+            request.UserId,
+            request.ListingId,
+            cancellationToken
+        );
 }

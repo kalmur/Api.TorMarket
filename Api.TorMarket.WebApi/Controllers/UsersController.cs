@@ -20,7 +20,7 @@ public sealed class UsersController(
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> CreateAsync(
-        [FromBody] [Required] CreateUserRequestDto createUserDto,
+        [FromBody][Required] CreateUserRequestDto createUserDto,
         CancellationToken cancellationToken
     )
     {
@@ -30,7 +30,9 @@ public sealed class UsersController(
         );
 
         return result.IsError
-            ? BadRequest(result.Error.ToFailureResponseDto())
+            ? BadRequest(
+                result.Error.ToFailureResponseDto()
+            )
             : StatusCode(
                 StatusCodes.Status201Created, 
                 result.Result.ToResponseDto()
@@ -41,7 +43,7 @@ public sealed class UsersController(
     [Route("{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetByProviderIdAsync(
-        [FromRoute] [Required] string providerId,
+        [FromRoute][Required] string providerId,
         CancellationToken cancellationToken
     )
     {

@@ -10,6 +10,7 @@ internal static class UserExtensions
     ) => new()
     {
         UserId = entity.UserId,
+        RoleId = entity.RoleId,
         ProviderId = entity.ProviderId
     };
 
