@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Domain.Models;
+﻿using Api.TorMarket.Domain.Models.ViewModels;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 

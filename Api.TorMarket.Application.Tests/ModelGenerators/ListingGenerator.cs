@@ -1,4 +1,5 @@
 ﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.Tests.ModelGenerators;
 

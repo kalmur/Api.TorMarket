@@ -1,6 +1,7 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 

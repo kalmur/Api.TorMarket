@@ -1,5 +1,5 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
-using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;

@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Domain.Models;
+﻿namespace Api.TorMarket.Domain.Models.ViewModels;
 
 public record ListingWithReviewAndCategory : ListingReview
 {

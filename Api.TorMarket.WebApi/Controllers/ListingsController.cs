@@ -3,7 +3,6 @@ using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
-using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
@@ -11,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.DTOs.Responses;
+using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.WebApi.Controllers;
 

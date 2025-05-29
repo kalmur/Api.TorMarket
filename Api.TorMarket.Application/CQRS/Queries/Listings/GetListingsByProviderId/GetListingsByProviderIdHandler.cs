@@ -1,11 +1,11 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
-using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 
-internal sealed class GetListingsByProviderIdHandler(
+public class GetListingsByProviderIdHandler(
     IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> validator,
     IListingRepository listingRepository
 ) : IRequestHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByProviderIdFailure>>

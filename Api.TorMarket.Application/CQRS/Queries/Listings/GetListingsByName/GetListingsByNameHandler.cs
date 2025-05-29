@@ -1,11 +1,11 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
-using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
-internal sealed class GetListingsByNameHandler(
+public class GetListingsByNameHandler(
     IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
     IListingRepository listingRepository
 ) : IRequestHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithCategory>, GetListingsByNameFailure>>
