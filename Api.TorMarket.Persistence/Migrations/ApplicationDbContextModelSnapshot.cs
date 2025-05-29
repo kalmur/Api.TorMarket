@@ -537,7 +537,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("ListingReviews")
                         .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
@@ -556,19 +556,19 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasOne("Api.TorMarket.Persistence.Entities.OrderStatusEntity", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "UserAddress")
                         .WithMany()
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("OrderStatus");
@@ -602,7 +602,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -613,13 +613,13 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasOne("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", "ShoppingCart")
                         .WithMany("Items")
                         .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ListingId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Listing");

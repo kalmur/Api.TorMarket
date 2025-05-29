@@ -53,16 +53,16 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
             );
 
         builder
-            .HasOne(listingReview => listingReview.User)
-            .WithMany(x => x.ListingReviews)
-            .HasForeignKey(x => x.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder
             .HasOne(x => x.Listing)
             .WithMany(x => x.ListingReviews)
             .HasForeignKey(x => x.ListingId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
+            .HasOne(listingReview => listingReview.User)
+            .WithMany(x => x.ListingReviews)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingReviewEntity> builder)

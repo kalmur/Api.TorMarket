@@ -75,7 +75,7 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
             .WithMany(user => user.UserAddresses)
             .HasForeignKey(user => user.UserId)
             .HasPrincipalKey(userAddress => userAddress.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<UserAddressEntity> builder)

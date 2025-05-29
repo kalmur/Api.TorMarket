@@ -43,13 +43,13 @@ internal sealed class ShoppingCartItemEntityConfiguration : EntityConfigurationB
             .WithMany(shoppingCart => shoppingCart.Items)
             .HasForeignKey(shoppingCart => shoppingCart.CartId)
             .HasPrincipalKey(shoppingCartItem => shoppingCartItem.ShoppingCartId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
 
         // TODO - Check constraint
         builder
             .HasOne(shoppingCart => shoppingCart.Listing)
             .WithMany(listing => listing.ShoppingCartItems)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ShoppingCartItemEntity> builder)

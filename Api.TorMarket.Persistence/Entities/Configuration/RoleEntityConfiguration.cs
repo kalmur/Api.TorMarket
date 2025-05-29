@@ -29,12 +29,6 @@ internal class RoleEntityConfiguration : EntityConfigurationBase<RoleEntity>
     {
         builder
             .HasKey(role => role.RoleId);
-
-        builder
-            .HasMany(role => role.Users)
-            .WithOne(user => user.Role)
-            .HasForeignKey(user => user.RoleId)
-            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<RoleEntity> builder)

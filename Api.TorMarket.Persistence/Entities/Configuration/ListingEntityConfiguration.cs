@@ -60,27 +60,15 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .HasKey(listing => listing.ListingId);
 
         builder
-            .HasOne(listing => listing.User)
-            .WithMany(u => u.Listings)
-            .HasForeignKey(p => p.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder
             .HasOne(listing => listing.Category)
             .WithMany(listingCategory => listingCategory.Listings)
             .HasForeignKey(listing => listing.CategoryId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-           .HasMany(listing => listing.ListingBlobs)
-           .WithOne(listingBlobs => listingBlobs.Listing)
-           .HasForeignKey(listing => listing.ListingId)
-           .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasMany(listing => listing.ListingReviews)
-            .WithOne(listingReview => listingReview.Listing)
-            .HasForeignKey(listing => listing.ListingId)
+            .HasOne(listing => listing.User)
+            .WithMany(u => u.Listings)
+            .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

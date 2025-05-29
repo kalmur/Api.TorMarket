@@ -117,8 +117,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         name: "FK_ShoppingCarts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -184,8 +183,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         name: "FK_ListingReviews_Listings_ListingId",
                         column: x => x.ListingId,
                         principalTable: "Listings",
-                        principalColumn: "ListingId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ListingId");
                     table.ForeignKey(
                         name: "FK_ListingReviews_Users_UserId",
                         column: x => x.UserId,
@@ -211,14 +209,12 @@ namespace Api.TorMarket.Persistence.Migrations
                         name: "FK_ShoppingCartItems_Listings_ListingId",
                         column: x => x.ListingId,
                         principalTable: "Listings",
-                        principalColumn: "ListingId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ListingId");
                     table.ForeignKey(
                         name: "FK_ShoppingCartItems_ShoppingCarts_CartId",
                         column: x => x.CartId,
                         principalTable: "ShoppingCarts",
-                        principalColumn: "ShoppingCartId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ShoppingCartId");
                 });
 
             migrationBuilder.CreateTable(
@@ -238,20 +234,17 @@ namespace Api.TorMarket.Persistence.Migrations
                         name: "FK_Orders_OrderStatuses_OrderId",
                         column: x => x.OrderId,
                         principalTable: "OrderStatuses",
-                        principalColumn: "OrderStatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "OrderStatusId");
                     table.ForeignKey(
                         name: "FK_Orders_UserAddresses_OrderId",
                         column: x => x.OrderId,
                         principalTable: "UserAddresses",
-                        principalColumn: "UserAddressId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "UserAddressId");
                     table.ForeignKey(
                         name: "FK_Orders_Users_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(

@@ -45,7 +45,7 @@ internal sealed class ListingBlobEntityConfiguration : EntityConfigurationBase<L
             .WithMany(listing => listing.ListingBlobs)
             .HasForeignKey(listingBlob => listingBlob.ListingId)
             .HasPrincipalKey(listing => listing.ListingId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingBlobEntity> builder)

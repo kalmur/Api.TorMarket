@@ -49,27 +49,21 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .WithMany(user => user.Orders)
             .HasForeignKey(user => user.OrderId)
             .HasPrincipalKey(order => order.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasOne(order => order.OrderStatus)
             .WithMany(status => status.Orders)
             .HasForeignKey(status => status.OrderId)
             .HasPrincipalKey(order => order.OrderStatusId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.NoAction);
 
         // TODO - Confirm
         builder
             .HasOne(order => order.UserAddress)
             .WithMany()
             .HasForeignKey(o => o.OrderId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder
-            .HasMany(order => order.OrderLines)
-            .WithOne(orderLine => orderLine.Order)
-            .HasForeignKey(orderLine => orderLine.OrderId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<OrderEntity> builder)

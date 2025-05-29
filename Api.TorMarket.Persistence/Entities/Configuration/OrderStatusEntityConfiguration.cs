@@ -29,13 +29,6 @@ internal sealed class OrderStatusEntityConfiguration : EntityConfigurationBase<O
     {
         builder
             .HasKey(orderStatus => orderStatus.OrderStatusId);
-
-        // TODO - Check constraint
-        builder
-            .HasMany(orderStatus => orderStatus.Orders)
-            .WithOne(order => order.OrderStatus)
-            .HasForeignKey(order => order.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<OrderStatusEntity> builder)

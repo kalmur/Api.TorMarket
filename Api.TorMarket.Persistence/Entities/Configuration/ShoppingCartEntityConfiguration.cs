@@ -33,7 +33,7 @@ internal sealed class ShoppingCartEntityConfiguration : EntityConfigurationBase<
             .WithMany(user => user.ShoppingCarts)
             .HasForeignKey(user => user.UserId)
             .HasPrincipalKey(shoppingCart => shoppingCart.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ShoppingCartEntity> builder)

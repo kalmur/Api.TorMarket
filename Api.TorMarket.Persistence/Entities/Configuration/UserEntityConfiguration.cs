@@ -49,24 +49,6 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
             .WithMany(role => role.Users)
             .HasForeignKey(user => user.RoleId)
             .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasMany(user => user.Listings)
-            .WithOne(listing => listing.User)
-            .HasForeignKey(listing => listing.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasMany(user => user.ListingReviews)
-            .WithOne(listingReviews => listingReviews.User)
-            .HasForeignKey(listingReviews => listingReviews.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        builder
-            .HasMany(user => user.UserAddresses)
-            .WithOne(address => address.User)
-            .HasForeignKey(address => address.UserId)
-            .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<UserEntity> builder)

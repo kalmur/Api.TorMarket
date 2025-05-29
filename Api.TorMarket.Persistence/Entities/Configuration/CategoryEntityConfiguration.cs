@@ -29,12 +29,6 @@ internal sealed class CategoryEntityConfiguration : EntityConfigurationBase<Cate
     {
         builder
             .HasKey(listingCategory => listingCategory.CategoryId);
-
-        builder
-            .HasMany(x => x.Listings)
-            .WithOne(x => x.Category)
-            .HasForeignKey(x => x.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<CategoryEntity> builder)
