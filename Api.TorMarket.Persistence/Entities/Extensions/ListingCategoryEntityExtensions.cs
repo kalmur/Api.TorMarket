@@ -9,6 +9,6 @@ internal static class ListingCategoryEntityExtensions
     ) => new()
     {
         CategoryId = entity.CategoryId,
-        Name = entity.Name ?? string.Empty
+        Name = entity.Name
     };
 }

@@ -2,7 +2,6 @@
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
-using Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
 using Api.TorMarket.Domain.Models;
 using NSubstitute;
 using NUnit.Framework;
@@ -36,7 +35,7 @@ internal sealed class CreateUserHandlerTests
     public async Task Handle_WhenValidationPasses_ReturnsUser()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand("auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
 
         var expectedResult = new User
         {
@@ -67,7 +66,7 @@ internal sealed class CreateUserHandlerTests
     public async Task Handle_WhenValidationFails_ReturnsFailure()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand("");
+        var command = CreateUserCommandGenerator.GenerateCommand(1, "");
 
         _validator.SetupToFailValidation(ErrorType.InvalidProviderId);
 

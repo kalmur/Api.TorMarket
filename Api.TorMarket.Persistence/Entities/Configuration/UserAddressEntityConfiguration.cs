@@ -72,7 +72,7 @@ internal sealed class UserAddressEntityConfiguration : EntityConfigurationBase<U
 
         builder
             .HasOne(userAddress => userAddress.User)
-            .WithMany(user => user.Addresses)
+            .WithMany(user => user.UserAddresses)
             .HasForeignKey(user => user.UserId)
             .HasPrincipalKey(userAddress => userAddress.UserId)
             .OnDelete(DeleteBehavior.Cascade);

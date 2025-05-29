@@ -5,6 +5,9 @@ namespace Api.TorMarket.WebApi.DTOs.Requests;
 
 public sealed record CreateUserRequestDto
 {
+    [Required]
+    public required int RoleId { get; init; }
+
     [Required(AllowEmptyStrings = false)]
     [StringLength(User.ProviderId_MaxLength)]
     public required string ProviderId { get; init; }

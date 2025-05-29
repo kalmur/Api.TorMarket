@@ -19,6 +19,11 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
             .ValueGeneratedOnAdd();
 
         builder
+            .Property(user => user.RoleId)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
             .Property(user => user.ProviderId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
@@ -40,6 +45,12 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
             .HasKey(user => user.UserId);
 
         builder
+            .HasOne(user => user.Role)
+            .WithMany(role => role.Users)
+            .HasForeignKey(user => user.RoleId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
             .HasMany(user => user.Listings)
             .WithOne(listing => listing.User)
             .HasForeignKey(listing => listing.UserId)
@@ -49,14 +60,12 @@ internal sealed class UserEntityConfiguration : EntityConfigurationBase<UserEnti
             .HasMany(user => user.ListingReviews)
             .WithOne(listingReviews => listingReviews.User)
             .HasForeignKey(listingReviews => listingReviews.UserId)
-            .HasPrincipalKey(user => user.UserId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
-            .HasMany(user => user.Addresses)
+            .HasMany(user => user.UserAddresses)
             .WithOne(address => address.User)
             .HasForeignKey(address => address.UserId)
-            .HasPrincipalKey(user => user.UserId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

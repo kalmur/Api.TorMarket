@@ -73,6 +73,7 @@ internal static class ListingEntityExtensions
         this CreateUserCommand command
     ) => new()
     {
+        RoleId = command.RoleId,
         ProviderId = command.ProviderId
     };
 }

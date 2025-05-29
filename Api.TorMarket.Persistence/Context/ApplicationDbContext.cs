@@ -15,20 +15,18 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
+internal sealed class ApplicationDbContext(
+    DbContextOptions<ApplicationDbContext> options
+): DbContext(options), IApplicationDbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
-        : base(options)
-    {
-    }
-
     public DbSet<CategoryEntity> Category => Set<CategoryEntity>();
-    public DbSet<OrderEntity> Order => Set<OrderEntity>();
-    public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
-    public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
     public DbSet<ListingEntity> Listing => Set<ListingEntity>();
     public DbSet<ListingBlobEntity> ListingBlob => Set<ListingBlobEntity>();
     public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();
+    public DbSet<RoleEntity> Role => Set<RoleEntity>();
+    public DbSet<OrderEntity> Order => Set<OrderEntity>();
+    public DbSet<OrderLineEntity> OrderLine => Set<OrderLineEntity>();
+    public DbSet<OrderStatusEntity> OrderStatus => Set<OrderStatusEntity>();
     public DbSet<ShoppingCartEntity> ShoppingCart => Set<ShoppingCartEntity>();
     public DbSet<ShoppingCartItemEntity> ShoppingCartItem => Set<ShoppingCartItemEntity>();
     public DbSet<UserEntity> User => Set<UserEntity>();

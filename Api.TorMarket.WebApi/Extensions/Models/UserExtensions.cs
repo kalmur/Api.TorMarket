@@ -7,13 +7,13 @@ namespace Api.TorMarket.WebApi.Extensions.Models;
 
 public static class UserExtensions
 {
-    public static CreateUserCommand ToCommand(this CreateUserRequestDto dto)
+    public static CreateUserCommand ToCommand(
+        this CreateUserRequestDto dto
+    ) => new()
     {
-        return new CreateUserCommand
-        {
-            ProviderId = dto.ProviderId
-        };
-    }
+        RoleId = dto.RoleId,
+        ProviderId = dto.ProviderId
+    };
 
     public static UserDto ToResponseDto(
         this User user

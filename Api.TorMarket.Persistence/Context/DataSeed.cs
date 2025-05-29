@@ -8,22 +8,24 @@ internal static class DataSeed
 {
     public static void SeedData(ModelBuilder builder)
     {
+        SeedRoles(builder);
+        SeedCategories(builder);
         SeedOrderStatuses(builder);
-        SeedListingCategories(builder);
         SeedAdminUser(builder);
+    }
+
+    private static void SeedRoles(ModelBuilder builder)
+    {
+        IImmutableList<RoleEntity> roles = ImmutableList.Create(
+            CreateRoles(1, "Admin"),
+            CreateRoles(2, "User")
+        );
+
+        builder.Entity<RoleEntity>().HasData(roles);
     }
 
     private static void SeedOrderStatuses(ModelBuilder builder)
     {
-        static OrderStatusEntity CreateOrderStatus(
-            int orderStatusId,
-            string statusName
-        ) => new()
-        {
-            OrderStatusId = orderStatusId,
-            Status = statusName
-        };
-
         IImmutableList<OrderStatusEntity> orderStatuses = ImmutableList.Create(
             CreateOrderStatus(1, "Pending"),
             CreateOrderStatus(2, "Processing"),
@@ -35,18 +37,9 @@ internal static class DataSeed
         builder.Entity<OrderStatusEntity>().HasData(orderStatuses);
     }
 
-    private static void SeedListingCategories(ModelBuilder builder)
+    private static void SeedCategories(ModelBuilder builder)
     {
-        static CategoryEntity CreateListingCategory(
-            int listingCategoryId,
-            string categoryName
-        ) => new()
-        {
-            CategoryId = listingCategoryId,
-            Name = categoryName
-        };
-
-        IImmutableList<CategoryEntity> listingCategories = ImmutableList.Create(
+        IImmutableList<CategoryEntity> categories = ImmutableList.Create(
             CreateListingCategory(1, "Electronics"),
             CreateListingCategory(2, "Games"),
             CreateListingCategory(3, "Toys"),
@@ -56,16 +49,47 @@ internal static class DataSeed
             CreateListingCategory(7, "Other")
         );
 
-        builder.Entity<CategoryEntity>().HasData(listingCategories);
+        builder.Entity<CategoryEntity>().HasData(categories);
     }
+
     private static void SeedAdminUser(ModelBuilder builder)
     {
         var adminUser = new UserEntity
         {
             UserId = 1,
+            RoleId = 1,
             ProviderId = "auth0|6821c63e7bd4b1c29438d9e3"
         };
 
         builder.Entity<UserEntity>().HasData(adminUser);
     }
+
+    // Helper method
+
+    private static RoleEntity CreateRoles(
+        int roleId,
+        string roleName
+    ) => new()
+    {
+        RoleId = roleId,
+        Name = roleName
+    };
+
+    private static OrderStatusEntity CreateOrderStatus(
+        int orderStatusId,
+        string statusName
+    ) => new()
+    {
+        OrderStatusId = orderStatusId,
+        Status = statusName
+    };
+
+    private static CategoryEntity CreateListingCategory(
+        int listingCategoryId,
+        string categoryName
+    ) => new()
+    {
+        CategoryId = listingCategoryId,
+        Name = categoryName
+    };
 }

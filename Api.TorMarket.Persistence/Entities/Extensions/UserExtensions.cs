@@ -10,13 +10,14 @@ internal static class UserExtensions
     ) => new()
     {
         UserId = entity.UserId,
-        ProviderId = entity.ProviderId ?? string.Empty
+        ProviderId = entity.ProviderId
     };
 
     public static UserEntity ToEntity(
         this CreateUserRequest request
     ) => new()
     {
+        RoleId = request.RoleId,
         ProviderId = request.ProviderId
     };
 }

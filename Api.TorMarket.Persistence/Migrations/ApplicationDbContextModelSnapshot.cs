@@ -307,6 +307,41 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.RoleEntity", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("RoleId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            Name = "User"
+                        });
+                });
+
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Property<int>("ShoppingCartId")
@@ -431,22 +466,28 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnOrder(3);
+                        .HasColumnOrder(4);
 
                     b.Property<string>("ProviderId")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(3);
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int")
                         .HasColumnOrder(2);
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(5);
 
                     b.HasKey("UserId");
 
                     b.HasIndex("ProviderId")
                         .IsUnique();
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users", (string)null);
 
@@ -456,6 +497,7 @@ namespace Api.TorMarket.Persistence.Migrations
                             UserId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProviderId = "auth0|6821c63e7bd4b1c29438d9e3",
+                            RoleId = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -588,12 +630,23 @@ namespace Api.TorMarket.Persistence.Migrations
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserAddressEntity", b =>
                 {
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
-                        .WithMany("Addresses")
+                        .WithMany("UserAddresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
+                {
+                    b.HasOne("Api.TorMarket.Persistence.Entities.RoleEntity", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CategoryEntity", b =>
@@ -622,6 +675,11 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("Orders");
                 });
 
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.RoleEntity", b =>
+                {
+                    b.Navigation("Users");
+                });
+
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", b =>
                 {
                     b.Navigation("Items");
@@ -629,8 +687,6 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.UserEntity", b =>
                 {
-                    b.Navigation("Addresses");
-
                     b.Navigation("ListingReviews");
 
                     b.Navigation("Listings");
@@ -638,6 +694,8 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("ShoppingCarts");
+
+                    b.Navigation("UserAddresses");
                 });
 #pragma warning restore 612, 618
         }

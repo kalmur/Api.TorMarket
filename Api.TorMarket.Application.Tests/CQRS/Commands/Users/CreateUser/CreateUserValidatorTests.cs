@@ -1,6 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
-using Api.TorMarket.Application.Tests.CQRS.Commands.CreateUser;
 using Api.TorMarket.Domain.Models;
 using NSubstitute;
 using NUnit.Framework;
@@ -30,7 +29,7 @@ internal sealed class CreateUserValidatorTests
     public async Task ValidateAsync_WhenCommandIsValid_ReturnsNoErrors()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand("auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
 
         _userRepository.GetByProviderIdAsync(
             command.ProviderId,
@@ -57,7 +56,7 @@ internal sealed class CreateUserValidatorTests
     )
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand(providerId);
+        var command = CreateUserCommandGenerator.GenerateCommand(1, providerId);
 
         // Act
         var result = await _validator.ValidateAsync(
@@ -74,7 +73,7 @@ internal sealed class CreateUserValidatorTests
     public async Task ValidateAsync_WhenUserAlreadyExists_ReturnsUserAlreadyExistsError()
     {
         // Arrange
-        var command = CreateUserCommandGenerator.GenerateCommand("auth|007");
+        var command = CreateUserCommandGenerator.GenerateCommand(1, "auth|007");
 
         _userRepository.GetByProviderIdAsync(
             command.ProviderId,

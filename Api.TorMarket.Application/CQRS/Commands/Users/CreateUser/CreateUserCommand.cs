@@ -7,11 +7,13 @@ namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
 public sealed record CreateUserCommand : IRequest<ResultOrError<User, CreateUserFailure>>
 {
+    public required int RoleId { get; init; }
     public required string ProviderId { get; init; }
 
     internal CreateUserRequest ToRequest()
         => new()
         {
+            RoleId = RoleId,
             ProviderId = ProviderId
         };
 }
