@@ -5,7 +5,7 @@ namespace Api.TorMarket.WebApi.Extensions.Models;
 
 public static class ListingCategoryExtensions
 {
-    public static ListingCategoryDto ToResponseDto(
+    public static CategoryDto ToResponseDto(
        this Category product
    ) => new()
    {
@@ -13,7 +13,7 @@ public static class ListingCategoryExtensions
        Name = product.Name
    };
 
-    public static IEnumerable<ListingCategoryDto> ToResponseDto(
+    public static IEnumerable<CategoryDto> ToResponseDto(
         this IEnumerable<Category> listings
     ) => listings.Select(ToResponseDto);
 }

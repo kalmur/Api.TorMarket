@@ -17,7 +17,7 @@ internal static class ListingGenerator
         Price = 50.00m
     };
 
-    internal static ListingWithUserAndCategory GenerateListingWithUserAndCategory(
+    internal static ListingWithDetails GenerateListingWithUserAndCategory(
         int listingId = 1,
         int userId = 1,
         int categoryId = 1
@@ -35,5 +35,7 @@ internal static class ListingGenerator
         User = UserGenerator.GenerateUser(
             userId
         ),
+        // TODO - Create method
+        ListingBlobs = new List<ListingBlob>()
     };
 }

@@ -152,7 +152,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     ListingBlobId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ListingId = table.Column<int>(type: "int", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     IsPrimary = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

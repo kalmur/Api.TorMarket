@@ -18,11 +18,8 @@ public sealed class CreateListingValidator(
             errors.Add(ErrorType.UserDoesNotExist);
 
 
-        if (string.IsNullOrWhiteSpace(command.Name))
+        if (string.IsNullOrWhiteSpace(command.ListingName))
             errors.Add(ErrorType.InvalidName);
-
-        if (command.CategoryId == 0)
-            errors.Add(ErrorType.InvalidCategoryId);
 
         if (command.Price <= 0)
             errors.Add(ErrorType.InvalidPrice);

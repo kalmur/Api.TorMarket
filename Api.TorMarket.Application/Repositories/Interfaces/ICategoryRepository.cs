@@ -8,7 +8,7 @@ public interface ICategoryRepository
         CancellationToken cancellationToken
     );
 
-    Task<Category?> GetByNameAsync(
+    Task<Category> GetByNameAsync(
         string name, 
         CancellationToken cancellationToken
     );

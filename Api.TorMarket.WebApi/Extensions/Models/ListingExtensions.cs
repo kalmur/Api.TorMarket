@@ -20,6 +20,8 @@ public static class ListingExtensions
         Description = product.Description
     };
 
+    // Check
+
     public static ListingWithDetailsDto ToResponseDto(
         this ListingWithCategory model
     ) => new()
@@ -30,7 +32,8 @@ public static class ListingExtensions
         Price = model.Price,
         Description = model.Description,
         Category = model.Category?.ToResponseDto() ?? null,
-        User = null
+        User = null,
+        ListingBlobs = null
     };
 
     public static IEnumerable<ListingWithDetailsDto> ToResponseDto(
@@ -38,7 +41,7 @@ public static class ListingExtensions
     ) => models.Select(ToResponseDto);
 
     public static ListingWithDetailsDto ToResponseDto(
-        this ListingWithUserAndCategory model
+        this ListingWithDetails model
     ) => new()
     {
         ListingId = model.ListingId,
@@ -47,11 +50,14 @@ public static class ListingExtensions
         Price = model.Price,
         Description = model.Description,
         Category = model.Category?.ToResponseDto() ?? null,
-        User = model.User?.ToResponseDto() ?? null
+        User = model.User?.ToResponseDto() ?? null,
+        ListingBlobs = model.ListingBlobs?.Select(
+            blob => blob.ToResponseDto()
+        ).ToList() ?? null
     };
 
     public static IEnumerable<ListingWithDetailsDto> ToResponseDto(
-        this IEnumerable<ListingWithUserAndCategory> models
+        this IEnumerable<ListingWithDetails> models
     ) => models.Select(ToResponseDto);
 
     public static CreateListingCommand ToCommand(
@@ -59,8 +65,8 @@ public static class ListingExtensions
     ) => new()
     {
         UserId = request.UserId,
-        CategoryId = request.CategoryId,
-        Name = request.Name,
+        CategoryName = request.CategoryName,
+        ListingName = request.ListingName,
         Price = request.Price,
         Description = request.Description,
     };
@@ -68,9 +74,8 @@ public static class ListingExtensions
     public static UpdateListingBlobUrlsCommand ToCommand(
         this UpdateBlobUrlRequestDto request,
         int listingId
-    ) 
-        => new(
-            listingId, 
-            request.BlobUrl.Url
-        );
+    ) => new(
+        listingId, 
+        request.BlobUrl.Url
+    );
 }

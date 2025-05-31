@@ -18,7 +18,7 @@ internal sealed class CategoryRepository(
             .Select(category => category.ToModel()!)
             .ToListAsync(cancellationToken);
 
-    public async Task<Category?> GetByNameAsync(
+    public async Task<Category> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
     ) =>
@@ -27,5 +27,6 @@ internal sealed class CategoryRepository(
                 category => category.Name == name,
                 cancellationToken
             )
-        )?.ToModel();
+        )?.ToModel() 
+        ?? throw new InvalidOperationException($"Category with name '{name}' not found.");
 }

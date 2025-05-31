@@ -1,7 +1,8 @@
 ﻿namespace Api.TorMarket.Domain.Models.ViewModels;
 
-public record ListingWithUserAndCategory : Listing
+public record ListingWithDetails : Listing
 {
     public User? User { get; set; }
     public Category? Category { get; set; }
+    public List<ListingBlob>? ListingBlobs { get; set; }
 }

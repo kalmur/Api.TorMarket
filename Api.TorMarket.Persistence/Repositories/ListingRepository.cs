@@ -28,30 +28,31 @@ internal class ListingRepository(
         ) ?? throw new InvalidOperationException("Product creation failed.");
     }
 
-    public async Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(
+    public async Task<IEnumerable<ListingWithDetails>> GetAllInRandomOrder(
         CancellationToken cancellationToken
     ) =>
         await context.Listing
             .Include(listing => listing.User)
             .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs)
             .OrderBy(_ => Guid.NewGuid())
             .Select(listing => 
-                listing.ToModelWithUserAndCategory()
-            )
-            .ToListAsync(cancellationToken);
+                listing.ToListingWithDetails()
+            ).ToListAsync(cancellationToken);
 
-    public async Task<ListingWithUserAndCategory> GetByIdAsync(
+    public async Task<ListingWithDetails> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
     ) => (
         await context.Listing
             .Include(listing => listing.User)
             .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs)
             .FirstOrDefaultAsync(
                 listing => listing.ListingId == listingId,
                 cancellationToken
             )
-    )?.ToModelWithUserAndCategory() ?? new ListingWithUserAndCategory();
+    )?.ToListingWithDetails() ?? new ListingWithDetails();
 
     public async Task<List<ListingWithCategory>> GetByNameAsync(
         string name,
@@ -104,9 +105,7 @@ internal class ListingRepository(
     )
     {
         var listing = await context.Listing
-            .Include(
-                listing => listing.ListingBlobs
-            )
+            .Include(listing => listing.ListingBlobs)
             .FirstOrDefaultAsync(
                 listing => listing.ListingId == listingId, 
                 cancellationToken

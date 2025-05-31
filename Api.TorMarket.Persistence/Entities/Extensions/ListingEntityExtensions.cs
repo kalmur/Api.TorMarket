@@ -21,7 +21,7 @@ internal static class ListingEntityExtensions
         Description = entity.Description
     };
 
-    internal static ListingWithUserAndCategory ToModelWithUserAndCategory(
+    internal static ListingWithDetails ToListingWithDetails(
         this ListingEntity entity
     ) => new()
     {
@@ -32,7 +32,10 @@ internal static class ListingEntityExtensions
         Price = entity.Price,
         Description = entity.Description,
         User = entity.User.ToModel(),
-        Category = entity.Category.ToModel()
+        Category = entity.Category.ToModel(),
+        ListingBlobs = entity.ListingBlobs.Select(
+            blob => blob.ToModel()
+        ).ToList()
     };
 
     internal static ListingWithCategory ToModelWithCategory(
@@ -54,20 +57,9 @@ internal static class ListingEntityExtensions
     {
         UserId = request.UserId,
         CategoryId = request.CategoryId,
-        Name = request.Name,
+        Name = request.ListingName,
         Price = request.Price,
         Description = request.Description
-    };
-
-    internal static CreateListingRequest ToRequest(
-        this CreateListingCommand command
-    ) => new()
-    {
-        UserId = command.UserId,
-        CategoryId = command.CategoryId,
-        Name = command.Name,
-        Price = command.Price,
-        Description = command.Description,
     };
 
     internal static CreateUserRequest ToRequest(

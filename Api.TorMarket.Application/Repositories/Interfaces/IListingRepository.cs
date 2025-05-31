@@ -11,11 +11,11 @@ public interface IListingRepository
         CancellationToken ct
     );
 
-    Task<IEnumerable<ListingWithUserAndCategory>> GetAllInRandomOrder(
+    Task<IEnumerable<ListingWithDetails>> GetAllInRandomOrder(
         CancellationToken ct
     );
 
-    Task<ListingWithUserAndCategory> GetByIdAsync(
+    Task<ListingWithDetails> GetByIdAsync(
         int listingId, 
         CancellationToken ct
     );

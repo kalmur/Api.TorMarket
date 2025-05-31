@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250529110251_InitialMigration")]
+    [Migration("20250531153804_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -103,8 +103,8 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnOrder(3);
 
                     b.HasKey("ListingBlobId");

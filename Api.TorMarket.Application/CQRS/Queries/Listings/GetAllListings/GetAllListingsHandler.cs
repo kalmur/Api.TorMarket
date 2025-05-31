@@ -6,9 +6,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 
 internal sealed class GetAllListingsHandler(
     IListingRepository repository
-) : IRequestHandler<GetAllListingsQuery, IEnumerable<ListingWithUserAndCategory>>
+) : IRequestHandler<GetAllListingsQuery, IEnumerable<ListingWithDetails>>
 {
-    public async Task<IEnumerable<ListingWithUserAndCategory>> Handle(
+    public async Task<IEnumerable<ListingWithDetails>> Handle(
         GetAllListingsQuery request, 
         CancellationToken cancellationToken
     ) => await repository.GetAllInRandomOrder(cancellationToken);

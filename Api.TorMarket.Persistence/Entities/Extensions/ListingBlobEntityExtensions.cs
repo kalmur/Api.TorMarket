@@ -12,14 +12,10 @@ internal static class ListingBlobEntityExtensions
     )
     {
         if (string.IsNullOrWhiteSpace(blobUrl))
-        {
             throw new ArgumentException("Blob URL cannot be null or empty.", nameof(blobUrl));
-        }
 
         if (blobUrl.Length > ListingBlob.Url_MaxLength)
-        {
             throw new ArgumentException($"Blob URL exceeds maximum length of {ListingBlob.Url_MaxLength}.", nameof(blobUrl));
-        }
 
         var listingBlob = new ListingBlobEntity
         {

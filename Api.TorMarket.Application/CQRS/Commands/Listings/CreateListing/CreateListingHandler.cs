@@ -7,7 +7,8 @@ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 internal sealed class CreateListingHandler(
     IValidator<CreateListingCommand, CreateListingFailure> validator,
-    IListingRepository listingRepository
+    IListingRepository listingRepository,
+    ICategoryRepository categoryRepository
 ) : IRequestHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>>
 {
     public async Task<ResultOrError<Listing, CreateListingFailure>> Handle(
@@ -23,8 +24,13 @@ internal sealed class CreateListingHandler(
         if (validationErrors is not null)
             return validationErrors;
 
+        var category = await categoryRepository.GetByNameAsync(
+            command.CategoryName,
+            cancellationToken
+        );
+
         return await listingRepository.CreateAsync(
-            command.ToRequest(),
+            command.ToRequest(category!.CategoryId),
             cancellationToken
         );
     }

@@ -2,7 +2,7 @@
 
 public record ListingBlob
 {
-    public const int Url_MaxLength = 50;
+    public const int Url_MaxLength = 100;
 
     public int ListingBlobId { get; init; }
     public required int ListingId { get; init; }

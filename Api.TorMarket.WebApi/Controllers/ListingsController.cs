@@ -124,6 +124,7 @@ public sealed class ListingsController(
             );
     }
 
+    // Change return type in produces
     [HttpGet]
     [Route("category/{categoryName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
