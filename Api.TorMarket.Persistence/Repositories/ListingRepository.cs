@@ -33,8 +33,12 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await GetListingsWithDetails()
-            .OrderBy(_ => Guid.NewGuid())
-            .Select(listing => listing.ToListingWithDetails())
+            .OrderBy(
+                _ => Guid.NewGuid()
+            )
+            .Select(
+                listing => listing.ToListingWithDetails()
+            )
             .ToListAsync(cancellationToken);
 
     public async Task<ListingWithDetails> GetByIdAsync(
@@ -67,9 +71,11 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) =>
         await GetListingsWithDetails()
-            .Where(listing => listing.User.ProviderId == providerId)
-            .Select(listing => listing.ToListingWithDetails())
-            .ToListAsync(cancellationToken);
+            .Where(
+                listing => listing.User.ProviderId == providerId
+            ).Select(
+                listing => listing.ToListingWithDetails()
+            ).ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName,
@@ -112,12 +118,12 @@ internal class ListingRepository(
         );
     }
 
-    private IQueryable<ListingEntity> GetListingsWithDetails()
-    {
-        return context.Listing
+    // Private methods
+
+    private IQueryable<ListingEntity> GetListingsWithDetails() 
+        => context.Listing
             .Include(listing => listing.User)
             .Include(listing => listing.Category)
             .Include(listing => listing.ListingBlobs);
-    }
 
 }
