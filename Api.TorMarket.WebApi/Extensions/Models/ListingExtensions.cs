@@ -15,30 +15,10 @@ public static class ListingExtensions
     {
         ListingId = product.ListingId,
         CategoryId = product.CategoryId,
-        Name = product.Name,
+        Name = product.Name!,
         Price = product.Price,
         Description = product.Description
     };
-
-    // Check
-
-    public static ListingWithDetailsDto ToResponseDto(
-        this ListingWithCategory model
-    ) => new()
-    {
-        ListingId = model.ListingId,
-        CategoryId = model.CategoryId,
-        Name = model.Name ?? string.Empty,
-        Price = model.Price,
-        Description = model.Description,
-        Category = model.Category?.ToResponseDto() ?? null,
-        User = null,
-        ListingBlobs = null
-    };
-
-    public static IEnumerable<ListingWithDetailsDto> ToResponseDto(
-        this IEnumerable<ListingWithCategory> models
-    ) => models.Select(ToResponseDto);
 
     public static ListingWithDetailsDto ToResponseDto(
         this ListingWithDetails model
@@ -46,7 +26,7 @@ public static class ListingExtensions
     {
         ListingId = model.ListingId,
         CategoryId = model.CategoryId,
-        Name = model.Name,
+        Name = model.Name!,
         Price = model.Price,
         Description = model.Description,
         Category = model.Category?.ToResponseDto() ?? null,

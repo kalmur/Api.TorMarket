@@ -103,7 +103,7 @@ public sealed class ListingsController(
 
     [HttpGet]
     [Route("user/{providerId}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByProviderId(
         [FromRoute][Required] string providerId,
@@ -124,10 +124,9 @@ public sealed class ListingsController(
             );
     }
 
-    // Change return type in produces
     [HttpGet]
     [Route("category/{categoryName}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithCategory>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
         [FromRoute][Required] string categoryName,
         CancellationToken cancellationToken
@@ -139,7 +138,7 @@ public sealed class ListingsController(
         );
 
         return Ok(
-            result.ToResponseDto()
+            result!.ToResponseDto()
         );
     }
 

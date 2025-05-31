@@ -3,6 +3,7 @@ using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,23 +32,16 @@ internal class ListingRepository(
     public async Task<IEnumerable<ListingWithDetails>> GetAllInRandomOrder(
         CancellationToken cancellationToken
     ) =>
-        await context.Listing
-            .Include(listing => listing.User)
-            .Include(listing => listing.Category)
-            .Include(listing => listing.ListingBlobs)
+        await GetListingsWithDetails()
             .OrderBy(_ => Guid.NewGuid())
-            .Select(listing => 
-                listing.ToListingWithDetails()
-            ).ToListAsync(cancellationToken);
+            .Select(listing => listing.ToListingWithDetails())
+            .ToListAsync(cancellationToken);
 
     public async Task<ListingWithDetails> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
     ) => (
-        await context.Listing
-            .Include(listing => listing.User)
-            .Include(listing => listing.Category)
-            .Include(listing => listing.ListingBlobs)
+        await GetListingsWithDetails()
             .FirstOrDefaultAsync(
                 listing => listing.ListingId == listingId,
                 cancellationToken
@@ -58,8 +52,7 @@ internal class ListingRepository(
         string name,
         CancellationToken cancellationToken
     ) =>
-        await context.Listing
-            .Include(listing => listing.Category)
+        await GetListingsWithDetails()
             .Where(
                 listing => listing.Name.ToLower().Contains(
                     name.ToLower()
@@ -73,24 +66,16 @@ internal class ListingRepository(
         string providerId,
         CancellationToken cancellationToken
     ) =>
-        await context.Listing
-            .Include(listing => listing.User)
-            .Include(listing => listing.Category)
-            .Include(listing => listing.ListingBlobs)
-            .Where(
-                listing => listing.User.ProviderId == providerId
-            )
-            .Select(
-                listing => listing.ToListingWithDetails()
-            ).ToListAsync(cancellationToken);
+        await GetListingsWithDetails()
+            .Where(listing => listing.User.ProviderId == providerId)
+            .Select(listing => listing.ToListingWithDetails())
+            .ToListAsync(cancellationToken);
 
     public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName,
         CancellationToken cancellationToken
     ) =>
-        await context.Listing
-            .Include(listing => listing.Category)
-            .Include(listing => listing.ListingBlobs)
+        await GetListingsWithDetails()
             .Where(
                listing => listing.Category.Name.ToLower().Contains(
                    categoryName.ToLower()
@@ -126,4 +111,13 @@ internal class ListingRepository(
             cancellationToken
         );
     }
+
+    private IQueryable<ListingEntity> GetListingsWithDetails()
+    {
+        return context.Listing
+            .Include(listing => listing.User)
+            .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs);
+    }
+
 }

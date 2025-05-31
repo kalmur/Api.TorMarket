@@ -31,24 +31,11 @@ internal static class ListingEntityExtensions
         Name = entity.Name,
         Price = entity.Price,
         Description = entity.Description,
-        User = entity.User.ToModel(),
-        Category = entity.Category.ToModel(),
+        User = entity.User.ToModel() ?? null,
+        Category = entity.Category.ToModel() ?? null,
         ListingBlobs = entity.ListingBlobs.Select(
             blob => blob.ToModel()
-        ).ToList()
-    };
-
-    internal static ListingWithCategory ToModelWithCategory(
-        this ListingEntity entity
-    ) => new()
-    {
-        ListingId = entity.ListingId,
-        UserId = entity.UserId,
-        CategoryId = entity.CategoryId,
-        Name = entity.Name,
-        Price = entity.Price,
-        Description = entity.Description,
-        Category = entity.Category.ToModel()
+        ).ToList() ?? new List<ListingBlob>()
     };
 
     internal static ListingEntity ToEntity(

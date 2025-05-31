@@ -11,5 +11,5 @@ public sealed record UpdateBlobUrlRequestDto
 public sealed record BlobUrlDto
 {
     [Required]
-    public string Url { get; init; }
+    public required string Url { get; init; }
 }
