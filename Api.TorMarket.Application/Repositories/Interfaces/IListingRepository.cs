@@ -20,17 +20,17 @@ public interface IListingRepository
         CancellationToken ct
     );
 
-    Task<List<ListingWithCategory>> GetByNameAsync(
+    Task<List<ListingWithDetails>> GetByNameAsync(
         string name, 
         CancellationToken ct
     );
 
-    Task<List<ListingWithCategory>> GetByProviderIdAsync(
+    Task<List<ListingWithDetails>> GetByProviderIdAsync(
         string providerId, 
         CancellationToken ct
     );
 
-    Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
+    Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName, 
         CancellationToken ct
     );

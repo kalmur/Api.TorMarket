@@ -6,4 +6,4 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryN
 
 public sealed record GetListingsByCategoryNameQuery(
     [Required] string CategoryName
-) : IRequest<IEnumerable<ListingWithCategory?>>;
+) : IRequest<IEnumerable<ListingWithDetails?>>;

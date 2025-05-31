@@ -54,7 +54,7 @@ internal class ListingRepository(
             )
     )?.ToListingWithDetails() ?? new ListingWithDetails();
 
-    public async Task<List<ListingWithCategory>> GetByNameAsync(
+    public async Task<List<ListingWithDetails>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
     ) =>
@@ -66,36 +66,38 @@ internal class ListingRepository(
                 )
             )
             .Select(
-                listing => listing.ToModelWithCategory()
+                listing => listing.ToListingWithDetails()
             ).ToListAsync(cancellationToken);
 
-    public async Task<List<ListingWithCategory>> GetByProviderIdAsync(
+    public async Task<List<ListingWithDetails>> GetByProviderIdAsync(
         string providerId,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
             .Include(listing => listing.User)
             .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs)
             .Where(
                 listing => listing.User.ProviderId == providerId
             )
             .Select(
-                listing => listing.ToModelWithCategory()
+                listing => listing.ToListingWithDetails()
             ).ToListAsync(cancellationToken);
 
-    public async Task<IEnumerable<ListingWithCategory?>> GetByCategoryNameAsync(
+    public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName,
         CancellationToken cancellationToken
     ) =>
         await context.Listing
             .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs)
             .Where(
                listing => listing.Category.Name.ToLower().Contains(
                    categoryName.ToLower()
                )
             )
             .Select(
-                listing => listing.ToModelWithCategory()
+                listing => listing.ToListingWithDetails()
             ).ToListAsync(cancellationToken);
 
     public async Task<Listing> UpdateBlobUrlsAsync(

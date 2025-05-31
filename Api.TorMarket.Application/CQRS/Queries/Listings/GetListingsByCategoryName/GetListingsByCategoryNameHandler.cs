@@ -6,9 +6,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryN
 
 internal sealed class GetListingsByCategoryNameHandler(
     IListingRepository repository
-) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithCategory?>>
+) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithDetails?>>
 {
-    public async Task<IEnumerable<ListingWithCategory?>> Handle(
+    public async Task<IEnumerable<ListingWithDetails?>> Handle(
         GetListingsByCategoryNameQuery request,
         CancellationToken cancellationToken
     ) =>
