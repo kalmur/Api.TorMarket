@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Api.TorMarket.Persistence.QuickRepository;
+namespace Api.TorMarket.Persistence.QuickRepo;
 
-internal abstract class QuickRepository<TQueryable>
+internal abstract class QuickRepo<TQueryable>
 {
     protected static async Task<TResponse?> ExecuteQuerySingleOrDefaultAsync<TResponse>(
         IQueryable<TQueryable> query,

@@ -5,7 +5,7 @@ using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
-using Api.TorMarket.Persistence.QuickRepository;
+using Api.TorMarket.Persistence.QuickRepo;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -13,24 +13,8 @@ namespace Api.TorMarket.Persistence.Repositories;
 
 internal class ListingRepository(
     IApplicationDbContext context
-) : QuickRepository<ListingEntity>, IListingRepository
+) : QuickRepo<ListingEntity>, IListingRepository
 {
-    public async Task<Listing> CreateAsync(
-        CreateListingRequest request, 
-        CancellationToken cancellationToken
-    )
-    {
-        var listing = request.ToEntity();
-
-        context.Listing.Add(listing);
-        await context.SaveChangesAsync(cancellationToken);
-
-        return await GetByIdAsync(
-            listing.ListingId, 
-            cancellationToken
-        ) ?? throw new InvalidOperationException("Product creation failed.");
-    }
-
     public async Task<ListingWithDetails?> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
@@ -74,22 +58,38 @@ internal class ListingRepository(
         cancellationToken
     );
 
-    public async Task<Listing?> UpdateBlobUrlsAsync(
-        int listingId,
-        string blobUrl,
+    public async Task<Listing> CreateAsync(
+        CreateListingRequest request,
         CancellationToken cancellationToken
+    )
+    {
+        var listing = request.ToEntity();
+
+        context.Listing.Add(listing);
+        await context.SaveChangesAsync(cancellationToken);
+
+        return await GetByIdAsync(
+            listing.ListingId,
+            cancellationToken
+        ) ?? throw new InvalidOperationException("Product creation failed.");
+    }
+
+    public async Task<Listing?> UpdateBlobUrlsAsync(
+       int listingId,
+       string blobUrl,
+       CancellationToken cancellationToken
     )
     {
         var listing = await context.Listing
             .Include(listing => listing.ListingBlobs)
-            .FirstOrDefaultAsync(
-                listing => listing.ListingId == listingId, 
+            .SingleOrDefaultAsync(
+                listing => listing.ListingId == listingId,
                 cancellationToken
             ) ?? throw new InvalidOperationException($"Listing with ID {listingId} not found.");
 
         listing.ListingBlobs.AddBlob(
-            listingId, 
-            blobUrl, 
+            listingId,
+            blobUrl,
             isPrimary: true
         );
 
@@ -100,6 +100,7 @@ internal class ListingRepository(
             cancellationToken
         );
     }
+
 
     // Private methods
     private IQueryable<ListingEntity> ListingQuery

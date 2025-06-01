@@ -2,9 +2,9 @@
 using Api.TorMarket.Application.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Api.TorMarket.Persistence.QuickRepository;
+namespace Api.TorMarket.Persistence.QuickRepo;
 
-internal abstract class QuickRepositoryPageable<TQueryable> : QuickRepository<TQueryable> where TQueryable : class
+internal abstract class QuickRepoPageable<TQueryable> : QuickRepo<TQueryable> where TQueryable : class
 {
     protected abstract uint MaximumPageSize { get; }
     protected abstract IReadOnlyDictionary<string, IOrderBy> OrderFunctions { get; }

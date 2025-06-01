@@ -10,7 +10,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.DTOs.Responses;
-using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.WebApi.Controllers;
 

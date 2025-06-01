@@ -6,11 +6,6 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IListingRepository
 {
-    Task<Listing> CreateAsync(
-        CreateListingRequest request,
-        CancellationToken ct
-    );
-   
     Task<ListingWithDetails?> GetByIdAsync(
         int listingId, 
         CancellationToken ct
@@ -33,6 +28,11 @@ public interface IListingRepository
 
     Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName, 
+        CancellationToken ct
+    );
+
+    Task<Listing> CreateAsync(
+        CreateListingRequest request,
         CancellationToken ct
     );
 

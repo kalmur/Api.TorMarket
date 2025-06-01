@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Persistence.QuickRepository;
+﻿namespace Api.TorMarket.Persistence.QuickRepo;
 
 public interface IOrderBy
 {

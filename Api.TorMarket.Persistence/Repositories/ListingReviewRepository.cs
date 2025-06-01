@@ -3,17 +3,38 @@ using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.Persistence.Abstractions;
+using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
+using Api.TorMarket.Persistence.QuickRepo;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
 internal sealed class ListingReviewRepository(
     IApplicationDbContext context
-) : IListingReviewRepository
+) : QuickRepo<ListingReviewEntity>, IListingReviewRepository
 {
-    public async Task<ListingWithReviewAndCategory> CreateAsync(
-        CreateListingReviewRequest request, 
+    public async Task<IEnumerable<ListingReview>> GetByListingIdAsync(
+        int listingId,
+        CancellationToken cancellationToken
+    ) => await GetListingReviews(
+        listingReview => listingReview.ListingId == listingId,
+        cancellationToken
+    );
+
+    public async Task<ListingWithReviewAndCategory?> GetByUserAndListingIdAsync(
+        int userId,
+        int listingId,
+        CancellationToken cancellationToken
+    ) => await GetListingReview(
+        listingReview => listingReview.UserId == userId && 
+        listingReview.ListingId == listingId,
+        cancellationToken
+    );
+
+    public async Task<ListingWithReviewAndCategory?> CreateAsync(
+        CreateListingReviewRequest request,
         CancellationToken cancellationToken
     )
     {
@@ -26,36 +47,33 @@ internal sealed class ListingReviewRepository(
             review.UserId,
             review.ListingId,
             cancellationToken
-        ) ?? throw new InvalidOperationException("Review creation failed.");
+        );
     }
 
-    //Todo - CHANGE BACK FIRSTORDEFAULT
-    public async Task<ListingWithReviewAndCategory?> GetByUserAndListingIdAsync(
-        int userId,
-        int listingId,
-        CancellationToken cancellationToken
-    ) => (
-            await context.ListingReview
+    // Private methods
+    private IQueryable<ListingReviewEntity> ListingReviewQuery
+        => context.ListingReview
             .Include(lr => lr.User)
             .Include(lr => lr.Listing)
-            .ThenInclude(l => l.Category)
-            .FirstOrDefaultAsync(p => 
-                p.UserId == userId && 
-                p.ListingId == listingId,
-                cancellationToken
-            )
-        )?.ToModel() ?? throw new InvalidOperationException("Review not found");
+            .ThenInclude(l => l.Category);
 
-    public async Task<IEnumerable<ListingReview>> GetByListingIdAsync(
-        int listingId,
+    private async Task<ListingWithReviewAndCategory?> GetListingReview(
+        Expression<Func<ListingReviewEntity, bool>>? predicate,
         CancellationToken cancellationToken
-    ) => 
-        (
-            await context.ListingReview
-                .Include(lr => lr.User)
-                .Where(p => p.ListingId == listingId)
-                .ToListAsync(cancellationToken))
-                .Select(r => r.ToModel()
-            );
+    ) => await ExecuteQuerySingleOrDefaultAsync(
+        ListingReviewQuery,
+        predicate,
+        listingReview => listingReview.ToModel()!,
+        cancellationToken
+    );
 
+    private async Task<IEnumerable<ListingWithReviewAndCategory>> GetListingReviews(
+        Expression<Func<ListingReviewEntity, bool>>? predicate,
+        CancellationToken cancellationToken
+    ) => await ExecuteQueryAsync(
+        ListingReviewQuery,
+        predicate,
+        listingReview => listingReview.ToModel()!,
+        cancellationToken
+    );
 }
