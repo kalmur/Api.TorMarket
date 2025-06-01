@@ -7,4 +7,4 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderI
 
 public sealed record GetListingsByProviderIdQuery(
     [Required] string ProviderId
-) : IRequest<ResultOrError<IEnumerable<ListingWithDetails>, GetListingsByProviderIdFailure>>;
+) : IRequest<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>>;

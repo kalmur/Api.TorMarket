@@ -11,5 +11,5 @@ internal sealed class GetAllListingsHandler(
     public async Task<IEnumerable<ListingWithDetails>> Handle(
         GetAllListingsQuery request, 
         CancellationToken cancellationToken
-    ) => await repository.GetAllInRandomOrder(cancellationToken);
+    ) => await repository.GetAllAsync(cancellationToken);
 }

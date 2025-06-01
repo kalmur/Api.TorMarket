@@ -31,19 +31,7 @@ internal class ListingRepository(
         ) ?? throw new InvalidOperationException("Product creation failed.");
     }
 
-    public async Task<IEnumerable<ListingWithDetails>> GetAllInRandomOrder(
-        CancellationToken cancellationToken
-    ) =>
-        await GetListingsWithDetails()
-            .OrderBy(
-                _ => Guid.NewGuid()
-            )
-            .Select(
-                listing => listing.ToListingWithDetails()
-            )
-            .ToListAsync(cancellationToken);
-
-    public async Task<ListingWithDetails> GetByIdAsync(
+    public async Task<ListingWithDetails?> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
     ) => await GetListing(
@@ -51,46 +39,42 @@ internal class ListingRepository(
         cancellationToken
     );
 
-    public async Task<List<ListingWithDetails>> GetByNameAsync(
+    public async Task<IEnumerable<ListingWithDetails>> GetAllAsync(
+       CancellationToken cancellationToken
+   ) => await GetListings(
+       null,
+       cancellationToken
+   );
+
+    public async Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
-    ) =>
-        await GetListingsWithDetails()
-            .Where(
-                listing => listing.Name.ToLower().Contains(
-                    name.ToLower()
-                )
-            )
-            .Select(
-                listing => listing.ToListingWithDetails()
-            ).ToListAsync(cancellationToken);
+    ) => await GetListings(
+        listing => listing.Name.ToLower().Contains(
+            name.ToLower()
+        ),
+        cancellationToken
+    );
 
-    public async Task<List<ListingWithDetails>> GetByProviderIdAsync(
+    public async Task<IEnumerable<ListingWithDetails?>> GetByProviderIdAsync(
         string providerId,
         CancellationToken cancellationToken
-    ) =>
-        await GetListingsWithDetails()
-            .Where(
-                listing => listing.User.ProviderId == providerId
-            ).Select(
-                listing => listing.ToListingWithDetails()
-            ).ToListAsync(cancellationToken);
+    ) => await GetListings(
+        listing => listing.User.ProviderId == providerId,
+        cancellationToken
+    );
 
     public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
         string categoryName,
         CancellationToken cancellationToken
-    ) =>
-        await GetListingsWithDetails()
-            .Where(
-               listing => listing.Category.Name.ToLower().Contains(
-                   categoryName.ToLower()
-               )
-            )
-            .Select(
-                listing => listing.ToListingWithDetails()
-            ).ToListAsync(cancellationToken);
+    ) => await GetListings(
+        listing => listing.Category.Name.ToLower().Contains(
+            categoryName.ToLower()
+        ),
+        cancellationToken
+    );
 
-    public async Task<Listing> UpdateBlobUrlsAsync(
+    public async Task<Listing?> UpdateBlobUrlsAsync(
         int listingId,
         string blobUrl,
         CancellationToken cancellationToken
@@ -118,9 +102,11 @@ internal class ListingRepository(
     }
 
     // Private methods
-
     private IQueryable<ListingEntity> ListingQuery
-        => context.Listing;
+        => context.Listing
+            .Include(listing => listing.User)
+            .Include(listing => listing.Category)
+            .Include(listing => listing.ListingBlobs);
 
     private async Task<ListingWithDetails?> GetListing(
         Expression<Func<ListingEntity, bool>>? predicate,
@@ -128,27 +114,17 @@ internal class ListingRepository(
     ) => await ExecuteQuerySingleOrDefaultAsync(
         ListingQuery,
         predicate,
-        // Correct later
-        listing => new ListingWithDetails(),
+        listing => listing.ToListingWithDetails(),
         cancellationToken
     );
 
-    //private async Task<IEnumerable<ListingWithDetails>> GetListings(
-    //    Expression<Func<ListingWithDetails, bool>>? predicate,
-    //    CancellationToken cancellationToken
-    //) => await ExecuteQueryAsync(
-    //    ListingQuery,
-    //    predicate,
-    //    // Same
-    //    listing => new ListingWithDetails(),
-    //    cancellationToken
-    //);
-
-    //REmove later
-    private IQueryable<ListingEntity> GetListingsWithDetails() 
-        => context.Listing
-            .Include(listing => listing.User)
-            .Include(listing => listing.Category)
-            .Include(listing => listing.ListingBlobs);
-
+    private async Task<IEnumerable<ListingWithDetails>> GetListings(
+        Expression<Func<ListingEntity, bool>>? predicate,
+        CancellationToken cancellationToken
+    ) => await ExecuteQueryAsync(
+        ListingQuery,
+        predicate,
+        listing => listing.ToListingWithDetails(),
+        cancellationToken
+    );
 }

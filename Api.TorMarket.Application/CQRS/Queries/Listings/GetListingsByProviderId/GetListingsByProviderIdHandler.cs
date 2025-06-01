@@ -8,9 +8,9 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderI
 public class GetListingsByProviderIdHandler(
     IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> validator,
     IListingRepository listingRepository
-) : IRequestHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithDetails>, GetListingsByProviderIdFailure>>
+) : IRequestHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>>
 {
-    public async Task<ResultOrError<IEnumerable<ListingWithDetails>, GetListingsByProviderIdFailure>> Handle(
+    public async Task<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>> Handle(
         GetListingsByProviderIdQuery query, 
         CancellationToken cancellationToken
     )
@@ -23,9 +23,11 @@ public class GetListingsByProviderIdHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        return await listingRepository.GetByProviderIdAsync(
-            query.ProviderId, 
-            cancellationToken
-        );
+        return (
+            await listingRepository.GetByProviderIdAsync(
+                query.ProviderId,
+                cancellationToken
+            )
+        ).ToList();
     }
 }

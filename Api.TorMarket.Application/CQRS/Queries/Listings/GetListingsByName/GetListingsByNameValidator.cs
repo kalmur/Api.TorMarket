@@ -35,10 +35,10 @@ public sealed class GetListingByNameValidator(
         string name,
         CancellationToken cancellationToken
     ) =>
-        (
+        !(
             await listingRepository.GetByNameAsync(
                 name, 
                 cancellationToken
             )
-        ).Count == 0;
+        ).Any();
 }

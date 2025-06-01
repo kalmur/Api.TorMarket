@@ -10,22 +10,23 @@ public interface IListingRepository
         CreateListingRequest request,
         CancellationToken ct
     );
-
-    Task<IEnumerable<ListingWithDetails>> GetAllInRandomOrder(
-        CancellationToken ct
-    );
-
-    Task<ListingWithDetails> GetByIdAsync(
+   
+    Task<ListingWithDetails?> GetByIdAsync(
         int listingId, 
         CancellationToken ct
     );
 
-    Task<List<ListingWithDetails>> GetByNameAsync(
+    Task<IEnumerable<ListingWithDetails>> GetAllAsync(
+       CancellationToken ct
+   );
+
+
+    Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
         string name, 
         CancellationToken ct
     );
 
-    Task<List<ListingWithDetails>> GetByProviderIdAsync(
+    Task<IEnumerable<ListingWithDetails?>> GetByProviderIdAsync(
         string providerId, 
         CancellationToken ct
     );
@@ -35,7 +36,7 @@ public interface IListingRepository
         CancellationToken ct
     );
 
-    Task<Listing> UpdateBlobUrlsAsync(
+    Task<Listing?> UpdateBlobUrlsAsync(
         int listingId,
         string blobUrl,
         CancellationToken cancellationToken
