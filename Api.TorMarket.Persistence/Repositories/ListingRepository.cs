@@ -5,13 +5,15 @@ using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
+using Api.TorMarket.Persistence.QuickRepository;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
 internal class ListingRepository(
     IApplicationDbContext context
-) : IListingRepository
+) : QuickRepository<ListingEntity>, IListingRepository
 {
     public async Task<Listing> CreateAsync(
         CreateListingRequest request, 
@@ -44,13 +46,10 @@ internal class ListingRepository(
     public async Task<ListingWithDetails> GetByIdAsync(
         int listingId,
         CancellationToken cancellationToken
-    ) => (
-        await GetListingsWithDetails()
-            .FirstOrDefaultAsync(
-                listing => listing.ListingId == listingId,
-                cancellationToken
-            )
-    )?.ToListingWithDetails() ?? new ListingWithDetails();
+    ) => await GetListing(
+        listing => listing.ListingId == listingId,
+        cancellationToken
+    );
 
     public async Task<List<ListingWithDetails>> GetByNameAsync(
         string name,
@@ -120,6 +119,32 @@ internal class ListingRepository(
 
     // Private methods
 
+    private IQueryable<ListingEntity> ListingQuery
+        => context.Listing;
+
+    private async Task<ListingWithDetails?> GetListing(
+        Expression<Func<ListingEntity, bool>>? predicate,
+        CancellationToken cancellationToken
+    ) => await ExecuteQuerySingleOrDefaultAsync(
+        ListingQuery,
+        predicate,
+        // Correct later
+        listing => new ListingWithDetails(),
+        cancellationToken
+    );
+
+    //private async Task<IEnumerable<ListingWithDetails>> GetListings(
+    //    Expression<Func<ListingWithDetails, bool>>? predicate,
+    //    CancellationToken cancellationToken
+    //) => await ExecuteQueryAsync(
+    //    ListingQuery,
+    //    predicate,
+    //    // Same
+    //    listing => new ListingWithDetails(),
+    //    cancellationToken
+    //);
+
+    //REmove later
     private IQueryable<ListingEntity> GetListingsWithDetails() 
         => context.Listing
             .Include(listing => listing.User)

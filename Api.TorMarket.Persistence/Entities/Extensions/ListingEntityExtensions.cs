@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
-using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
+﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;
@@ -35,7 +34,7 @@ internal static class ListingEntityExtensions
         Category = entity.Category.ToModel() ?? null,
         ListingBlobs = entity.ListingBlobs.Select(
             blob => blob.ToModel()
-        ).ToList() ?? new List<ListingBlob>()
+        ).ToList()
     };
 
     internal static ListingEntity ToEntity(

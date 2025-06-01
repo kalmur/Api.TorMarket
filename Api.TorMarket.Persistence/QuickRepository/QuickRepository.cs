@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.QuickRepository;
 
-internal abstract class QuickRepo<TQueryable>
+internal abstract class QuickRepository<TQueryable>
 {
     protected static async Task<TResponse?> ExecuteQuerySingleOrDefaultAsync<TResponse>(
         IQueryable<TQueryable> query,
