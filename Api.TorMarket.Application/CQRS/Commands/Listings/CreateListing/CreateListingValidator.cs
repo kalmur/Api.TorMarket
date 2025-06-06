@@ -4,6 +4,7 @@ using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.Crea
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 public sealed class CreateListingValidator(
+    IListingRepository listingRepository,
     IUserRepository userRepository
 ) : IValidator<CreateListingCommand, CreateListingFailure>
 {
@@ -14,15 +15,18 @@ public sealed class CreateListingValidator(
     {
         var errors = new List<ErrorType>();
 
-        if (await UserDoesNotExist(command.UserId, cancellationToken))
-            errors.Add(ErrorType.UserDoesNotExist);
-
-
         if (string.IsNullOrWhiteSpace(command.ListingName))
             errors.Add(ErrorType.InvalidName);
 
         if (command.Price <= 0)
             errors.Add(ErrorType.InvalidPrice);
+
+        if (await UserDoesNotExistAsync(command.UserId, cancellationToken))
+            errors.Add(ErrorType.UserDoesNotExist);
+
+        // Ensure idempotency
+        if (await ListingAlreadyExistsAsync(command.UserId, command.ListingName, cancellationToken))
+            errors.Add(ErrorType.ListingAlreadyExists);
 
         if (errors.Count > 0)
         {
@@ -35,7 +39,7 @@ public sealed class CreateListingValidator(
         return null;
     }
 
-    private async Task<bool> UserDoesNotExist(
+    private async Task<bool> UserDoesNotExistAsync(
         int userId,
         CancellationToken cancellationToken
     ) => 
@@ -44,4 +48,14 @@ public sealed class CreateListingValidator(
             cancellationToken
         )
      is null;
+
+    private async Task<bool> ListingAlreadyExistsAsync(
+        int userId,
+        string listingName,
+        CancellationToken cancellationToken
+    ) => await listingRepository.ListingExists(
+        userId, 
+        listingName, 
+        cancellationToken
+    );
 }
