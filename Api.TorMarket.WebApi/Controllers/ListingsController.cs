@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.DTOs.Responses;
+using Api.TorMarket.Application.Repositories;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -46,16 +47,18 @@ public sealed class ListingsController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetAllAsync(
+        PaginatedRequest request,
         CancellationToken cancellationToken
     )
     {
         var result = await mediator.Send(
-            new GetAllListingsQuery(),
+            new GetAllListingsQuery(request),
             cancellationToken
         );
 
+        // Convert to DTO
         return Ok(
-            result.ToResponseDto()
+            result
         );
     }
 

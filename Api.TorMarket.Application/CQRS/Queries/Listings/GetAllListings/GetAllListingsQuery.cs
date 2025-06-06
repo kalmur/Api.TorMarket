@@ -1,6 +1,9 @@
-﻿using Api.TorMarket.Domain.Models.ViewModels;
+﻿using Api.TorMarket.Application.Repositories;
+using Api.TorMarket.Domain.Models.ViewModels;
 using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 
-public sealed record GetAllListingsQuery : IRequest<IEnumerable<ListingWithDetails>>;
+public sealed record GetAllListingsQuery(
+    PaginatedRequest PaginatedRequest
+) : IRequest<PaginatedResult<ListingWithDetails>>;
