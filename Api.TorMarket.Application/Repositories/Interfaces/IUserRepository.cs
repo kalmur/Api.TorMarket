@@ -19,4 +19,8 @@ public interface IUserRepository
         string providerId, 
         CancellationToken cancellationToken
     );
+
+    Task<IEnumerable<User?>> GetAllAsync(
+        CancellationToken cancellationToken
+    );
 }

@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
+﻿using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
+using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
@@ -54,6 +55,23 @@ public sealed class UsersController(
 
         return Ok(
             result.ToResponseDto()
+        );
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    public async Task<IActionResult> GetAllAsync(
+       CancellationToken cancellationToken
+   )
+    {
+        var result = await mediator.Send(
+            new GetAllUsersQuery(),
+            cancellationToken
+        );
+
+        // Return dto
+        return Ok(
+            result
         );
     }
 }
