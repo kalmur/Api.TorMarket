@@ -1,10 +1,16 @@
-﻿using Api.TorMarket.Domain.Models.External;
-using Auth0.AuthenticationApi.Models;
+﻿using Api.TorMarket.Domain.Model.External;
+using Api.TorMarket.Domain.Models.External;
 
 namespace Api.TorMarket.Application.Abstractions;
 
 public interface IIdentityProviderService
 {
-    Task<IReadOnlyCollection<Auth0User>> GetUsersInformationAsync(IReadOnlyCollection<string> externalProviderIds, CancellationToken token = default);
-    Task<AccessTokenResponse> RetrieveAccessTokenAsync(CancellationToken token = default);
+    Task<IReadOnlyCollection<Auth0User>> GetUsersInformationAsync(
+        IReadOnlyCollection<string> providerIds, 
+        CancellationToken token = default
+    );
+
+    Task<AccessTokenResponse> RetrieveAccessTokenAsync(
+        CancellationToken token = default
+    );
 }

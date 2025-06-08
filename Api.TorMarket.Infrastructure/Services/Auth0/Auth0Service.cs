@@ -1,10 +1,12 @@
-﻿using Api.User.Notes.Application.Interfaces.Services;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using Api.TorMarket.Infrastructure.Options;
+using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Domain.Models.External;
+using Api.TorMarket.Domain.Model.External;
 
 namespace Api.TorMarket.Infrastructure.Services.Auth0;
 
@@ -31,28 +33,29 @@ public class Auth0Service : IIdentityProviderService
     /// <summary>
     ///     Performs an HTTP call to retrieves User information from Auth0.
     /// </summary>
-    /// <param name="externalProviderIds">The Id's of the Users to be retrieved.</param>
+    /// <param name="providerIds">The Id's of the Users to be retrieved.</param>
     /// <param name="token">A cancellation token.</param>
     /// <returns>A list <see cref="Auth0User"/> containing user information.</returns>
     public async Task<IReadOnlyCollection<Auth0User>> GetUsersInformationAsync(
-        IReadOnlyCollection<string> externalProviderIds,
-        CancellationToken token = default)
+        IReadOnlyCollection<string> providerIds,
+        CancellationToken token = default
+    )
     {
         var client = _httpClientFactory.CreateClient(ClientNames.Auth0);
 
-        var query = _queryBuilder.GenerateQueryString(externalProviderIds);
+        var query = _queryBuilder.GenerateQueryString(providerIds);
 
         var response = await client.GetAsync($"{_options.GetUsersEndpoint}?{query}", token);
 
         if (response.IsSuccessStatusCode)
         {
             _logger.LogInformation("Successfully retrieved users with IDs: {externalIds} from Auth0.",
-                externalProviderIds);
+                providerIds);
             var content = await response.Content.ReadAsStringAsync(token);
             return JsonConvert.DeserializeObject<List<Auth0User>>(content)!;
         }
 
-        _logger.LogInformation("Could not retrieve users with IDs: {externalIds} from Auth0.", externalProviderIds);
+        _logger.LogInformation("Could not retrieve users with IDs: {externalIds} from Auth0.", providerIds);
         return new List<Auth0User>();
     }
 
@@ -94,4 +97,5 @@ public class Auth0Service : IIdentityProviderService
         _logger.LogInformation("Could not retrieve the Access Token from Auth0.");
         return new AccessTokenResponse();
     }
+    
 }

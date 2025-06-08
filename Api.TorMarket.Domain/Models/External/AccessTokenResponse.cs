@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Api.TorMarket.Infrastructure.Services.Auth0;
+namespace Api.TorMarket.Domain.Model.External;
 
 public class AccessTokenResponse
 {

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Api.TorMarket.Infrastructure.Options;
 using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
 
-namespace Api.TorMarket.Infrastructure.Services;
+namespace Api.TorMarket.Infrastructure.Services.Blob;
 
 internal sealed class BlobService : IBlobService
 {
@@ -29,7 +29,7 @@ internal sealed class BlobService : IBlobService
     }
 
     public async Task<BlobInfo> GetBlobAsync(
-        string blobName, 
+        string blobName,
         CancellationToken cancellationToken
     )
     {
@@ -57,7 +57,7 @@ internal sealed class BlobService : IBlobService
     }
 
     public async Task UploadFileAsync(
-        string filePath, 
+        string filePath,
         string fileName,
         CancellationToken cancellationToken
     )
@@ -75,7 +75,7 @@ internal sealed class BlobService : IBlobService
     }
 
     public async Task UploadContentAsync(
-        string content, 
+        string content,
         string fileName,
         CancellationToken cancellationToken
     )

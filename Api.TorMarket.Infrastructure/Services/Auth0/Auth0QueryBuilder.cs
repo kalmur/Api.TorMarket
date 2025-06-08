@@ -4,14 +4,11 @@ using Microsoft.Extensions.Options;
 
 namespace Api.TorMarket.Infrastructure.Services.Auth0;
 
-public class Auth0QueryBuilder : IAuth0QueryBuilder
+public class Auth0QueryBuilder(
+    IOptions<Auth0Config> options
+) : IAuth0QueryBuilder
 {
-    private readonly Auth0Config _options;
-
-    public Auth0QueryBuilder(IOptions<Auth0Config> options)
-    {
-        _options = options.Value;
-    }
+    private readonly Auth0Config _options = options.Value;
 
     /// <summary>
     ///     Generates a query string based on ExternalProviderId's

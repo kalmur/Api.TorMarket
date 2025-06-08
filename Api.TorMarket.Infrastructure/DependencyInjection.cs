@@ -1,14 +1,13 @@
 ﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Infrastructure.Options;
-using Api.TorMarket.Infrastructure.Services;
 using Api.TorMarket.Infrastructure.Services.Auth0;
-using Auth0Net.DependencyInjection;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Runtime.CompilerServices;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
+using Api.TorMarket.Infrastructure.Services.Blob;
 
 [assembly: InternalsVisibleTo("Api.TorMarket.Infrastructure.Tests")]
 namespace Api.TorMarket.Infrastructure;
@@ -44,7 +43,7 @@ public static class DependencyInjection
         return services;
     }
 
-    private static void AddAuth0Services(
+    private static IServiceCollection AddAuth0Services(
         this IServiceCollection services,
         IConfiguration configuration
     )
@@ -69,27 +68,16 @@ public static class DependencyInjection
             config.ClientSecret = options.ClientSecret;
             config.Audience = options!.Audience;
         });
-    }
 
-    private static void Auth0Authentication(
-        IServiceCollection services,
-        IConfiguration configuration)
-    {
-        var options = Auth0Config.LoadFromConfiguration(configuration);
-
-        services
-            .AddHttpClient(ClientNames.Auth0Authentication, client =>
-            {
-                client.BaseAddress = new Uri(options!.Domain!);
-            });
+        return services;
     }
 
     private static void AddAuth0Authentication(
         this IServiceCollection services,
-        Action<Auth0Config> config)
+        Action<Auth0Config> config
+    )
     {
         services.AddFusionCache(Constants.FusionCacheInstance);
-
         services.AddScoped<IAuth0TokenCache, Auth0TokenCache>();
     }
 

@@ -3,21 +3,42 @@ using Microsoft.Extensions.Configuration;
 
 namespace Api.TorMarket.Infrastructure.Options;
 
-public record Auth0Config
+public class Auth0Config
 {
     public const string SectionName = "Auth0";
+
+    [Required(AllowEmptyStrings = false)]
+    public required string Audience { get; set; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string AuthenticationEndpoint { get; init; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string ClientId { get; set; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string ClientSecret { get; set; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string Connection { get; init; }
 
     [Required(AllowEmptyStrings = false)]
     public required string Domain { get; init; }
 
     [Required(AllowEmptyStrings = false)]
-    public required string ClientId { get; init; }
+    public required string GetUsersEndpoint { get; init; }
 
     [Required(AllowEmptyStrings = false)]
-    public required string ClientSecret { get; init; }
+    public required string UsersQuery { get; init; }
 
     [Required(AllowEmptyStrings = false)]
-    public required string Connection { get; init; }
+    public required string FieldsToInclude { get; init; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string IncludeFields { get; init; }
+
+    [Required(AllowEmptyStrings = false)]
+    public required string SearchEngine { get; init; }
 
     internal static IConfigurationSection GetAuth0ConfigSection(
         IConfiguration configuration
