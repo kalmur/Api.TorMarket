@@ -1,12 +1,14 @@
 ﻿using Api.TorMarket.Application.Abstractions;
 using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services;
+using Api.TorMarket.Infrastructure.Services.Auth0;
 using Auth0Net.DependencyInjection;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Runtime.CompilerServices;
+using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
 
 [assembly: InternalsVisibleTo("Api.TorMarket.Infrastructure.Tests")]
 namespace Api.TorMarket.Infrastructure;
@@ -19,9 +21,9 @@ public static class DependencyInjection
     ) =>
         services
             .LoadOptions(configuration)
-            .AddAuth0Services(configuration)
-            .AddAzureServices(configuration);
-    
+            .AddAzureServices(configuration)
+            .AddAuth0Services(configuration);
+
     private static IServiceCollection LoadOptions(
         this IServiceCollection services,
         IConfigurationManager configuration
@@ -42,27 +44,53 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddAuth0Services(
+    private static void AddAuth0Services(
         this IServiceCollection services,
-        IConfigurationManager configuration
+        IConfiguration configuration
     )
     {
-        var auth0Config = Auth0Config.LoadFromConfiguration(configuration);
-
-        services.AddAuth0AuthenticationClient(config =>
-        {
-            config.Domain = auth0Config.Domain;
-            config.ClientId = auth0Config.ClientId;
-            config.ClientSecret = auth0Config.ClientSecret;
-        });
+        var options = Auth0Config.LoadFromConfiguration(configuration);
 
         services
-            .AddScoped<IAuth0UsersClient, Auth0UsersClient>()
-            .AddScoped<IAuth0Service, Auth0Service>()
-            .AddAuth0ManagementClient()
-            .AddManagementAccessToken();
+            .AddScoped<IIdentityProviderService, Auth0Service>()
+            .AddScoped<IAuth0QueryBuilder, Auth0QueryBuilder>()
+            .AddScoped<Auth0TokenHandler>();
 
-        return services;
+        services
+            .AddHttpClient(ClientNames.Auth0, client =>
+            {
+                client.BaseAddress = new Uri(options!.Domain!);
+            })
+            .AddHttpMessageHandler<Auth0TokenHandler>();
+
+        services.AddAuth0Authentication(config =>
+        {
+            config.ClientId = options!.ClientId;
+            config.ClientSecret = options.ClientSecret;
+            config.Audience = options!.Audience;
+        });
+    }
+
+    private static void Auth0Authentication(
+        IServiceCollection services,
+        IConfiguration configuration)
+    {
+        var options = Auth0Config.LoadFromConfiguration(configuration);
+
+        services
+            .AddHttpClient(ClientNames.Auth0Authentication, client =>
+            {
+                client.BaseAddress = new Uri(options!.Domain!);
+            });
+    }
+
+    private static void AddAuth0Authentication(
+        this IServiceCollection services,
+        Action<Auth0Config> config)
+    {
+        services.AddFusionCache(Constants.FusionCacheInstance);
+
+        services.AddScoped<IAuth0TokenCache, Auth0TokenCache>();
     }
 
     private static IServiceCollection AddAzureServices(
