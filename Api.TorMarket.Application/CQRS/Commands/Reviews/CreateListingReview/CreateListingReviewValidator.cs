@@ -16,21 +16,22 @@ public sealed class CreateListingReviewValidator(
     {
         var errors = new List<CreateListingReviewFailure.ErrorType>();
 
+        //TODO - Add sanitization package down the line - Antisamy
+        if (string.IsNullOrWhiteSpace(command.Comment))
+            errors.Add(CreateListingReviewFailure.ErrorType.InvalidComment);
+
+        if (command.Value > 5)
+            errors.Add(CreateListingReviewFailure.ErrorType.InvalidValue);
+
         if (await ListingDoesNotExist(command.ListingId, cancellationToken))
             errors.Add(CreateListingReviewFailure.ErrorType.ListingNotFound);
 
         if (await RequestingUserDoesNotExist(command.UserId, cancellationToken))
             errors.Add(CreateListingReviewFailure.ErrorType.UserNotFound);
 
+        // Ensure idempotency
         if (await ReviewAlreadyExists(command.UserId, command.ListingId, cancellationToken))
-           errors.Add(CreateListingReviewFailure.ErrorType.ReviewAlreadyExists);
-
-        if (command.Value > 5)
-            errors.Add(CreateListingReviewFailure.ErrorType.InvalidValue);
-
-        //TODO - Add sanitization package - Antisamy or similar
-        if (string.IsNullOrWhiteSpace(command.Comment))
-            errors.Add(CreateListingReviewFailure.ErrorType.InvalidComment);
+            errors.Add(CreateListingReviewFailure.ErrorType.ReviewAlreadyExists);
 
         if (errors.Count > 0)
         {

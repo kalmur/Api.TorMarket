@@ -14,15 +14,8 @@ internal abstract class QuickRepo<TQueryable>
     {
         var result = await (
             predicate is null
-                ? query
-                    .SingleOrDefaultAsync(
-                        cancellationToken
-                    )
-                : query
-                    .SingleOrDefaultAsync(
-                        predicate,
-                        cancellationToken
-                    )
+                ? query.SingleOrDefaultAsync(cancellationToken)
+                : query.SingleOrDefaultAsync(predicate, cancellationToken)
         );
 
         return result is null
@@ -56,5 +49,4 @@ internal abstract class QuickRepo<TQueryable>
         selector,
         cancellationToken
     );
-
 }

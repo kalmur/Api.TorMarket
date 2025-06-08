@@ -20,10 +20,11 @@ public static class CreateListingFailureExtensions
         this ErrorType error
     ) => error switch
     {
-        ErrorType.InvalidName => "Invalid name",
-        ErrorType.InvalidCategoryId => "Invalid category id",
-        ErrorType.InvalidPrice => "Invalid price",
-        ErrorType.UserDoesNotExist => "User does not exist",
+        ErrorType.InvalidName => "Invalid name.",
+        ErrorType.InvalidCategoryId => "Invalid category id.",
+        ErrorType.InvalidPrice => "Invalid price.",
+        ErrorType.UserDoesNotExist => "User does not exist.",
+        ErrorType.ListingAlreadyExists => "Listing already exists.",
         _ => throw new InvalidEnumArgumentException(nameof(ErrorType))
     };
 }

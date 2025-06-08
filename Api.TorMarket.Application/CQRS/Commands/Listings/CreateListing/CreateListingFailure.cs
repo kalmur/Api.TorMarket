@@ -9,6 +9,7 @@ public sealed record CreateListingFailure
         InvalidName,
         InvalidCategoryId,
         InvalidPrice,
-        UserDoesNotExist
+        UserDoesNotExist,
+        ListingAlreadyExists
     }
 }

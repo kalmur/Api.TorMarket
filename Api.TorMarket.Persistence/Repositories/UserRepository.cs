@@ -43,6 +43,13 @@ internal class UserRepository(
         return user.ToModel();
     }
 
+    public async Task<IEnumerable<User?>> GetAllAsync(
+        CancellationToken cancellationToken
+    ) => await GetUsers(
+        null,
+        cancellationToken
+    );
+
     // Private methods
     private IQueryable<UserEntity> UserQuery
         => context.User;
@@ -54,6 +61,16 @@ internal class UserRepository(
         UserQuery,
         predicate,
         user => user.ToModel()!,
+        cancellationToken
+    );
+
+    private async Task<IEnumerable<User?>> GetUsers(
+        Expression<Func<UserEntity, bool>>? predicate,
+        CancellationToken cancellationToken
+    ) => await ExecuteQueryAsync(
+        UserQuery,
+        predicate,
+        user => user.ToModel(),
         cancellationToken
     );
 }

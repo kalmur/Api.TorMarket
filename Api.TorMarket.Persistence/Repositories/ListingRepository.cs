@@ -15,49 +15,6 @@ internal class ListingRepository(
     IApplicationDbContext context
 ) : QuickRepo<ListingEntity>, IListingRepository
 {
-    public async Task<ListingWithDetails?> GetByIdAsync(
-        int listingId,
-        CancellationToken cancellationToken
-    ) => await GetListing(
-        listing => listing.ListingId == listingId,
-        cancellationToken
-    );
-
-    public async Task<IEnumerable<ListingWithDetails>> GetAllAsync(
-       CancellationToken cancellationToken
-   ) => await GetListings(
-       null,
-       cancellationToken
-   );
-
-    public async Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
-        string name,
-        CancellationToken cancellationToken
-    ) => await GetListings(
-        listing => listing.Name.ToLower().Contains(
-            name.ToLower()
-        ),
-        cancellationToken
-    );
-
-    public async Task<IEnumerable<ListingWithDetails?>> GetByProviderIdAsync(
-        string providerId,
-        CancellationToken cancellationToken
-    ) => await GetListings(
-        listing => listing.User.ProviderId == providerId,
-        cancellationToken
-    );
-
-    public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
-        string categoryName,
-        CancellationToken cancellationToken
-    ) => await GetListings(
-        listing => listing.Category.Name.ToLower().Contains(
-            categoryName.ToLower()
-        ),
-        cancellationToken
-    );
-
     public async Task<Listing> CreateAsync(
         CreateListingRequest request,
         CancellationToken cancellationToken
@@ -101,6 +58,58 @@ internal class ListingRepository(
         );
     }
 
+    public async Task<IEnumerable<ListingWithDetails>> GetAllAsync(
+        CancellationToken cancellationToken
+    ) => await GetListings(
+        null,
+        cancellationToken
+    );
+
+    public async Task<ListingWithDetails?> GetByIdAsync(
+       int listingId,
+       CancellationToken cancellationToken
+   ) => await GetListing(
+       listing => listing.ListingId == listingId,
+       cancellationToken
+   );
+
+    public async Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
+        string name,
+        CancellationToken cancellationToken
+    ) => await GetListings(
+        listing => listing.Name.ToLower().Contains(
+            name.ToLower()
+        ),
+        cancellationToken
+    );
+
+    public async Task<IEnumerable<ListingWithDetails?>> GetByProviderIdAsync(
+        string providerId,
+        CancellationToken cancellationToken
+    ) => await GetListings(
+        listing => listing.User.ProviderId == providerId,
+        cancellationToken
+    );
+
+    public async Task<IEnumerable<ListingWithDetails?>> GetByCategoryNameAsync(
+        string categoryName,
+        CancellationToken cancellationToken
+    ) => await GetListings(
+        listing => listing.Category.Name.ToLower().Contains(
+            categoryName.ToLower()
+        ),
+        cancellationToken
+    );
+
+    public async Task<bool> ListingExists(
+        int userId, 
+        string listingName, 
+        CancellationToken cancellationToken
+    ) => await context.Listing.AnyAsync(
+        listing => listing.User.UserId == userId &&
+                   listing.Name.ToLower() == listingName.ToLower(),
+        cancellationToken
+    );
 
     // Private methods
     private IQueryable<ListingEntity> ListingQuery

@@ -18,6 +18,7 @@ public sealed class CreateUserValidator(
         if (string.IsNullOrEmpty(command.ProviderId))
             errors.Add(ErrorType.InvalidProviderId);
 
+        // Ensure idempotency
         if (await UserExists(command, cancellationToken))
             errors.Add(ErrorType.UserAlreadyExists);
 
