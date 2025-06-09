@@ -1,5 +1,4 @@
-﻿using Api.TorMarket.Domain.Model.External;
-using Api.TorMarket.Domain.Models.External;
+﻿using Api.TorMarket.Domain.Models.External;
 
 namespace Api.TorMarket.Application.Abstractions;
 
