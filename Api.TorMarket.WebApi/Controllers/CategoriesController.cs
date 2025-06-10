@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
+using Api.TorMarket.Application.Mediator;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -18,11 +19,12 @@ public sealed class CategoriesController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Category>))]
     public async Task<IActionResult> GetAllAsync(
+        [FromServices] IQueryHandler<GetAllCategoriesQuery, IEnumerable<Category>> handler,
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
-            new GetAllCategoriesRequest(),
+        var result = await handler.HandleAsync(
+            new GetAllCategoriesQuery(),
             cancellationToken
         );
 

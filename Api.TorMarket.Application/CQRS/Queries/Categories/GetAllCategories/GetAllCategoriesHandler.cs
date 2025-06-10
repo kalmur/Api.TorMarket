@@ -1,18 +1,15 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetAllCategories;
 
-internal sealed class GetAllCategoriesHandler(
+public sealed class GetAllCategoriesHandler(
     ICategoryRepository repository
-) : IRequestHandler<GetAllCategoriesRequest, IEnumerable<Category>>
+) : IQueryHandler<GetAllCategoriesQuery, IEnumerable<Category>>
 {
-    public async Task<IEnumerable<Category>> Handle(
-        GetAllCategoriesRequest request,
+    public async Task<IEnumerable<Category>> HandleAsync(
+        GetAllCategoriesQuery query,
         CancellationToken cancellationToken
-    )
-    {
-        return await repository.GetAllAsync(cancellationToken);
-    }
+    ) => await repository.GetAllAsync(cancellationToken);
 }

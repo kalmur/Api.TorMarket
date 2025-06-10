@@ -1,5 +1,8 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
+﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
+using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
 using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
+using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
@@ -21,11 +24,12 @@ public sealed class UsersController(
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> CreateAsync(
+        [FromServices] ICommandHandler<CreateUserCommand, ResultOrError<User, CreateUserFailure>> handler,
         [FromBody][Required] CreateUserRequestDto createUserDto,
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var result = await handler.HandleAsync(
             createUserDto.ToCommand(),
             cancellationToken
         );

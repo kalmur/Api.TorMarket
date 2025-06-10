@@ -1,11 +1,12 @@
-﻿using Api.TorMarket.Application.Repositories.Requests;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-public sealed record CreateUserCommand : IRequest<ResultOrError<User, CreateUserFailure>>
+public sealed record CreateUserCommand : ICommand<ResultOrError<User, CreateUserFailure>>
 {
     public required int RoleId { get; init; }
     public required string ProviderId { get; init; }

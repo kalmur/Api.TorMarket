@@ -1,6 +1,6 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
-using MediatR;
 using User = Api.TorMarket.Domain.Models.User;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
@@ -8,15 +8,15 @@ namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 public sealed class CreateUserHandler(
     IValidator<CreateUserCommand, CreateUserFailure> validator,
     IUserRepository userRepository
-) : IRequestHandler<CreateUserCommand, ResultOrError<User, CreateUserFailure>>
+) : ICommandHandler<CreateUserCommand, ResultOrError<User, CreateUserFailure>>
 {
-    public async Task<ResultOrError<User, CreateUserFailure>> Handle(
+    public async Task<ResultOrError<User, CreateUserFailure>> HandleAsync(
         CreateUserCommand command, 
         CancellationToken cancellationToken
     )
     {
         var validationErrors = await validator.ValidateAsync(
-            command, 
+            command,
             cancellationToken
         );
 
