@@ -49,7 +49,7 @@ internal sealed class CreateUserHandlerTests
 
         _validator.SetupToPassValidation();
 
-        _userRepository.CreateUserAsync(
+        _userRepository.CreateAsync(
             Arg.Any<CreateUserRequest>(),
             Arg.Any<CancellationToken>()
         ).Returns(expectedResult);
@@ -93,7 +93,7 @@ internal sealed class CreateUserHandlerTests
             Arg.Any<CancellationToken>()
         );
 
-        await _userRepository.DidNotReceive().CreateUserAsync(
+        await _userRepository.DidNotReceive().CreateAsync(
             Arg.Any<CreateUserRequest>(),
             Arg.Any<CancellationToken>()
         );
