@@ -25,7 +25,12 @@ internal class UserRepository(
 
         await context.SaveChangesAsync(cancellationToken);
 
-        return user.ToModel();
+        return (
+            await GetByIdAsync(
+                user.UserId, 
+                cancellationToken
+            )
+        ) ?? throw new InvalidOperationException("Failed to locate user.");
     }
 
     public async Task DeleteAsync(
