@@ -11,12 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\AddressRepositoryTests\" />
-    <Folder Include="Repositories\ListingCategoryRepositoryTests\" />
-    <Folder Include="Repositories\ListingRepositoryTests\" />
-    <Folder Include="Repositories\OrderStatusRepositoryTests\" />
-    <Folder Include="Repositories\OrderRepositoryTests\" />
+    <Folder Include="Repositories\AddressRepositoryTests\Methods\" />
+    <Folder Include="Repositories\ListingCategoryRepositoryTests\Methods\" />
+    <Folder Include="Repositories\ListingRepositoryTests\Methods\" />
+    <Folder Include="Repositories\OrderRepositoryTests\Methods\" />
     <Folder Include="Repositories\OrderLineRepositoryTests\" />
+    <Folder Include="Repositories\OrderStatusRepositoryTests\Methods\" />
   </ItemGroup>
 
   <ItemGroup>
