@@ -56,9 +56,10 @@ public sealed class ListingsController(
             cancellationToken
         );
 
-        // Convert to DTO
         return Ok(
-            result
+            result.ToPaginatedResponseDto(
+                listing => listing.ToResponseDto()
+            )
         );
     }
 
