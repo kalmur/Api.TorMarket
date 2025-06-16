@@ -23,7 +23,7 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
             .IsRequired();
 
         builder
-            .Property(x => x.RatingValue)
+            .Property(x => x.Rating)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 

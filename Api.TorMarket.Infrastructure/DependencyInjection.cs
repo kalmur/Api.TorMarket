@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
 using Api.TorMarket.Infrastructure.Services.Blob;
 
-[assembly: InternalsVisibleTo("Api.TorMarket.Infrastructure.Tests")]
 namespace Api.TorMarket.Infrastructure;
 
 public static class DependencyInjection

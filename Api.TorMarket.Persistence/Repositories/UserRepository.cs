@@ -6,6 +6,7 @@ using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
 using Api.TorMarket.Persistence.QuickRepo;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
@@ -13,6 +14,30 @@ internal class UserRepository(
     IApplicationDbContext context
 ) : QuickRepo<UserEntity>, IUserRepository
 {
+    public async Task<User> CreateAsync(
+        CreateUserRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var user = request.ToEntity();
+
+        context.User.Add(user);
+
+        await context.SaveChangesAsync(cancellationToken);
+
+        return await GetByIdAsync(
+            user.UserId, 
+            cancellationToken
+        ) ?? throw new InvalidOperationException("Failed to locate user.");
+    }
+
+    public async Task DeleteAsync(
+        string providerId,
+        CancellationToken cancellationToken
+    ) => await context.User
+        .Where(user => user.ProviderId == providerId)
+        .ExecuteDeleteAsync(cancellationToken);
+
     public async Task<User?> GetByIdAsync(
         int userId, 
         CancellationToken cancellationToken
@@ -28,20 +53,6 @@ internal class UserRepository(
         user => user.ProviderId == providerId,
         cancellationToken
     );
-
-    public async Task<User> CreateUserAsync(
-        CreateUserRequest request,
-        CancellationToken cancellationToken
-    )
-    {
-        var user = request.ToEntity();
-
-        context.User.Add(user);
-
-        await context.SaveChangesAsync(cancellationToken);
-
-        return user.ToModel();
-    }
 
     public async Task<IEnumerable<User?>> GetAllAsync(
         CancellationToken cancellationToken

@@ -6,6 +6,11 @@ namespace Api.TorMarket.Application.Repositories.Interfaces;
 
 public interface IListingReviewRepository
 {
+    Task<ListingWithReviewAndCategory?> CreateAsync(
+        CreateListingReviewRequest review,
+        CancellationToken cancellationToken
+    );
+
     Task<IEnumerable<ListingReview>> GetByListingIdAsync(
         int listingId, 
         CancellationToken cancellationToken
@@ -14,11 +19,6 @@ public interface IListingReviewRepository
     Task<ListingWithReviewAndCategory?> GetByUserAndListingIdAsync(
         int userId,
         int listingId,
-        CancellationToken cancelationToken
+        CancellationToken cancellationToken
     );
-
-    Task<ListingWithReviewAndCategory?> CreateAsync(
-       CreateListingReviewRequest review,
-       CancellationToken cancelationToken
-   );
 }

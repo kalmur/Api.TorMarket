@@ -136,15 +136,15 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("nvarchar(500)")
                         .HasColumnOrder(6);
 
-                    b.Property<string>("Name")
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)")
+                        .HasColumnOrder(5);
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnOrder(4);
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
@@ -182,7 +182,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnOrder(5);
 
-                    b.Property<int>("RatingValue")
+                    b.Property<int>("Rating")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
@@ -371,14 +371,7 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShoppingCartItemId"));
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int")
-                        .HasColumnOrder(2);
-
                     b.Property<int>("ListingId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 
@@ -386,11 +379,15 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(4);
 
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
                     b.HasKey("ShoppingCartItemId");
 
-                    b.HasIndex("CartId");
-
                     b.HasIndex("ListingId");
+
+                    b.HasIndex("ShoppingCartId");
 
                     b.ToTable("ShoppingCartItems", (string)null);
                 });
@@ -610,15 +607,15 @@ namespace Api.TorMarket.Persistence.Migrations
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ShoppingCartItemEntity", b =>
                 {
-                    b.HasOne("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", "ShoppingCart")
-                        .WithMany("Items")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Api.TorMarket.Persistence.Entities.ListingEntity", "Listing")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Api.TorMarket.Persistence.Entities.ShoppingCartEntity", "ShoppingCart")
+                        .WithMany("Items")
+                        .HasForeignKey("ShoppingCartId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 

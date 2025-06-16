@@ -15,6 +15,23 @@ internal sealed class ListingReviewRepository(
     IApplicationDbContext context
 ) : QuickRepo<ListingReviewEntity>, IListingReviewRepository
 {
+    public async Task<ListingWithReviewAndCategory?> CreateAsync(
+        CreateListingReviewRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var review = request.ToEntity();
+
+        context.ListingReview.Add(review);
+        await context.SaveChangesAsync(cancellationToken);
+
+        return await GetByUserAndListingIdAsync(
+            review.UserId,
+            review.ListingId,
+            cancellationToken
+        );
+    }
+
     public async Task<IEnumerable<ListingReview>> GetByListingIdAsync(
         int listingId,
         CancellationToken cancellationToken
@@ -32,23 +49,6 @@ internal sealed class ListingReviewRepository(
         listingReview.ListingId == listingId,
         cancellationToken
     );
-
-    public async Task<ListingWithReviewAndCategory?> CreateAsync(
-        CreateListingReviewRequest request,
-        CancellationToken cancellationToken
-    )
-    {
-        var review = request.ToEntity();
-
-        context.ListingReview.Add(review);
-        await context.SaveChangesAsync(cancellationToken);
-
-        return await GetByUserAndListingIdAsync(
-            review.UserId,
-            review.ListingId,
-            cancellationToken
-        );
-    }
 
     // Private methods
     private IQueryable<ListingReviewEntity> ListingReviewQuery

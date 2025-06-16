@@ -29,7 +29,7 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .IsRequired();
 
         builder
-            .Property(listing => listing.Name)
+            .Property(listing => listing.Title)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .HasMaxLength(Listing.Name_MaxLength);

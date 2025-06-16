@@ -7,7 +7,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public sealed class BlobController(
+public sealed class BlobsController(
     IBlobService blobService
 ) : ControllerBase
 {

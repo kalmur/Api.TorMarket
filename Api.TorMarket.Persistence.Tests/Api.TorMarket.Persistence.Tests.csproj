@@ -10,4 +10,23 @@
     <ProjectReference Include="..\Api.TorMarket.Persistence\Api.TorMarket.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\AddressRepositoryTests\Methods\" />
+    <Folder Include="Repositories\ListingCategoryRepositoryTests\Methods\" />
+    <Folder Include="Repositories\ListingRepositoryTests\Methods\" />
+    <Folder Include="Repositories\OrderRepositoryTests\Methods\" />
+    <Folder Include="Repositories\OrderLineRepositoryTests\" />
+    <Folder Include="Repositories\OrderStatusRepositoryTests\Methods\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+  </ItemGroup>
+
 </Project>

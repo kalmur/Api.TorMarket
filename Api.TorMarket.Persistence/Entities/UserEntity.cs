@@ -6,6 +6,7 @@ internal class UserEntity : AuditableEntity
 {
     internal int UserId { get; set; }
     internal required int RoleId { get; set; }
+
     internal required string ProviderId { get; set; }
 
     internal virtual RoleEntity Role { get; set; } = null!;

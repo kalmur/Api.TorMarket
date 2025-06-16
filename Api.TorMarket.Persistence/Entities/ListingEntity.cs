@@ -7,7 +7,8 @@ internal class ListingEntity : AuditableEntity
     internal int ListingId { get; set; }
     internal required int UserId { get; set; }
     internal required int CategoryId { get; set; }
-    internal required string Name { get; set; }
+
+    internal required string Title { get; set; }
     internal required decimal Price { get; set; }
     internal required string? Description { get; set; }
 

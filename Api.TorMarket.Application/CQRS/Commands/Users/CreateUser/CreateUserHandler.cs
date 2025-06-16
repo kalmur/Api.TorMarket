@@ -23,7 +23,7 @@ public sealed class CreateUserHandler(
         if (validationErrors is not null)
             return validationErrors;
 
-        return await userRepository.CreateUserAsync(
+        return await userRepository.CreateAsync(
             command.ToRequest(),
             cancellationToken
         );
