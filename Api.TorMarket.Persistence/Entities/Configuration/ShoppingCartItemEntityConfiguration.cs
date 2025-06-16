@@ -18,12 +18,12 @@ internal sealed class ShoppingCartItemEntityConfiguration : EntityConfigurationB
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(shoppingCartItem => shoppingCartItem.CartId)
+            .Property(shoppingCartItem => shoppingCartItem.ShoppingCartId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(shoppingCartItem => shoppingCartItem.ProductId)
+            .Property(shoppingCartItem => shoppingCartItem.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
@@ -41,7 +41,7 @@ internal sealed class ShoppingCartItemEntityConfiguration : EntityConfigurationB
         builder
             .HasOne(shoppingCartItem => shoppingCartItem.ShoppingCart)
             .WithMany(shoppingCart => shoppingCart.Items)
-            .HasForeignKey(shoppingCart => shoppingCart.CartId)
+            .HasForeignKey(shoppingCart => shoppingCart.ShoppingCartId)
             .HasPrincipalKey(shoppingCartItem => shoppingCartItem.ShoppingCartId)
             .OnDelete(DeleteBehavior.NoAction);
 

@@ -12,7 +12,7 @@ internal static class ListingGenerator
     {
         ListingId = listingId,
         UserId = userId,
-        Name = "Test",
+        Title = "Test",
         Description = "Test",
         Price = 50.00m
     };
@@ -26,7 +26,7 @@ internal static class ListingGenerator
         ListingId = listingId,
         UserId = userId,
         CategoryId = categoryId,
-        Name = "Test",
+        Title = "Test",
         Description = "Test",
         Price = 50.00m,
         Category = ListingCategoryGenerator.GenerateListingCategory(

@@ -13,7 +13,7 @@ public sealed record CreateListingRequestDto
 
     [Required(AllowEmptyStrings = false)]
     [StringLength(Listing.Name_MaxLength)]
-    public required string ListingName { get; init; }
+    public required string Title { get; init; }
 
     [Required]
     public required decimal Price { get; init; }

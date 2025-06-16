@@ -7,6 +7,7 @@ internal class OrderEntity : AuditableEntity
     internal int OrderId { get; set; }
     internal required int UserId { get; set; }
     internal required int StatusId { get; set; }
+
     internal required decimal TotalPrice { get; set; }
     internal required DateTimeOffset OrderDate { get; set; }
 

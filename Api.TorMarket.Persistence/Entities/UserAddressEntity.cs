@@ -4,6 +4,7 @@ internal class UserAddressEntity
 {
     internal int UserAddressId { get; set; }
     internal required int UserId { get; set; }
+
     internal required int UnitNumber { get; set; }
     internal required int StreetNumber { get; set; }
     internal required string AddressLine { get; set; }

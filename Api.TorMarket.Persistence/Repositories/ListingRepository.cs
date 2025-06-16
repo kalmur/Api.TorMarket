@@ -28,7 +28,7 @@ internal class ListingRepository(
         return await GetByIdAsync(
             listing.ListingId,
             cancellationToken
-        ) ?? throw new InvalidOperationException("Product creation failed.");
+        ) ?? throw new InvalidOperationException("Listing creation failed.");
     }
 
     public async Task<Listing?> UpdateBlobUrlsAsync(
@@ -55,7 +55,7 @@ internal class ListingRepository(
         return await GetByIdAsync(
             listing.ListingId,
             cancellationToken
-        );
+        ) ?? throw new InvalidOperationException("Updating Blob Urls failed.");
     }
 
     public async Task<IEnumerable<ListingWithDetails>> GetAllAsync(
@@ -77,7 +77,7 @@ internal class ListingRepository(
         string name,
         CancellationToken cancellationToken
     ) => await GetListings(
-        listing => listing.Name.ToLower().Contains(
+        listing => listing.Title.ToLower().Contains(
             name.ToLower()
         ),
         cancellationToken
@@ -107,7 +107,7 @@ internal class ListingRepository(
         CancellationToken cancellationToken
     ) => await context.Listing.AnyAsync(
         listing => listing.User.UserId == userId &&
-                   listing.Name.ToLower() == listingName.ToLower(),
+                   listing.Title.ToLower() == listingName.ToLower(),
         cancellationToken
     );
 

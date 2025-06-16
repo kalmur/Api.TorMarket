@@ -9,7 +9,7 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
 {
     public required int UserId { get; init; }
     public required string CategoryName { get; init; }
-    public required string ListingName { get; init; }
+    public required string Title { get; init; }
     public required decimal Price { get; init; }
     public string? Description { get; init; }
 
@@ -19,7 +19,7 @@ public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, Crea
     {
         UserId = UserId,
         CategoryId = categoryId,
-        ListingName = ListingName,
+        ListingName = Title,
         Price = Price,
         Description = Description
     };

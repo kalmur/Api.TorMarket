@@ -15,7 +15,7 @@ public sealed class CreateListingValidator(
     {
         var errors = new List<ErrorType>();
 
-        if (string.IsNullOrWhiteSpace(command.ListingName))
+        if (string.IsNullOrWhiteSpace(command.Title))
             errors.Add(ErrorType.InvalidName);
 
         if (command.Price <= 0)
@@ -25,7 +25,7 @@ public sealed class CreateListingValidator(
             errors.Add(ErrorType.UserDoesNotExist);
 
         // Ensure idempotency
-        if (await ListingAlreadyExistsAsync(command.UserId, command.ListingName, cancellationToken))
+        if (await ListingAlreadyExistsAsync(command.UserId, command.Title, cancellationToken))
             errors.Add(ErrorType.ListingAlreadyExists);
 
         if (errors.Count > 0)

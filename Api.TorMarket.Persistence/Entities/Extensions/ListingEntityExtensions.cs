@@ -15,7 +15,7 @@ internal static class ListingEntityExtensions
         ListingId = entity.ListingId,
         UserId = entity.UserId,
         CategoryId = entity.CategoryId,
-        Name = entity.Name,
+        Title = entity.Title,
         Price = entity.Price,
         Description = entity.Description
     };
@@ -27,7 +27,7 @@ internal static class ListingEntityExtensions
         ListingId = entity.ListingId,
         UserId = entity.UserId,
         CategoryId = entity.CategoryId,
-        Name = entity.Name,
+        Title = entity.Title,
         Price = entity.Price,
         Description = entity.Description,
         User = entity.User.ToModel() ?? null,
@@ -43,7 +43,7 @@ internal static class ListingEntityExtensions
     {
         UserId = request.UserId,
         CategoryId = request.CategoryId,
-        Name = request.ListingName,
+        Title = request.ListingName,
         Price = request.Price,
         Description = request.Description
     };

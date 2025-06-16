@@ -15,7 +15,7 @@ public static class ListingExtensions
     {
         ListingId = product.ListingId,
         CategoryId = product.CategoryId,
-        Name = product.Name!,
+        Name = product.Title!,
         Price = product.Price,
         Description = product.Description
     };
@@ -25,8 +25,7 @@ public static class ListingExtensions
     ) => new()
     {
         ListingId = model.ListingId,
-        CategoryId = model.CategoryId,
-        Name = model.Name!,
+        Name = model.Title!,
         Price = model.Price,
         Description = model.Description,
         Category = model.Category?.ToResponseDto() ?? null,
@@ -46,7 +45,7 @@ public static class ListingExtensions
     {
         UserId = request.UserId,
         CategoryName = request.CategoryName,
-        ListingName = request.ListingName,
+        Title = request.Title,
         Price = request.Price,
         Description = request.Description,
     };
