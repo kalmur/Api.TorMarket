@@ -1,16 +1,16 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models.ViewModels;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
 public class GetListingsByNameHandler(
     IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
     IListingRepository listingRepository
-) : IRequestHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>>
+) : IQueryHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>>
 {
-    public async Task<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>> Handle(
+    public async Task<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>> HandleAsync(
         GetListingsByNameQuery query,
         CancellationToken cancellationToken
     )

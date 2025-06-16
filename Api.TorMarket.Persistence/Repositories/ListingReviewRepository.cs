@@ -15,7 +15,7 @@ internal sealed class ListingReviewRepository(
     IApplicationDbContext context
 ) : QuickRepo<ListingReviewEntity>, IListingReviewRepository
 {
-    public async Task<ListingWithReviewAndCategory?> CreateAsync(
+    public async Task<ListingWithReviewAndCategory> CreateAsync(
         CreateListingReviewRequest request,
         CancellationToken cancellationToken
     )
@@ -29,7 +29,7 @@ internal sealed class ListingReviewRepository(
             review.UserId,
             review.ListingId,
             cancellationToken
-        );
+        ) ?? throw new InvalidOperationException("Could not locate review.");
     }
 
     public async Task<IEnumerable<ListingReview>> GetByListingIdAsync(

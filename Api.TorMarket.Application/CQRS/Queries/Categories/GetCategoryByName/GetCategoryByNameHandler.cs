@@ -1,22 +1,22 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-internal sealed class GetCategoryByNameHandler(
+public sealed class GetCategoryByNameHandler(
     IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
     ICategoryRepository productCategoryRepository
-) : IRequestHandler<GetCategoryByNameQuery, ResultOrError<Category, GetCategoryByNameFailure>>
+) : IQueryHandler<GetCategoryByNameQuery, ResultOrError<Category, GetCategoryByNameFailure>>
 {
-    public async Task<ResultOrError<Category, GetCategoryByNameFailure>> Handle(
-        GetCategoryByNameQuery request,
+    public async Task<ResultOrError<Category, GetCategoryByNameFailure>> HandleAsync(
+        GetCategoryByNameQuery query, 
         CancellationToken cancellationToken
     )
     {
         var validationErrors = await validator.ValidateAsync(
-            request,
+            query,
             cancellationToken
         );
 
@@ -25,7 +25,7 @@ internal sealed class GetCategoryByNameHandler(
 
         return (
             await productCategoryRepository.GetByNameAsync(
-                request.Name,
+                query.Name,
                 cancellationToken
             )
         )!;

@@ -31,7 +31,7 @@ internal class ListingRepository(
         ) ?? throw new InvalidOperationException("Listing creation failed.");
     }
 
-    public async Task<Listing?> UpdateBlobUrlsAsync(
+    public async Task<Listing> UpdateBlobUrlsAsync(
        int listingId,
        string blobUrl,
        CancellationToken cancellationToken
@@ -66,12 +66,12 @@ internal class ListingRepository(
     );
 
     public async Task<ListingWithDetails?> GetByIdAsync(
-       int listingId,
-       CancellationToken cancellationToken
-   ) => await GetListing(
-       listing => listing.ListingId == listingId,
-       cancellationToken
-   );
+        int listingId,
+        CancellationToken cancellationToken
+    ) => await GetListing(
+        listing => listing.ListingId == listingId,
+        cancellationToken
+    );
 
     public async Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
         string name,

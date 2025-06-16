@@ -8,7 +8,6 @@ using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
@@ -16,9 +15,7 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public sealed class UsersController(
-    ISender mediator
-) : ControllerBase
+public sealed class UsersController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
@@ -48,11 +45,12 @@ public sealed class UsersController(
     [Route("{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetByProviderIdAsync(
+        [FromServices] IQueryHandler<GetUserByProviderIdQuery, User> mediator,
         [FromRoute][Required] string providerId,
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetUserByProviderIdQuery(providerId),
             cancellationToken
         );
@@ -65,10 +63,11 @@ public sealed class UsersController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetAllAsync(
+        [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<User?>> mediator,
        CancellationToken cancellationToken
-   )
+    )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetAllUsersQuery(),
             cancellationToken
         );

@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
 
-internal sealed class GetAllUsersHandler(
+public sealed class GetAllUsersHandler(
     IUserRepository userRepository
-) : IRequestHandler<GetAllUsersQuery, IEnumerable<User?>>
+) : IQueryHandler<GetAllUsersQuery, IEnumerable<User?>>
 {
-    public async Task<IEnumerable<User?>> Handle(
+    public async Task<IEnumerable<User?>> HandleAsync(
         GetAllUsersQuery request,
         CancellationToken cancellationToken
     ) => await userRepository.GetAllAsync(cancellationToken);

@@ -2,7 +2,6 @@
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 

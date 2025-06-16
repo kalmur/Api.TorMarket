@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models.ViewModels;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewByUserAndListingId;
 
-internal sealed class GetReviewByUserAndListingIdHandler(
+public sealed class GetReviewByUserAndListingIdHandler(
     IListingReviewRepository repository
-) : IRequestHandler<GetReviewByUserAndListingIdQuery, ListingWithReviewAndCategory>
+) : IQueryHandler<GetReviewByUserAndListingIdQuery, ListingWithReviewAndCategory>
 {
-    public async Task<ListingWithReviewAndCategory> Handle(
+    public async Task<ListingWithReviewAndCategory> HandleAsync(
         GetReviewByUserAndListingIdQuery request, 
         CancellationToken cancellationToken
     ) => 

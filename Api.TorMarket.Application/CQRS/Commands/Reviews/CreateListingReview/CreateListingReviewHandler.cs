@@ -1,17 +1,17 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 
-internal sealed class CreateListingReviewHandler(
+public sealed class CreateListingReviewHandler(
     IValidator<CreateListingReviewCommand, CreateListingReviewFailure> validator,
     IListingReviewRepository listingReviewRepository
-) : IRequestHandler<CreateListingReviewCommand, ResultOrError<ListingReview, CreateListingReviewFailure>>
+) : ICommandHandler<CreateListingReviewCommand, ResultOrError<ListingReview, CreateListingReviewFailure>>
 {
-    public async Task<ResultOrError<ListingReview, CreateListingReviewFailure>> Handle(
-        CreateListingReviewCommand command,
+    public async Task<ResultOrError<ListingReview, CreateListingReviewFailure>> HandleAsync(
+        CreateListingReviewCommand command, 
         CancellationToken cancellationToken
     )
     {

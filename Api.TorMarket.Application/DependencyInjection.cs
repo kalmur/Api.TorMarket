@@ -17,18 +17,8 @@ public static class DependencyInjection
         this IServiceCollection services, 
         IConfiguration configuration
     ) => services
-            .AddMediator()
             .AddMediators()
             .AddValidators();
-
-    private static IServiceCollection AddMediator(
-        this IServiceCollection services
-    ) => services
-            .AddMediatR(config =>
-                config.RegisterServicesFromAssembly(
-                    typeof(DependencyInjection).Assembly
-                )
-            );
 
     private static IServiceCollection AddMediators(
         this IServiceCollection services

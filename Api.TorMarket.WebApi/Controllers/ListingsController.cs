@@ -1,33 +1,37 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
+using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
+using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Unions;
+using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.WebApi.DTOs.Requests;
+using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public sealed class ListingsController(
-    ISender mediator
-) : ControllerBase
+public sealed class ListingsController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ListingDto))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> CreateAsync(
+        [FromServices] ICommandHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>> mediator,
         [FromBody][Required] CreateListingRequestDto request,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             request.ToCommand(),
             cancellationToken
         );
@@ -46,10 +50,11 @@ public sealed class ListingsController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetAllAsync(
+        [FromServices] IQueryHandler<GetAllListingsQuery, IEnumerable<ListingWithDetails>> mediator,
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetAllListingsQuery(),
             cancellationToken
         );
@@ -63,11 +68,12 @@ public sealed class ListingsController(
     [Route("id/{listingId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetByIdAsync(
+        [FromServices] IQueryHandler<GetListingByIdQuery, ListingWithDetails> mediator,
         [FromRoute][Required] int listingId, 
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetListingByIdQuery(listingId),
             cancellationToken
         );
@@ -82,11 +88,12 @@ public sealed class ListingsController(
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingDto>))]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByName(
+        [FromServices] IQueryHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>> mediator,
         [FromRoute][Required] string listingName,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             new GetListingsByNameQuery(listingName),
             cancellationToken
         );
@@ -105,11 +112,12 @@ public sealed class ListingsController(
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByProviderId(
+        [FromServices] IQueryHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithDetails>, GetListingsByProviderIdFailure>> mediator,
         [FromRoute][Required] string providerId,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             new GetListingsByProviderIdQuery(providerId),
             cancellationToken
         );
@@ -127,11 +135,12 @@ public sealed class ListingsController(
     [Route("category/{categoryName}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetByCategoryNameAsync(
+        [FromServices] IQueryHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithDetails>> mediator,
         [FromRoute][Required] string categoryName,
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetListingsByCategoryNameQuery(categoryName),
             cancellationToken
         );
@@ -147,12 +156,13 @@ public sealed class ListingsController(
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateBlobUrlsAsync(
+        [FromServices] ICommandHandler<UpdateListingBlobUrlsCommand, Listing> mediator,
         [FromRoute][Required] int listingId,
         [FromBody] UpdateBlobUrlRequestDto request,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             request.ToCommand(listingId),
             cancellationToken
         );
