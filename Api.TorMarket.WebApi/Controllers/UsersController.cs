@@ -25,18 +25,18 @@ public sealed class UsersController(
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var resultOrError = await mediator.Send(
             createUserDto.ToCommand(),
             cancellationToken
         );
 
-        return result.IsError
+        return resultOrError.IsError
             ? BadRequest(
-                result.Error.ToFailureResponseDto()
+                resultOrError.Error.ToFailureResponseDto()
             )
             : StatusCode(
                 StatusCodes.Status201Created, 
-                result.Result.ToResponseDto()
+                resultOrError.Result.ToResponseDto()
             );
     }
 
@@ -48,14 +48,18 @@ public sealed class UsersController(
         CancellationToken cancellationToken
     )
     {
-        var result = await mediator.Send(
+        var resultOrError = await mediator.Send(
             new GetUserByProviderIdQuery(providerId),
             cancellationToken
         );
 
-        return Ok(
-            result.ToResponseDto()
-        );
+        return resultOrError.IsError
+            ? NotFound(
+                resultOrError.Error.ToFailureResponseDto()
+            )
+            : Ok(
+                resultOrError.Result.ToResponseDto()
+            );
     }
 
     [HttpGet]

@@ -5,7 +5,7 @@ using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.Crea
 
 namespace Api.TorMarket.WebApi.Extensions.Results;
 
-public static class CreateListingFailureExtensions
+internal static class CreateListingFailureExtensions
 {
     public static CreateListingFailureResponseDto ToFailureResponseDto(
         this CreateListingFailure failure
