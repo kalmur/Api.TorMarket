@@ -2,7 +2,7 @@
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using System.ComponentModel.DataAnnotations;
-using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Abstractions.Mediator;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 

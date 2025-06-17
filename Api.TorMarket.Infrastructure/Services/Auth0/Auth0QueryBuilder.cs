@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Abstractions;
+﻿using Api.TorMarket.Application.Abstractions.IdentityProvider;
 using Api.TorMarket.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 

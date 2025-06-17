@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Abstractions.Blob;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Microsoft.AspNetCore.Mvc;
 

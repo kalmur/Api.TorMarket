@@ -1,11 +1,11 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
+﻿using Api.TorMarket.Application.Abstractions.Mediator;
+using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
-using Api.TorMarket.Application.Mediator;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;

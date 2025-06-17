@@ -1,11 +1,12 @@
-﻿using Api.TorMarket.Application.Abstractions;
-using Api.TorMarket.Infrastructure.Options;
+﻿using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services.Auth0;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
 using Api.TorMarket.Infrastructure.Services.Blob;
+using Api.TorMarket.Application.Abstractions.Blob;
+using Api.TorMarket.Application.Abstractions.IdentityProvider;
 
 namespace Api.TorMarket.Infrastructure;
 

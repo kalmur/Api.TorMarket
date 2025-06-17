@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Abstractions;
+﻿namespace Api.TorMarket.Application.Abstractions.IdentityProvider;
 
 public interface IAuth0UsersClient
 {

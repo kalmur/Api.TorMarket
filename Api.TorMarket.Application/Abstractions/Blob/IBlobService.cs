@@ -1,6 +1,6 @@
 ﻿using Api.TorMarket.Domain.Models.External;
 
-namespace Api.TorMarket.Application.Abstractions;
+namespace Api.TorMarket.Application.Abstractions.Blob;
 
 public interface IBlobService
 {

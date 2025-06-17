@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Abstractions.Mediator;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 

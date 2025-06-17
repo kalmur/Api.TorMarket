@@ -1,10 +1,10 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using System.Text;
-using Api.TorMarket.Application.Abstractions;
 using Microsoft.Extensions.Options;
 using Api.TorMarket.Infrastructure.Options;
 using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
+using Api.TorMarket.Application.Abstractions.Blob;
 
 namespace Api.TorMarket.Infrastructure.Services.Blob;
 

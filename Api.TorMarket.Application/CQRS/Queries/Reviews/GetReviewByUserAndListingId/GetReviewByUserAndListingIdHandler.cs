@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Mediator;
+﻿using Api.TorMarket.Application.Abstractions.Mediator;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models.ViewModels;
 

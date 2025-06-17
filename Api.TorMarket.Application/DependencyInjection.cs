@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Application.CQRS;
+﻿using Api.TorMarket.Application.Abstractions.Mediator;
+using Api.TorMarket.Application.CQRS;
 using Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 using Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
@@ -6,7 +7,6 @@ using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
-using Api.TorMarket.Application.Mediator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,6 +1,5 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewsByListingId;
-using Api.TorMarket.Application.Mediator;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;
@@ -10,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewByUserAndListingId;
 using Api.TorMarket.WebApi.Extensions.Results;
+using Api.TorMarket.Application.Abstractions.Mediator;
 
 namespace Api.TorMarket.WebApi.Controllers;
 

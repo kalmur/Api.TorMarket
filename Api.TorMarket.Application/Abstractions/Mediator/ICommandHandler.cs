@@ -1,4 +1,4 @@
-﻿namespace Api.TorMarket.Application.Mediator;
+﻿namespace Api.TorMarket.Application.Abstractions.Mediator;
 
 public interface ICommandHandler<in TCommand, TResult>
     where TCommand : ICommand<TResult>

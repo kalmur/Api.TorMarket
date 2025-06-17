@@ -1,4 +1,4 @@
-﻿using Api.TorMarket.Application.Mediator;
+﻿using Api.TorMarket.Application.Abstractions.Mediator;
 using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;

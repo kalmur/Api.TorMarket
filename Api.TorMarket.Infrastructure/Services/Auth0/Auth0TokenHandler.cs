@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Headers;
-using Api.TorMarket.Application.Abstractions;
+using Api.TorMarket.Application.Abstractions.IdentityProvider;
 
 namespace Api.TorMarket.Infrastructure.Services.Auth0;
 
