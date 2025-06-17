@@ -77,7 +77,7 @@ public sealed class ReviewsController : ControllerBase
         );
 
         return Ok(
-            result
+            result.ToResponseDto()
         );
     }
 }

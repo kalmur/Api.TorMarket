@@ -76,9 +76,10 @@ public sealed class UsersController : ControllerBase
             cancellationToken
         );
 
-        // Return dto
         return Ok(
-            result
+            result.Select(
+                user => user.ToResponseDto()
+            )
         );
     }
 }

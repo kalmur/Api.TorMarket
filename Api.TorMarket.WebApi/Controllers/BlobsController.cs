@@ -11,35 +11,6 @@ public sealed class BlobsController(
     IBlobService blobService
 ) : ControllerBase
 {
-    [HttpGet("{blobName}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
-    public async Task<IActionResult> GetByNameAsync(
-        [Required] string blobName,
-        CancellationToken cancellationToken
-    )
-    {
-        var blob = await blobService.GetBlobAsync(
-            blobName, 
-            cancellationToken
-        );
-
-        return File(
-            blob.Content, 
-            blob.ContentType
-        );
-    }
-
-    [HttpGet("all")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
-    public async Task<IActionResult> GetAllAsync(
-        CancellationToken cancellationToken
-    )
-    {
-        var blobs = await blobService.ListBlobsAsync(cancellationToken);
-
-        return Ok(blobs);
-    }
-
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
     [ApiExplorerSettings(IgnoreApi = false)]
@@ -75,7 +46,7 @@ public sealed class BlobsController(
     )
     {
         await blobService.UploadFileAsync(
-            request.FilePath, 
+            request.FilePath,
             request.FileName,
             cancellationToken
         );
@@ -107,10 +78,39 @@ public sealed class BlobsController(
     )
     {
         await blobService.DeleteBlobAsync(
-            blobName, 
+            blobName,
             cancellationToken
         );
 
         return NoContent();
+    }
+
+    [HttpGet("{blobName}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FileContentResult))]
+    public async Task<IActionResult> GetByNameAsync(
+        [Required] string blobName,
+        CancellationToken cancellationToken
+    )
+    {
+        var blob = await blobService.GetBlobAsync(
+            blobName, 
+            cancellationToken
+        );
+
+        return File(
+            blob.Content, 
+            blob.ContentType
+        );
+    }
+
+    [HttpGet("all")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
+    public async Task<IActionResult> GetAllAsync(
+        CancellationToken cancellationToken
+    )
+    {
+        var blobs = await blobService.ListBlobsAsync(cancellationToken);
+
+        return Ok(blobs);
     }
 }
