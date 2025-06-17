@@ -151,15 +151,13 @@ public sealed class ListingsController : ControllerBase
         );
 
         return Ok(
-            result!.ToResponseDto()
+            result.ToResponseDto()
         );
     }
 
     [HttpPut]
     [Route("blob/{listingId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> UpdateBlobUrlsAsync(
         [FromServices] ICommandHandler<UpdateListingBlobUrlsCommand, Listing> mediator,
         [FromRoute][Required] int listingId,
@@ -167,11 +165,11 @@ public sealed class ListingsController : ControllerBase
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.HandleAsync(
+        var result = await mediator.HandleAsync(
             request.ToCommand(listingId),
             cancellationToken
         );
 
-        return Ok(resultOrError);
+        return Ok(result);
     }
 }

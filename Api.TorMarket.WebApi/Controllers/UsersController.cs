@@ -44,6 +44,7 @@ public sealed class UsersController : ControllerBase
     [HttpGet]
     [Route("{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByProviderIdAsync(
         [FromServices] IQueryHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>> mediator,
         [FromRoute][Required] string providerId,
