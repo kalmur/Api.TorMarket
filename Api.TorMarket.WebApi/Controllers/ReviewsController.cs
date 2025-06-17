@@ -22,8 +22,7 @@ public sealed class ReviewsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> CreateAsync(
         [FromServices] ICommandHandler<CreateListingReviewCommand, ResultOrError<ListingReview, CreateListingReviewFailure>> mediator,
-
-    [FromBody][Required] CreateListingReviewDto request,
+        [FromBody][Required] CreateListingReviewDto request,
         CancellationToken cancellationToken
     )
     {
