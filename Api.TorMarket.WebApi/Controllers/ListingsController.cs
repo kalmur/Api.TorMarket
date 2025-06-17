@@ -14,7 +14,7 @@ using Api.TorMarket.WebApi.DTOs.Responses;
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{apiVersion:apiVersion}/[controller]")]
 public sealed class ListingsController(
     ISender mediator
 ) : ControllerBase

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{apiVersion:apiVersion}/[controller]")]
 public sealed class BlobsController(
     IBlobService blobService
 ) : ControllerBase

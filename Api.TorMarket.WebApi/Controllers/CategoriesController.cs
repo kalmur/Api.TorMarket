@@ -10,7 +10,7 @@ using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v{apiVersion:apiVersion}/[controller]")]
 public sealed class CategoriesController(
     ISender mediator
 ) : ControllerBase
