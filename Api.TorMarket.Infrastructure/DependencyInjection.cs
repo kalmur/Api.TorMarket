@@ -4,8 +4,6 @@ using Api.TorMarket.Infrastructure.Services.Auth0;
 using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using System.Runtime.CompilerServices;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
 using Api.TorMarket.Infrastructure.Services.Blob;
 

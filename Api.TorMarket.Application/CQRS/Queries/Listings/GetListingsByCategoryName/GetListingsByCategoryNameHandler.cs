@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models.ViewModels;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByCategoryName;
 
-internal sealed class GetListingsByCategoryNameHandler(
+public sealed class GetListingsByCategoryNameHandler(
     IListingRepository repository
-) : IRequestHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithDetails?>>
+) : IQueryHandler<GetListingsByCategoryNameQuery, IEnumerable<ListingWithDetails?>>
 {
-    public async Task<IEnumerable<ListingWithDetails?>> Handle(
+    public async Task<IEnumerable<ListingWithDetails?>> HandleAsync(
         GetListingsByCategoryNameQuery request,
         CancellationToken cancellationToken
     ) =>

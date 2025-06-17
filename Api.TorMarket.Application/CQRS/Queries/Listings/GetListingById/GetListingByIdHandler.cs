@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models.ViewModels;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 
-internal sealed class GetListingByIdHandler(
+public sealed class GetListingByIdHandler(
     IListingRepository repository
-) : IRequestHandler<GetListingByIdQuery, ListingWithDetails>
+) : IQueryHandler<GetListingByIdQuery, ListingWithDetails>
 {
-    public async Task<ListingWithDetails> Handle(
+    public async Task<ListingWithDetails> HandleAsync(
         GetListingByIdQuery request, 
         CancellationToken cancellationToken
     ) => await repository.GetByIdAsync(

@@ -1,16 +1,16 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 
-internal sealed class GetUserByProviderIdHandler(
+public sealed class GetUserByProviderIdHandler(
     IValidator<GetUserByProviderIdQuery, GetUserByProviderIdFailure> validator,
     IUserRepository repository
-) : IRequestHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>>
+) : IQueryHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>>
 {
-    public async Task<ResultOrError<User, GetUserByProviderIdFailure>> Handle(
+    public async Task<ResultOrError<User, GetUserByProviderIdFailure>> HandleAsync(
         GetUserByProviderIdQuery query,
         CancellationToken cancellationToken
     )

@@ -1,11 +1,11 @@
-﻿using Api.TorMarket.Application.Repositories.Requests;
+﻿using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-public sealed record CreateListingCommand : IRequest<ResultOrError<Listing, CreateListingFailure>>
+public sealed record CreateListingCommand : ICommand<ResultOrError<Listing, CreateListingFailure>>
 {
     public required int UserId { get; init; }
     public required string CategoryName { get; init; }

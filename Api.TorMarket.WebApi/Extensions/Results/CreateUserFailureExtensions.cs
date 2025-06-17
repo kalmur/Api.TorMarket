@@ -20,7 +20,7 @@ namespace Api.TorMarket.WebApi.Extensions.Results
             this ErrorType error
         ) => error switch
         {
-            ErrorType.InvalidProviderId=> "Invalid provider id",
+            ErrorType.InvalidProviderId => "Invalid provider id",
             ErrorType.UserAlreadyExists => "User already exists",
             _ => throw new InvalidEnumArgumentException(nameof(ErrorType))
         };

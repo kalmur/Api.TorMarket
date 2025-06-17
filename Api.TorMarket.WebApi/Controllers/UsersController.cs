@@ -1,31 +1,32 @@
-﻿using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
+﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
+using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
 using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
+using Api.TorMarket.Application.Mediator;
+using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
-using Api.TorMarket.WebApi.Extensions.Results;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.WebApi.Extensions.Results;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/v{apiVersion:apiVersion}/[controller]")]
-public sealed class UsersController(
-    ISender mediator
-) : ControllerBase
+public sealed class UsersController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> CreateAsync(
+        [FromServices] ICommandHandler<CreateUserCommand, ResultOrError<User, CreateUserFailure>> mediator,
         [FromBody][Required] CreateUserRequestDto createUserDto,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             createUserDto.ToCommand(),
             cancellationToken
         );
@@ -44,11 +45,12 @@ public sealed class UsersController(
     [Route("{providerId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetByProviderIdAsync(
+        [FromServices] IQueryHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>> mediator,
         [FromRoute][Required] string providerId,
         CancellationToken cancellationToken
     )
     {
-        var resultOrError = await mediator.Send(
+        var resultOrError = await mediator.HandleAsync(
             new GetUserByProviderIdQuery(providerId),
             cancellationToken
         );
@@ -65,10 +67,11 @@ public sealed class UsersController(
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     public async Task<IActionResult> GetAllAsync(
+        [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<User?>> mediator,
        CancellationToken cancellationToken
-   )
+    )
     {
-        var result = await mediator.Send(
+        var result = await mediator.HandleAsync(
             new GetAllUsersQuery(),
             cancellationToken
         );

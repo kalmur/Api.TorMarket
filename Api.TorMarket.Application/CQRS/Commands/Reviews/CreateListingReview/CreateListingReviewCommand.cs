@@ -1,12 +1,12 @@
 ﻿using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.Application.Mediator;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 
-public sealed record CreateListingReviewCommand : IRequest<ResultOrError<ListingReview, CreateListingReviewFailure>>
+public sealed record CreateListingReviewCommand : ICommand<ResultOrError<ListingReview, CreateListingReviewFailure>>
 {
     [Required]
     public required int UserId { get; init; }

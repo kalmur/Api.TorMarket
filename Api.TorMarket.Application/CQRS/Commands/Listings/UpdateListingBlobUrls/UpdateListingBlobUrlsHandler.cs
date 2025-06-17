@@ -1,20 +1,20 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
+﻿using Api.TorMarket.Application.Mediator;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
-using MediatR;
 
+namespace Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 
-internal sealed class UpdateListingBlobUrlsHandler(
+public sealed class UpdateListingBlobUrlsHandler(
     IListingRepository repository
-) : IRequestHandler<UpdateListingBlobUrlsCommand, Listing>
+) : ICommandHandler<UpdateListingBlobUrlsCommand, Listing>
 {
-    public async Task<Listing> Handle(
-        UpdateListingBlobUrlsCommand request, 
+    public async Task<Listing> HandleAsync(
+        UpdateListingBlobUrlsCommand command, 
         CancellationToken cancellationToken
     ) =>
         await repository.UpdateBlobUrlsAsync(
-            request.ListingId,
-            request.BlobUrl,
+            command.ListingId,
+            command.BlobUrl,
             cancellationToken
-         );
+        );
 }

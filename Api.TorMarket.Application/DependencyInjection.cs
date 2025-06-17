@@ -6,6 +6,7 @@ using Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 using Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
+using Api.TorMarket.Application.Mediator;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,17 +18,20 @@ public static class DependencyInjection
         this IServiceCollection services, 
         IConfiguration configuration
     ) => services
-            .AddMediator()
+            .AddMediators()
             .AddValidators();
 
-    private static IServiceCollection AddMediator(
+    private static IServiceCollection AddMediators(
         this IServiceCollection services
-    ) => services
-            .AddMediatR(config =>
-                config.RegisterServicesFromAssembly(
-                    typeof(DependencyInjection).Assembly
-                )
-            );
+    ) => services.Scan(
+        scan => scan.FromAssembliesOf(typeof(DependencyInjection))
+            .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+            .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+    );
 
     private static IServiceCollection AddValidators(
         this IServiceCollection services

@@ -1,10 +1,10 @@
 ﻿using Api.TorMarket.Domain.Models;
-using MediatR;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.Application.Mediator;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.UpdateListingBlobUrls;
 
 public sealed record UpdateListingBlobUrlsCommand(
     [Required] int ListingId, 
     [Required] string BlobUrl
-) : IRequest<Listing>;
+) : ICommand<Listing>;
