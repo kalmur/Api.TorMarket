@@ -17,7 +17,8 @@ public interface IListingRepository
         CancellationToken cancellationToken
     );
 
-    Task<IEnumerable<ListingWithDetails>> GetAllAsync(
+    Task<PaginatedResult<ListingWithDetails>> GetAllPaginatedAsync(
+        PaginatedRequest paginatedRequest,
         CancellationToken cancellationToken
     );
 

@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories;
+using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Repositories.Requests;
 using Api.TorMarket.Domain.Models;
 using Api.TorMarket.Domain.Models.ViewModels;
@@ -7,14 +8,19 @@ using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
 using Api.TorMarket.Persistence.QuickRepo;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
 using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
 internal class ListingRepository(
     IApplicationDbContext context
-) : QuickRepo<ListingEntity>, IListingRepository
+) : QuickRepoPageable<ListingEntity>, IListingRepository
 {
+    protected override uint MaximumPageSize => 50;
+    protected override IReadOnlyDictionary<string, IOrderBy> OrderFunctions => ListingOrderFunctions;
+    protected override IOrderBy DefaultOrderFunction => DefaultListingOrderFunction;
+
     public async Task<Listing> CreateAsync(
         CreateListingRequest request,
         CancellationToken cancellationToken
@@ -58,10 +64,12 @@ internal class ListingRepository(
         ) ?? throw new InvalidOperationException("Updating Blob Urls failed.");
     }
 
-    public async Task<IEnumerable<ListingWithDetails>> GetAllAsync(
+    public async Task<PaginatedResult<ListingWithDetails>> GetAllPaginatedAsync(
+        PaginatedRequest paginatedRequest,
         CancellationToken cancellationToken
-    ) => await GetListings(
+    ) => await GetListingsPaginated(
         null,
+        paginatedRequest,
         cancellationToken
     );
 
@@ -137,4 +145,34 @@ internal class ListingRepository(
         listing => listing.ToListingWithDetails(),
         cancellationToken
     );
+
+    private async Task<PaginatedResult<ListingWithDetails>> GetListingsPaginated(
+        Expression<Func<ListingEntity, bool>>? predicate,
+        PaginatedRequest pagination,
+        CancellationToken cancellationToken
+    ) => await ExecutePaginatedQueryAsync(
+        ListingQuery,
+        predicate,
+        listing => listing.ToListingWithDetails(),
+        pagination,
+        cancellationToken
+    );
+
+    private static readonly ReadOnlyDictionary<string, IOrderBy> ListingOrderFunctions = new(
+        new Dictionary<string, IOrderBy>(StringComparer.OrdinalIgnoreCase)
+        {
+            {
+                nameof(Listing.Title),
+                new OrderBy<string>(listing => listing.Title)
+            },
+            {
+                nameof(Listing.Price),
+                new OrderBy<decimal>(listing => listing.Price)
+            }
+        }
+    );
+
+    private static readonly IOrderBy DefaultListingOrderFunction = ListingOrderFunctions[
+        nameof(Listing.Title)
+    ];
 }

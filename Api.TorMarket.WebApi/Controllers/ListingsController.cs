@@ -15,6 +15,8 @@ using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using Api.TorMarket.WebApi.DTOs.Responses;
+using Api.TorMarket.Application.Repositories;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -50,17 +52,20 @@ public sealed class ListingsController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetAllAsync(
-        [FromServices] IQueryHandler<GetAllListingsQuery, IEnumerable<ListingWithDetails>> mediator,
+        [FromServices] IQueryHandler<GetAllListingsQuery, PaginatedResult<ListingWithDetails>> mediator,
+        PaginatedRequest request,
         CancellationToken cancellationToken
     )
     {
         var result = await mediator.HandleAsync(
-            new GetAllListingsQuery(),
+            new GetAllListingsQuery(request),
             cancellationToken
         );
 
         return Ok(
-            result.ToResponseDto()
+            result.ToPaginatedResponseDto(
+                listing => listing.ToResponseDto()
+            )
         );
     }
 
