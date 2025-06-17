@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.Application.CQRS.Queries.Reviews.GetReviewByUserAndListingId;
 using Api.TorMarket.WebApi.Extensions.Results;
 using Api.TorMarket.Application.Abstractions.Mediator;
+using Api.TorMarket.WebApi.DTOs.Responses;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -45,7 +46,7 @@ public sealed class ReviewsController : ControllerBase
 
     [HttpGet]
     [Route("listing/{listingId}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingReview>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ReviewDto>))]
     public async Task<IActionResult> GetByListingIdAsync(
         [FromServices] IQueryHandler<GetReviewsByListingIdQuery, IEnumerable<ListingReview>> mediator,
         [FromRoute][Required] int listingId,
@@ -63,7 +64,7 @@ public sealed class ReviewsController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ListingWithReviewAndCategory))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReviewDto))]
     public async Task<IActionResult> GetByListingAndUserIdAsync(
         [FromServices] IQueryHandler<GetReviewByUserAndListingIdQuery, ListingWithReviewAndCategory> mediator,
         [FromBody][Required] GetReviewByUserAndListingIdDto request,

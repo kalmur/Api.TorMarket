@@ -43,7 +43,7 @@ public sealed class UsersController : ControllerBase
 
     [HttpGet]
     [Route("{providerId}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByProviderIdAsync(
         [FromServices] IQueryHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>> mediator,
@@ -66,7 +66,7 @@ public sealed class UsersController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
     public async Task<IActionResult> GetAllAsync(
         [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<User?>> mediator,
        CancellationToken cancellationToken
