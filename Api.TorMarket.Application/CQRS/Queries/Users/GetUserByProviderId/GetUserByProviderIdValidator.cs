@@ -3,7 +3,7 @@ using static Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId.Ge
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 
-internal class GetUserByProviderIdValidator(
+public class GetUserByProviderIdValidator(
     IUserRepository userRepository
 ) : IValidator<GetUserByProviderIdQuery, GetUserByProviderIdFailure>
 {
