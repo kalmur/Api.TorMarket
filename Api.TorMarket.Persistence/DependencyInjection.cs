@@ -52,6 +52,7 @@ public static class DependencyInjection
     ) => services
         .AddScoped<IListingRepository, ListingRepository>()
         .AddScoped<ICategoryRepository, CategoryRepository>()
+        .AddScoped<ICurrencyRepository, CurrencyRepository>()
         .AddScoped<IListingReviewRepository, ListingReviewRepository>()
         .AddScoped<IUserRepository, UserRepository>();
 }

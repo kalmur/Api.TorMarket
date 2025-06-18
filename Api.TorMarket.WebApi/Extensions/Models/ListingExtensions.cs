@@ -45,6 +45,7 @@ public static class ListingExtensions
     {
         UserId = request.UserId,
         CategoryName = request.CategoryName,
+        CurrencyCode = request.CurrencyCode,
         Title = request.Title,
         Price = request.Price,
         Description = request.Description,

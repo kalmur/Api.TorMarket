@@ -43,6 +43,7 @@ internal static class ListingEntityExtensions
     {
         UserId = request.UserId,
         CategoryId = request.CategoryId,
+        CurrencyId = request.CurrencyId,
         Title = request.ListingName,
         Price = request.Price,
         Description = request.Description

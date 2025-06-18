@@ -15,7 +15,6 @@ using Api.TorMarket.WebApi.Extensions.Models;
 using Api.TorMarket.WebApi.Extensions.Results;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.Application.Repositories;
 
 namespace Api.TorMarket.WebApi.Controllers;

@@ -19,7 +19,7 @@ internal sealed class CategoryEntityConfiguration : EntityConfigurationBase<Cate
             .ValueGeneratedOnAdd();
 
         builder
-            .Property(x => x.Name)
+            .Property(listingCategory => listingCategory.Name)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
             .HasMaxLength(Category.Name_MaxLength);
