@@ -7,10 +7,15 @@ namespace Api.TorMarket.WebApi.Controllers;
 
 [ApiController]
 [Route("api/v{apiVersion:apiVersion}/[controller]")]
-public sealed class BlobsController(
-    IBlobService blobService
-) : ControllerBase
+public sealed class BlobsController : ControllerBase
 {
+    private readonly IBlobService _blobService;
+
+    public BlobsController(IBlobService blobService)
+    {
+        _blobService = blobService;
+    }
+
     [HttpPost("upload")]
     [Consumes("multipart/form-data")]
     [ApiExplorerSettings(IgnoreApi = false)]
@@ -26,7 +31,7 @@ public sealed class BlobsController(
 
         await using var stream = form.File.OpenReadStream();
 
-        var blobUrl = await blobService.UploadFileFromStreamAsync(
+        var blobUrl = await _blobService.UploadFileFromStreamAsync(
             stream,
             form.File.FileName,
             form.File.ContentType,
@@ -45,7 +50,7 @@ public sealed class BlobsController(
         CancellationToken cancellationToken
     )
     {
-        await blobService.UploadFileAsync(
+        await _blobService.UploadFileAsync(
             request.FilePath,
             request.FileName,
             cancellationToken
@@ -61,7 +66,7 @@ public sealed class BlobsController(
         CancellationToken cancellationToken
     )
     {
-        await blobService.UploadContentAsync(
+        await _blobService.UploadContentAsync(
             request.Content,
             request.FileName,
             cancellationToken
@@ -77,7 +82,7 @@ public sealed class BlobsController(
         CancellationToken cancellationToken
     )
     {
-        await blobService.DeleteBlobAsync(
+        await _blobService.DeleteBlobAsync(
             blobName,
             cancellationToken
         );
@@ -92,7 +97,7 @@ public sealed class BlobsController(
         CancellationToken cancellationToken
     )
     {
-        var blob = await blobService.GetBlobAsync(
+        var blob = await _blobService.GetBlobAsync(
             blobName, 
             cancellationToken
         );
@@ -109,7 +114,7 @@ public sealed class BlobsController(
         CancellationToken cancellationToken
     )
     {
-        var blobs = await blobService.ListBlobsAsync(cancellationToken);
+        var blobs = await _blobService.ListBlobsAsync(cancellationToken);
 
         return Ok(blobs);
     }
