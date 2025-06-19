@@ -48,7 +48,7 @@ builder.Services
     });
 
 builder.Services
-    .AddApplicationDependencies(builder.Configuration)
+    .AddApplicationDependencies()
     .AddInfrastructureDependencies(builder.Configuration)
     .AddPersistenceDependencies(builder.Configuration)
     .AddControllers(options =>
