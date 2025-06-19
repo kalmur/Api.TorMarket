@@ -16,10 +16,14 @@ public static class DependencyInjection
         this IServiceCollection services
     ) => services.Scan(
         scan => scan.FromAssembliesOf(typeof(DependencyInjection))
-            .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
+            .AddClasses(
+                classes => classes.AssignableTo(typeof(IQueryHandler<,>))
+            )
             .AsImplementedInterfaces()
             .WithScopedLifetime()
-            .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
+            .AddClasses(
+                classes => classes.AssignableTo(typeof(ICommandHandler<,>))
+            )
             .AsImplementedInterfaces()
             .WithScopedLifetime()
     );
@@ -28,7 +32,9 @@ public static class DependencyInjection
         this IServiceCollection services
     ) => services.Scan(
         scan => scan.FromAssembliesOf(typeof(DependencyInjection))
-            .AddClasses(classes => classes.AssignableTo(typeof(IValidator<,>)))
+            .AddClasses(
+                classes => classes.AssignableTo(typeof(IValidator<,>))
+            )
             .AsImplementedInterfaces()
             .WithScopedLifetime()
     );
