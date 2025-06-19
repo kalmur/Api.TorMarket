@@ -5,14 +5,19 @@ using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
 
-public sealed class GetAllListingsHandler(
-    IListingRepository repository
-) : IQueryHandler<GetAllListingsQuery, PaginatedResult<ListingWithDetails>>
+public sealed class GetAllListingsHandler : IQueryHandler<GetAllListingsQuery, PaginatedResult<ListingWithDetails>>
 {
+    private readonly IListingRepository _repository;
+
+    public GetAllListingsHandler(IListingRepository repository)
+    {
+        _repository = repository;
+    }
+
     public async Task<PaginatedResult<ListingWithDetails>> HandleAsync(
-        GetAllListingsQuery request, 
+        GetAllListingsQuery request,
         CancellationToken cancellationToken
-    ) => await repository.GetAllPaginatedAsync(
+    ) => await _repository.GetAllPaginatedAsync(
         request.PaginatedRequest,
         cancellationToken
     );

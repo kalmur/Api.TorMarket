@@ -5,17 +5,26 @@ using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
-public class GetListingsByNameHandler(
-    IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
-    IListingRepository listingRepository
-) : IQueryHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>>
+public class GetListingsByNameHandler : IQueryHandler<GetListingsByNameQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>>
 {
+    private readonly IValidator<GetListingsByNameQuery, GetListingsByNameFailure> _validator;
+    private readonly IListingRepository _listingRepository;
+
+    public GetListingsByNameHandler(
+        IValidator<GetListingsByNameQuery, GetListingsByNameFailure> validator,
+        IListingRepository listingRepository
+    )
+    {
+        _validator = validator;
+        _listingRepository = listingRepository;
+    }
+
     public async Task<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByNameFailure>> HandleAsync(
         GetListingsByNameQuery query,
         CancellationToken cancellationToken
     )
     {
-        var validationErrors = await validator.ValidateAsync(
+        var validationErrors = await _validator.ValidateAsync(
             query,
             cancellationToken
         );
@@ -24,7 +33,7 @@ public class GetListingsByNameHandler(
             return validationErrors;
 
         return (
-            await listingRepository.GetByNameAsync(
+            await _listingRepository.GetByNameAsync(
                 query.Name,
                 cancellationToken
             )

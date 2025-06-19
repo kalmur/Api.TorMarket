@@ -5,17 +5,26 @@ using Api.TorMarket.Domain.Models;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-public sealed class GetCategoryByNameHandler(
-    IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
-    ICategoryRepository productCategoryRepository
-) : IQueryHandler<GetCategoryByNameQuery, ResultOrError<Category, GetCategoryByNameFailure>>
+public sealed class GetCategoryByNameHandler : IQueryHandler<GetCategoryByNameQuery, ResultOrError<Category, GetCategoryByNameFailure>>
 {
+    private readonly IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> _validator;
+    private readonly ICategoryRepository _productCategoryRepository;
+
+    public GetCategoryByNameHandler(
+        IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure> validator,
+        ICategoryRepository productCategoryRepository
+    )
+    {
+        _validator = validator;
+        _productCategoryRepository = productCategoryRepository;
+    }
+
     public async Task<ResultOrError<Category, GetCategoryByNameFailure>> HandleAsync(
-        GetCategoryByNameQuery query, 
+        GetCategoryByNameQuery query,
         CancellationToken cancellationToken
     )
     {
-        var validationErrors = await validator.ValidateAsync(
+        var validationErrors = await _validator.ValidateAsync(
             query,
             cancellationToken
         );
@@ -24,7 +33,7 @@ public sealed class GetCategoryByNameHandler(
             return validationErrors;
 
         return (
-            await productCategoryRepository.GetByNameAsync(
+            await _productCategoryRepository.GetByNameAsync(
                 query.Name,
                 cancellationToken
             )

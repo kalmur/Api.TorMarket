@@ -23,7 +23,7 @@ public static class DependencyInjection
 
     private static IServiceCollection LoadOptions(
         this IServiceCollection services,
-        IConfigurationManager configuration
+        IConfiguration configuration
     )
     {
         services

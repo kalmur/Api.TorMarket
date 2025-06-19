@@ -11,10 +11,15 @@ using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal sealed class ListingReviewRepository(
-    IApplicationDbContext context
-) : QuickRepo<ListingReviewEntity>, IListingReviewRepository
+internal sealed class ListingReviewRepository : QuickRepo<ListingReviewEntity>, IListingReviewRepository
 {
+    private readonly IApplicationDbContext _context;
+
+    public ListingReviewRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
     public async Task<ListingWithReviewAndCategory> CreateAsync(
         CreateListingReviewRequest request,
         CancellationToken cancellationToken
@@ -22,8 +27,8 @@ internal sealed class ListingReviewRepository(
     {
         var review = request.ToEntity();
 
-        context.ListingReview.Add(review);
-        await context.SaveChangesAsync(cancellationToken);
+        _context.ListingReview.Add(review);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return await GetByUserAndListingIdAsync(
             review.UserId,
@@ -52,7 +57,7 @@ internal sealed class ListingReviewRepository(
 
     // Private methods
     private IQueryable<ListingReviewEntity> ListingReviewQuery
-        => context.ListingReview
+        => _context.ListingReview
             .Include(lr => lr.User)
             .Include(lr => lr.Listing)
             .ThenInclude(l => l.Category);

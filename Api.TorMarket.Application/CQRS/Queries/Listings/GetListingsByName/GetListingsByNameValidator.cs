@@ -3,12 +3,17 @@ using static Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName.G
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByName;
 
-public sealed class GetListingByNameValidator(
-    IListingRepository listingRepository
-) : IValidator<GetListingsByNameQuery, GetListingsByNameFailure>
+public sealed class GetListingByNameValidator : IValidator<GetListingsByNameQuery, GetListingsByNameFailure>
 {
+    private readonly IListingRepository _listingRepository;
+
+    public GetListingByNameValidator(IListingRepository listingRepository)
+    {
+        _listingRepository = listingRepository;
+    }
+
     public async Task<GetListingsByNameFailure?> ValidateAsync(
-        GetListingsByNameQuery query, 
+        GetListingsByNameQuery query,
         CancellationToken cancellationToken
     )
     {
@@ -36,8 +41,8 @@ public sealed class GetListingByNameValidator(
         CancellationToken cancellationToken
     ) =>
         !(
-            await listingRepository.GetByNameAsync(
-                name, 
+            await _listingRepository.GetByNameAsync(
+                name,
                 cancellationToken
             )
         ).Any();

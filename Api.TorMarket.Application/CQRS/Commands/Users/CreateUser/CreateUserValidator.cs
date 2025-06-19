@@ -4,12 +4,17 @@ using static Api.TorMarket.Application.CQRS.Commands.Users.CreateUser.CreateUser
 
 namespace Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 
-public sealed class CreateUserValidator(
-    IUserRepository userRepository
-) : IValidator<CreateUserCommand, CreateUserFailure>
+public sealed class CreateUserValidator : IValidator<CreateUserCommand, CreateUserFailure>
 {
+    private readonly IUserRepository _userRepository;
+
+    public CreateUserValidator(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
     public async Task<CreateUserFailure?> ValidateAsync(
-        CreateUserCommand command, 
+        CreateUserCommand command,
         CancellationToken cancellationToken
     )
     {
@@ -36,11 +41,10 @@ public sealed class CreateUserValidator(
     private async Task<bool> UserExists(
         CreateUserCommand command,
         CancellationToken cancellationToken
-    ) => 
-        await userRepository.GetByProviderIdAsync(
-            command.ProviderId, 
-            cancellationToken
-        )
-     is not null;
+    ) =>
+        await _userRepository.GetByProviderIdAsync(
+                command.ProviderId,
+                cancellationToken
+            )
+            is not null;
 }
-

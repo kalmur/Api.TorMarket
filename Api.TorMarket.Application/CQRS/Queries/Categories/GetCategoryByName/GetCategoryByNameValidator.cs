@@ -3,10 +3,15 @@ using static Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName
 
 namespace Api.TorMarket.Application.CQRS.Queries.Categories.GetCategoryByName;
 
-public sealed class GetCategoryByNameValidator(
-    ICategoryRepository categoryRepository
-) : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
+public sealed class GetCategoryByNameValidator : IValidator<GetCategoryByNameQuery, GetCategoryByNameFailure>
 {
+    private readonly ICategoryRepository _categoryRepository;
+
+    public GetCategoryByNameValidator(ICategoryRepository categoryRepository)
+    {
+        _categoryRepository = categoryRepository;
+    }
+
     public async Task<GetCategoryByNameFailure?> ValidateAsync(
         GetCategoryByNameQuery command,
         CancellationToken cancellationToken
@@ -35,9 +40,8 @@ public sealed class GetCategoryByNameValidator(
         string categoryName,
         CancellationToken cancellationToken
     ) =>
-        await categoryRepository.GetByNameAsync(
-            categoryName,
-            cancellationToken
-        )
-     is null;
+        await _categoryRepository.GetByNameAsync(
+                categoryName,
+                cancellationToken
+        ) is null;
 }

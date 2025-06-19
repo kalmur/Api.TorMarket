@@ -3,12 +3,17 @@ using static Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId.Ge
 
 namespace Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 
-public class GetUserByProviderIdValidator(
-    IUserRepository userRepository
-) : IValidator<GetUserByProviderIdQuery, GetUserByProviderIdFailure>
+public class GetUserByProviderIdValidator : IValidator<GetUserByProviderIdQuery, GetUserByProviderIdFailure>
 {
+    private readonly IUserRepository _userRepository;
+
+    public GetUserByProviderIdValidator(IUserRepository userRepository)
+    {
+        _userRepository = userRepository;
+    }
+
     public async Task<GetUserByProviderIdFailure?> ValidateAsync(
-        GetUserByProviderIdQuery command, 
+        GetUserByProviderIdQuery command,
         CancellationToken cancellationToken
     )
     {
@@ -31,7 +36,7 @@ public class GetUserByProviderIdValidator(
     private async Task<bool> UserDoesNotExists(
         string providerId,
         CancellationToken cancellationToken
-    ) => await userRepository.GetByProviderIdAsync(
+    ) => await _userRepository.GetByProviderIdAsync(
         providerId,
         cancellationToken
     ) is null;

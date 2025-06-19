@@ -4,12 +4,17 @@ namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderI
 
 using static GetListingsByProviderIdFailure;
 
-public sealed class GetListingsByProviderIdValidator(
-    IUserRepository repository
-) : IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure>
+public sealed class GetListingsByProviderIdValidator : IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure>
 {
+    private readonly IUserRepository _repository;
+
+    public GetListingsByProviderIdValidator(IUserRepository repository)
+    {
+        _repository = repository;
+    }
+
     public async Task<GetListingsByProviderIdFailure?> ValidateAsync(
-        GetListingsByProviderIdQuery query, 
+        GetListingsByProviderIdQuery query,
         CancellationToken cancellationToken
     )
     {
@@ -34,7 +39,7 @@ public sealed class GetListingsByProviderIdValidator(
         CancellationToken cancellationToken
     ) =>
     (
-        await repository.GetByProviderIdAsync(
+        await _repository.GetByProviderIdAsync(
             providerId,
             cancellationToken
         )

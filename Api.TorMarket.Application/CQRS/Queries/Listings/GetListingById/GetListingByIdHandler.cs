@@ -1,18 +1,25 @@
 ﻿using Api.TorMarket.Application.Abstractions.Mediator;
+using Api.TorMarket.Application.CQRS.Queries.Listings.GetAllListings;
+using Api.TorMarket.Application.Repositories;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingById;
 
-public sealed class GetListingByIdHandler(
-    IListingRepository repository
-) : IQueryHandler<GetListingByIdQuery, ListingWithDetails>
+public sealed class GetAllListingsHandler : IQueryHandler<GetAllListingsQuery, PaginatedResult<ListingWithDetails>>
 {
-    public async Task<ListingWithDetails> HandleAsync(
-        GetListingByIdQuery request, 
+    private readonly IListingRepository _repository;
+
+    public GetAllListingsHandler(IListingRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public async Task<PaginatedResult<ListingWithDetails>> HandleAsync(
+        GetAllListingsQuery request,
         CancellationToken cancellationToken
-    ) => await repository.GetByIdAsync(
-        request.Id, 
+    ) => await _repository.GetAllPaginatedAsync(
+        request.PaginatedRequest,
         cancellationToken
     );
 }

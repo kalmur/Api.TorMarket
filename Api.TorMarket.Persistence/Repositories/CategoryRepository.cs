@@ -1,17 +1,22 @@
 ﻿using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
-using Api.TorMarket.Persistence.Abstractions;
 using Api.TorMarket.Persistence.Entities;
 using Api.TorMarket.Persistence.Entities.Extensions;
 using Api.TorMarket.Persistence.QuickRepo;
 using System.Linq.Expressions;
+using Api.TorMarket.Persistence.Abstractions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal sealed class CategoryRepository(
-    IApplicationDbContext context
-) : QuickRepo<CategoryEntity>, ICategoryRepository
+internal sealed class CategoryRepository : QuickRepo<CategoryEntity>, ICategoryRepository
 {
+    private readonly IApplicationDbContext _context;
+
+    public CategoryRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
     public async Task<Category?> GetByNameAsync(
         string name,
         CancellationToken cancellationToken
@@ -29,7 +34,7 @@ internal sealed class CategoryRepository(
 
     // Private methods
     private IQueryable<CategoryEntity> CategoryQuery
-        => context.Category;
+        => _context.Category;
 
     private async Task<Category?> GetCategory(
         Expression<Func<CategoryEntity, bool>>? predicate,

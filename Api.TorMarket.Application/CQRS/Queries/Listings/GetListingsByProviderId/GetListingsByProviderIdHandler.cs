@@ -5,17 +5,26 @@ using Api.TorMarket.Domain.Models.ViewModels;
 
 namespace Api.TorMarket.Application.CQRS.Queries.Listings.GetListingsByProviderId;
 
-public class GetListingsByProviderIdHandler(
-    IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> validator,
-    IListingRepository listingRepository
-) : IQueryHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>>
+public class GetListingsByProviderIdHandler : IQueryHandler<GetListingsByProviderIdQuery, ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>>
 {
+    private readonly IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> _validator;
+    private readonly IListingRepository _listingRepository;
+
+    public GetListingsByProviderIdHandler(
+        IValidator<GetListingsByProviderIdQuery, GetListingsByProviderIdFailure> validator,
+        IListingRepository listingRepository
+    )
+    {
+        _validator = validator;
+        _listingRepository = listingRepository;
+    }
+
     public async Task<ResultOrError<IEnumerable<ListingWithDetails?>, GetListingsByProviderIdFailure>> HandleAsync(
-        GetListingsByProviderIdQuery query, 
+        GetListingsByProviderIdQuery query,
         CancellationToken cancellationToken
     )
     {
-        var validationErrors = await validator.ValidateAsync(
+        var validationErrors = await _validator.ValidateAsync(
             query,
             cancellationToken
         );
@@ -24,7 +33,7 @@ public class GetListingsByProviderIdHandler(
             return validationErrors;
 
         return (
-            await listingRepository.GetByProviderIdAsync(
+            await _listingRepository.GetByProviderIdAsync(
                 query.ProviderId,
                 cancellationToken
             )

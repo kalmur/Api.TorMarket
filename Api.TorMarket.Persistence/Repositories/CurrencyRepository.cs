@@ -8,10 +8,15 @@ using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal class CurrencyRepository(
-    IApplicationDbContext context
-) : QuickRepo<CurrencyEntity>, ICurrencyRepository
+internal sealed class CurrencyRepository : QuickRepo<CurrencyEntity>, ICurrencyRepository
 {
+    private readonly IApplicationDbContext _context;
+
+    public CurrencyRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
     public Task<Currency?> GetByCodeAync(
         string codeName,
         CancellationToken cancellationToken
@@ -22,7 +27,7 @@ internal class CurrencyRepository(
 
     // Private methods
     private IQueryable<CurrencyEntity> CurrencyQuery
-        => context.Currency;
+        => _context.Currency;
 
     private async Task<Currency?> GetCurrency(
         Expression<Func<CurrencyEntity, bool>>? predicate,

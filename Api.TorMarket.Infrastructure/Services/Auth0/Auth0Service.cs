@@ -8,25 +8,34 @@ using Api.TorMarket.Application.Abstractions.IdentityProvider;
 
 namespace Api.TorMarket.Infrastructure.Services.Auth0;
 
-public class Auth0Service(
-    IAuth0QueryBuilder queryBuilder,
-    IHttpClientFactory httpClientFactory,
-    IOptions<Auth0Config> options
-) : IIdentityProviderService
+public class Auth0Service : IIdentityProviderService
 {
-    private readonly Auth0Config _options = options.Value;
+    private readonly IAuth0QueryBuilder _queryBuilder;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly Auth0Config _options;
+
+    public Auth0Service(
+        IAuth0QueryBuilder queryBuilder,
+        IHttpClientFactory httpClientFactory,
+        IOptions<Auth0Config> options
+    )
+    {
+        _queryBuilder = queryBuilder;
+        _httpClientFactory = httpClientFactory;
+        _options = options.Value;
+    }
 
     public async Task<IReadOnlyCollection<Auth0User>> GetUsersInformationAsync(
         IReadOnlyCollection<string> providerIds,
         CancellationToken token = default
     )
     {
-        var client = httpClientFactory.CreateClient(ClientNames.Auth0);
+        var client = _httpClientFactory.CreateClient(ClientNames.Auth0);
 
-        var query = queryBuilder.GenerateQueryString(providerIds);
+        var query = _queryBuilder.GenerateQueryString(providerIds);
 
         var response = await client.GetAsync(
-            $"{_options.GetUsersEndpoint}?{query}", 
+            $"{_options.GetUsersEndpoint}?{query}",
             token
         );
 
@@ -43,7 +52,7 @@ public class Auth0Service(
         CancellationToken token = default
     )
     {
-        var client = httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
+        var client = _httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
 
         var body = new Dictionary<string, string>
         {

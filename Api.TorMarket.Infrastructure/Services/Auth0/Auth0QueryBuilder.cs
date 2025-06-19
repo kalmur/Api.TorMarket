@@ -4,20 +4,18 @@ using Microsoft.Extensions.Options;
 
 namespace Api.TorMarket.Infrastructure.Services.Auth0;
 
-public class Auth0QueryBuilder(
-    IOptions<Auth0Config> options
-) : IAuth0QueryBuilder
+public class Auth0QueryBuilder : IAuth0QueryBuilder
 {
-    private readonly Auth0Config _options = options.Value;
+    private readonly Auth0Config _options;
 
-    /// <summary>
-    ///     Generates a query string based on ExternalProviderId's
-    /// </summary>
-    /// <param name="externalProviderIds">The Id's of the Users.</param>
-    /// <returns>A string.</returns>
-    public string GenerateQueryString(IReadOnlyCollection<string> externalProviderIds)
+    public Auth0QueryBuilder(IOptions<Auth0Config> options)
     {
-        var query = GetUserProfileQueryChunk(externalProviderIds);
+        _options = options.Value;
+    }
+
+    public string GenerateQueryString(IReadOnlyCollection<string> providerIds)
+    {
+        var query = GetUserProfileQueryChunk(providerIds);
 
         return _options!.UsersQuery!
             .Replace("{FieldsToInclude}", _options.FieldsToInclude)
@@ -26,6 +24,6 @@ public class Auth0QueryBuilder(
             .Replace("{SearchEngine}", _options.SearchEngine);
     }
 
-    private static string GetUserProfileQueryChunk(IEnumerable<string> externalProviderIds)
-        => "user_id:(\"" + string.Join("\"OR\"", externalProviderIds) + "\")";
+    private static string GetUserProfileQueryChunk(IEnumerable<string> providerIds)
+        => "user_id:(\"" + string.Join("\"OR\"", providerIds) + "\")";
 }

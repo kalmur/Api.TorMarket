@@ -10,10 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal class UserRepository(
-    IApplicationDbContext context
-) : QuickRepo<UserEntity>, IUserRepository
+internal class UserRepository : QuickRepo<UserEntity>, IUserRepository
 {
+    private readonly IApplicationDbContext _context;
+
+    public UserRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
     public async Task<User> CreateAsync(
         CreateUserRequest request,
         CancellationToken cancellationToken
@@ -21,9 +26,9 @@ internal class UserRepository(
     {
         var user = request.ToEntity();
 
-        context.User.Add(user);
+        _context.User.Add(user);
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return await GetByIdAsync(
             user.UserId, 
@@ -35,7 +40,7 @@ internal class UserRepository(
         string providerId,
         CancellationToken cancellationToken
     ) => await EntityFrameworkQueryableExtensions.ExecuteDeleteAsync(
-        context.User.Where(user => user.ProviderId == providerId),
+        _context.User.Where(user => user.ProviderId == providerId),
         cancellationToken
     );
 
@@ -64,7 +69,7 @@ internal class UserRepository(
 
     // Private methods
     private IQueryable<UserEntity> UserQuery
-        => context.User;
+        => _context.User;
 
     private async Task<User?> GetUser(
         Expression<Func<UserEntity, bool>>? predicate,

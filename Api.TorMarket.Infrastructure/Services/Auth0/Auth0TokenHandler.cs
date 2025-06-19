@@ -6,6 +6,7 @@ namespace Api.TorMarket.Infrastructure.Services.Auth0;
 public class Auth0TokenHandler : DelegatingHandler
 {
     private const string Scheme = "Bearer";
+
     private readonly IAuth0TokenCache _cache;
 
     public Auth0TokenHandler(IAuth0TokenCache cache)

@@ -2,5 +2,5 @@
 
 public interface IAuth0QueryBuilder
 {
-    string GenerateQueryString(IReadOnlyCollection<string> externalProviderIds);
+    string GenerateQueryString(IReadOnlyCollection<string> providerIds);
 }

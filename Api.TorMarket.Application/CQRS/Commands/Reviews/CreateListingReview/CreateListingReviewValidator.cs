@@ -1,16 +1,26 @@
-﻿
-using Api.TorMarket.Application.Repositories.Interfaces;
+﻿using Api.TorMarket.Application.Repositories.Interfaces;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Reviews.CreateListingReview;
 
-public sealed class CreateListingReviewValidator(
-    IListingRepository listingRepository,
-    IListingReviewRepository listingReviewRepository,
-    IUserRepository userRepository
-) : IValidator<CreateListingReviewCommand, CreateListingReviewFailure>
+public sealed class CreateListingReviewValidator : IValidator<CreateListingReviewCommand, CreateListingReviewFailure>
 {
+    private readonly IListingRepository _listingRepository;
+    private readonly IListingReviewRepository _listingReviewRepository;
+    private readonly IUserRepository _userRepository;
+
+    public CreateListingReviewValidator(
+        IListingRepository listingRepository,
+        IListingReviewRepository listingReviewRepository,
+        IUserRepository userRepository
+    )
+    {
+        _listingRepository = listingRepository;
+        _listingReviewRepository = listingReviewRepository;
+        _userRepository = userRepository;
+    }
+
     public async Task<CreateListingReviewFailure?> ValidateAsync(
-        CreateListingReviewCommand command, 
+        CreateListingReviewCommand command,
         CancellationToken cancellationToken
     )
     {
@@ -48,7 +58,7 @@ public sealed class CreateListingReviewValidator(
         int listingId,
         CancellationToken cancellationToken
     ) => (
-            await listingRepository.GetByIdAsync(
+            await _listingRepository.GetByIdAsync(
                 listingId,
                 cancellationToken
             )
@@ -58,7 +68,7 @@ public sealed class CreateListingReviewValidator(
         int userId,
         CancellationToken cancellationToken
     ) => (
-            await userRepository.GetByIdAsync(
+            await _userRepository.GetByIdAsync(
                 userId,
                 cancellationToken
             )
@@ -69,7 +79,7 @@ public sealed class CreateListingReviewValidator(
         int listingId,
         CancellationToken cancellationToken
     ) => (
-            await listingReviewRepository.GetByUserAndListingIdAsync(
+            await _listingReviewRepository.GetByUserAndListingIdAsync(
                 userId,
                 listingId,
                 cancellationToken

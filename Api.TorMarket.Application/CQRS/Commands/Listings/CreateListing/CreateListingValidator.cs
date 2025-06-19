@@ -3,11 +3,20 @@ using static Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing.Crea
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
-public sealed class CreateListingValidator(
-    IListingRepository listingRepository,
-    IUserRepository userRepository
-) : IValidator<CreateListingCommand, CreateListingFailure>
+public sealed class CreateListingValidator : IValidator<CreateListingCommand, CreateListingFailure>
 {
+    private readonly IListingRepository _listingRepository;
+    private readonly IUserRepository _userRepository;
+
+    public CreateListingValidator(
+        IListingRepository listingRepository,
+        IUserRepository userRepository
+    )
+    {
+        _listingRepository = listingRepository;
+        _userRepository = userRepository;
+    }
+
     public async Task<CreateListingFailure?> ValidateAsync(
         CreateListingCommand command, 
         CancellationToken cancellationToken
@@ -43,7 +52,7 @@ public sealed class CreateListingValidator(
         int userId,
         CancellationToken cancellationToken
     ) => 
-        await userRepository.GetByIdAsync(
+        await _userRepository.GetByIdAsync(
             userId, 
             cancellationToken
         )
@@ -53,7 +62,7 @@ public sealed class CreateListingValidator(
         int userId,
         string listingName,
         CancellationToken cancellationToken
-    ) => await listingRepository.ListingExists(
+    ) => await _listingRepository.ListingExists(
         userId, 
         listingName, 
         cancellationToken

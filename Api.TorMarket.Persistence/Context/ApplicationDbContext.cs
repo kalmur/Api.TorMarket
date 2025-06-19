@@ -15,10 +15,13 @@ using UserEntity = Api.TorMarket.Persistence.Entities.UserEntity;
 
 namespace Api.TorMarket.Persistence.Context;
 
-internal sealed class ApplicationDbContext(
-    DbContextOptions<ApplicationDbContext> options
-): DbContext(options), IApplicationDbContext
+internal sealed class ApplicationDbContext : DbContext, IApplicationDbContext
 {
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
+    }
+
     public DbSet<CategoryEntity> Category => Set<CategoryEntity>();
     public DbSet<CurrencyEntity> Currency => Set<CurrencyEntity>();
     public DbSet<ListingEntity> Listing => Set<ListingEntity>();

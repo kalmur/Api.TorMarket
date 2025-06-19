@@ -13,13 +13,18 @@ using System.Linq.Expressions;
 
 namespace Api.TorMarket.Persistence.Repositories;
 
-internal class ListingRepository(
-    IApplicationDbContext context
-) : QuickRepoPageable<ListingEntity>, IListingRepository
+internal class ListingRepository : QuickRepoPageable<ListingEntity>, IListingRepository
 {
     protected override uint MaximumPageSize => 50;
     protected override IReadOnlyDictionary<string, IOrderBy> OrderFunctions => ListingOrderFunctions;
     protected override IOrderBy DefaultOrderFunction => DefaultListingOrderFunction;
+
+    private readonly IApplicationDbContext _context;
+
+    public ListingRepository(IApplicationDbContext context)
+    {
+        _context = context;
+    }
 
     public async Task<Listing> CreateAsync(
         CreateListingRequest request,
@@ -28,8 +33,8 @@ internal class ListingRepository(
     {
         var listing = request.ToEntity();
 
-        context.Listing.Add(listing);
-        await context.SaveChangesAsync(cancellationToken);
+        _context.Listing.Add(listing);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return await GetByIdAsync(
             listing.ListingId,
@@ -43,7 +48,7 @@ internal class ListingRepository(
        CancellationToken cancellationToken
     )
     {
-        var listing = await context.Listing
+        var listing = await _context.Listing
             .Include(listing => listing.ListingBlobs)
             .SingleOrDefaultAsync(
                 listing => listing.ListingId == listingId,
@@ -56,7 +61,7 @@ internal class ListingRepository(
             isPrimary: true
         );
 
-        await context.SaveChangesAsync(cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
 
         return await GetByIdAsync(
             listing.ListingId,
@@ -113,7 +118,7 @@ internal class ListingRepository(
         int userId, 
         string listingName, 
         CancellationToken cancellationToken
-    ) => await context.Listing.AnyAsync(
+    ) => await _context.Listing.AnyAsync(
         listing => listing.User.UserId == userId &&
                    listing.Title.ToLower() == listingName.ToLower(),
         cancellationToken
@@ -121,7 +126,7 @@ internal class ListingRepository(
 
     // Private methods
     private IQueryable<ListingEntity> ListingQuery
-        => context.Listing
+        => _context.Listing
             .Include(listing => listing.User)
             .Include(listing => listing.Category)
             .Include(listing => listing.ListingBlobs);
