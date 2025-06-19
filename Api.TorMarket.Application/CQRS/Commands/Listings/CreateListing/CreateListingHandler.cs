@@ -7,8 +7,9 @@ namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
 public sealed class CreateListingHandler(
     IValidator<CreateListingCommand, CreateListingFailure> validator,
-    IListingRepository listingRepository,
-    ICategoryRepository categoryRepository
+    ICategoryRepository categoryRepository,
+    ICurrencyRepository currencyRepository,
+    IListingRepository listingRepository
 ) : ICommandHandler<CreateListingCommand, ResultOrError<Listing, CreateListingFailure>>
 {
     public async Task<ResultOrError<Listing, CreateListingFailure>> HandleAsync(
@@ -29,8 +30,16 @@ public sealed class CreateListingHandler(
             cancellationToken
         );
 
+        var currency = await currencyRepository.GetByCodeAync(
+            command.CurrencyCode,
+            cancellationToken
+        );
+
         return await listingRepository.CreateAsync(
-            command.ToRequest(category!.CategoryId),
+            command.ToRequest(
+                category!.CategoryId,
+                currency!.CurrencyId
+            ),
             cancellationToken
         );
     }

@@ -20,6 +20,7 @@ internal sealed class ApplicationDbContext(
 ): DbContext(options), IApplicationDbContext
 {
     public DbSet<CategoryEntity> Category => Set<CategoryEntity>();
+    public DbSet<CurrencyEntity> Currency => Set<CurrencyEntity>();
     public DbSet<ListingEntity> Listing => Set<ListingEntity>();
     public DbSet<ListingBlobEntity> ListingBlob => Set<ListingBlobEntity>();
     public DbSet<ListingReviewEntity> ListingReview => Set<ListingReviewEntity>();

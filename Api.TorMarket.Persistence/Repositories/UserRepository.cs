@@ -34,9 +34,10 @@ internal class UserRepository(
     public async Task DeleteAsync(
         string providerId,
         CancellationToken cancellationToken
-    ) => await context.User
-        .Where(user => user.ProviderId == providerId)
-        .ExecuteDeleteAsync(cancellationToken);
+    ) => await EntityFrameworkQueryableExtensions.ExecuteDeleteAsync(
+        context.User.Where(user => user.ProviderId == providerId),
+        cancellationToken
+    );
 
     public async Task<User?> GetByIdAsync(
         int userId, 

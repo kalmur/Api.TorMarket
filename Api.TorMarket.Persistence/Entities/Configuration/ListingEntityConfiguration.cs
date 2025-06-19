@@ -66,6 +66,12 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
+            .HasOne(listing => listing.Currency)
+            .WithMany(currency => currency.Listings)
+            .HasForeignKey(listing => listing.CurrencyId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder
             .HasOne(listing => listing.User)
             .WithMany(u => u.Listings)
             .HasForeignKey(p => p.UserId)

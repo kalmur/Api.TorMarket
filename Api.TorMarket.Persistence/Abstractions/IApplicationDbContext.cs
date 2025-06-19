@@ -6,6 +6,7 @@ namespace Api.TorMarket.Persistence.Abstractions;
 internal interface IApplicationDbContext
 {
     DbSet<CategoryEntity> Category { get; }
+    DbSet<CurrencyEntity> Currency { get; }
     DbSet<ListingEntity> Listing { get; }
     DbSet<ListingBlobEntity> ListingBlob { get; }
     DbSet<ListingReviewEntity> ListingReview { get; }

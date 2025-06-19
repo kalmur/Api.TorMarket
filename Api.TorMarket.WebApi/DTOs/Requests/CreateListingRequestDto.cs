@@ -14,6 +14,10 @@ public sealed record CreateListingRequestDto
     [JsonPropertyName("categoryName")]
     public required string CategoryName { get; init; }
 
+    [Required]
+    [JsonPropertyName("currencyCode")]
+    public required string CurrencyCode { get; init; }
+
     [Required(AllowEmptyStrings = false)]
     [StringLength(Listing.Name_MaxLength)]
     [JsonPropertyName("title")]

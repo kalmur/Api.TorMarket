@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250616101745_InitialMigration")]
+    [Migration("20250618231823_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Api.TorMarket.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -84,6 +84,119 @@ namespace Api.TorMarket.Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CurrencyEntity", b =>
+                {
+                    b.Property<int>("CurrencyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CurrencyId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnOrder(2);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnOrder(4);
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnOrder(3);
+
+                    b.HasKey("CurrencyId");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Currency", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CurrencyId = 1,
+                            Code = "USD",
+                            Name = "United States Dollar",
+                            Symbol = "$"
+                        },
+                        new
+                        {
+                            CurrencyId = 2,
+                            Code = "EUR",
+                            Name = "Euro",
+                            Symbol = "€"
+                        },
+                        new
+                        {
+                            CurrencyId = 3,
+                            Code = "JPY",
+                            Name = "Japanese Yen",
+                            Symbol = "¥"
+                        },
+                        new
+                        {
+                            CurrencyId = 4,
+                            Code = "GBP",
+                            Name = "British Pound Sterling",
+                            Symbol = "£"
+                        },
+                        new
+                        {
+                            CurrencyId = 5,
+                            Code = "AUD",
+                            Name = "Australian Dollar",
+                            Symbol = "$"
+                        },
+                        new
+                        {
+                            CurrencyId = 6,
+                            Code = "BTC",
+                            Name = "Bitcoin",
+                            Symbol = "₿"
+                        },
+                        new
+                        {
+                            CurrencyId = 7,
+                            Code = "ETH",
+                            Name = "Ethereum",
+                            Symbol = "Ξ"
+                        },
+                        new
+                        {
+                            CurrencyId = 8,
+                            Code = "SOL",
+                            Name = "Solana",
+                            Symbol = "◎"
+                        },
+                        new
+                        {
+                            CurrencyId = 9,
+                            Code = "XRP",
+                            Name = "Ripple",
+                            Symbol = "X"
+                        },
+                        new
+                        {
+                            CurrencyId = 10,
+                            Code = "ADA",
+                            Name = "Cardano",
+                            Symbol = "₳"
+                        });
+                });
+
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.ListingBlobEntity", b =>
                 {
                     b.Property<int>("ListingBlobId")
@@ -134,6 +247,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnOrder(7);
 
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
@@ -160,6 +276,8 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasKey("ListingId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("CurrencyId");
 
                     b.HasIndex("UserId");
 
@@ -521,6 +639,12 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Api.TorMarket.Persistence.Entities.CurrencyEntity", "Currency")
+                        .WithMany("Listings")
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Listings")
                         .HasForeignKey("UserId")
@@ -528,6 +652,8 @@ namespace Api.TorMarket.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Currency");
 
                     b.Navigation("User");
                 });
@@ -650,6 +776,11 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CategoryEntity", b =>
+                {
+                    b.Navigation("Listings");
+                });
+
+            modelBuilder.Entity("Api.TorMarket.Persistence.Entities.CurrencyEntity", b =>
                 {
                     b.Navigation("Listings");
                 });

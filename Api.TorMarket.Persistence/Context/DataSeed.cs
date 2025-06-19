@@ -10,6 +10,7 @@ internal static class DataSeed
     {
         SeedRoles(builder);
         SeedCategories(builder);
+        SeedCurrencies(builder);
         SeedOrderStatuses(builder);
         SeedAdminUser(builder);
     }
@@ -24,6 +25,39 @@ internal static class DataSeed
         builder.Entity<RoleEntity>().HasData(roles);
     }
 
+    private static void SeedCategories(ModelBuilder builder)
+    {
+        IImmutableList<CategoryEntity> categories = ImmutableList.Create(
+            CreateCategory(1, "Electronics"),
+            CreateCategory(2, "Games"),
+            CreateCategory(3, "Toys"),
+            CreateCategory(4, "Clothing"),
+            CreateCategory(5, "Vehicles"),
+            CreateCategory(6, "Pets"),
+            CreateCategory(7, "Other")
+        );
+
+        builder.Entity<CategoryEntity>().HasData(categories);
+    }
+
+    private static void SeedCurrencies(ModelBuilder builder)
+    {
+        IImmutableList<CurrencyEntity> currencies = ImmutableList.Create(
+            CreateCurrency(1, "USD", "$", "United States Dollar"),
+            CreateCurrency(2, "EUR", "€", "Euro"),
+            CreateCurrency(3, "JPY", "¥", "Japanese Yen"),
+            CreateCurrency(4, "GBP", "£", "British Pound Sterling"),
+            CreateCurrency(5, "AUD", "$", "Australian Dollar"),
+            CreateCurrency(6, "BTC", "₿", "Bitcoin"),
+            CreateCurrency(7, "ETH", "Ξ", "Ethereum"),
+            CreateCurrency(8, "SOL", "◎", "Solana"),
+            CreateCurrency(9, "XRP", "X", "Ripple"),
+            CreateCurrency(10, "ADA", "₳", "Cardano")
+        );
+
+        builder.Entity<CurrencyEntity>().HasData(currencies);
+    }
+
     private static void SeedOrderStatuses(ModelBuilder builder)
     {
         IImmutableList<OrderStatusEntity> orderStatuses = ImmutableList.Create(
@@ -35,21 +69,6 @@ internal static class DataSeed
         );
 
         builder.Entity<OrderStatusEntity>().HasData(orderStatuses);
-    }
-
-    private static void SeedCategories(ModelBuilder builder)
-    {
-        IImmutableList<CategoryEntity> categories = ImmutableList.Create(
-            CreateListingCategory(1, "Electronics"),
-            CreateListingCategory(2, "Games"),
-            CreateListingCategory(3, "Toys"),
-            CreateListingCategory(4, "Clothing"),
-            CreateListingCategory(5, "Vehicles"),
-            CreateListingCategory(6, "Pets"),
-            CreateListingCategory(7, "Other")
-        );
-
-        builder.Entity<CategoryEntity>().HasData(categories);
     }
 
     private static void SeedAdminUser(ModelBuilder builder)
@@ -75,6 +94,28 @@ internal static class DataSeed
         Name = roleName
     };
 
+    private static CategoryEntity CreateCategory(
+        int listingCategoryId,
+        string categoryName
+    ) => new()
+    {
+        CategoryId = listingCategoryId,
+        Name = categoryName
+    };
+
+    private static CurrencyEntity CreateCurrency(
+       int currencyId,
+       string code,
+       string symbol,
+       string name
+   ) => new()
+   {
+       CurrencyId = currencyId,
+       Code = code,
+       Symbol = symbol,
+       Name = name
+   };
+
     private static OrderStatusEntity CreateOrderStatus(
         int orderStatusId,
         string statusName
@@ -82,14 +123,5 @@ internal static class DataSeed
     {
         OrderStatusId = orderStatusId,
         Status = statusName
-    };
-
-    private static CategoryEntity CreateListingCategory(
-        int listingCategoryId,
-        string categoryName
-    ) => new()
-    {
-        CategoryId = listingCategoryId,
-        Name = categoryName
     };
 }
