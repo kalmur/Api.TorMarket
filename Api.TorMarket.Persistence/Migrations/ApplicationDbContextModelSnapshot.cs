@@ -119,7 +119,7 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Currency", (string)null);
+                    b.ToTable("Currencies", (string)null);
 
                     b.HasData(
                         new
@@ -242,29 +242,30 @@ namespace Api.TorMarket.Persistence.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnOrder(7);
+                        .HasColumnOrder(8);
 
                     b.Property<int>("CurrencyId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(4);
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)")
-                        .HasColumnOrder(6);
+                        .HasColumnOrder(7);
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnOrder(5);
+                        .HasColumnOrder(6);
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
-                        .HasColumnOrder(4);
+                        .HasColumnOrder(5);
 
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
-                        .HasColumnOrder(8);
+                        .HasColumnOrder(9);
 
                     b.Property<int>("UserId")
                         .HasColumnType("int")

@@ -2,7 +2,7 @@
 
 internal sealed class TableNames
 {
-    internal const string Currency = nameof(Currency);
+    internal const string Currencies = nameof(Currencies);
     internal const string Categories = nameof(Categories);
     internal const string Listings = nameof(Listings);
     internal const string ListingBlobs = nameof(ListingBlobs);

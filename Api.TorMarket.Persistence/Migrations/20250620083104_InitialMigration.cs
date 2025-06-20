@@ -27,7 +27,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Currency",
+                name: "Currencies",
                 columns: table => new
                 {
                     CurrencyId = table.Column<int>(type: "int", nullable: false)
@@ -38,7 +38,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Currency", x => x.CurrencyId);
+                    table.PrimaryKey("PK_Currencies", x => x.CurrencyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,12 +96,12 @@ namespace Api.TorMarket.Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CurrencyId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CurrencyId = table.Column<int>(type: "int", nullable: false)
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,9 +112,9 @@ namespace Api.TorMarket.Persistence.Migrations
                         principalTable: "Categories",
                         principalColumn: "CategoryId");
                     table.ForeignKey(
-                        name: "FK_Listings_Currency_CurrencyId",
+                        name: "FK_Listings_Currencies_CurrencyId",
                         column: x => x.CurrencyId,
-                        principalTable: "Currency",
+                        principalTable: "Currencies",
                         principalColumn: "CurrencyId");
                     table.ForeignKey(
                         name: "FK_Listings_Users_UserId",
@@ -309,7 +309,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Currency",
+                table: "Currencies",
                 columns: new[] { "CurrencyId", "Code", "Name", "Symbol" },
                 values: new object[,]
                 {
@@ -357,14 +357,14 @@ namespace Api.TorMarket.Persistence.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Currency_Code",
-                table: "Currency",
+                name: "IX_Currencies_Code",
+                table: "Currencies",
                 column: "Code",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Currency_Name",
-                table: "Currency",
+                name: "IX_Currencies_Name",
+                table: "Currencies",
                 column: "Name",
                 unique: true);
 
@@ -487,7 +487,7 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Currency");
+                name: "Currencies");
 
             migrationBuilder.DropTable(
                 name: "Users");

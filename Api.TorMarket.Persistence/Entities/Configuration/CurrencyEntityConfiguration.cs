@@ -8,7 +8,7 @@ namespace Api.TorMarket.Persistence.Entities.Configuration;
 
 internal sealed class CurrencyEntityConfiguration : EntityConfigurationBase<CurrencyEntity>
 {
-    protected override string TableName => TableNames.Currency;
+    protected override string TableName => TableNames.Currencies;
 
     protected override void ConfigureColumns(EntityTypeBuilder<CurrencyEntity> builder)
     {

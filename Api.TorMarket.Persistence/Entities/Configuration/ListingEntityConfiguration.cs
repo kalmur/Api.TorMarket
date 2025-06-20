@@ -29,6 +29,11 @@ internal sealed class ListingEntityConfiguration : EntityConfigurationBase<Listi
             .IsRequired();
 
         builder
+            .Property(listing => listing.CurrencyId)
+            .HasColumnOrder(ColumnOrder++)
+            .IsRequired();
+
+        builder
             .Property(listing => listing.Title)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired()
