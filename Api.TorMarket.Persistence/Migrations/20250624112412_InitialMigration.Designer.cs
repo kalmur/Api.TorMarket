@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250620083104_InitialMigration")]
+    [Migration("20250624112412_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -333,7 +333,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         .HasColumnType("datetimeoffset")
                         .HasColumnOrder(5);
 
-                    b.Property<int>("StatusId")
+                    b.Property<int>("OrderStatusId")
                         .HasColumnType("int")
                         .HasColumnOrder(3);
 

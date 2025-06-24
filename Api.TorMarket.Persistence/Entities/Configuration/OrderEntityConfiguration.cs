@@ -23,7 +23,7 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .IsRequired();
 
         builder
-            .Property(order => order.StatusId)
+            .Property(order => order.OrderStatusId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
