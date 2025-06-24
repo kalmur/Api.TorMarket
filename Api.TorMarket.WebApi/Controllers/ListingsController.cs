@@ -52,7 +52,7 @@ public sealed class ListingsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetAllAsync(
         [FromServices] IQueryHandler<GetAllListingsQuery, PaginatedResult<ListingWithDetails>> mediator,
-        PaginatedRequest request,
+        [FromQuery] PaginatedRequest request,
         CancellationToken cancellationToken
     )
     {
