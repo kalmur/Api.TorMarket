@@ -124,6 +124,31 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    OrderDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_OrderStatuses_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "OrderStatuses",
+                        principalColumn: "OrderStatusId");
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShoppingCarts",
                 columns: table => new
                 {
@@ -213,61 +238,6 @@ namespace Api.TorMarket.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ShoppingCartItems",
-                columns: table => new
-                {
-                    ShoppingCartItemId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
-                    ListingId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemId);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_Listings_ListingId",
-                        column: x => x.ListingId,
-                        principalTable: "Listings",
-                        principalColumn: "ListingId");
-                    table.ForeignKey(
-                        name: "FK_ShoppingCartItems_ShoppingCarts_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
-                        principalTable: "ShoppingCarts",
-                        principalColumn: "ShoppingCartId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Orders",
-                columns: table => new
-                {
-                    OrderId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    OrderDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
-                    table.ForeignKey(
-                        name: "FK_Orders_OrderStatuses_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "OrderStatuses",
-                        principalColumn: "OrderStatusId");
-                    table.ForeignKey(
-                        name: "FK_Orders_UserAddresses_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "UserAddresses",
-                        principalColumn: "UserAddressId");
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "OrderLines",
                 columns: table => new
                 {
@@ -292,6 +262,31 @@ namespace Api.TorMarket.Persistence.Migrations
                         principalTable: "Orders",
                         principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
+                {
+                    ShoppingCartItemId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShoppingCartId = table.Column<int>(type: "int", nullable: false),
+                    ListingId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => x.ShoppingCartItemId);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Listings_ListingId",
+                        column: x => x.ListingId,
+                        principalTable: "Listings",
+                        principalColumn: "ListingId");
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_ShoppingCarts_ShoppingCartId",
+                        column: x => x.ShoppingCartId,
+                        principalTable: "ShoppingCarts",
+                        principalColumn: "ShoppingCartId");
                 });
 
             migrationBuilder.InsertData(
@@ -469,6 +464,9 @@ namespace Api.TorMarket.Persistence.Migrations
                 name: "ShoppingCartItems");
 
             migrationBuilder.DropTable(
+                name: "UserAddresses");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -479,9 +477,6 @@ namespace Api.TorMarket.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderStatuses");
-
-            migrationBuilder.DropTable(
-                name: "UserAddresses");
 
             migrationBuilder.DropTable(
                 name: "Categories");

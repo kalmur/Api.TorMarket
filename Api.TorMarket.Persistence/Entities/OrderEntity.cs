@@ -12,7 +12,6 @@ internal class OrderEntity : AuditableEntity
     internal required DateTimeOffset OrderDate { get; set; }
 
     internal virtual UserEntity User { get; set; } = null!;
-    internal virtual UserAddressEntity UserAddress { get; set; } = null!;
     internal virtual OrderStatusEntity OrderStatus { get; set; } = null!;
 
     internal virtual ICollection<OrderLineEntity> OrderLines { get; set; } = null!;

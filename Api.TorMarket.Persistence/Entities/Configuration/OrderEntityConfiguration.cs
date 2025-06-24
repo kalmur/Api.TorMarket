@@ -1,4 +1,5 @@
-﻿using Api.TorMarket.Persistence.Constants;
+﻿using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Persistence.Constants;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Api.TorMarket.Persistence.Entities.Configuration.Common;
@@ -30,7 +31,7 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
         builder
             .Property(order => order.TotalPrice)
             .HasColumnOrder(ColumnOrder++)
-            .HasColumnType("decimal(18,2)")
+            .HasColumnType(Order.TotalPrice_ColumnType)
             .IsRequired();
 
         builder
@@ -56,13 +57,6 @@ internal sealed class OrderEntityConfiguration : EntityConfigurationBase<OrderEn
             .WithMany(status => status.Orders)
             .HasForeignKey(status => status.OrderId)
             .HasPrincipalKey(order => order.OrderStatusId)
-            .OnDelete(DeleteBehavior.NoAction);
-
-        // TODO - Confirm
-        builder
-            .HasOne(order => order.UserAddress)
-            .WithMany()
-            .HasForeignKey(o => o.OrderId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 

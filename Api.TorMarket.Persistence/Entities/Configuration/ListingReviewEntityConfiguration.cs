@@ -13,27 +13,27 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
     protected override void ConfigureColumns(EntityTypeBuilder<ListingReviewEntity> builder)
     {
         builder
-            .Property(x => x.UserId)
+            .Property(listingReview => listingReview.UserId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.ListingId)
+            .Property(listingReview => listingReview.ListingId)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Rating)
+            .Property(listingReview => listingReview.Rating)
             .HasColumnOrder(ColumnOrder++)
             .IsRequired();
 
         builder
-            .Property(x => x.Comment)
+            .Property(listingReview => listingReview.Comment)
             .HasColumnOrder(ColumnOrder++)
             .HasMaxLength(ListingReview.Comment_MaxLength);
 
         builder
-            .Property(x => x.CreatedDate)
+            .Property(listingReview => listingReview.CreatedDate)
             .HasColumnOrder(ColumnOrder++);
 
         builder
@@ -53,26 +53,25 @@ internal sealed class ListingReviewEntityConfiguration : EntityConfigurationBase
             );
 
         builder
-            .HasOne(x => x.Listing)
-            .WithMany(x => x.ListingReviews)
-            .HasForeignKey(x => x.ListingId)
+            .HasOne(listingReview => listingReview.Listing)
+            .WithMany(listing => listing.ListingReviews)
+            .HasForeignKey(listingReview => listingReview.ListingId)
             .OnDelete(DeleteBehavior.NoAction);
 
         builder
             .HasOne(listingReview => listingReview.User)
-            .WithMany(x => x.ListingReviews)
-            .HasForeignKey(x => x.UserId)
+            .WithMany(user => user.ListingReviews)
+            .HasForeignKey(listingReview => listingReview.UserId)
             .OnDelete(DeleteBehavior.NoAction);
     }
 
     protected override void ConfigureIndexes(EntityTypeBuilder<ListingReviewEntity> builder)
     {
-        // TODO - Remove in case there are too many updates on the entity
         builder
-            .HasIndex(pr => new
+            .HasIndex(listingReview => new
             {
-                pr.UserId,
-                pr.ListingId
+                listingReview.UserId,
+                listingReview.ListingId
             })
             .IsUnique();
     }

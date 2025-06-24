@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.TorMarket.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250624112412_InitialMigration")]
+    [Migration("20250624123835_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -686,12 +686,6 @@ namespace Api.TorMarket.Persistence.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Api.TorMarket.Persistence.Entities.UserAddressEntity", "UserAddress")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("Api.TorMarket.Persistence.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("OrderId")
@@ -701,8 +695,6 @@ namespace Api.TorMarket.Persistence.Migrations
                     b.Navigation("OrderStatus");
 
                     b.Navigation("User");
-
-                    b.Navigation("UserAddress");
                 });
 
             modelBuilder.Entity("Api.TorMarket.Persistence.Entities.OrderLineEntity", b =>
