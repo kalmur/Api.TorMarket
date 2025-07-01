@@ -69,7 +69,7 @@ public sealed class ListingsController : ControllerBase
     }
 
     [HttpGet]
-    [Route("id/{listingId:int}")]
+    [Route("{listingId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ListingWithDetailsDto>))]
     public async Task<IActionResult> GetByIdAsync(
         [FromServices] IQueryHandler<GetListingByIdQuery, ListingWithDetails> mediator,
