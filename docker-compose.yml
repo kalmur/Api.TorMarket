@@ -10,12 +10,12 @@ services:
     depends_on:
       - db
     environment:
-      - ConnectionStrings__Default=Server=db;Database=TorMarketDb;User=sa;Password=Your_password123;
+      - ConnectionStrings__Default=Server=db;Database=TorMarketDb;User=sa;Password=Your_admin123;
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      SA_PASSWORD: "Your_password123"
+      SA_PASSWORD: "Your_admin123"
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
