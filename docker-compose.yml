@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  webapi:
+  api.tormarket.webapi:
     build:
       context: .
       dockerfile: Api.TorMarket.WebApi/Dockerfile
@@ -10,7 +8,8 @@ services:
     depends_on:
       - db
     environment:
-      - ConnectionStrings__Default=Server=db;Database=TorMarketDb;User=sa;Password=Your_admin123;
+      - RUN_MIGRATIONS_IN_DOCKER=true
+      - ConnectionStrings__Default=Server=db;Database=TorMarketDb;User=sa;Password=Your_admin123;TrustServerCertificate=True;Encrypt=False;
 
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
