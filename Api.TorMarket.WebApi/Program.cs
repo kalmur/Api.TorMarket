@@ -3,6 +3,8 @@ using Api.TorMarket.Infrastructure;
 using Api.TorMarket.Persistence;
 using Asp.Versioning;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +49,27 @@ builder.Services
         });
     });
 
+//TODO - Load from configuration
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(
+        JwtBearerDefaults.AuthenticationScheme, 
+        options =>
+        {
+            options.Authority = "https://tormarket.us.auth0.com/";
+            options.Audience = "https://tormarket.com/api";
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+            };
+        }
+    );
+
+builder.Services.AddAuthorization();
+
 builder.Services
     .AddApplicationDependencies()
     .AddInfrastructureDependencies(builder.Configuration)
@@ -65,6 +88,7 @@ app.UseSwaggerUI();
 
 app.UseCors();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using Api.TorMarket.WebApi.Extensions.Results;
 using Api.TorMarket.Application.Abstractions.Mediator;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Api.TorMarket.WebApi.Controllers;
 
@@ -65,6 +66,7 @@ public sealed class UsersController : ControllerBase
             );
     }
 
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
     public async Task<IActionResult> GetAllAsync(

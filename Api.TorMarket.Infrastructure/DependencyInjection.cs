@@ -41,6 +41,24 @@ public static class DependencyInjection
         return services;
     }
 
+    private static IServiceCollection AddAzureServices(
+        this IServiceCollection services,
+        IConfigurationManager configuration
+    )
+    {
+        var azureConfig = AzureConfig.LoadFromConfiguration(configuration);
+
+        services.AddSingleton(
+            _ => new BlobServiceClient(
+                azureConfig.ConnectionString
+            )
+        );
+
+        services.AddSingleton<IBlobService, BlobService>();
+
+        return services;
+    }
+
     private static IServiceCollection AddAuth0Services(
         this IServiceCollection services,
         IConfiguration configuration
@@ -77,23 +95,5 @@ public static class DependencyInjection
     {
         services.AddFusionCache(Constants.FusionCacheInstance);
         services.AddScoped<IAuth0TokenCache, Auth0TokenCache>();
-    }
-
-    private static IServiceCollection AddAzureServices(
-        this IServiceCollection services, 
-        IConfigurationManager configuration
-    )
-    {
-        var azureConfig = AzureConfig.LoadFromConfiguration(configuration);
-
-        services.AddSingleton(
-            _ => new BlobServiceClient(
-                azureConfig.ConnectionString
-            )
-        );
-
-        services.AddSingleton<IBlobService, BlobService>();
-
-        return services;
     }
 }
