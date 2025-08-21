@@ -77,7 +77,7 @@ internal static class DataSeed
         {
             UserId = 1,
             RoleId = 1,
-            ProviderId = "auth0|6821c63e7bd4b1c29438d9e3"
+            ProviderId = "auth0|68a5d34d77f7ffc81f90691f"
         };
 
         builder.Entity<UserEntity>().HasData(adminUser);

@@ -612,7 +612,7 @@ namespace Api.TorMarket.Persistence.Migrations
                         {
                             UserId = 1,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProviderId = "auth0|6821c63e7bd4b1c29438d9e3",
+                            ProviderId = "auth0|68a5d34d77f7ffc81f90691f",
                             RoleId = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
