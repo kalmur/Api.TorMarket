@@ -67,6 +67,7 @@ public sealed class UsersController : ControllerBase
     }
 
     [Authorize]
+    //[Authorize("read:messages")]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
     public async Task<IActionResult> GetAllAsync(

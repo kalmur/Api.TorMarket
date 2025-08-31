@@ -7,10 +7,15 @@ using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
 using Api.TorMarket.Infrastructure.Services.Blob;
 using Api.TorMarket.Application.Abstractions.Blob;
 using Api.TorMarket.Application.Abstractions.IdentityProvider;
+using Api.TorMarket.Infrastructure.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Api.TorMarket.Infrastructure;
 
-public static class DependencyInjection
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureDependencies(
         this IServiceCollection services,
@@ -19,7 +24,11 @@ public static class DependencyInjection
         services
             .LoadOptions(configuration)
             .AddAzureServices(configuration)
-            .AddAuth0Services(configuration);
+            .AddAuth0Services(configuration)
+            .AddAuthorizationServices()
+            .AddAuthentication()
+            .AddAuthorization();
+
 
     private static IServiceCollection LoadOptions(
         this IServiceCollection services,
@@ -84,6 +93,58 @@ public static class DependencyInjection
             config.ClientSecret = options.ClientSecret;
             config.Audience = options!.Audience;
         });
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorizationServices(
+        this IServiceCollection services
+    ) =>
+        services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+
+    private static IServiceCollection AddAuthentication(
+       this IServiceCollection services
+    )
+    {
+        services
+            .AddAuthentication("Bearer")
+            .AddJwtBearer(
+                JwtBearerDefaults.AuthenticationScheme,
+                options =>
+                {
+                    options.Authority = "https://tormarket.us.auth0.com/";
+                    options.Audience = "https://tormarket.com/api";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = ClaimTypes.NameIdentifier,
+                        RoleClaimType = "permissions",
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                    };
+                }
+            );
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorization(
+        this IServiceCollection services,
+        IConfiguration config
+    )
+    {
+        var auth0Options = Auth0Config.LoadFromConfiguration(config);
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("read:messages", policy => 
+                policy.Requirements.Add(
+                    new HasScopeRequirement("read:messages", auth0Options.Domain)
+                    )
+                );
+            }
+    );
 
         return services;
     }

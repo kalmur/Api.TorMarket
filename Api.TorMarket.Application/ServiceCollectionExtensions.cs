@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Api.TorMarket.Application;
 
-public static class DependencyInjection
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationDependencies(
         this IServiceCollection services 
@@ -15,7 +15,7 @@ public static class DependencyInjection
     private static IServiceCollection AddMediators(
         this IServiceCollection services
     ) => services.Scan(
-        scan => scan.FromAssembliesOf(typeof(DependencyInjection))
+        scan => scan.FromAssembliesOf(typeof(ServiceCollectionExtensions))
             .AddClasses(
                 classes => classes.AssignableTo(typeof(IQueryHandler<,>))
             )
@@ -31,7 +31,7 @@ public static class DependencyInjection
     private static IServiceCollection AddValidators(
         this IServiceCollection services
     ) => services.Scan(
-        scan => scan.FromAssembliesOf(typeof(DependencyInjection))
+        scan => scan.FromAssembliesOf(typeof(ServiceCollectionExtensions))
             .AddClasses(
                 classes => classes.AssignableTo(typeof(IValidator<,>))
             )
