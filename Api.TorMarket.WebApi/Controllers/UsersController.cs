@@ -66,8 +66,8 @@ public sealed class UsersController : ControllerBase
             );
     }
 
-    [Authorize("admin")]
     [HttpGet]
+    [Authorize("admin")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
     public async Task<IActionResult> GetAllAsync(
         [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<User?>> mediator,
