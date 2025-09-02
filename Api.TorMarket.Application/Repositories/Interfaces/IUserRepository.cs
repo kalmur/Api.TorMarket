@@ -10,10 +10,10 @@ public interface IUserRepository
         CancellationToken cancellationToken
     );
 
-    Task DeleteAsync(
-        string providerId,
-        CancellationToken cancellationToken
-    );
+    //Task DeleteAsync(
+    //    string providerId,
+    //    CancellationToken cancellationToken
+    //);
 
     Task<User?> GetByIdAsync(
         int userId, 
