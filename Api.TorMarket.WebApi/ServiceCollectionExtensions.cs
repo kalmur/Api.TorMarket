@@ -16,7 +16,8 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddSwagger(
         this IServiceCollection services
     ) =>
-        services.AddEndpointsApiExplorer()
+        services
+            .AddEndpointsApiExplorer()
             .AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(
@@ -33,18 +34,19 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services
     )
     {
-        services.AddApiVersioning(options =>
-        {
-            options.DefaultApiVersion = new ApiVersion(1);
-            options.ApiVersionReader = new UrlSegmentApiVersionReader();
-            options.ReportApiVersions = true;
-        })
-        .AddMvc()
-        .AddApiExplorer(options =>
-        {
-            options.GroupNameFormat = "'v'V";
-            options.SubstituteApiVersionInUrl = true;
-        });
+        services
+            .AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1);
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+                options.ReportApiVersions = true;
+            })
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            })
+            .AddMvc();
 
         return services;
     }
@@ -52,14 +54,15 @@ public static class ServiceCollectionExtensions
     private static IServiceCollection AddCors(
         this IServiceCollection services
     ) =>
-        services.AddCors(options =>
-        {
-            options.AddDefaultPolicy(corsBuilder =>
+        services
+            .AddCors(options =>
             {
-                corsBuilder
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
+                options.AddDefaultPolicy(corsBuilder =>
+                {
+                    corsBuilder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
             });
-        });
 }

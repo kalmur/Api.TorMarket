@@ -66,7 +66,7 @@ public static class ServiceCollectionExtensions
                     {
                         ValidIssuer = $"https://{auth0Options.Domain}/",
                         ValidAudience = auth0Options.Audience,
-                        ClockSkew = TimeSpan.FromMinutes(5) // Allow 5 minutes clock skew
+                        ClockSkew = TimeSpan.FromMinutes(5)
                     };
                 }
             );
@@ -78,7 +78,7 @@ public static class ServiceCollectionExtensions
                         new HasPermissionRequirement("admin", $"https://{auth0Options.Domain}/")
                     )
                 );
-        }
+            }
         );
 
         services.AddSingleton<IAuthorizationHandler, HasPermissionHandler>();
