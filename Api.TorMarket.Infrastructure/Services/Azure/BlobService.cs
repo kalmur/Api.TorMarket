@@ -4,9 +4,9 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Api.TorMarket.Infrastructure.Options;
 using BlobInfo = Api.TorMarket.Domain.Models.External.BlobInfo;
-using Api.TorMarket.Application.Abstractions.Blob;
+using Api.TorMarket.Application.Abstractions.Azure;
 
-namespace Api.TorMarket.Infrastructure.Services.Blob;
+namespace Api.TorMarket.Infrastructure.Services.Azure;
 
 internal sealed class BlobService : IBlobService
 {

@@ -4,12 +4,14 @@ using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
-using Api.TorMarket.Infrastructure.Services.Blob;
-using Api.TorMarket.Application.Abstractions.Blob;
 using Api.TorMarket.Application.Abstractions.IdentityProvider;
 using Api.TorMarket.Infrastructure.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Api.TorMarket.Infrastructure.Services.Azure;
+using Azure.Search.Documents;
+using Azure;
+using Api.TorMarket.Application.Abstractions.Azure;
 
 namespace Api.TorMarket.Infrastructure;
 
@@ -91,6 +93,18 @@ public static class ServiceCollectionExtensions
             )
         );
 
+        services.AddSingleton<SearchClient>(sp =>
+        {
+            string endpoint = "<Your Azure Search Endpoint>";
+            string apiKey = "<Your Azure Search API Key>";
+            string indexName = "<Your Index Name>";
+
+            var credential = new AzureKeyCredential(apiKey);
+            return new SearchClient(new Uri(endpoint), indexName, credential);
+        });
+
+        services.AddScoped<ISearchService, SearchService>();
+        services.AddScoped<IIndexingService, IndexingService>();
         services.AddSingleton<IBlobService, BlobService>();
 
         return services;

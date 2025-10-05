@@ -1,11 +1,11 @@
 ﻿using Api.TorMarket.Domain.Models.External;
 
-namespace Api.TorMarket.Application.Abstractions.Blob;
+namespace Api.TorMarket.Application.Abstractions.Azure;
 
 public interface IBlobService
 {
     Task<BlobInfo> GetBlobAsync(
-        string blobName, 
+        string blobName,
         CancellationToken cancellationToken
     );
 
@@ -14,19 +14,19 @@ public interface IBlobService
     );
 
     Task UploadFileAsync(
-        string filePath, 
-        string fileName, 
+        string filePath,
+        string fileName,
         CancellationToken cancellationToken
     );
 
     Task UploadContentAsync(
-        string content, 
-        string fileName, 
+        string content,
+        string fileName,
         CancellationToken cancellationToken
     );
 
     Task DeleteBlobAsync(
-        string blobName, 
+        string blobName,
         CancellationToken cancellationToken
     );
 
