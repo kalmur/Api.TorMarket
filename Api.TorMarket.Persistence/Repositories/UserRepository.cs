@@ -36,13 +36,13 @@ internal class UserRepository : QuickRepo<UserEntity>, IUserRepository
         ) ?? throw new InvalidOperationException("Failed to locate user.");
     }
 
-    public async Task DeleteAsync(
-        string providerId,
-        CancellationToken cancellationToken
-    ) => await EntityFrameworkQueryableExtensions.ExecuteDeleteAsync(
-        _context.User.Where(user => user.ProviderId == providerId),
-        cancellationToken
-    );
+    //public async Task DeleteAsync(
+    //    string providerId,
+    //    CancellationToken cancellationToken
+    //) => await EntityFrameworkQueryableExtensions.ExecuteDeleteAsync(
+    //    _context.User.Where(user => user.ProviderId == providerId),
+    //    cancellationToken
+    //);
 
     public async Task<User?> GetByIdAsync(
         int userId, 

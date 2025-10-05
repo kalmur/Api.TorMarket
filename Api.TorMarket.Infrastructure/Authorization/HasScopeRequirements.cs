@@ -2,7 +2,7 @@
 
 namespace Api.TorMarket.Infrastructure.Authorization;
 
-public class HasScopeRequirement : IAuthorizationRequirement
+public sealed class HasScopeRequirement : IAuthorizationRequirement
 {
     public string Issuer { get; }
     public string Scope { get; }

@@ -1,6 +1,13 @@
-﻿using Api.TorMarket.Infrastructure.Options;
+﻿using Api.TorMarket.Application.Abstractions.Blob;
+using Api.TorMarket.Application.Abstractions.IdentityProvider;
+using Api.TorMarket.Infrastructure.Authorization;
+using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services.Auth0;
+using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
+using Api.TorMarket.Infrastructure.Services.Blob;
 using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
@@ -60,22 +67,28 @@ public static class ServiceCollectionExtensions
                 JwtBearerDefaults.AuthenticationScheme,
                 options =>
                 {
-                    options.Authority = auth0Options.Domain;
-                    options.Audience = auth0Options.Audience;
+                    options.MapInboundClaims = false;
+                    options.Authority = $"https://{auth0Options.Domain}/";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = $"https://{auth0Options.Domain}/",
+                        ValidAudience = auth0Options.Audience,
+                        ClockSkew = TimeSpan.FromMinutes(5)
+                    };
                 }
             );
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("read:messages", policy =>
+            options.AddPolicy("admin", policy =>
                 policy.Requirements.Add(
-                    new HasScopeRequirement("read:messages", auth0Options.Domain)
+                        new HasPermissionRequirement("admin", $"https://{auth0Options.Domain}/")
                     )
                 );
-        }
+            }
         );
 
-        services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
+        services.AddSingleton<IAuthorizationHandler, HasPermissionHandler>();
 
         return services;
     }
