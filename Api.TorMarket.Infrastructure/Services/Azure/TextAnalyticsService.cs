@@ -25,7 +25,6 @@ public class TextAnalyticsService : ITextAnalyticsService
         }
         catch (RequestFailedException ex)
         {
-            Console.WriteLine($"Key Phrase Extraction failed: {ex.Message}");
             return Enumerable.Empty<string>();
         }
     }
@@ -42,7 +41,6 @@ public class TextAnalyticsService : ITextAnalyticsService
         }
         catch (RequestFailedException ex)
         {
-            Console.WriteLine($"Sentiment Analysis failed: {ex.Message}");
             return "Neutral";
         }
     }
