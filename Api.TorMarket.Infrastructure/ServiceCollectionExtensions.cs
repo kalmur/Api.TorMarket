@@ -1,24 +1,18 @@
-﻿using Api.TorMarket.Application.Abstractions.Blob;
-using Api.TorMarket.Application.Abstractions.IdentityProvider;
+﻿using Api.TorMarket.Application.Abstractions.IdentityProvider;
 using Api.TorMarket.Infrastructure.Authorization;
 using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Infrastructure.Services.Auth0;
 using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
-using Api.TorMarket.Infrastructure.Services.Blob;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
-using Api.TorMarket.Application.Abstractions.IdentityProvider;
-using Api.TorMarket.Infrastructure.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Api.TorMarket.Infrastructure.Services.Azure;
 using Azure.Search.Documents;
 using Azure;
 using Api.TorMarket.Application.Abstractions.Azure;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Api.TorMarket.Infrastructure;
 
@@ -106,7 +100,7 @@ public static class ServiceCollectionExtensions
             )
         );
 
-        services.AddSingleton<SearchClient>(sp =>
+        services.AddSingleton(sp =>
         {
             string endpoint = "<Your Azure Search Endpoint>";
             string apiKey = "<Your Azure Search API Key>";
@@ -116,9 +110,19 @@ public static class ServiceCollectionExtensions
             return new SearchClient(new Uri(endpoint), indexName, credential);
         });
 
-        services.AddScoped<ISearchService, SearchService>();
-        services.AddScoped<IIndexingService, IndexingService>();
+        //services.AddSingleton(sp =>
+        //{
+        //    var endpoint = azureConfig.TextAnalyticsEndpoint ?? string.Empty;
+        //    var apiKey = azureConfig.TextAnalyticsApiKey!;
+        //    var credential = new AzureKeyCredential(apiKey);
+
+        //    return new TextAnalyticsClient(new Uri(endpoint), credential);
+        //});
+
         services.AddSingleton<IBlobService, BlobService>();
+        services.AddScoped<IIndexingService, IndexingService>();
+        services.AddScoped<ISearchService, SearchService>();
+        services.AddScoped<ITextAnalyticsService, TextAnalyticsService>();
 
         return services;
     }

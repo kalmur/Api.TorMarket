@@ -4,5 +4,5 @@ namespace Api.TorMarket.Application.Abstractions.Azure;
 
 public interface IIndexingService
 {
-    Task UploadDataAsync(IEnumerable<SearchDocument> data);
+    Task UploadDataAsync(IEnumerable<SearchDocument> data, CancellationToken cancellationToken);
 }

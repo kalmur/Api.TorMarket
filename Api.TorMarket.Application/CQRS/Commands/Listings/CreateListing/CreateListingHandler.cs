@@ -14,13 +14,15 @@ public sealed class CreateListingHandler : ICommandHandler<CreateListingCommand,
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IListingRepository _listingRepository;
     private readonly IIndexingService _indexingService;
+    private readonly ITextAnalyticsService _textAnalyticsService;
 
     public CreateListingHandler(
         IValidator<CreateListingCommand, CreateListingFailure> validator,
         ICategoryRepository categoryRepository,
         ICurrencyRepository currencyRepository,
         IListingRepository listingRepository,
-        IIndexingService indexingService
+        IIndexingService indexingService,
+        ITextAnalyticsService textAnalyticsService
     )
     {
         _validator = validator;
@@ -28,6 +30,7 @@ public sealed class CreateListingHandler : ICommandHandler<CreateListingCommand,
         _currencyRepository = currencyRepository;
         _listingRepository = listingRepository;
         _indexingService = indexingService;
+        _textAnalyticsService = textAnalyticsService;
     }
 
     public async Task<ResultOrError<Listing, CreateListingFailure>> HandleAsync(
@@ -62,23 +65,33 @@ public sealed class CreateListingHandler : ICommandHandler<CreateListingCommand,
             cancellationToken
         );
 
-        // Add _textAnalyticsService AND _translatorService potentially
-
-        var indexingResult = await _indexingService.UploadDataAsync(
-            new SearchDocument
-            {
-                ListingId = result.ListingId.ToString(),
-                ListingTitle = result.Title ?? string.Empty,
-                ListingDescription = result.Description ?? ?? string.Empty
-            },
-            cancellationToken
-        );
-
-        if (!indexingResult)
-        {
-            // handle
-        }
+        await EnrichAndUploadSearchDocumentsAsync(result, cancellationToken);
 
         return result;
+    }
+
+    private async Task EnrichAndUploadSearchDocumentsAsync(Listing result, CancellationToken cancellationToken)
+    {
+        var titleKeyPhrases = await _textAnalyticsService.ExtractKeyPhrasesAsync(result.Title ?? string.Empty, cancellationToken);
+        var descriptionKeyPhrases = await _textAnalyticsService.ExtractKeyPhrasesAsync(result.Description ?? string.Empty, cancellationToken);
+
+        var titleSentiment = await _textAnalyticsService.AnalyzeSentimentAsync(result.Title ?? string.Empty, cancellationToken);
+        var descriptionSentiment = await _textAnalyticsService.AnalyzeSentimentAsync(result.Description ?? string.Empty, cancellationToken);
+
+        var documents = new List<SearchDocument>
+        {
+            new()
+            {
+                ListingId = result.ListingId,
+                ListingTitle = result.Title ?? string.Empty,
+                ListingDescription = result.Description ?? string.Empty,
+                TitleKeyPhrases = titleKeyPhrases.ToList(),
+                DescriptionKeyPhrases = descriptionKeyPhrases.ToList(),
+                TitleSentiment = titleSentiment,
+                DescriptionSentiment = descriptionSentiment,
+            }
+        };
+
+        await _indexingService.UploadDataAsync(documents, cancellationToken);
     }
 }
