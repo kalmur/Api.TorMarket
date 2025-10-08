@@ -86,6 +86,17 @@ internal class ListingRepository : QuickRepoPageable<ListingEntity>, IListingRep
         cancellationToken
     );
 
+    public async Task<IEnumerable<ListingWithDetails>> GetByIdsAsync(
+        IEnumerable<int> listingIds,
+        CancellationToken cancellationToken
+    )
+    {
+        return await GetListings(
+            listing => listingIds.Contains(listing.ListingId),
+            cancellationToken
+        );
+    }
+
     public async Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken

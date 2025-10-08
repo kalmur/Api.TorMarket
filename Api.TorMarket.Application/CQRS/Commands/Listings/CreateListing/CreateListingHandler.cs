@@ -1,7 +1,9 @@
-﻿using Api.TorMarket.Application.Abstractions.Mediator;
+﻿using Api.TorMarket.Application.Abstractions.Azure;
+using Api.TorMarket.Application.Abstractions.Mediator;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.External;
 
 namespace Api.TorMarket.Application.CQRS.Commands.Listings.CreateListing;
 
@@ -11,17 +13,21 @@ public sealed class CreateListingHandler : ICommandHandler<CreateListingCommand,
     private readonly ICategoryRepository _categoryRepository;
     private readonly ICurrencyRepository _currencyRepository;
     private readonly IListingRepository _listingRepository;
+    private readonly IIndexingService _indexingService;
 
     public CreateListingHandler(
         IValidator<CreateListingCommand, CreateListingFailure> validator,
         ICategoryRepository categoryRepository,
         ICurrencyRepository currencyRepository,
-        IListingRepository listingRepository)
+        IListingRepository listingRepository,
+        IIndexingService indexingService
+    )
     {
         _validator = validator;
         _categoryRepository = categoryRepository;
         _currencyRepository = currencyRepository;
         _listingRepository = listingRepository;
+        _indexingService = indexingService;
     }
 
     public async Task<ResultOrError<Listing, CreateListingFailure>> HandleAsync(
@@ -47,12 +53,32 @@ public sealed class CreateListingHandler : ICommandHandler<CreateListingCommand,
             cancellationToken
         );
 
-        return await _listingRepository.CreateAsync(
+
+        var result = await _listingRepository.CreateAsync(
             command.ToRequest(
                 category!.CategoryId,
                 currency!.CurrencyId
             ),
             cancellationToken
         );
+
+        // Add _textAnalyticsService AND _translatorService potentially
+
+        var indexingResult = await _indexingService.UploadDataAsync(
+            new SearchDocument
+            {
+                ListingId = result.ListingId.ToString(),
+                ListingTitle = result.Title ?? string.Empty,
+                ListingDescription = result.Description ?? ?? string.Empty
+            },
+            cancellationToken
+        );
+
+        if (!indexingResult)
+        {
+            // handle
+        }
+
+        return result;
     }
 }

@@ -27,6 +27,11 @@ public interface IListingRepository
         CancellationToken cancellationToken
     );
 
+    Task<IEnumerable<ListingWithDetails>> GetByIdsAsync(
+        IEnumerable<int> listingIds,
+        CancellationToken cancellationToken
+    );
+
     Task<IEnumerable<ListingWithDetails?>> GetByNameAsync(
         string name,
         CancellationToken cancellationToken

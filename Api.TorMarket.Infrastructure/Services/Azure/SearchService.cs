@@ -13,11 +13,22 @@ internal class SearchService : ISearchService
         _searchClient = searchClient;
     }
 
-    public async Task<IEnumerable<SearchDocument>> SearchAsync(string query)
+    public async Task<IEnumerable<SearchDocument>> SearchAsync(
+        string query,
+        CancellationToken cancellationToken
+    )
     {
-        var options = new SearchOptions { Size = 10 };
+        var options = new SearchOptions 
+        { 
+            Size = 10,
+            IncludeTotalCount = true
+        };
 
-        var results = await _searchClient.SearchAsync<SearchDocument>(query, options);
+        var results = await _searchClient.SearchAsync<SearchDocument>(
+            query, 
+            options, 
+            cancellationToken
+        );
 
         return results.Value.GetResults().Select(r => r.Document);
     }
