@@ -19,8 +19,14 @@ internal class IndexingService : IIndexingService
         _searchClient = new SearchClient(new Uri(endpoint), indexName, credential);
     }
 
-    public async Task UploadDataAsync(IEnumerable<SearchDocument> data, CancellationToken cancellationToken)
+    public async Task UploadDataAsync(
+        IEnumerable<SearchDocument> data, 
+        CancellationToken cancellationToken
+    )
     {
-        await _searchClient.UploadDocumentsAsync(data);
+        await _searchClient.UploadDocumentsAsync(
+            data,
+            cancellationToken: cancellationToken
+        );
     }
 }

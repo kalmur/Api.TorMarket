@@ -1,21 +1,21 @@
-﻿using System.Net.Http.Headers;
+using System.Net.Http.Headers;
 using Api.TorMarket.Application.Abstractions.IdentityProvider;
 
-namespace Api.TorMarket.Infrastructure.Services.Auth0;
+namespace Api.TorMarket.Infrastructure.Services.FusionAuth;
 
-public class Auth0TokenHandler : DelegatingHandler
+public class FusionAuthTokenHandler : DelegatingHandler
 {
     private const string Scheme = "Bearer";
 
-    private readonly IAuth0TokenCache _cache;
+    private readonly IFusionAuthTokenCache _cache;
 
-    public Auth0TokenHandler(IAuth0TokenCache cache)
+    public FusionAuthTokenHandler(IFusionAuthTokenCache cache)
     {
         _cache = cache;
     }
 
     /// <summary>
-    ///     Adds an authentication header with a Auth0-generated JWT token.
+    ///     Adds an authentication header with a FusionAuth-issued JWT token.
     /// </summary>
     /// <param name="request">The HTTP request that requires an authentication header.</param>
     /// <param name="cancellationToken">A cancellation token.</param>
@@ -28,4 +28,3 @@ public class Auth0TokenHandler : DelegatingHandler
         return await base.SendAsync(request, cancellationToken);
     }
 }
-

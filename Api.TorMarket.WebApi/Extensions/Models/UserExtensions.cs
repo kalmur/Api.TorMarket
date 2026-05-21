@@ -1,5 +1,6 @@
 ﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 
@@ -22,5 +23,17 @@ public static class UserExtensions
         UserId = user.UserId,
         RoleId = user.RoleId,
         ProviderId = user.ProviderId
+    };
+
+    public static UserProfileDto ToResponseDto(
+        this UserProfile profile
+    ) => new()
+    {
+        UserId = profile.User.UserId,
+        RoleId = profile.User.RoleId,
+        ProviderId = profile.User.ProviderId,
+        Email = profile.IdentityProfile?.Email,
+        FirstName = profile.IdentityProfile?.FirstName,
+        LastName = profile.IdentityProfile?.LastName
     };
 }

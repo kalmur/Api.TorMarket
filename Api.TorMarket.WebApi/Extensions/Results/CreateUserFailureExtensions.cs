@@ -22,6 +22,7 @@ namespace Api.TorMarket.WebApi.Extensions.Results
         {
             ErrorType.InvalidProviderId => "Invalid provider id",
             ErrorType.UserAlreadyExists => "User already exists",
+            ErrorType.ProviderUserNotFound => "The supplied provider id was not found in FusionAuth.",
             _ => throw new InvalidEnumArgumentException(nameof(ErrorType))
         };
     }

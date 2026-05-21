@@ -4,7 +4,7 @@ namespace Api.TorMarket.Application.Abstractions.IdentityProvider;
 
 public interface IIdentityProviderService
 {
-    Task<IReadOnlyCollection<Auth0User>> GetUsersInformationAsync(
+    Task<IReadOnlyCollection<FusionAuthUser>> GetUsersInformationAsync(
         IReadOnlyCollection<string> providerIds, 
         CancellationToken token = default
     );

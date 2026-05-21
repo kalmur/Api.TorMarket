@@ -1,6 +1,8 @@
-﻿using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
+﻿using Api.TorMarket.Application.Abstractions.IdentityProvider;
+using Api.TorMarket.Application.CQRS.Commands.Users.CreateUser;
 using Api.TorMarket.Application.Repositories.Interfaces;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.External;
 using NSubstitute;
 using NUnit.Framework;
 using Shouldly;
@@ -13,15 +15,18 @@ namespace Api.TorMarket.Application.Tests.CQRS.Commands.Users.CreateUser;
 internal sealed class CreateUserValidatorTests
 {
     private IUserRepository _userRepository;
+    private IIdentityProviderService _identityProviderService;
     private CreateUserValidator _validator;
 
     [SetUp]
     public void Setup()
     {
         _userRepository = Substitute.For<IUserRepository>();
+        _identityProviderService = Substitute.For<IIdentityProviderService>();
 
         _validator = new CreateUserValidator(
-            _userRepository
+            _userRepository,
+            _identityProviderService
         );
     }
 
@@ -39,6 +44,16 @@ internal sealed class CreateUserValidatorTests
             Arg.Any<CancellationToken>()
         ).Returns(
             (User)null
+        );
+
+        _identityProviderService.GetUsersInformationAsync(
+            Arg.Any<IReadOnlyCollection<string>>(),
+            Arg.Any<CancellationToken>()
+        ).Returns(
+            new List<FusionAuthUser>
+            {
+                new() { ExternalProviderId = command.ProviderId }
+            }
         );
 
         // Act

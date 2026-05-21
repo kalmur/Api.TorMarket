@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Api.TorMarket.Application\Api.TorMarket.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Auth0\Cache\" />
+  </ItemGroup>
+
 </Project>

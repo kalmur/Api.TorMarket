@@ -7,6 +7,7 @@ public sealed record CreateUserFailure
     public enum ErrorType
     {
         InvalidProviderId,
-        UserAlreadyExists
+        UserAlreadyExists,
+        ProviderUserNotFound
     }
 }

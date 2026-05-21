@@ -1,6 +1,6 @@
-﻿namespace Api.TorMarket.Application.Abstractions.IdentityProvider;
+namespace Api.TorMarket.Application.Abstractions.IdentityProvider;
 
-public interface IAuth0UsersClient
+public interface IFusionAuthUsersClient
 {
     //WIP
 

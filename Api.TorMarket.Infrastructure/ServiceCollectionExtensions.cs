@@ -1,8 +1,8 @@
 ﻿using Api.TorMarket.Application.Abstractions.IdentityProvider;
 using Api.TorMarket.Infrastructure.Authorization;
 using Api.TorMarket.Infrastructure.Options;
-using Api.TorMarket.Infrastructure.Services.Auth0;
-using Api.TorMarket.Infrastructure.Services.Auth0.Cache;
+using Api.TorMarket.Infrastructure.Services.FusionAuth;
+using Api.TorMarket.Infrastructure.Services.FusionAuth.Cache;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
             .LoadOptions(configuration)
             .AddAuthenticationAndAuthorization(configuration)
             .AddAzureServices(configuration)
-            .AddAuth0Services(configuration);
+            .AddFusionAuthServices(configuration);
 
     private static IServiceCollection LoadOptions(
         this IServiceCollection services,
@@ -34,9 +34,9 @@ public static class ServiceCollectionExtensions
     )
     {
         services
-            .AddOptions<Auth0Config>()
+            .AddOptions<FusionAuthConfig>()
             .Bind(
-                Auth0Config.GetAuth0ConfigSection(configuration)
+                FusionAuthConfig.GetFusionAuthConfigSection(configuration)
             ).ValidateOnStart();
 
         services
@@ -53,7 +53,9 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration
     )
     {
-        var auth0Options = Auth0Config.LoadFromConfiguration(configuration);
+        var fusionAuthOptions = FusionAuthConfig.LoadFromConfiguration(configuration);
+
+        var issuer = fusionAuthOptions.Authority.TrimEnd('/');
 
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -62,11 +64,11 @@ public static class ServiceCollectionExtensions
                 options =>
                 {
                     options.MapInboundClaims = false;
-                    options.Authority = $"https://{auth0Options.Domain}/";
+                    options.Authority = issuer;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidIssuer = $"https://{auth0Options.Domain}/",
-                        ValidAudience = auth0Options.Audience,
+                        ValidIssuer = issuer,
+                        ValidAudience = fusionAuthOptions.Audience,
                         ClockSkew = TimeSpan.FromMinutes(5)
                     };
                 }
@@ -76,7 +78,7 @@ public static class ServiceCollectionExtensions
         {
             options.AddPolicy("admin", policy =>
                 policy.Requirements.Add(
-                        new HasPermissionRequirement("admin", $"https://{auth0Options.Domain}/")
+                        new HasPermissionRequirement("admin", issuer)
                     )
                 );
             }
@@ -127,41 +129,41 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddAuth0Services(
+    private static IServiceCollection AddFusionAuthServices(
         this IServiceCollection services,
         IConfiguration configuration
     )
     {
-        var auth0Options = Auth0Config.LoadFromConfiguration(configuration);
+        var fusionAuthOptions = FusionAuthConfig.LoadFromConfiguration(configuration);
 
         services
-            .AddScoped<IIdentityProviderService, Auth0Service>()
-            .AddScoped<IAuth0QueryBuilder, Auth0QueryBuilder>()
-            .AddScoped<Auth0TokenHandler>();
+            .AddScoped<IIdentityProviderService, FusionAuthService>()
+            .AddScoped<IFusionAuthQueryBuilder, FusionAuthQueryBuilder>()
+            .AddScoped<FusionAuthTokenHandler>();
 
         services
-            .AddHttpClient(ClientNames.Auth0, client =>
+            .AddHttpClient(ClientNames.FusionAuth, client =>
             {
-                client.BaseAddress = new Uri(auth0Options!.Domain!);
+                client.BaseAddress = new Uri(fusionAuthOptions!.Authority!);
             })
-            .AddHttpMessageHandler<Auth0TokenHandler>();
+            .AddHttpMessageHandler<FusionAuthTokenHandler>();
 
-        services.AddAuth0Authentication(config =>
-        {
-            config.ClientId = auth0Options!.ClientId;
-            config.ClientSecret = auth0Options.ClientSecret;
-            config.Audience = auth0Options!.Audience;
-        });
+        services
+            .AddHttpClient(ClientNames.FusionAuthAuthentication, client =>
+            {
+                client.BaseAddress = new Uri(fusionAuthOptions!.Authority!);
+            });
+
+        services.AddFusionAuthTokenCache();
 
         return services;
     }
 
-    private static void AddAuth0Authentication(
-        this IServiceCollection services,
-        Action<Auth0Config> config
+    private static void AddFusionAuthTokenCache(
+        this IServiceCollection services
     )
     {
         services.AddFusionCache(Constants.FusionCacheInstance);
-        services.AddScoped<IAuth0TokenCache, Auth0TokenCache>();
+        services.AddScoped<IFusionAuthTokenCache, FusionAuthTokenCache>();
     }
 }

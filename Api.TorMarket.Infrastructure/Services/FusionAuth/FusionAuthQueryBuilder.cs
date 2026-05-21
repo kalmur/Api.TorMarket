@@ -1,14 +1,14 @@
-﻿using Api.TorMarket.Application.Abstractions.IdentityProvider;
+using Api.TorMarket.Application.Abstractions.IdentityProvider;
 using Api.TorMarket.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 
-namespace Api.TorMarket.Infrastructure.Services.Auth0;
+namespace Api.TorMarket.Infrastructure.Services.FusionAuth;
 
-public class Auth0QueryBuilder : IAuth0QueryBuilder
+public class FusionAuthQueryBuilder : IFusionAuthQueryBuilder
 {
-    private readonly Auth0Config _options;
+    private readonly FusionAuthConfig _options;
 
-    public Auth0QueryBuilder(IOptions<Auth0Config> options)
+    public FusionAuthQueryBuilder(IOptions<FusionAuthConfig> options)
     {
         _options = options.Value;
     }
@@ -20,10 +20,9 @@ public class Auth0QueryBuilder : IAuth0QueryBuilder
         return _options!.UsersQuery!
             .Replace("{FieldsToInclude}", _options.FieldsToInclude)
             .Replace("{IncludeFields}", _options.IncludeFields)
-            .Replace("{Query}", query)
-            .Replace("{SearchEngine}", _options.SearchEngine);
+            .Replace("{Query}", query);
     }
 
     private static string GetUserProfileQueryChunk(IEnumerable<string> providerIds)
-        => "user_id:(\"" + string.Join("\"OR\"", providerIds) + "\")";
+        => "id:(\"" + string.Join("\"OR\"", providerIds) + "\")";
 }

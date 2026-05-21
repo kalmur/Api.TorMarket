@@ -3,6 +3,7 @@ using Api.TorMarket.Application.CQRS.Queries.Users.GetAllUsers;
 using Api.TorMarket.Application.CQRS.Queries.Users.GetUserByProviderId;
 using Api.TorMarket.Application.Unions;
 using Api.TorMarket.Domain.Models;
+using Api.TorMarket.Domain.Models.ViewModels;
 using Api.TorMarket.WebApi.DTOs.Requests;
 using Api.TorMarket.WebApi.DTOs.Responses;
 using Api.TorMarket.WebApi.Extensions.Models;
@@ -44,10 +45,10 @@ public sealed class UsersController : ControllerBase
 
     [HttpGet]
     [Route("{providerId}")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDto))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserProfileDto))]
     [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> GetByProviderIdAsync(
-        [FromServices] IQueryHandler<GetUserByProviderIdQuery, ResultOrError<User, GetUserByProviderIdFailure>> mediator,
+        [FromServices] IQueryHandler<GetUserByProviderIdQuery, ResultOrError<UserProfile, GetUserByProviderIdFailure>> mediator,
         [FromRoute][Required] string providerId,
         CancellationToken cancellationToken
     )
@@ -68,9 +69,9 @@ public sealed class UsersController : ControllerBase
 
     [HttpGet]
     [Authorize("admin")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDto>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserProfileDto>))]
     public async Task<IActionResult> GetAllAsync(
-        [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<User?>> mediator,
+        [FromServices] IQueryHandler<GetAllUsersQuery, IEnumerable<UserProfile>> mediator,
        CancellationToken cancellationToken
     )
     {
@@ -81,7 +82,7 @@ public sealed class UsersController : ControllerBase
 
         return Ok(
             result.Select(
-                user => user.ToResponseDto()
+                profile => profile.ToResponseDto()
             )
         );
     }
