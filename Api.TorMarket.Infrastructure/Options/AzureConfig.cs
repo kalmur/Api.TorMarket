@@ -19,6 +19,10 @@ internal record AzureConfig
     [Required(AllowEmptyStrings = false)]
     public required string ListingsContainerName { get; init; }
 
+    public string? TextAnalyticsEndpoint { get; init; }
+
+    public string? TextAnalyticsApiKey { get; init; }
+
     internal static IConfigurationSection GetAzureConfig(
         IConfiguration configuration
     ) => configuration.GetSection(SectionName);

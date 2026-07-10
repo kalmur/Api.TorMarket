@@ -12,6 +12,7 @@ using Api.TorMarket.Infrastructure.Services.Azure;
 using Azure.Search.Documents;
 using Azure;
 using Api.TorMarket.Application.Abstractions.Azure;
+using Azure.AI.TextAnalytics;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.TorMarket.Infrastructure;
@@ -83,6 +84,7 @@ public static class ServiceCollectionExtensions
         );
 
         services.AddSingleton<IAuthorizationHandler, HasPermissionHandler>();
+        services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
         return services;
     }
@@ -110,17 +112,24 @@ public static class ServiceCollectionExtensions
             return new SearchClient(new Uri(endpoint), indexName, credential);
         });
 
-        //services.AddSingleton(sp =>
-        //{
-        //    var endpoint = azureConfig.TextAnalyticsEndpoint ?? string.Empty;
-        //    var apiKey = azureConfig.TextAnalyticsApiKey!;
-        //    var credential = new AzureKeyCredential(apiKey);
+        services.AddSingleton(sp =>
+        {
+            var endpoint = azureConfig.TextAnalyticsEndpoint ?? string.Empty;
+            var apiKey = azureConfig.TextAnalyticsApiKey!;
+            var credential = new AzureKeyCredential(apiKey);
 
-        //    return new TextAnalyticsClient(new Uri(endpoint), credential);
-        //});
+            return new TextAnalyticsClient(new Uri(endpoint), credential);
+        });
 
         services.AddSingleton<IBlobService, BlobService>();
-        services.AddScoped<IIndexingService, IndexingService>();
+        services.AddScoped<IIndexingService>(sp =>
+        {
+            string endpoint = "<Your Azure Search Endpoint>";
+            string apiKey = "<Your Azure Search API Key>";
+            string indexName = "<Your Index Name>";
+
+            return new IndexingService(endpoint, apiKey, indexName);
+        });
         services.AddScoped<ISearchService, SearchService>();
         services.AddScoped<ITextAnalyticsService, TextAnalyticsService>();
 
@@ -145,6 +154,8 @@ public static class ServiceCollectionExtensions
                 client.BaseAddress = new Uri(auth0Options!.Domain!);
             })
             .AddHttpMessageHandler<Auth0TokenHandler>();
+
+        services.AddHttpClient(ClientNames.Auth0Authentication);
 
         services.AddAuth0Authentication(config =>
         {

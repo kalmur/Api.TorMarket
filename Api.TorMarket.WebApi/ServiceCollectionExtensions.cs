@@ -5,13 +5,16 @@ namespace Api.TorMarket.WebApi;
 
 public static class ServiceCollectionExtensions
 {
+    private const string CorsAllowedOriginsKey = "Cors:AllowedOrigins";
+
     public static IServiceCollection AddWebApiDependencies(
-        this IServiceCollection services
+        this IServiceCollection services,
+        IConfiguration configuration
     ) =>
         services
             .AddSwagger()
             .AddApiVersioning()
-            .AddCors();
+            .AddCors(configuration);
 
     private static IServiceCollection AddSwagger(
         this IServiceCollection services
@@ -52,17 +55,35 @@ public static class ServiceCollectionExtensions
     }
 
     private static IServiceCollection AddCors(
-        this IServiceCollection services
-    ) =>
-        services
-            .AddCors(options =>
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
+        var allowedOrigins = configuration
+            .GetSection(CorsAllowedOriginsKey)
+            .Get<string[]>() ?? Array.Empty<string>();
+
+        return services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(corsBuilder =>
             {
-                options.AddDefaultPolicy(corsBuilder =>
+                if (allowedOrigins.Length > 0)
+                {
+                    // Required for the Angular SPA so the BFF refresh-token cookie can flow.
+                    corsBuilder
+                        .WithOrigins(allowedOrigins)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                }
+                else
                 {
                     corsBuilder
                         .AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod();
-                });
+                }
             });
+        });
+    }
 }

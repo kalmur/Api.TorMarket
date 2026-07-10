@@ -10,9 +10,6 @@ public class HasPermissionHandler : AuthorizationHandler<HasPermissionRequiremen
         HasPermissionRequirement requirement
     )
     {
-        // Temporary debugging - remove after fixing
-        var allClaims = context.User.Claims.ToList();
-
         var matchingClaims = context.User.FindAll("permissions");
 
         var permissions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);

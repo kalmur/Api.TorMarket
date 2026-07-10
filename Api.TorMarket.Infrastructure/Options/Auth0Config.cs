@@ -19,6 +19,13 @@ public class Auth0Config
     [Required(AllowEmptyStrings = false)]
     public required string ClientSecret { get; set; }
 
+    /// <summary>
+    ///     The Client ID of the SPA application used for user-facing authorization
+    ///     code exchanges (PKCE). This must match the client_id used by the frontend.
+    /// </summary>
+    [Required(AllowEmptyStrings = false)]
+    public required string SpaClientId { get; init; }
+
     [Required(AllowEmptyStrings = false)]
     public required string Connection { get; init; }
 
@@ -39,6 +46,12 @@ public class Auth0Config
 
     [Required(AllowEmptyStrings = false)]
     public required string SearchEngine { get; init; }
+
+    /// <summary>
+    ///     Default redirect URI used when exchanging an authorization code, if the
+    ///     caller does not supply one explicitly. Optional.
+    /// </summary>
+    public string? RedirectUri { get; init; }
 
     internal static IConfigurationSection GetAuth0ConfigSection(
         IConfiguration configuration

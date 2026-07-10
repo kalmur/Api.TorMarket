@@ -9,7 +9,7 @@ builder.Services
     .AddApplicationDependencies()
     .AddInfrastructureDependencies(builder.Configuration)
     .AddPersistenceDependencies(builder.Configuration)
-    .AddWebApiDependencies()
+    .AddWebApiDependencies(builder.Configuration)
     .AddControllers();
 
 var app = builder.Build();

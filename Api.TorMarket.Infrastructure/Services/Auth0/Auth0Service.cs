@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net;
-using System.Text;
 using Api.TorMarket.Infrastructure.Options;
 using Api.TorMarket.Domain.Models.External;
 using Api.TorMarket.Application.Abstractions.IdentityProvider;
@@ -31,7 +30,6 @@ public class Auth0Service : IIdentityProviderService
     )
     {
         var client = _httpClientFactory.CreateClient(ClientNames.Auth0);
-
         var query = _queryBuilder.GenerateQueryString(providerIds);
 
         var response = await client.GetAsync(
@@ -52,8 +50,6 @@ public class Auth0Service : IIdentityProviderService
         CancellationToken token = default
     )
     {
-        var client = _httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
-
         var body = new Dictionary<string, string>
         {
             { "client_id", _options.ClientId! },
@@ -61,10 +57,10 @@ public class Auth0Service : IIdentityProviderService
             { "audience", _options.Audience! },
             { "grant_type", "client_credentials" }
         };
-        var jsonBody = JsonConvert.SerializeObject(body);
-        var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+        var content = new FormUrlEncodedContent(body);
 
-        var response = await client.PostAsync($"{_options.AuthenticationEndpoint}", content, token);
+        var client = _httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
+        var response = await client.PostAsync($"https://{_options.Domain}/oauth/token", content, token);
 
         var responseContent = await response.Content.ReadAsStringAsync(token);
         var tokenObject = JsonConvert.DeserializeObject<AccessTokenResponse>(responseContent);
@@ -79,5 +75,89 @@ public class Auth0Service : IIdentityProviderService
         }
 
         return new AccessTokenResponse();
+    }
+
+    public async Task<AccessTokenResponse> ExchangeAuthorizationCodeAsync(
+        string code,
+        string? redirectUri = null,
+        string? codeVerifier = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var body = new Dictionary<string, string>
+        {
+            { "grant_type", "authorization_code" },
+            { "client_id", _options.SpaClientId! },
+            { "code", code },
+            { "redirect_uri", redirectUri ?? _options.RedirectUri ?? string.Empty }
+        };
+
+        if (!string.IsNullOrWhiteSpace(codeVerifier))
+        {
+            body["code_verifier"] = codeVerifier;
+        }
+        else
+        {
+            body["client_secret"] = _options.ClientSecret!;
+        }
+
+        return await PostTokenRequestAsync(body, cancellationToken);
+    }
+
+    public async Task<AccessTokenResponse> RefreshAccessTokenAsync(
+        string refreshToken,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var body = new Dictionary<string, string>
+        {
+            { "grant_type", "refresh_token" },
+            { "client_id", _options.SpaClientId! },
+            { "refresh_token", refreshToken }
+        };
+
+        return await PostTokenRequestAsync(body, cancellationToken);
+    }
+
+    public async Task RevokeRefreshTokenAsync(
+        string refreshToken,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var body = new Dictionary<string, string>
+        {
+            { "client_id", _options.SpaClientId! },
+            { "token", refreshToken }
+        };
+
+        var content = new FormUrlEncodedContent(body);
+
+        var client = _httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
+        await client.PostAsync($"https://{_options.Domain}/oauth/revoke", content, cancellationToken);
+    }
+
+    private async Task<AccessTokenResponse> PostTokenRequestAsync(
+        IDictionary<string, string> body,
+        CancellationToken cancellationToken
+    )
+    {
+        var client = _httpClientFactory.CreateClient(ClientNames.Auth0Authentication);
+        var content = new FormUrlEncodedContent(body);
+
+        var response = await client.PostAsync($"https://{_options.Domain}/oauth/token", content, cancellationToken);
+
+        var responseContent = await response.Content.ReadAsStringAsync(cancellationToken);
+        var tokenObject = JsonConvert.DeserializeObject<AccessTokenResponse>(responseContent);
+
+        if (response.IsSuccessStatusCode && tokenObject is not null)
+        {
+            return tokenObject;
+        }
+
+        return tokenObject ?? new AccessTokenResponse
+        {
+            Error = "server_error",
+            ErrorDescription = "The identity provider returned an unexpected response."
+        };
     }
 }
