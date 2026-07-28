@@ -18,10 +18,12 @@ public sealed class AuthController : ControllerBase
     private static readonly TimeSpan RefreshTokenCookieLifetime = TimeSpan.FromDays(30);
 
     private readonly IWebHostEnvironment _environment;
+    private readonly IIdentityProviderService _identityProviderService;
 
-    public AuthController(IWebHostEnvironment environment)
+    public AuthController(IWebHostEnvironment environment, IIdentityProviderService identityProviderService)
     {
         _environment = environment;
+        _identityProviderService = identityProviderService;
     }
 
     /// <summary>
@@ -34,12 +36,11 @@ public sealed class AuthController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
     public async Task<IActionResult> ExchangeCodeAsync(
-        [FromServices] IIdentityProviderService identityProviderService,
         [FromBody][Required] ExchangeCodeRequestDto request,
         CancellationToken cancellationToken
     )
     {
-        var tokenResponse = await identityProviderService.ExchangeAuthorizationCodeAsync(
+        var tokenResponse = await _identityProviderService.ExchangeAuthorizationCodeAsync(
             request.Code,
             request.RedirectUri,
             request.CodeVerifier,
@@ -55,10 +56,7 @@ public sealed class AuthController : ControllerBase
     [HttpPost("refresh")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenResponseDto))]
     [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ProblemDetails))]
-    public async Task<IActionResult> RefreshAsync(
-        [FromServices] IIdentityProviderService identityProviderService,
-        CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> RefreshAsync(CancellationToken cancellationToken)
     {
         if (!Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken)
             || string.IsNullOrWhiteSpace(refreshToken))
@@ -66,7 +64,7 @@ public sealed class AuthController : ControllerBase
             return MissingOrInvalidRefreshToken();
         }
 
-        var tokenResponse = await identityProviderService.RefreshAccessTokenAsync(
+        var tokenResponse = await _identityProviderService.RefreshAccessTokenAsync(
             refreshToken,
             cancellationToken
         );
@@ -79,15 +77,12 @@ public sealed class AuthController : ControllerBase
     /// </summary>
     [HttpPost("logout")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> LogoutAsync(
-        [FromServices] IIdentityProviderService identityProviderService,
-        CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> LogoutAsync(CancellationToken cancellationToken)
     {
         if (Request.Cookies.TryGetValue(RefreshTokenCookieName, out var refreshToken)
             && !string.IsNullOrWhiteSpace(refreshToken))
         {
-            await identityProviderService.RevokeRefreshTokenAsync(refreshToken, cancellationToken);
+            await _identityProviderService.RevokeRefreshTokenAsync(refreshToken, cancellationToken);
         }
 
         ClearRefreshTokenCookie();
@@ -133,40 +128,36 @@ public sealed class AuthController : ControllerBase
         );
     }
 
-    private void SetRefreshTokenCookie(string refreshToken)
-    {
-        var isSecure = !_environment.IsDevelopment();
-
+    private void SetRefreshTokenCookie(string refreshToken) =>
         Response.Cookies.Append(
             RefreshTokenCookieName,
             refreshToken,
             new CookieOptions
             {
                 HttpOnly = true,
-                Secure = isSecure,
-                SameSite = isSecure ? SameSiteMode.None : SameSiteMode.Lax,
+                Secure = !_environment.IsDevelopment(),
+                SameSite = !_environment.IsDevelopment() 
+                    ? SameSiteMode.None 
+                    : SameSiteMode.Lax,
                 Path = CookiePath,
                 Expires = DateTimeOffset.UtcNow.Add(RefreshTokenCookieLifetime),
                 IsEssential = true
             }
         );
-    }
 
-    private void ClearRefreshTokenCookie()
-    {
-        var isSecure = !_environment.IsDevelopment();
-
+    private void ClearRefreshTokenCookie() =>
         Response.Cookies.Delete(
             RefreshTokenCookieName,
             new CookieOptions
             {
                 HttpOnly = true,
-                Secure = isSecure,
-                SameSite = isSecure ? SameSiteMode.None : SameSiteMode.Lax,
+                Secure = !_environment.IsDevelopment(),
+                SameSite = !_environment.IsDevelopment() 
+                    ? SameSiteMode.None 
+                    : SameSiteMode.Lax,
                 Path = CookiePath
             }
         );
-    }
 
     private IActionResult MissingOrInvalidRefreshToken() =>
         Unauthorized(
